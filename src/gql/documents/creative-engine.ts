@@ -676,31 +676,9 @@ export const DeleteShareableBoardMutation = gql`
 `;
 
 export const CreateApiKeyMutation = gql`
-mutation CreateApiKey($name: String!, $expiresIn: ExpirationInput) {
-  createApiKey(name: $name, expiresIn: $expiresIn) {
-    ... on ApiKey {
-      _id
-      teamId
-      name
-      key
-      permissions
-      createdAt
-      updatedAt
-      expiresAt
-    }
-    ... on HandledError {
-      code
-      message
-    }
-  }
-}
-`;
-
-export const SearchPaginatedApiKeysQuery = gql`
-query SearchPaginatedApiKeys($pagination: Pagination, $filters: ApiKeyFilter) {
-  searchPaginatedApiKeys(pagination: $pagination, filters: $filters) {
-    ... on ApiKeyPage {
-      items {
+  mutation CreateApiKey($name: String!, $expiresIn: ExpirationInput) {
+    createApiKey(name: $name, expiresIn: $expiresIn) {
+      ... on ApiKey {
         _id
         teamId
         name
@@ -710,99 +688,124 @@ query SearchPaginatedApiKeys($pagination: Pagination, $filters: ApiKeyFilter) {
         updatedAt
         expiresAt
       }
-      metadata {
-        limit
-        offset
-        orderBy
-        orderDirection
-        numElements
-        total
-        page
-        pages
+      ... on HandledError {
+        code
+        message
       }
     }
-    ... on HandledError {
-      code
-      message
+  }
+`;
+
+export const SearchPaginatedApiKeysQuery = gql`
+  query SearchPaginatedApiKeys(
+    $pagination: Pagination
+    $filters: ApiKeyFilter
+  ) {
+    searchPaginatedApiKeys(pagination: $pagination, filters: $filters) {
+      ... on ApiKeyPage {
+        items {
+          _id
+          teamId
+          name
+          key
+          permissions
+          createdAt
+          updatedAt
+          expiresAt
+        }
+        metadata {
+          limit
+          offset
+          orderBy
+          orderDirection
+          numElements
+          total
+          page
+          pages
+        }
+      }
+      ... on HandledError {
+        code
+        message
+      }
     }
   }
-}
 `;
 
 export const DeleteApiKeyMutation = gql`
-mutation DeleteApiKey($deleteApiKeyId: String!) {
-  deleteApiKey(id: $deleteApiKeyId) {
-    ... on ApiKey {
-      _id
-      teamId
-      name
-      key
-      permissions
-      createdAt
-      updatedAt
-      expiresAt
-    }
-    ... on HandledError {
-      code
-      message
+  mutation DeleteApiKey($deleteApiKeyId: String!) {
+    deleteApiKey(id: $deleteApiKeyId) {
+      ... on ApiKey {
+        _id
+        teamId
+        name
+        key
+        permissions
+        createdAt
+        updatedAt
+        expiresAt
+      }
+      ... on HandledError {
+        code
+        message
+      }
     }
   }
-}
 `;
 
 export const RotateApiKeyMutation = gql`
-mutation RotateApiKey($rotateApiKeyId: String!) {
-  rotateApiKey(id: $rotateApiKeyId) {
-    ... on ApiKey {
-      _id
-      teamId
-      name
-      key
-      permissions
-      createdAt
-      updatedAt
-      expiresAt
-    }
-    ... on HandledError {
-      code
-      message
+  mutation RotateApiKey($rotateApiKeyId: String!) {
+    rotateApiKey(id: $rotateApiKeyId) {
+      ... on ApiKey {
+        _id
+        teamId
+        name
+        key
+        permissions
+        createdAt
+        updatedAt
+        expiresAt
+      }
+      ... on HandledError {
+        code
+        message
+      }
     }
   }
-}
 `;
 
 export const GetTokenOverviewQuery = gql`
-query GetTokenOverview {
-  getTokenOverview {
-    ... on BirdeyeTokenOverviewResponse {
-      address
-      description
-      price
-      totalSupply
-      marketCap
-      fullyDilutedValue
-    }
-    ... on HandledError {
-      code
-      message
+  query GetTokenOverview {
+    getTokenOverview {
+      ... on BirdeyeTokenOverviewResponse {
+        address
+        description
+        price
+        totalSupply
+        marketCap
+        fullyDilutedValue
+      }
+      ... on HandledError {
+        code
+        message
+      }
     }
   }
-}
 `;
 
 export const GetTokenHistoricalPriceQuery = gql`
-query GetTokenHistoricalPriceResult($time: BirdeyeHistoricalDataTimeTypes!) {
-  getTokenHistoricalPriceResult(time: $time) {
-    ... on BirdeyeHistoricalPriceResponse {
-      items {
-        unixTime
-        value
+  query GetTokenHistoricalPriceResult($time: BirdeyeHistoricalDataTimeTypes!) {
+    getTokenHistoricalPriceResult(time: $time) {
+      ... on BirdeyeHistoricalPriceResponse {
+        items {
+          unixTime
+          value
+        }
+      }
+      ... on HandledError {
+        code
+        message
       }
     }
-    ... on HandledError {
-      code
-      message
-    }
   }
-}
 `;

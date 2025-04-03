@@ -19,7 +19,8 @@ const isPlural = (num: number) => Math.abs(num) !== 1;
 const simplePlural = (word: string) => `${word}s`;
 export function isLocalMode() {
   return (
-    process?.env?.NODE_ENV === "development" || process?.env?.APP_ENV === "local"
+    process?.env?.NODE_ENV === "development" ||
+    process?.env?.APP_ENV === "local"
   );
 }
 export function pluralize(
