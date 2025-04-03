@@ -82,7 +82,7 @@ export default function MobileMockCard({ showModel }: { showModel: boolean }) {
                   <button className="flex items-center justify-center ml-1 ">
                     <ChevronUp
                       className={cn(
-                        "-rotate-180 w-4 h-4 transition-transform duration-300 ease-in-out"
+                        "-rotate-180 w-4 h-4 transition-transform duration-300 ease-in-out",
                       )}
                     />
                   </button>{" "}

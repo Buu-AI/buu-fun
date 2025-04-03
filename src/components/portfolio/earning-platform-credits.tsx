@@ -1,6 +1,4 @@
 import FlashIcon from "@/assets/icons/flash-icon";
-import React from "react";
-import { Button } from "../ui/button";
 import StakingDialog from "./stake-dialog";
 
 export default function EarningPlatformCredits() {

@@ -10,7 +10,9 @@ export default function YourEarnings() {
       <div className="px-1 md:px-6 md:py-6">
         <div className="">
           <div className="flex items-center justify-between">
-            <h3 className="font-medium   w-full text-center lg:text-left ">Your Earnings</h3>
+            <h3 className="font-medium   w-full text-center lg:text-left ">
+              Your Earnings
+            </h3>
           </div>
           <div className="flex flex-col lg:flex-row items-center justify-between gap-2 pt-3">
             <div>

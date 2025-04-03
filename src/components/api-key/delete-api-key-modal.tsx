@@ -24,12 +24,12 @@ import DeleteApiKeyConfirm from "./delete-api-key-confim";
 export default function DeleteApiKeyModal() {
   const { identityToken: accessToken, login } = useAuthentication();
   const isDialogOpen = useAppSelector(
-    (state) => state.apiKey.isDeleteModalOpen
+    (state) => state.apiKey.isDeleteModalOpen,
   );
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
   const keyToDeleteData = useAppSelector(
-    (state) => state.apiKey.keyToDeleteData
+    (state) => state.apiKey.keyToDeleteData,
   );
 
   const {

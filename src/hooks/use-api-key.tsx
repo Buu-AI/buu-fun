@@ -1,4 +1,7 @@
-import { OrderDirection, SearchPaginatedApiKeysQueryVariables as TSearchPaginatedApiKeysQueryVariables } from "@/gql/types/graphql";
+import {
+  OrderDirection,
+  SearchPaginatedApiKeysQueryVariables as TSearchPaginatedApiKeysQueryVariables,
+} from "@/gql/types/graphql";
 import { getApiKeys } from "@/lib/react-query/api-key";
 import { useAuthentication } from "@/providers/account.context";
 import { useQuery } from "@tanstack/react-query";

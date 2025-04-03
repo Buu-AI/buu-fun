@@ -1,21 +1,16 @@
-import React from "react";
+import { Button } from "../ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
-  DialogOverlay,
-  DialogPortal,
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import StakingSlider from "./staking-slider";
+import { Label } from "../ui/label";
 import StakingRewardReview from "./staking-reward-review";
+import StakingSlider from "./staking-slider";
 
 export default function StakingDialog() {
   return (
@@ -50,7 +45,7 @@ export default function StakingDialog() {
               placeholder="30"
             />
             <StakingSlider />
-            <StakingRewardReview/>
+            <StakingRewardReview />
           </div>
         </div>
       </DialogContent>

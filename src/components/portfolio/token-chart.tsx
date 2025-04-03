@@ -1,20 +1,16 @@
 "use client";
+import { generateMockData } from "@/lib/mock/generate-chart-mock-data";
 import React, { useState } from "react";
 import {
-  LineChart,
-  Line,
-  BarChart,
   Bar,
+  CartesianGrid,
+  ComposedChart,
+  Line,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  ResponsiveContainer,
-  ComposedChart,
-  Tooltip,
-  CartesianGrid,
-  TooltipProps,
 } from "recharts";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { generateMockData } from "@/lib/mock/generate-chart-mock-data";
 
 // Define types for our data
 interface DataPoint {
@@ -33,14 +29,14 @@ interface CustomTooltipProps {
 }
 
 export default function TokenPriceChart() {
-  const [timeRange, setTimeRange] = useState<number>(1); // Default to 1 hour
-  const [data, setData] = useState<DataPoint[]>(generateMockData(timeRange));
-  const [maxVolume] = useState(Math.max(...data.map((item) => item.volume)));
-  
-  const updateTimeRange = (hours: number): void => {
-    setTimeRange(hours);
-    setData(generateMockData(hours));
-  };
+  const [timeRange] = useState<number>(1); // Default to 1 hour
+  const [data] = useState<DataPoint[]>(generateMockData(timeRange));
+  // const [maxVolume] = useState(Math.max(...data.map((item) => item.volume)));
+
+  // const updateTimeRange = (hours: number): void => {
+  //   setTimeRange(hours);
+  //   setData(generateMockData(hours));
+  // };
 
   const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
     if (active && payload && payload.length) {

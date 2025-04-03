@@ -15,7 +15,7 @@ export const generateMockData = (hours = 1) => {
 
   // Set a controlled maximum volume that will scale well with the 150px constraint
   const volumeBase = 100;
-  const volumeMax = 0.000020;
+  const volumeMax = 0.00002;
 
   for (let i = 0; i < points; i++) {
     const time = new Date(startTime);
