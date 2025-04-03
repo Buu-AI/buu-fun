@@ -773,3 +773,39 @@ export const RotateApiKeyMutation = gql`
     }
   }
 `;
+
+export const GetTokenOverviewQuery = gql`
+  query GetTokenOverview {
+    getTokenOverview {
+      ... on BirdeyeTokenOverviewResponse {
+        address
+        description
+        price
+        totalSupply
+        marketCap
+        fullyDilutedValue
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const GetTokenHistoricalPriceQuery = gql`
+  query GetTokenHistoricalPriceResult($time: BirdeyeHistoricalDataTimeTypes!) {
+    getTokenHistoricalPriceResult(time: $time) {
+      ... on BirdeyeHistoricalPriceResponse {
+        items {
+          unixTime
+          value
+        }
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
