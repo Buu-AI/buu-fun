@@ -1,17 +1,18 @@
 "use client";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
+import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
 import LogoutIcon from "@/assets/icons/log-out-Icon";
+import ReferralIcon from "@/assets/icons/referral-icon";
 import SettingsIcon from "@/assets/icons/settings-icon";
+import WalletIcon2 from "@/assets/icons/wallet-icon-2";
 import { profilePicture } from "@/lib/dice-bear";
 import { useAuthentication } from "@/providers/account.context";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import CopyAddress from "./copy-address";
-import ReferralIcon from "@/assets/icons/referral-icon";
 import ExportSolanaWallet from "../referral/export-wallet";
-import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
+import CopyAddress from "./copy-address";
 
 export default function DesktopProfileNavigation() {
   const { address, isAuthenticated, logout } = useAuthentication();
@@ -54,6 +55,17 @@ export default function DesktopProfileNavigation() {
             <div className="w-full mt-2">
               <CopyAddress isNavigation />
             </div>
+            <Link
+              href={"/app/portfolio"}
+              className="flex w-full items-center gap-1.5 hover:bg-buu-secondary py-2 rounded-md px-2 font-medium"
+            >
+              <div className="flex w-5 h-5 ">
+                {/* fill="#78DBFF" */}
+                <WalletIcon2 />
+              </div>
+              {/* <SettingsIcon /> */}
+              <p>Portfolio</p>
+            </Link>
             <Link
               href={"/app/api-key"}
               className="flex w-full items-center gap-1.5 hover:bg-buu-secondary py-2 rounded-md px-2 font-medium"

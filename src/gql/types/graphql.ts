@@ -96,6 +96,45 @@ export type ApiKeyPageResult = ApiKeyPage | HandledError;
 
 export type ApiKeyResult = ApiKey | HandledError;
 
+export enum BirdeyeHistoricalDataTimeTypes {
+  All = "ALL",
+  LastDay = "LAST_DAY",
+  LastHour = "LAST_HOUR",
+  LastMonth = "LAST_MONTH",
+  LastThreeHours = "LAST_THREE_HOURS",
+  LastWeek = "LAST_WEEK",
+  LastYear = "LAST_YEAR",
+}
+
+export type BirdeyeHistoricalPriceItemResponse = {
+  __typename?: "BirdeyeHistoricalPriceItemResponse";
+  unixTime: Scalars["Int"]["output"];
+  value: Scalars["Float"]["output"];
+};
+
+export type BirdeyeHistoricalPriceResponse = {
+  __typename?: "BirdeyeHistoricalPriceResponse";
+  items: Array<BirdeyeHistoricalPriceItemResponse>;
+};
+
+export type BirdeyeHistoricalPriceResult =
+  | BirdeyeHistoricalPriceResponse
+  | HandledError;
+
+export type BirdeyeTokenOverviewResponse = {
+  __typename?: "BirdeyeTokenOverviewResponse";
+  address: Scalars["String"]["output"];
+  description: Scalars["String"]["output"];
+  fullyDilutedValue: Scalars["Float"]["output"];
+  marketCap: Scalars["Float"]["output"];
+  price: Scalars["Float"]["output"];
+  totalSupply: Scalars["Float"]["output"];
+};
+
+export type BirdeyeTokenOverviewResult =
+  | BirdeyeTokenOverviewResponse
+  | HandledError;
+
 export type Credit = {
   __typename?: "Credit";
   _id: Scalars["String"]["output"];
@@ -392,6 +431,8 @@ export type Query = {
   getSubthreads: SubthreadPageResult;
   getTeam: TeamResult;
   getThreads: ThreadPageResult;
+  getTokenHistoricalPriceResult: BirdeyeHistoricalPriceResult;
+  getTokenOverview: BirdeyeTokenOverviewResult;
   getUserShareableBoard: ShareableBoardPageResult;
   me: AccountResult;
   searchPaginatedApiKeys: ApiKeyPageResult;
@@ -435,6 +476,10 @@ export type QueryGetSubthreadsArgs = {
 export type QueryGetThreadsArgs = {
   filters?: InputMaybe<ThreadFilter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type QueryGetTokenHistoricalPriceResultArgs = {
+  time: BirdeyeHistoricalDataTimeTypes;
 };
 
 export type QueryGetUserShareableBoardArgs = {
@@ -1551,6 +1596,41 @@ export type RotateApiKeyMutation = {
         createdAt: any;
         updatedAt: any;
         expiresAt?: any | null;
+      }
+    | { __typename?: "HandledError"; code: string; message: string };
+};
+
+export type GetTokenOverviewQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetTokenOverviewQuery = {
+  __typename?: "Query";
+  getTokenOverview:
+    | {
+        __typename?: "BirdeyeTokenOverviewResponse";
+        address: string;
+        description: string;
+        price: number;
+        totalSupply: number;
+        marketCap: number;
+        fullyDilutedValue: number;
+      }
+    | { __typename?: "HandledError"; code: string; message: string };
+};
+
+export type GetTokenHistoricalPriceResultQueryVariables = Exact<{
+  time: BirdeyeHistoricalDataTimeTypes;
+}>;
+
+export type GetTokenHistoricalPriceResultQuery = {
+  __typename?: "Query";
+  getTokenHistoricalPriceResult:
+    | {
+        __typename?: "BirdeyeHistoricalPriceResponse";
+        items: Array<{
+          __typename?: "BirdeyeHistoricalPriceItemResponse";
+          unixTime: number;
+          value: number;
+        }>;
       }
     | { __typename?: "HandledError"; code: string; message: string };
 };
@@ -5718,4 +5798,183 @@ export const RotateApiKeyDocument = {
 } as unknown as DocumentNode<
   RotateApiKeyMutation,
   RotateApiKeyMutationVariables
+>;
+export const GetTokenOverviewDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "GetTokenOverview" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "getTokenOverview" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: {
+                      kind: "Name",
+                      value: "BirdeyeTokenOverviewResponse",
+                    },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "address" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "description" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "price" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "totalSupply" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "marketCap" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "fullyDilutedValue" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "HandledError" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "message" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetTokenOverviewQuery,
+  GetTokenOverviewQueryVariables
+>;
+export const GetTokenHistoricalPriceResultDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "GetTokenHistoricalPriceResult" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "time" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "BirdeyeHistoricalDataTimeTypes" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "getTokenHistoricalPriceResult" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "time" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "time" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: {
+                      kind: "Name",
+                      value: "BirdeyeHistoricalPriceResponse",
+                    },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "items" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "unixTime" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "value" },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "HandledError" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "message" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetTokenHistoricalPriceResultQuery,
+  GetTokenHistoricalPriceResultQueryVariables
 >;

@@ -74,6 +74,7 @@
     "react-hot-toast": "^2.5.2",
     "react-intersection-observer": "^9.15.1",
     "react-redux": "^9.2.0",
+    "recharts": "^2.15.1",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.169.0",
@@ -96,7 +97,9 @@
   },
   "overrides": {
     "react": "$react",
-    "react-dom": "$react-dom"
+    "react-dom": "$react-dom",
+    "react-is": "^19.0.0-rc-69d4b800-20241021"
+
   },
   "pnpm": {
     "onlyBuiltDependencies": [
