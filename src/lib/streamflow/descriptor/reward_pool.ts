@@ -56,7 +56,20 @@ export type RewardPool = {
             seeds: [
               {
                 kind: "const";
-                value: [114, 101, 119, 97, 114, 100, 45, 101, 110, 116, 114, 121];
+                value: [
+                  114,
+                  101,
+                  119,
+                  97,
+                  114,
+                  100,
+                  45,
+                  101,
+                  110,
+                  116,
+                  114,
+                  121,
+                ];
               },
               {
                 kind: "account";
@@ -121,7 +134,20 @@ export type RewardPool = {
             seeds: [
               {
                 kind: "const";
-                value: [114, 101, 119, 97, 114, 100, 45, 101, 110, 116, 114, 121];
+                value: [
+                  114,
+                  101,
+                  119,
+                  97,
+                  114,
+                  100,
+                  45,
+                  101,
+                  110,
+                  116,
+                  114,
+                  121,
+                ];
               },
               {
                 kind: "account";
@@ -171,7 +197,20 @@ export type RewardPool = {
             seeds: [
               {
                 kind: "const";
-                value: [114, 101, 119, 97, 114, 100, 45, 101, 110, 116, 114, 121];
+                value: [
+                  114,
+                  101,
+                  119,
+                  97,
+                  114,
+                  100,
+                  45,
+                  101,
+                  110,
+                  116,
+                  114,
+                  121,
+                ];
               },
               {
                 kind: "account";
@@ -245,7 +284,20 @@ export type RewardPool = {
             seeds: [
               {
                 kind: "const";
-                value: [114, 101, 119, 97, 114, 100, 45, 118, 97, 117, 108, 116];
+                value: [
+                  114,
+                  101,
+                  119,
+                  97,
+                  114,
+                  100,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                ];
               },
               {
                 kind: "account";
@@ -660,7 +712,9 @@ export type RewardPool = {
           },
           {
             name: "accountedAmount";
-            docs: ["Sum of accounted amounts, used to correctly issue rewards in case of precision loss"];
+            docs: [
+              "Sum of accounted amounts, used to correctly issue rewards in case of precision loss",
+            ];
             type: "u128";
           },
           {
@@ -790,7 +844,9 @@ export type RewardPool = {
           },
           {
             name: "lastClaimPeriod";
-            docs: ["For how much seconds after unstake user should be able to claim rewards"];
+            docs: [
+              "For how much seconds after unstake user should be able to claim rewards",
+            ];
             type: "u64";
           },
           {
@@ -840,7 +896,9 @@ export type RewardPool = {
           },
           {
             name: "effectiveAmount";
-            docs: ["Effective Amount staked, does not equal to deposited amount, accounts for Stake Weight"];
+            docs: [
+              "Effective Amount staked, does not equal to deposited amount, accounts for Stake Weight",
+            ];
             type: "u128";
           },
           {
@@ -920,7 +978,9 @@ export type RewardPool = {
           },
           {
             name: "maxDuration";
-            docs: ["Max Duration of stake in seconds, the more duration, the more weight the stake has"];
+            docs: [
+              "Max Duration of stake in seconds, the more duration, the more weight the stake has",
+            ];
             type: "u64";
           },
           {

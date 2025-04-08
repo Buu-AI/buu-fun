@@ -18,6 +18,7 @@ export type GlobalStakingData = {
     mintAuthority: string;
     tlvData: {
       type: string;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       data: any[];
     };
   };
@@ -26,7 +27,7 @@ export type GlobalStakingData = {
     account: {
       authority: string;
       amount: string;
-      duration: string; 
+      duration: string;
       effectiveAmount: string;
       stakePool: string;
       nonce: number;
@@ -77,7 +78,7 @@ export function useGlobalStaking() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         setData(globalData as GlobalStakingData);
       } catch (err) {
         setError(err instanceof Error ? err : new Error(String(err)));

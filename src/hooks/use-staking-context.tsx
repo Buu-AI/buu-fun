@@ -27,9 +27,7 @@ export function StakingProvider({
   value: StakingContextType;
 }) {
   return (
-    <StakingContext.Provider value={value}>
-      {children}
-    </StakingContext.Provider>
+    <StakingContext.Provider value={value}>{children}</StakingContext.Provider>
   );
 }
 

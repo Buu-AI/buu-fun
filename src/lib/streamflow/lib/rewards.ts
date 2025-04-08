@@ -1,11 +1,15 @@
 import { ProgramAccount } from "@coral-xyz/anchor";
 import { PublicKey } from "@solana/web3.js";
-// eslint-disable-next-line no-restricted-imports
+ 
 import BN from "bn.js";
 import { getBN, getNumberFromBN } from "@streamflow/common";
 
 import { RewardEntry, RewardPool, StakeEntry } from "../types";
-import { REWARD_AMOUNT_DECIMALS, REWARD_AMOUNT_PRECISION_FACTOR_BN, SCALE_PRECISION_FACTOR_BN } from "../constants";
+import {
+  REWARD_AMOUNT_DECIMALS,
+  REWARD_AMOUNT_PRECISION_FACTOR_BN,
+  SCALE_PRECISION_FACTOR_BN,
+} from "../constants";
 
 export class RewardEntryAccumulator implements RewardEntry {
   lastAccountedTs: BN;
@@ -70,7 +74,9 @@ export class RewardEntryAccumulator implements RewardEntry {
     rewardAmount: BN,
     rewardPeriod: BN,
   ): BN {
-    const lastAccountedTs = this.lastAccountedTs.gt(new BN(0)) ? this.lastAccountedTs : stakedTs;
+    const lastAccountedTs = this.lastAccountedTs.gt(new BN(0))
+      ? this.lastAccountedTs
+      : stakedTs;
     const secondsPassed = accountableTs.sub(lastAccountedTs);
 
     if (secondsPassed.lt(rewardPeriod)) {
@@ -81,19 +87,25 @@ export class RewardEntryAccumulator implements RewardEntry {
 
     const claimablePerEffectiveStake = periodsPassed.mul(rewardAmount);
 
-    return claimablePerEffectiveStake.mul(effectiveStakedAmount).div(SCALE_PRECISION_FACTOR_BN);
+    return claimablePerEffectiveStake
+      .mul(effectiveStakedAmount)
+      .div(SCALE_PRECISION_FACTOR_BN);
   }
 
   // Calculates claimable amount from accountable amount.
   getClaimableAmount(): BN {
-    const claimedAmount = this.claimedAmount.mul(REWARD_AMOUNT_PRECISION_FACTOR_BN);
+    const claimedAmount = this.claimedAmount.mul(
+      REWARD_AMOUNT_PRECISION_FACTOR_BN,
+    );
     const nonClaimedAmount = this.accountedAmount.sub(claimedAmount);
     return nonClaimedAmount.div(REWARD_AMOUNT_PRECISION_FACTOR_BN);
   }
 
   // Get the time of the last unlock
   getLastAccountedTs(stakedTs: BN, claimableTs: BN, rewardPeriod: BN): BN {
-    const lastAccountedTs = this.lastAccountedTs.gtn(0) ? this.lastAccountedTs : stakedTs;
+    const lastAccountedTs = this.lastAccountedTs.gtn(0)
+      ? this.lastAccountedTs
+      : stakedTs;
     const totalSecondsPassed = claimableTs.sub(lastAccountedTs);
     const periodsPassed = totalSecondsPassed.div(rewardPeriod);
     const periodsToSeconds = periodsPassed.mul(rewardPeriod);
@@ -134,7 +146,8 @@ export const calcRewards = (
   rewardPoolAccount: ProgramAccount<RewardPool>,
 ) => {
   const rewardEntry: RewardEntry =
-    rewardEntryAccount?.account ?? createDefaultRewardEntry(stakeEntryAccount, rewardPoolAccount);
+    rewardEntryAccount?.account ??
+    createDefaultRewardEntry(stakeEntryAccount, rewardPoolAccount);
   const stakeEntry = stakeEntryAccount.account;
   const rewardPool = rewardPoolAccount.account;
 
@@ -145,8 +158,12 @@ export const calcRewards = (
 
   const currTs = Math.floor(Date.now() / 1000);
 
-  const stakedTs = rewardPool.createdTs ? BN.max(stakeEntry.createdTs, rewardPool.createdTs) : stakeEntry.createdTs;
-  const claimableTs = stakeEntry.closedTs.gtn(0) ? stakeEntry.closedTs : new BN(currTs);
+  const stakedTs = rewardPool.createdTs
+    ? BN.max(stakeEntry.createdTs, rewardPool.createdTs)
+    : stakeEntry.createdTs;
+  const claimableTs = stakeEntry.closedTs.gtn(0)
+    ? stakeEntry.closedTs
+    : new BN(currTs);
 
   const amountUpdated =
     !rewardPool.rewardAmount.eq(rewardPool.lastRewardAmount) &&
@@ -158,7 +175,10 @@ export const calcRewards = (
     rewardPool.lastPeriodUpdateTs.gt(stakeEntry.closedTs);
 
   if (amountUpdated || periodUpdated) {
-    let firstUpdateTs: BN, secondUpdateTs: BN, rewardAmount: BN, rewardPeriod: BN;
+    let firstUpdateTs: BN,
+      secondUpdateTs: BN,
+      rewardAmount: BN,
+      rewardPeriod: BN;
     if (amountUpdated && periodUpdated) {
       if (rewardPool.lastAmountUpdateTs.lt(rewardPool.lastPeriodUpdateTs)) {
         firstUpdateTs = rewardPool.lastAmountUpdateTs;
@@ -184,19 +204,21 @@ export const calcRewards = (
     }
 
     if (firstUpdateTs.gtn(0)) {
-      const firstAccountableAmount = rewardEntryAccumulator.getAccountableAmount(
-        stakedTs,
-        firstUpdateTs,
-        stakeEntry.effectiveAmount,
-        rewardEntryAccumulator.lastRewardAmount,
-        rewardEntryAccumulator.lastRewardPeriod,
-      );
+      const firstAccountableAmount =
+        rewardEntryAccumulator.getAccountableAmount(
+          stakedTs,
+          firstUpdateTs,
+          stakeEntry.effectiveAmount,
+          rewardEntryAccumulator.lastRewardAmount,
+          rewardEntryAccumulator.lastRewardPeriod,
+        );
       rewardEntryAccumulator.addAccountedAmount(firstAccountableAmount);
-      rewardEntryAccumulator.lastAccountedTs = rewardEntryAccumulator.getLastAccountedTs(
-        stakedTs,
-        firstUpdateTs,
-        rewardPool.lastRewardPeriod,
-      );
+      rewardEntryAccumulator.lastAccountedTs =
+        rewardEntryAccumulator.getLastAccountedTs(
+          stakedTs,
+          firstUpdateTs,
+          rewardPool.lastRewardPeriod,
+        );
     }
     const secondAccountableAmount = rewardEntryAccumulator.getAccountableAmount(
       stakedTs,
@@ -206,11 +228,12 @@ export const calcRewards = (
       rewardPeriod,
     );
     rewardEntryAccumulator.addAccountedAmount(secondAccountableAmount);
-    rewardEntryAccumulator.lastAccountedTs = rewardEntryAccumulator.getLastAccountedTs(
-      stakedTs,
-      secondUpdateTs,
-      rewardPeriod,
-    );
+    rewardEntryAccumulator.lastAccountedTs =
+      rewardEntryAccumulator.getLastAccountedTs(
+        stakedTs,
+        secondUpdateTs,
+        rewardPeriod,
+      );
   }
 
   const accountableAmount = rewardEntryAccumulator.getAccountableAmount(
@@ -230,11 +253,15 @@ export const calculateRewardRateFromAmount = (
   stakeTokenDecimals: number,
   rewardTokenDecimals: number,
 ) => {
-  const decimals = rewardTokenDecimals + (REWARD_AMOUNT_DECIMALS - stakeTokenDecimals);
+  const decimals =
+    rewardTokenDecimals + (REWARD_AMOUNT_DECIMALS - stakeTokenDecimals);
   return getNumberFromBN(rewardAmount, decimals);
 };
 
-export const calculateRewardAmountFromValue = (rewardTokenValue: BN, stakeTokenDecimals: number) => {
+export const calculateRewardAmountFromValue = (
+  rewardTokenValue: BN,
+  stakeTokenDecimals: number,
+) => {
   const decimalsDiff = REWARD_AMOUNT_DECIMALS - stakeTokenDecimals;
   if (decimalsDiff === 0) {
     return rewardTokenValue;
@@ -251,5 +278,8 @@ export const calculateRewardAmountFromRate = (
   stakeTokenDecimals: number,
   rewardTokenDecimals: number,
 ) => {
-  return calculateRewardAmountFromValue(getBN(rewardRate, rewardTokenDecimals), stakeTokenDecimals);
+  return calculateRewardAmountFromValue(
+    getBN(rewardRate, rewardTokenDecimals),
+    stakeTokenDecimals,
+  );
 };

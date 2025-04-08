@@ -8,9 +8,9 @@ export default function BuuStakedSupply() {
   // Calculate percentages based on the actual values
   const { data: PricingData } = useBuuPricingData();
 
-  const totalSupply = PricingData?.totalSupply ?? 0
-  const circulatingSupply = PricingData?.price ?? 0
-  const totalStaked = 12.44  * 10000;
+  const totalSupply = PricingData?.totalSupply ?? 0;
+  const circulatingSupply = PricingData?.price ?? 0;
+  const totalStaked = 12.44 * 10000;
   const stakedByUsers = 4.92 * 10000; // Based on 919.94K value shown in the image
 
   // Convert to percentages relative to total supply

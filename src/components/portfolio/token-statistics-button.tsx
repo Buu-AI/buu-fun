@@ -8,7 +8,7 @@ import { setBuuPricingHour } from "@/lib/redux/features/buu-pricing";
 export default function TokenStatisticsButtons() {
   const dispatch = useAppDispatch();
   const selectedTime = useAppSelector(
-    (state) => state.BuuPricing.buuPricingHistoryTime
+    (state) => state.BuuPricing.buuPricingHistoryTime,
   );
   return (
     <div className="flex items-center justify-center bg-portfolio-statistics-button-background rounded-md px-2 py-2">

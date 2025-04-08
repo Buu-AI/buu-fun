@@ -9,7 +9,7 @@ import { useAppSelector } from "./redux";
 export function usePricingHistoricalPricing() {
   const { identityToken, isAuthenticated, loading } = useAuthentication();
   const buuPricingHistoryTime = useAppSelector(
-    (state) => state.BuuPricing.buuPricingHistoryTime
+    (state) => state.BuuPricing.buuPricingHistoryTime,
   );
   return useQuery({
     queryKey: [

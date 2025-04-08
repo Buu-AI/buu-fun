@@ -13,7 +13,7 @@ export default function YourEarningsPricing() {
         <p>$BUU</p>
       </div>
       <p className="text-muted-foreground/50 block lg:hidden tracking-tight font-medium text-sm">
-        $ {multiplyAndFormatPricing(data?.price ?? 0 , 1388)}
+        $ {multiplyAndFormatPricing(data?.price ?? 0, 1388)}
       </p>
     </div>
   );

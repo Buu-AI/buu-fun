@@ -9,7 +9,7 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis
+  YAxis,
 } from "recharts";
 
 // Define types for our data
@@ -37,7 +37,7 @@ export default function TokenPriceChart() {
       time: formatUnixTimestamp(item.unixTime),
       price: item.value,
     }));
-    
+
   const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (

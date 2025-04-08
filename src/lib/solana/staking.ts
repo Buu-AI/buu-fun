@@ -27,34 +27,34 @@ export async function getUserStakingData({
     clusterUrl,
   });
   const userStakeEntries = stakeEntries.filter((stakeEntry) =>
-    new PublicKey(stakeEntry.account.payer).equals(new PublicKey(publicKey))
+    new PublicKey(stakeEntry.account.payer).equals(new PublicKey(publicKey)),
   );
   const rewardEntriesByStakeEntryPromises = stakeEntries.map(
     async (stakeEntry) => {
       return solanaStakingClient.searchRewardEntries({
         stakeEntry: new PublicKey(stakeEntry.publicKey),
       });
-    }
+    },
   );
   const rewardEntriesByStakeEntry = await Promise.all(
-    rewardEntriesByStakeEntryPromises
+    rewardEntriesByStakeEntryPromises,
   );
   const rewardEntries = rewardEntriesByStakeEntry.reduce(
     (acc, innerRewardEntries) => {
       return acc.concat(innerRewardEntries);
     },
-    []
+    [],
   );
   const totalClaimableRewards = userStakeEntries.reduce((acc1, stakeEntry) => {
     return rewardPools.reduce((acc2, rewardPool) => {
       const rewardEntry = rewardEntries.find(
         (rewardEntry) =>
           rewardEntry.account.stakeEntry.equals(
-            new PublicKey(stakeEntry.publicKey)
+            new PublicKey(stakeEntry.publicKey),
           ) &&
           rewardEntry.account.rewardPool.equals(
-            new PublicKey(rewardPool.publicKey)
-          )
+            new PublicKey(rewardPool.publicKey),
+          ),
       );
       return calcRewards(
         rewardEntry ?? undefined,
@@ -70,7 +70,7 @@ export async function getUserStakingData({
             closedTs: new BN(stakeEntry.account.closedTs),
             unstakeTs: new BN(stakeEntry.account.unstakeTs),
             priorTotalEffectiveStake: new BN(
-              stakeEntry.account.priorTotalEffectiveStake
+              stakeEntry.account.priorTotalEffectiveStake,
             ),
             effectiveAmount: new BN(stakeEntry.account.effectiveAmount),
             amount: new BN(stakeEntry.account.amount),
@@ -98,7 +98,7 @@ export async function getUserStakingData({
             rewardAmount: new BN(rewardPool.account.rewardAmount),
             rewardPeriod: new BN(rewardPool.account.rewardPeriod),
           },
-        }
+        },
       ).add(acc2);
     }, acc1);
   }, new BN(0));
@@ -109,7 +109,7 @@ export async function getUserStakingData({
     (acc, entry) => {
       const { effectiveAmount, amount } = entry.account;
       acc.totalEffectiveAmount = acc.totalEffectiveAmount.add(
-        new BN(effectiveAmount)
+        new BN(effectiveAmount),
       );
       acc.totalAmount = acc.totalAmount.add(new BN(amount));
       return acc;
@@ -117,7 +117,7 @@ export async function getUserStakingData({
     {
       totalEffectiveAmount: new BN(0),
       totalAmount: new BN(0),
-    }
+    },
   );
   const share = new BN(totalUserEffectiveAmount)
     .mul(new BN(10000))
@@ -133,7 +133,7 @@ export async function getUserStakingData({
     },
     {
       totalClaimedAmount: new BN(0),
-    }
+    },
   );
   const apy = totalRewardsPerDay
     .mul(new BN(365))

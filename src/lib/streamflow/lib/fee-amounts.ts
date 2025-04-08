@@ -3,7 +3,12 @@ import { Connection } from "@solana/web3.js";
 import BN from "bn.js";
 import { divCeilN } from "@streamflow/common";
 
-import { DEFAULT_FEE_BN, FEE_PRECISION_FACTOR_BN, SCALE_PRECISION_FACTOR, U64_MAX } from "../constants.js";
+import {
+  DEFAULT_FEE_BN,
+  FEE_PRECISION_FACTOR_BN,
+  SCALE_PRECISION_FACTOR,
+  U64_MAX,
+} from "../constants.js";
 
 export const calculateFeeAmount = (amount: BN, fee: BN = DEFAULT_FEE_BN) => {
   if (fee.eq(FEE_PRECISION_FACTOR_BN)) {
@@ -18,7 +23,12 @@ export const calculateDecimalsShift = (maxWeight: bigint, maxShift = 999) => {
   }
 
   let decimalsShift = 0;
-  while ((maxWeight * U64_MAX) / BigInt(SCALE_PRECISION_FACTOR) / BigInt(10 ** decimalsShift) > U64_MAX) {
+  while (
+    (maxWeight * U64_MAX) /
+      BigInt(SCALE_PRECISION_FACTOR) /
+      BigInt(10 ** decimalsShift) >
+    U64_MAX
+  ) {
     decimalsShift += 1;
     if (decimalsShift == maxShift) {
       return maxShift;
@@ -30,7 +40,7 @@ export const calculateDecimalsShift = (maxWeight: bigint, maxShift = 999) => {
 export async function calculateAmountWithTransferFees(
   connection: Connection,
   transferFeeConfig: TransferFeeConfig,
-  transferAmount: bigint,
+  transferAmount: bigint
 ): Promise<{ transferAmount: bigint; feeCharged: bigint }> {
   const epoch = await connection.getEpochInfo();
   const transferFee =
@@ -41,8 +51,8 @@ export async function calculateAmountWithTransferFees(
   let feeCharged = BigInt(0);
 
   if (transferFeeBasisPoints !== BigInt(0)) {
-    const numerator = transferAmount * 10_000n;
-    const denominator = 10_000n - transferFeeBasisPoints;
+    const numerator = BigInt(transferAmount) * BigInt(10_000);
+    const denominator = BigInt(10_000) - BigInt(transferFeeBasisPoints);
     const rawPreFeeAmount = divCeilN(numerator, denominator);
     const fee = rawPreFeeAmount - transferAmount;
     transferAmount = rawPreFeeAmount;

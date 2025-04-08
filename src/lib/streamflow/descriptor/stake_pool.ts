@@ -353,7 +353,9 @@ export type StakePool = {
         },
         {
           name: "stakeMint";
-          docs: ["Mint of stake tokens that will be minted in return for staking"];
+          docs: [
+            "Mint of stake tokens that will be minted in return for staking",
+          ];
           writable: true;
           relations: ["stakePool"];
         },
@@ -575,7 +577,9 @@ export type StakePool = {
           },
           {
             name: "effectiveAmount";
-            docs: ["Effective Amount staked, does not equal to deposited amount, accounts for Stake Weight"];
+            docs: [
+              "Effective Amount staked, does not equal to deposited amount, accounts for Stake Weight",
+            ];
             type: "u128";
           },
           {
@@ -595,7 +599,9 @@ export type StakePool = {
           },
           {
             name: "unstakeTs";
-            docs: ["Timestamp when unstake was requested, will be used in case `unstake_period` is set"];
+            docs: [
+              "Timestamp when unstake was requested, will be used in case `unstake_period` is set",
+            ];
             type: "u64";
           },
           {
@@ -665,7 +671,9 @@ export type StakePool = {
           },
           {
             name: "maxDuration";
-            docs: ["Max Duration of stake in seconds, the more duration, the more weight the stake has"];
+            docs: [
+              "Max Duration of stake in seconds, the more duration, the more weight the stake has",
+            ];
             type: "u64";
           },
           {

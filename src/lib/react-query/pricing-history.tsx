@@ -23,7 +23,7 @@ export async function getHistoricalPricingResult({
     },
     {
       Authorization: getAuthorization(accessToken),
-    }
+    },
   );
 
   if (!data) {
@@ -44,7 +44,7 @@ export async function getBuuTokenOverview({ accessToken }: AccessToken) {
     {},
     {
       Authorization: getAuthorization(accessToken),
-    }
+    },
   );
 
   if (!data) {

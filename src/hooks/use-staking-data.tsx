@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { getUserStakingData } from "@/lib/solana/staking";
 import { PublicKey } from "@solana/web3.js";
 import BN from "bn.js";
-import { getUserStakingData } from "@/lib/solana/staking";
-import { RewardPool, StakeEntry, TokenMint } from "@/lib/solana/types";
+import { useEffect, useState } from "react";
 
 type StakingData = {
   decimals: number;
@@ -17,8 +16,11 @@ type StakingData = {
 
 type UseStakingDataProps = {
   publicKey: PublicKey;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   stakeEntries: any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   rewardPools: any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   tokenMint: any;
   totalEffectiveAmount: BN;
   totalRewardsPerDay: BN;
@@ -37,7 +39,7 @@ export function useStakingData(props: UseStakingDataProps | null) {
       setLoading(true);
       return;
     }
-    
+
     const fetchData = async () => {
       try {
         setLoading(true);

@@ -16,26 +16,26 @@ export default function PortfolioPage() {
         clusterUrl="https://devnet.helius-rpc.com/?api-key=9c6fe2d4-cf7e-42a6-af65-4ee3ca510304"
       >
         <div className="grid overflow-hidden h-full  relative 2xl:grid-cols-[65%_35%]   max-h-[calc(100dvh-90px)] overflow-y-scroll  scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-orange scrollbar-thumb-rounded px-1 lg:px-24 lg:mt-9 pb-12">
-        <div className="">
-          <HeaderLogo />
-          <TokenStatistics />
-          <YourEarnings />
-          <div className="mb-4">
-            <StakingDataDisplay />
+          <div className="">
+            <HeaderLogo />
+            <TokenStatistics />
+            <YourEarnings />
+            <div className="mb-4">
+              <StakingDataDisplay />
+            </div>
+            <div className="py-6">
+              <APICapacityCTA />
+            </div>
+            <div className="flex justify-center flex-wrap place-content-center place-items-center  md:grid md:grid-cols-2  gap-2">
+              <BuuStakedSupply />
+              <BuuStakedSupply />
+            </div>
           </div>
-          <div className="py-6">
-            <APICapacityCTA />
+          <div className="2xl:px-8 py-8 2xl:py-0">
+            <div className="sticky top-[0px] w-full ">
+              <OverviewContainer />
+            </div>
           </div>
-          <div className="flex justify-center flex-wrap place-content-center place-items-center  md:grid md:grid-cols-2  gap-2">
-            <BuuStakedSupply />
-            <BuuStakedSupply />
-          </div>
-        </div>
-        <div className="2xl:px-8 py-8 2xl:py-0">
-          <div className="sticky top-[0px] w-full ">
-            <OverviewContainer />
-          </div>
-        </div>
         </div>
       </StakingDataProvider>
     </Bounded>

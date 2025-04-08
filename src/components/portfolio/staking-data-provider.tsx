@@ -18,8 +18,12 @@ export default function StakingDataProvider({
   clusterUrl,
   children,
 }: StakingDataProviderProps) {
-  const { data: globalData, loading: globalLoading, error: globalError } = useGlobalStaking();
-  
+  const {
+    data: globalData,
+    loading: globalLoading,
+    error: globalError,
+  } = useGlobalStaking();
+
   const stakingData = useStakingData(
     globalData
       ? {
@@ -31,9 +35,9 @@ export default function StakingDataProvider({
           totalRewardsPerDay: new BN(globalData.totalRewardsPerDay),
           clusterUrl,
         }
-      : null
+      : null,
   );
-  
+
   const isLoading = globalLoading || stakingData.loading;
   const error = globalError || stakingData.error;
 
@@ -41,11 +45,11 @@ export default function StakingDataProvider({
   console.log("stakingData", stakingData);
 
   return (
-    <StakingProvider 
+    <StakingProvider
       value={{
         data: stakingData.data,
         loading: isLoading,
-        error: error
+        error: error,
       }}
     >
       {children}
