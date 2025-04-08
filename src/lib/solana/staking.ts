@@ -1,8 +1,8 @@
-import { PublicKey } from '@solana/web3.js'
-import { SolanaStakingClient } from '@/lib/streamflow/client'
-import BN from 'bn.js'
-import { calcRewards } from '@/lib/streamflow/lib/rewards'
-import { RewardPool, StakeEntry, TokenMint } from './types'
+import { PublicKey } from "@solana/web3.js";
+import { SolanaStakingClient } from "@/lib/streamflow/client";
+import BN from "bn.js";
+import { calcRewards } from "@/lib/streamflow/lib/rewards";
+import { RewardPool, StakeEntry, TokenMint } from "./types";
 
 export async function getUserStakingData({
   publicKey,
@@ -82,6 +82,7 @@ export async function getUserStakingData({
           publicKey: new PublicKey(rewardPool.publicKey),
           account: {
             ...rewardPool.account,
+            createdTs: new BN(rewardPool.account.createdTs),
             authority: new PublicKey(rewardPool.account.authority),
             stakePool: new PublicKey(rewardPool.account.stakePool),
             mint: new PublicKey(rewardPool.account.mint),

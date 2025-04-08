@@ -26,7 +26,7 @@ export type GlobalStakingData = {
     account: {
       authority: string;
       amount: string;
-      duration: string;
+      duration: string; 
       effectiveAmount: string;
       stakePool: string;
       nonce: number;

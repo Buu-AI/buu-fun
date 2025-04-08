@@ -3,6 +3,8 @@ import SettingsSlice from "@/lib/redux/features/settings";
 import SubscriptionSlice from "@/lib/redux/features/subscription";
 import boardSlice from "@/lib/redux/features/boards";
 import apiKeySlice from "@/lib/redux/features/api-key";
+
+import BuuPricingSlice from "@/lib/redux/features/buu-pricing";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const makeStore = () => {
@@ -14,6 +16,7 @@ export const makeStore = () => {
       chat: ChatSlice,
       subscription: SubscriptionSlice,
       apiKey: apiKeySlice,
+      BuuPricing: BuuPricingSlice,
     },
   });
 };
