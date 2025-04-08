@@ -20,9 +20,9 @@ export default function PortfolioPage() {
             <HeaderLogo />
             <TokenStatistics />
             <YourEarnings />
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <StakingDataDisplay />
-            </div>
+            </div> */}
             <div className="py-6">
               <APICapacityCTA />
             </div>
