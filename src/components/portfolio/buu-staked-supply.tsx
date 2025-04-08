@@ -1,13 +1,17 @@
 "use client";
+import { useBuuPricingData } from "@/hooks/use-pricing-history";
+import { formatNumber } from "@/lib/utils";
 import React from "react";
 import { RadialBar, RadialBarChart, ResponsiveContainer } from "recharts";
 
 export default function BuuStakedSupply() {
   // Calculate percentages based on the actual values
-  const totalSupply = 101.51;
-  const circulatingSupply = 27.97;
-  const totalStaked = 12.44;
-  const stakedByUsers = 4.92; // Based on 919.94K value shown in the image
+  const { data: PricingData } = useBuuPricingData();
+
+  const totalSupply = PricingData?.totalSupply ?? 0;
+  const circulatingSupply = PricingData?.price ?? 0;
+  const totalStaked = 12.44 * 10000;
+  const stakedByUsers = 4.92 * 10000; // Based on 919.94K value shown in the image
 
   // Convert to percentages relative to total supply
   const circulatingPercentage = (circulatingSupply / totalSupply) * 100;
@@ -15,13 +19,13 @@ export default function BuuStakedSupply() {
   const userStakedPercentage = (stakedByUsers / totalSupply) * 100;
 
   // Format numbers for display
-  const formatNumber = (num: number) => {
-    if (num >= 1) {
-      return `${num.toFixed(2)}M`;
-    } else {
-      return `${(num * 1000).toFixed(2)}K`;
-    }
-  };
+  // const formatNumber = (num: number) => {
+  //   if (num >= 1) {
+  //     return `${num.toFixed(2)}M`;
+  //   } else {
+  //     return `${(num * 1000).toFixed(2)}K`;
+  //   }
+  // };
 
   // Staking percentage to display in the center
   const stakingRatio = Math.round((totalStaked / circulatingSupply) * 100);

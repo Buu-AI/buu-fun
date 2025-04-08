@@ -1,8 +1,8 @@
 "use client";
-import { generateMockData } from "@/lib/mock/generate-chart-mock-data";
-import React, { useState } from "react";
+import { usePricingHistoricalPricing } from "@/hooks/use-pricing-history";
+import { formatUnixTimestamp } from "@/lib/utils";
+import React from "react";
 import {
-  Bar,
   CartesianGrid,
   ComposedChart,
   Line,
@@ -29,14 +29,14 @@ interface CustomTooltipProps {
 }
 
 export default function TokenPriceChart() {
-  const [timeRange] = useState<number>(1); // Default to 1 hour
-  const [data] = useState<DataPoint[]>(generateMockData(timeRange));
-  // const [maxVolume] = useState(Math.max(...data.map((item) => item.volume)));
+  const { data } = usePricingHistoricalPricing();
 
-  // const updateTimeRange = (hours: number): void => {
-  //   setTimeRange(hours);
-  //   setData(generateMockData(hours));
-  // };
+  const timingData =
+    data &&
+    data.items?.map((item) => ({
+      time: formatUnixTimestamp(item.unixTime),
+      price: item.value,
+    }));
 
   const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -44,7 +44,6 @@ export default function TokenPriceChart() {
         <div className="bg-gray-800 p-2 rounded border border-gray-700 text-gray-200 text-xs">
           <p>{`Time: ${payload[0].payload.time}`}</p>
           <p>{`Price: ${payload[0].value}`}</p>
-          <p>{`Volume: ${payload[1]?.value}`}</p>
         </div>
       );
     }
@@ -54,10 +53,10 @@ export default function TokenPriceChart() {
   return (
     <div className="w-full ">
       <div className="">
-        <div className="h-80 ">
+        <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart
-              data={data}
+              data={timingData}
               margin={{ top: 20, right: 0, left: 15, bottom: 20 }}
             >
               <XAxis
@@ -66,7 +65,7 @@ export default function TokenPriceChart() {
                 className="text-sm  "
                 axisLine={{ stroke: "rgba(255, 255, 255, 0.1)" }}
                 tickLine={true}
-                interval={"equidistantPreserveStart"} // Show every 5th tick for cleaner timeline
+                interval={"equidistantPreserveStart"}
               />
               <YAxis
                 yAxisId="price"
@@ -78,16 +77,7 @@ export default function TokenPriceChart() {
                 tickLine={false}
                 orientation="left"
               />
-              <YAxis
-                yAxisId="volume"
-                // domain={[0, "dataMax + 600"]}
-                domain={[0, "dataMax + 1000"]}
-                hide={true}
-                className="max-h-[30px]"
-                // Set a fixed height for the volume bars
-                // This effectively caps the maximum height
-                height={100}
-              />
+
               <Tooltip content={<CustomTooltip />} />
               <CartesianGrid
                 vertical={false}
@@ -101,15 +91,6 @@ export default function TokenPriceChart() {
                 strokeWidth={2}
                 dot={false}
                 activeDot={{ r: 6, fill: "#5BBFCE" }}
-              />
-              <Bar
-                yAxisId="volume"
-                dataKey="volume"
-                fill="#275665"
-                opacity={0.8}
-                barSize={8} // Thicker bars as requested
-                // The maxBarSize ensures the bars don't exceed the height we want
-                maxBarSize={150}
               />
             </ComposedChart>
           </ResponsiveContainer>

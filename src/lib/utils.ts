@@ -116,7 +116,6 @@ export function truncateString(
 }
 
 export function formatNumber(value: number) {
-  return value;
   return new Intl.NumberFormat("en-US", {
     notation: "compact",
     compactDisplay: "short",
@@ -157,4 +156,42 @@ export function capitalizeFirstLetter(str: string): string {
 
 export function getSharableUrl(boardId: string) {
   return `${SHARE_LINK_CONFIG}/${boardId}`;
+}
+
+export function formatUnixTimestamp(unixTime: number) {
+  const date = new Date(unixTime * 1000);
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+export function multiplyAndFormatPricing(token: number, value: number) {
+  const calculatedAmount = token * value;
+  return calculatedAmount.toFixed(3);
+}
+
+export function formatTokenValue(value: number): string {
+  // For values of 1 or greater, show 2 decimal places
+  if (value >= 1) {
+    return value.toFixed(2);
+  }
+
+  // For values between 0 and 1
+  if (value > 0) {
+    // Find the position of the first non-zero digit after decimal point
+    const valueStr = value.toString();
+    const decimalPartMatch = valueStr.match(/\.0*/);
+
+    if (decimalPartMatch) {
+      const leadingZeros = decimalPartMatch[0].length - 1; // -1 for the decimal point
+      // Show at least 2 significant digits after the first non-zero digit
+      return value.toFixed(leadingZeros + 2);
+    }
+  }
+
+  // Fallback to 2 decimal places if something goes wrong
+  return value.toFixed(2);
 }
