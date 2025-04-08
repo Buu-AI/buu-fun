@@ -11,6 +11,7 @@ import Link from "next/link";
 import CopyAddress from "./copy-address";
 import ReferralIcon from "@/assets/icons/referral-icon";
 import ExportSolanaWallet from "../referral/export-wallet";
+import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
 
 export default function DesktopProfileNavigation() {
   const { address, isAuthenticated, logout } = useAuthentication();
@@ -50,7 +51,19 @@ export default function DesktopProfileNavigation() {
             className="px-1 pb-1 pt-1 max-w-[210px] bg-buu border-buu"
           >
             <ExportSolanaWallet className="w-full" />
-            <CopyAddress isNavigation />
+            <div className="w-full mt-2">
+              <CopyAddress isNavigation />
+            </div>
+            <Link
+              href={"/app/api-key"}
+              className="flex w-full items-center gap-1.5 hover:bg-buu-secondary py-2 rounded-md px-2 font-medium"
+            >
+              <div className="flex w-5 h-5 ">
+                <ApiKeyHeaderIcon fill="#78DBFF" />
+              </div>
+              {/* <SettingsIcon /> */}
+              <p>API Key</p>
+            </Link>
             <Link
               href={"/app/profile"}
               className="flex w-full items-center gap-1.5 hover:bg-buu-secondary py-2 rounded-md px-2 font-medium"
@@ -61,6 +74,7 @@ export default function DesktopProfileNavigation() {
               {/* <SettingsIcon /> */}
               <p>Settings</p>
             </Link>
+
             <Link
               href={"/app/referral"}
               className="flex w-full items-center gap-1.5 hover:bg-buu-secondary py-2 rounded-md px-2 font-medium"

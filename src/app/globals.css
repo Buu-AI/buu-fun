@@ -744,3 +744,58 @@ body {
   border-radius: 10px;
   background: rgba(26, 33, 41, 0.36);
 }
+
+.blue-plus-icon-gradient {
+  background: linear-gradient(0deg, #48b1f8 0%, #78c1e5 100%);
+}
+
+.text-star {
+  text-overflow: "*";
+}
+
+.bg-api-key-table-header {
+  background: rgba(28, 32, 39, 0.2);
+}
+
+.orange-pill {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 135, 70, 0.5);
+  box-shadow: 0px 0px 10.5px 3px rgba(179, 187, 197, 0.2) inset;
+}
+
+.destructive-pill {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 70, 70, 0.5);
+  box-shadow: 0px 0px 10.5px 3px rgba(179, 187, 197, 0.2) inset;
+}
+
+.bg-api-key-display {
+  border: 1.5px solid rgba(120, 219, 255, 0);
+  background: rgba(26, 33, 41, 0.36);
+  box-shadow: 0px 0px 23.4px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(10px);
+}
+
+.bg-button-muted {
+  background: rgba(28, 32, 39, 0.36);
+  box-shadow: 0px 0px 7.8px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(10px);
+}
+
+.border-button-muted {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bg-api-key-table-header {
+  background: rgba(28, 32, 39, 0.2);
+  box-shadow: 0px 0px 46.6px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(40px);
+}
+
+.bg-api-key-table-radius {
+  border-radius: 20px 20px 0px 0px;
+}
+
+.bg-background-select-item {
+  background: #252931cc;
+}

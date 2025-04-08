@@ -51,6 +51,51 @@ export type Account = {
 
 export type AccountResult = Account | HandledError;
 
+export type ApiKey = {
+  __typename?: "ApiKey";
+  _id: Scalars["String"]["output"];
+  createdAt: Scalars["DateTimeISO"]["output"];
+  expiresAt?: Maybe<Scalars["DateTimeISO"]["output"]>;
+  key: Scalars["String"]["output"];
+  name: Scalars["String"]["output"];
+  permissions: Array<Scalars["String"]["output"]>;
+  teamId: Scalars["String"]["output"];
+  updatedAt: Scalars["DateTimeISO"]["output"];
+};
+
+export type ApiKeyFilter = {
+  _id_eq?: InputMaybe<Scalars["String"]["input"]>;
+  _id_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  _id_ne?: InputMaybe<Scalars["String"]["input"]>;
+  _id_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  createdAt_eq?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  createdAt_gt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  createdAt_gte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  createdAt_lt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  createdAt_lte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  createdAt_ne?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  teamId_eq?: InputMaybe<Scalars["String"]["input"]>;
+  teamId_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  teamId_ne?: InputMaybe<Scalars["String"]["input"]>;
+  teamId_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  updatedAt_eq?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  updatedAt_gt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  updatedAt_gte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  updatedAt_lt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  updatedAt_lte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  updatedAt_ne?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+};
+
+export type ApiKeyPage = {
+  __typename?: "ApiKeyPage";
+  items: Array<ApiKey>;
+  metadata: Metadata;
+};
+
+export type ApiKeyPageResult = ApiKeyPage | HandledError;
+
+export type ApiKeyResult = ApiKey | HandledError;
+
 export type Credit = {
   __typename?: "Credit";
   _id: Scalars["String"]["output"];
@@ -114,6 +159,11 @@ export enum CreditsPurchaseType {
   Subscription = "SUBSCRIPTION",
   Voucher = "VOUCHER",
 }
+
+export type ExpirationInput = {
+  units: Scalars["String"]["input"];
+  value: Scalars["Float"]["input"];
+};
 
 export type GenRequest = {
   __typename?: "GenRequest";
@@ -230,7 +280,9 @@ export type Metadata = {
 
 export type Mutation = {
   __typename?: "Mutation";
+  createApiKey: ApiKeyResult;
   createShareableBoard: ShareableBoardResult;
+  deleteApiKey: ApiKeyResult;
   deleteShareableBoard: ShareableBoardResult;
   disconnectTelegram: AccountResult;
   disconnectTwitter: AccountResult;
@@ -241,11 +293,21 @@ export type Mutation = {
   generateSubthread: SubthreadResult;
   linkReferralAccount: ReferralAccountResult;
   redeemVoucher: CreditResult;
+  rotateApiKey: ApiKeyResult;
   updateShareableBoardVisibility: ShareableBoardResult;
+};
+
+export type MutationCreateApiKeyArgs = {
+  expiresIn?: InputMaybe<ExpirationInput>;
+  name: Scalars["String"]["input"];
 };
 
 export type MutationCreateShareableBoardArgs = {
   threadId: Scalars["String"]["input"];
+};
+
+export type MutationDeleteApiKeyArgs = {
+  id: Scalars["String"]["input"];
 };
 
 export type MutationDeleteShareableBoardArgs = {
@@ -287,6 +349,10 @@ export type MutationRedeemVoucherArgs = {
   code: Scalars["String"]["input"];
 };
 
+export type MutationRotateApiKeyArgs = {
+  id: Scalars["String"]["input"];
+};
+
 export type MutationUpdateShareableBoardVisibilityArgs = {
   isPublic: Scalars["Boolean"]["input"];
   shareableBoardId: Scalars["String"]["input"];
@@ -324,9 +390,11 @@ export type Query = {
   getSubthread: SubthreadResult;
   getSubthreadGenRequests: GenRequestsPageResult;
   getSubthreads: SubthreadPageResult;
+  getTeam: TeamResult;
   getThreads: ThreadPageResult;
   getUserShareableBoard: ShareableBoardPageResult;
   me: AccountResult;
+  searchPaginatedApiKeys: ApiKeyPageResult;
 };
 
 export type QueryGenerateCreditsPackagePaymentLinkArgs = {
@@ -371,6 +439,11 @@ export type QueryGetThreadsArgs = {
 
 export type QueryGetUserShareableBoardArgs = {
   filters?: InputMaybe<ShareableBoardFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type QuerySearchPaginatedApiKeysArgs = {
+  filters?: InputMaybe<ApiKeyFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -556,6 +629,33 @@ export type SuscriptionPaymentLinkOutput = {
   __typename?: "SuscriptionPaymentLinkOutput";
   url: Scalars["String"]["output"];
 };
+
+export type Team = {
+  __typename?: "Team";
+  _id: Scalars["String"]["output"];
+  available: Scalars["Float"]["output"];
+  confirmed: Scalars["Float"]["output"];
+  createdAt: Scalars["DateTimeISO"]["output"];
+  creator: Scalars["String"]["output"];
+  members: Array<TeamMember>;
+  name: Scalars["String"]["output"];
+  pending: Scalars["Float"]["output"];
+  updatedAt: Scalars["DateTimeISO"]["output"];
+};
+
+export type TeamMember = {
+  __typename?: "TeamMember";
+  address: Scalars["String"]["output"];
+  role: TeamRole;
+};
+
+export type TeamResult = HandledError | Team;
+
+/** Team member role */
+export enum TeamRole {
+  Admin = "ADMIN",
+  Member = "MEMBER",
+}
 
 export type Thread = {
   __typename?: "Thread";
@@ -1353,6 +1453,106 @@ export type DeleteShareableBoardMutation = {
           }>;
         }>;
       };
+};
+
+export type CreateApiKeyMutationVariables = Exact<{
+  name: Scalars["String"]["input"];
+  expiresIn?: InputMaybe<ExpirationInput>;
+}>;
+
+export type CreateApiKeyMutation = {
+  __typename?: "Mutation";
+  createApiKey:
+    | {
+        __typename?: "ApiKey";
+        _id: string;
+        teamId: string;
+        name: string;
+        key: string;
+        permissions: Array<string>;
+        createdAt: any;
+        updatedAt: any;
+        expiresAt?: any | null;
+      }
+    | { __typename?: "HandledError"; code: string; message: string };
+};
+
+export type SearchPaginatedApiKeysQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filters?: InputMaybe<ApiKeyFilter>;
+}>;
+
+export type SearchPaginatedApiKeysQuery = {
+  __typename?: "Query";
+  searchPaginatedApiKeys:
+    | {
+        __typename?: "ApiKeyPage";
+        items: Array<{
+          __typename?: "ApiKey";
+          _id: string;
+          teamId: string;
+          name: string;
+          key: string;
+          permissions: Array<string>;
+          createdAt: any;
+          updatedAt: any;
+          expiresAt?: any | null;
+        }>;
+        metadata: {
+          __typename?: "Metadata";
+          limit?: number | null;
+          offset?: number | null;
+          orderBy?: string | null;
+          orderDirection?: OrderDirection | null;
+          numElements?: number | null;
+          total?: number | null;
+          page?: number | null;
+          pages?: number | null;
+        };
+      }
+    | { __typename?: "HandledError"; code: string; message: string };
+};
+
+export type DeleteApiKeyMutationVariables = Exact<{
+  deleteApiKeyId: Scalars["String"]["input"];
+}>;
+
+export type DeleteApiKeyMutation = {
+  __typename?: "Mutation";
+  deleteApiKey:
+    | {
+        __typename?: "ApiKey";
+        _id: string;
+        teamId: string;
+        name: string;
+        key: string;
+        permissions: Array<string>;
+        createdAt: any;
+        updatedAt: any;
+        expiresAt?: any | null;
+      }
+    | { __typename?: "HandledError"; code: string; message: string };
+};
+
+export type RotateApiKeyMutationVariables = Exact<{
+  rotateApiKeyId: Scalars["String"]["input"];
+}>;
+
+export type RotateApiKeyMutation = {
+  __typename?: "Mutation";
+  rotateApiKey:
+    | {
+        __typename?: "ApiKey";
+        _id: string;
+        teamId: string;
+        name: string;
+        key: string;
+        permissions: Array<string>;
+        createdAt: any;
+        updatedAt: any;
+        expiresAt?: any | null;
+      }
+    | { __typename?: "HandledError"; code: string; message: string };
 };
 
 export const MeDocument = {
@@ -5007,4 +5207,515 @@ export const DeleteShareableBoardDocument = {
 } as unknown as DocumentNode<
   DeleteShareableBoardMutation,
   DeleteShareableBoardMutationVariables
+>;
+export const CreateApiKeyDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "CreateApiKey" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "name" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "expiresIn" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "ExpirationInput" },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "createApiKey" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "name" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "name" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "expiresIn" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "expiresIn" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "ApiKey" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "_id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "teamId" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "key" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "permissions" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "createdAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "updatedAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "expiresAt" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "HandledError" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "message" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreateApiKeyMutation,
+  CreateApiKeyMutationVariables
+>;
+export const SearchPaginatedApiKeysDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "SearchPaginatedApiKeys" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "pagination" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "Pagination" },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filters" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "ApiKeyFilter" },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "searchPaginatedApiKeys" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "pagination" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "pagination" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "filters" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "filters" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "ApiKeyPage" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "items" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "_id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "teamId" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "name" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "key" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "permissions" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "createdAt" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "updatedAt" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "expiresAt" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "metadata" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "limit" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "offset" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "orderBy" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "orderDirection" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "numElements" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "total" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "page" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "pages" },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "HandledError" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "message" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  SearchPaginatedApiKeysQuery,
+  SearchPaginatedApiKeysQueryVariables
+>;
+export const DeleteApiKeyDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "DeleteApiKey" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "deleteApiKeyId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "deleteApiKey" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "deleteApiKeyId" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "ApiKey" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "_id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "teamId" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "key" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "permissions" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "createdAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "updatedAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "expiresAt" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "HandledError" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "message" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  DeleteApiKeyMutation,
+  DeleteApiKeyMutationVariables
+>;
+export const RotateApiKeyDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "RotateApiKey" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "rotateApiKeyId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "rotateApiKey" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "rotateApiKeyId" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "ApiKey" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "_id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "teamId" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "key" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "permissions" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "createdAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "updatedAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "expiresAt" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "HandledError" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "message" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  RotateApiKeyMutation,
+  RotateApiKeyMutationVariables
 >;

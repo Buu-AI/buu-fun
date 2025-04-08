@@ -25,7 +25,7 @@ export default function ReferralShowcaseTable() {
       >
         <div className="max-h-[300px] overflow-y-auto">
           {data && data.items && data.items.length ? (
-            <div className="h-[300px] relative w-full overflow-auto">
+            <div className="h-[300px] relative w-full overflow-auto  scrollbar-w-hidden scrollbar-thumb-orange scrollbar-thumb-rounded">
               <Table className="w-full">
                 <TableHeader className="h-auto bg-buu-table shadow-buu sticky top-0 z-10">
                   <TableRow className="hover:bg-muted/0 h-auto !border-b-0 bg-clip-border !border-0 rounded-t-xl">

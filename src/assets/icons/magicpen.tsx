@@ -1,11 +1,16 @@
+import { cn } from "@/lib/utils";
 import React from "react";
 
-export default function MagicPenIcon() {
+export default function MagicPenIcon({
+  className = "fill-white",
+}: {
+  className?: string;
+}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 17 16"
-      className="fill-white transition-colors duration-200"
+      className={cn(" transition-colors duration-200", className)}
       fill="currentColor"
     >
       <path
