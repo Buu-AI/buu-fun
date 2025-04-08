@@ -801,18 +801,17 @@ export const GetTokenOverviewQuery = gql`
 `;
 
 export const GetTokenHistoricalPriceQuery = gql`
-  query GetTokenHistoricalPriceResult($time: BirdeyeHistoricalDataTimeTypes!) {
-    getTokenHistoricalPriceResult(time: $time) {
-      ... on BirdeyeHistoricalPriceResponse {
-        items {
-          unixTime
-          value
-        }
+query GetTokenHistoricalPriceResult($time: BirdeyeHistoricalDataTimeTypes!) {
+  getTokenHistoricalPriceResult(time: $time) {
+    ... on BirdeyeHistoricalPriceResponse {
+      items {
+        unixTime
+        value
       }
-      ... on HandledError {
-        code
-        message
-      }
+    }
+    ... on HandledError {
+      code
+      message
     }
   }
 }
