@@ -1,7 +1,11 @@
 import React from "react";
 import { Button } from "../ui/button";
+import { useBuuPricingData } from "@/hooks/use-pricing-history";
+import { formatTokenValue } from "@/lib/utils";
 
 export default function EarningAvailableCard() {
+  const { data } = useBuuPricingData();
+
   return (
     <div className="bg-buu shadow-buu-inner grid grid-cols-2 pt-6 pr-4 pb-5 pl-5 rounded-2xl  ">
       <div>
@@ -14,7 +18,8 @@ export default function EarningAvailableCard() {
         </div>
         <div>
           <p className="text-sm text-muted-foreground/50 tracking-tight font-medium">
-            $ 0.084
+            {/*  */}
+            {formatTokenValue(data?.price ?? 0)}
           </p>{" "}
         </div>
       </div>

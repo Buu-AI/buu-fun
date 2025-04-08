@@ -1,7 +1,11 @@
+"use client";
 import React from "react";
 import OverviewTilesContainer from "./overview-tiles";
+import { useBuuPricingData } from "@/hooks/use-pricing-history";
 
 export default function OverviewContainer() {
+  const { data } = useBuuPricingData();
+  console.log("OVERVIEW:", data);
   return (
     <div className="">
       <div className="px-4 py-4   border-white/5 border rounded-t-3xl  bg-overview-portfolio">
