@@ -2,6 +2,8 @@ import APICapacityCTA from "@/components/portfolio/api-capacity-cta";
 import BuuStakedSupply from "@/components/portfolio/buu-staked-supply";
 import HeaderLogo from "@/components/portfolio/header-logo";
 import OverviewContainer from "@/components/portfolio/overview-container";
+import StakingDataDisplay from "@/components/portfolio/staking-data-display";
+import StakingDataProvider from "@/components/portfolio/staking-data-provider";
 import TokenStatistics from "@/components/portfolio/token-statistics";
 import YourEarnings from "@/components/portfolio/your-earnings";
 import Bounded from "@/components/ui/Bounded";
@@ -9,11 +11,18 @@ import Bounded from "@/components/ui/Bounded";
 export default function PortfolioPage() {
   return (
     <Bounded className="h-full  max-w-screen-2xl px-0">
-      <div className="grid overflow-hidden h-full  relative 2xl:grid-cols-[65%_35%]   max-h-[calc(100dvh-90px)] overflow-y-scroll  scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-orange scrollbar-thumb-rounded px-1 lg:px-24 lg:mt-9 pb-12">
+      <StakingDataProvider
+        address={"B2A4tVHJ92TCbdEtdV2sDup4E4Pk2Excu8agQuXrhurH"}
+        clusterUrl="https://devnet.helius-rpc.com/?api-key=9c6fe2d4-cf7e-42a6-af65-4ee3ca510304"
+      >
+        <div className="grid overflow-hidden h-full  relative 2xl:grid-cols-[65%_35%]   max-h-[calc(100dvh-90px)] overflow-y-scroll  scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-orange scrollbar-thumb-rounded px-1 lg:px-24 lg:mt-9 pb-12">
         <div className="">
           <HeaderLogo />
           <TokenStatistics />
           <YourEarnings />
+          <div className="mb-4">
+            <StakingDataDisplay />
+          </div>
           <div className="py-6">
             <APICapacityCTA />
           </div>
@@ -27,7 +36,8 @@ export default function PortfolioPage() {
             <OverviewContainer />
           </div>
         </div>
-      </div>
+        </div>
+      </StakingDataProvider>
     </Bounded>
   );
 }
