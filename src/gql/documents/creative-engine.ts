@@ -19,6 +19,7 @@ export const GenerateSubthreadMutation = gql`
     ) {
       ... on Subthread {
         _id
+        teamId
         address
         createdAt
         updatedAt
@@ -42,6 +43,7 @@ export const GenerateImageMutation = gql`
       ... on GenRequest {
         _id
         subthreadId
+                teamId
         address
         status
         metadata
@@ -89,6 +91,7 @@ export const GenerateModelMutation = gql`
       ... on GenRequest {
         _id
         subthreadId
+                teamId
         address
         status
         metadata
@@ -130,6 +133,7 @@ export const GetThreadsQuery = gql`
           _id
           createdAt
           updatedAt
+                  teamId
           address
           title
           style
@@ -163,6 +167,7 @@ export const GetSubthreadsQuery = gql`
         items {
           _id
           address
+                  teamId
           createdAt
           updatedAt
           address
@@ -192,6 +197,7 @@ export const GetSubthreadQuery = gql`
       ... on Subthread {
         _id
         address
+                teamId
         createdAt
         updatedAt
         threadId
@@ -216,6 +222,7 @@ export const GetSubthreadGenRequestsQuery = gql`
           _id
           subthreadId
           address
+                  teamId
           status
           metadata
           type
@@ -808,4 +815,72 @@ export const GetTokenHistoricalPriceQuery = gql`
       }
     }
   }
+}
 `;
+
+export const GetStakingGlobalDataQuery = gql`
+query GetStakingGlobalData {
+  getStakingGlobalData {
+    ... on GetStakingGlobalData {
+      totalEffectiveAmount
+      totalRewardsPerDay
+      totalAmount
+      tokenMint {
+        address
+        decimals
+        supply
+        isInitialized
+        freezeAuthority
+        mintAuthority
+      }
+      stakeEntries {
+        publicKey
+        account {
+          authority
+          amount
+          duration
+          effectiveAmount
+          stakePool
+          nonce
+          payer
+          createdTs
+          closedTs
+          unstakeTs
+          priorTotalEffectiveStake
+          buffer
+        }
+      }
+      rewardPools {
+        publicKey
+        account {
+          authority
+          bump
+          buffer
+          creator
+          claimedAmount
+          fundedAmount
+          lastClaimPeriod
+          lastRewardAmount
+          lastRewardPeriod
+          lastAmountUpdateTs
+          lastPeriodUpdateTs
+          permissionless
+          rewardAmount
+          rewardPeriod
+          stakePool
+          createdTs
+          mint
+          nonce
+          vault
+        }
+      }
+      circulatingSupply
+      totalStakedByUsers
+    }
+    ... on HandledError {
+      code
+      message
+    }
+  }
+}
+  `;
