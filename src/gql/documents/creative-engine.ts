@@ -43,7 +43,7 @@ export const GenerateImageMutation = gql`
       ... on GenRequest {
         _id
         subthreadId
-                teamId
+        teamId
         address
         status
         metadata
@@ -91,7 +91,7 @@ export const GenerateModelMutation = gql`
       ... on GenRequest {
         _id
         subthreadId
-                teamId
+        teamId
         address
         status
         metadata
@@ -133,7 +133,7 @@ export const GetThreadsQuery = gql`
           _id
           createdAt
           updatedAt
-                  teamId
+          teamId
           address
           title
           style
@@ -167,7 +167,7 @@ export const GetSubthreadsQuery = gql`
         items {
           _id
           address
-                  teamId
+          teamId
           createdAt
           updatedAt
           address
@@ -197,7 +197,7 @@ export const GetSubthreadQuery = gql`
       ... on Subthread {
         _id
         address
-                teamId
+        teamId
         createdAt
         updatedAt
         threadId
@@ -222,7 +222,7 @@ export const GetSubthreadGenRequestsQuery = gql`
           _id
           subthreadId
           address
-                  teamId
+          teamId
           status
           metadata
           type
@@ -801,85 +801,85 @@ export const GetTokenOverviewQuery = gql`
 `;
 
 export const GetTokenHistoricalPriceQuery = gql`
-query GetTokenHistoricalPriceResult($time: BirdeyeHistoricalDataTimeTypes!) {
-  getTokenHistoricalPriceResult(time: $time) {
-    ... on BirdeyeHistoricalPriceResponse {
-      items {
-        unixTime
-        value
+  query GetTokenHistoricalPriceResult($time: BirdeyeHistoricalDataTimeTypes!) {
+    getTokenHistoricalPriceResult(time: $time) {
+      ... on BirdeyeHistoricalPriceResponse {
+        items {
+          unixTime
+          value
+        }
+      }
+      ... on HandledError {
+        code
+        message
       }
     }
-    ... on HandledError {
-      code
-      message
-    }
   }
-}
 `;
 
 export const GetStakingGlobalDataQuery = gql`
-query GetStakingGlobalData {
-  getStakingGlobalData {
-    ... on GetStakingGlobalData {
-      totalEffectiveAmount
-      totalRewardsPerDay
-      totalAmount
-      tokenMint {
-        address
-        decimals
-        supply
-        isInitialized
-        freezeAuthority
-        mintAuthority
-      }
-      stakeEntries {
-        publicKey
-        account {
-          authority
-          amount
-          duration
-          effectiveAmount
-          stakePool
-          nonce
-          payer
-          createdTs
-          closedTs
-          unstakeTs
-          priorTotalEffectiveStake
-          buffer
+  query GetStakingGlobalData {
+    getStakingGlobalData {
+      ... on GetStakingGlobalData {
+        totalEffectiveAmount
+        totalRewardsPerDay
+        totalAmount
+        tokenMint {
+          address
+          decimals
+          supply
+          isInitialized
+          freezeAuthority
+          mintAuthority
         }
-      }
-      rewardPools {
-        publicKey
-        account {
-          authority
-          bump
-          buffer
-          creator
-          claimedAmount
-          fundedAmount
-          lastClaimPeriod
-          lastRewardAmount
-          lastRewardPeriod
-          lastAmountUpdateTs
-          lastPeriodUpdateTs
-          permissionless
-          rewardAmount
-          rewardPeriod
-          stakePool
-          createdTs
-          mint
-          nonce
-          vault
+        stakeEntries {
+          publicKey
+          account {
+            authority
+            amount
+            duration
+            effectiveAmount
+            stakePool
+            nonce
+            payer
+            createdTs
+            closedTs
+            unstakeTs
+            priorTotalEffectiveStake
+            buffer
+          }
         }
+        rewardPools {
+          publicKey
+          account {
+            authority
+            bump
+            buffer
+            creator
+            claimedAmount
+            fundedAmount
+            lastClaimPeriod
+            lastRewardAmount
+            lastRewardPeriod
+            lastAmountUpdateTs
+            lastPeriodUpdateTs
+            permissionless
+            rewardAmount
+            rewardPeriod
+            stakePool
+            createdTs
+            mint
+            nonce
+            vault
+          }
+        }
+        circulatingSupply
+        totalStakedByUsers
       }
-      circulatingSupply
-      totalStakedByUsers
-    }
-    ... on HandledError {
-      code
-      message
+      ... on HandledError {
+        code
+        message
+      }
     }
   }
-}
-  `;
+`;
