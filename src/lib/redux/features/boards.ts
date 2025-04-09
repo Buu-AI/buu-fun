@@ -1,8 +1,8 @@
-import { ShareableBoard } from "@/gql/types/graphql";
+import { TGetSharableBoardQuery } from "@/lib/react-query/boards";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 type BoardsState = {
-  SharedBoards: ShareableBoard | null;
+  SharedBoards: TGetSharableBoardQuery | null;
   currentIndex: number;
 };
 
@@ -15,7 +15,10 @@ const BoardsSlice = createSlice({
   name: "Boards",
   initialState,
   reducers: {
-    initializeSharableBoards(state, actions: PayloadAction<ShareableBoard>) {
+    initializeSharableBoards(
+      state,
+      actions: PayloadAction<TGetSharableBoardQuery>
+    ) {
       state.SharedBoards = actions.payload;
     },
     clearBoard(state) {

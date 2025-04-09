@@ -15,7 +15,6 @@ export default async function BoardsPage({ params }: TBoardsPage) {
   const accessToken = cookie.get("privy-id-token")?.value;
   if (!accessToken) {
     redirect("/");
-
     return;
   }
 

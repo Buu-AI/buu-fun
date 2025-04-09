@@ -2,7 +2,6 @@ import APICapacityCTA from "@/components/portfolio/api-capacity-cta";
 import BuuStakedSupply from "@/components/portfolio/buu-staked-supply";
 import HeaderLogo from "@/components/portfolio/header-logo";
 import OverviewContainer from "@/components/portfolio/overview-container";
-import StakingDataDisplay from "@/components/portfolio/staking-data-display";
 import StakingDataProvider from "@/components/portfolio/staking-data-provider";
 import TokenStatistics from "@/components/portfolio/token-statistics";
 import YourEarnings from "@/components/portfolio/your-earnings";
