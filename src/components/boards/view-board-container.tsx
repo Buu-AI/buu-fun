@@ -1,6 +1,6 @@
 "use client";
-import { ShareableBoard } from "@/gql/types/graphql";
 import { useAppStore } from "@/hooks/redux";
+import { TGetSharableBoardQuery } from "@/lib/react-query/boards";
 import {
   initializeSharableBoards,
   setIndex,
@@ -14,7 +14,7 @@ export default function ViewBoardContainer({
   currentUser,
 }: {
   currentUser?: boolean;
-  board: ShareableBoard;
+  board: TGetSharableBoardQuery;
 }) {
   const store = useAppStore();
   const initialized = useRef(false);
