@@ -157,11 +157,12 @@ export enum CreditsPackageKeys {
 export type CreditsPurchase = {
   __typename?: "CreditsPurchase";
   _id: Scalars["String"]["output"];
-  address: Scalars["String"]["output"];
+  address?: Maybe<Scalars["String"]["output"]>;
   createdAt: Scalars["DateTimeISO"]["output"];
   credits: Scalars["Float"]["output"];
   metadata: Scalars["JSON"]["output"];
   price?: Maybe<Scalars["Float"]["output"]>;
+  teamId: Scalars["String"]["output"];
   type: CreditsPurchaseType;
 };
 
@@ -170,16 +171,16 @@ export type CreditsPurchaseFilter = {
   _id_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
   _id_ne?: InputMaybe<Scalars["String"]["input"]>;
   _id_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
-  address_eq?: InputMaybe<Scalars["String"]["input"]>;
-  address_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
-  address_ne?: InputMaybe<Scalars["String"]["input"]>;
-  address_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
   createdAt_eq?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_gt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_gte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_lt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_lte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_ne?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  teamId_eq?: InputMaybe<Scalars["String"]["input"]>;
+  teamId_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  teamId_ne?: InputMaybe<Scalars["String"]["input"]>;
+  teamId_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
 };
 
 export type CreditsPurchasePage = {
@@ -207,7 +208,7 @@ export type ExpirationInput = {
 export type GenRequest = {
   __typename?: "GenRequest";
   _id: Scalars["String"]["output"];
-  address: Scalars["String"]["output"];
+  address?: Maybe<Scalars["String"]["output"]>;
   createdAt: Scalars["DateTimeISO"]["output"];
   credits: Scalars["Float"]["output"];
   images?: Maybe<Array<Media>>;
@@ -215,6 +216,7 @@ export type GenRequest = {
   model_mesh?: Maybe<Media>;
   status: GenRequestStatusEnum;
   subthreadId: Scalars["String"]["output"];
+  teamId: Scalars["String"]["output"];
   timings?: Maybe<Timings>;
   type: Scalars["String"]["output"];
   updatedAt: Scalars["DateTimeISO"]["output"];
@@ -281,6 +283,20 @@ export type GenerateSubscriptionPaymentLinkResult =
   | HandledError
   | SuscriptionPaymentLinkOutput;
 
+export type GetStakingGlobalData = {
+  __typename?: "GetStakingGlobalData";
+  circulatingSupply: Scalars["String"]["output"];
+  rewardPools: Array<RewardPool>;
+  stakeEntries: Array<StakeEntry>;
+  tokenMint: TokenMint;
+  totalAmount: Scalars["String"]["output"];
+  totalEffectiveAmount: Scalars["String"]["output"];
+  totalRewardsPerDay: Scalars["String"]["output"];
+  totalStakedByUsers: Scalars["String"]["output"];
+};
+
+export type GetStakingGlobalDataResult = GetStakingGlobalData | HandledError;
+
 export type HandledError = {
   __typename?: "HandledError";
   code: Scalars["String"]["output"];
@@ -319,8 +335,10 @@ export type Metadata = {
 
 export type Mutation = {
   __typename?: "Mutation";
+  addTeamMember: TeamResult;
   createApiKey: ApiKeyResult;
   createShareableBoard: ShareableBoardResult;
+  createTeam: TeamResult;
   deleteApiKey: ApiKeyResult;
   deleteShareableBoard: ShareableBoardResult;
   disconnectTelegram: AccountResult;
@@ -332,8 +350,15 @@ export type Mutation = {
   generateSubthread: SubthreadResult;
   linkReferralAccount: ReferralAccountResult;
   redeemVoucher: CreditResult;
+  removeTeamMember: TeamResult;
   rotateApiKey: ApiKeyResult;
   updateShareableBoardVisibility: ShareableBoardResult;
+  updateTeamData: TeamResult;
+  updateTeamMemberRole: TeamResult;
+};
+
+export type MutationAddTeamMemberArgs = {
+  member: Scalars["String"]["input"];
 };
 
 export type MutationCreateApiKeyArgs = {
@@ -343,6 +368,10 @@ export type MutationCreateApiKeyArgs = {
 
 export type MutationCreateShareableBoardArgs = {
   threadId: Scalars["String"]["input"];
+};
+
+export type MutationCreateTeamArgs = {
+  name: Scalars["String"]["input"];
 };
 
 export type MutationDeleteApiKeyArgs = {
@@ -388,6 +417,10 @@ export type MutationRedeemVoucherArgs = {
   code: Scalars["String"]["input"];
 };
 
+export type MutationRemoveTeamMemberArgs = {
+  member: Scalars["String"]["input"];
+};
+
 export type MutationRotateApiKeyArgs = {
   id: Scalars["String"]["input"];
 };
@@ -395,6 +428,16 @@ export type MutationRotateApiKeyArgs = {
 export type MutationUpdateShareableBoardVisibilityArgs = {
   isPublic: Scalars["Boolean"]["input"];
   shareableBoardId: Scalars["String"]["input"];
+};
+
+export type MutationUpdateTeamDataArgs = {
+  name?: InputMaybe<Scalars["String"]["input"]>;
+  wallet?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type MutationUpdateTeamMemberRoleArgs = {
+  member: Scalars["String"]["input"];
+  newRole: TeamRole;
 };
 
 /** Order direction */
@@ -426,6 +469,7 @@ export type Query = {
   getReferralAccount: ReferralAccountResult;
   getReferralRewards: ReferralRewardPageResult;
   getShareableBoard: ShareableBoardResult;
+  getStakingGlobalData: GetStakingGlobalDataResult;
   getSubthread: SubthreadResult;
   getSubthreadGenRequests: GenRequestsPageResult;
   getSubthreads: SubthreadPageResult;
@@ -434,6 +478,7 @@ export type Query = {
   getTokenHistoricalPriceResult: BirdeyeHistoricalPriceResult;
   getTokenOverview: BirdeyeTokenOverviewResult;
   getUserShareableBoard: ShareableBoardPageResult;
+  getUserTeams: TeamPageResult;
   me: AccountResult;
   searchPaginatedApiKeys: ApiKeyPageResult;
 };
@@ -484,6 +529,11 @@ export type QueryGetTokenHistoricalPriceResultArgs = {
 
 export type QueryGetUserShareableBoardArgs = {
   filters?: InputMaybe<ShareableBoardFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type QueryGetUserTeamsArgs = {
+  filters?: InputMaybe<TeamFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -545,13 +595,43 @@ export type ReferralRewardPage = {
 
 export type ReferralRewardPageResult = HandledError | ReferralRewardPage;
 
+export type RewardPool = {
+  __typename?: "RewardPool";
+  account: RewardPoolAccount;
+  publicKey: Scalars["String"]["output"];
+};
+
+export type RewardPoolAccount = {
+  __typename?: "RewardPoolAccount";
+  authority: Scalars["String"]["output"];
+  buffer: Array<Scalars["Int"]["output"]>;
+  bump: Scalars["Int"]["output"];
+  claimedAmount: Scalars["String"]["output"];
+  createdTs: Scalars["String"]["output"];
+  creator: Scalars["String"]["output"];
+  fundedAmount: Scalars["String"]["output"];
+  lastAmountUpdateTs: Scalars["String"]["output"];
+  lastClaimPeriod: Scalars["String"]["output"];
+  lastPeriodUpdateTs: Scalars["String"]["output"];
+  lastRewardAmount: Scalars["String"]["output"];
+  lastRewardPeriod: Scalars["String"]["output"];
+  mint: Scalars["String"]["output"];
+  nonce: Scalars["Int"]["output"];
+  permissionless: Scalars["Boolean"]["output"];
+  rewardAmount: Scalars["String"]["output"];
+  rewardPeriod: Scalars["String"]["output"];
+  stakePool: Scalars["String"]["output"];
+  vault: Scalars["String"]["output"];
+};
+
 export type ShareableBoard = {
   __typename?: "ShareableBoard";
   _id: Scalars["String"]["output"];
   createdAt: Scalars["DateTimeISO"]["output"];
-  creator: Scalars["String"]["output"];
+  creator?: Maybe<Scalars["String"]["output"]>;
   ideas: Array<Idea>;
   isPublic: Scalars["Boolean"]["output"];
+  teamId: Scalars["String"]["output"];
   threadId: Scalars["String"]["output"];
   title: Scalars["String"]["output"];
 };
@@ -567,11 +647,11 @@ export type ShareableBoardFilter = {
   createdAt_lt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_lte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_ne?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
-  creator_eq?: InputMaybe<Scalars["String"]["input"]>;
-  creator_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
-  creator_ne?: InputMaybe<Scalars["String"]["input"]>;
-  creator_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
   isPublic_eq?: InputMaybe<Scalars["Boolean"]["input"]>;
+  teamId_eq?: InputMaybe<Scalars["String"]["input"]>;
+  teamId_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  teamId_ne?: InputMaybe<Scalars["String"]["input"]>;
+  teamId_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
   threadId_eq?: InputMaybe<Scalars["String"]["input"]>;
   threadId_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
   threadId_ne?: InputMaybe<Scalars["String"]["input"]>;
@@ -588,6 +668,28 @@ export type ShareableBoardPageResult = HandledError | ShareableBoardPage;
 
 export type ShareableBoardResult = HandledError | ShareableBoard;
 
+export type StakeEntry = {
+  __typename?: "StakeEntry";
+  account: StakeEntryAccount;
+  publicKey: Scalars["String"]["output"];
+};
+
+export type StakeEntryAccount = {
+  __typename?: "StakeEntryAccount";
+  amount: Scalars["String"]["output"];
+  authority: Scalars["String"]["output"];
+  buffer: Array<Scalars["Int"]["output"]>;
+  closedTs: Scalars["String"]["output"];
+  createdTs: Scalars["String"]["output"];
+  duration: Scalars["String"]["output"];
+  effectiveAmount: Scalars["String"]["output"];
+  nonce: Scalars["Int"]["output"];
+  payer: Scalars["String"]["output"];
+  priorTotalEffectiveStake: Scalars["String"]["output"];
+  stakePool: Scalars["String"]["output"];
+  unstakeTs: Scalars["String"]["output"];
+};
+
 export enum StripeSubscriptionPlanKeys {
   Basic = "BASIC",
   Enterprise = "ENTERPRISE",
@@ -599,12 +701,13 @@ export enum StripeSubscriptionPlanKeys {
 export type Subthread = {
   __typename?: "Subthread";
   _id: Scalars["String"]["output"];
-  address: Scalars["String"]["output"];
+  address?: Maybe<Scalars["String"]["output"]>;
   createdAt: Scalars["DateTimeISO"]["output"];
   imageUrl?: Maybe<Scalars["String"]["output"]>;
   prompt?: Maybe<Scalars["String"]["output"]>;
   strength?: Maybe<Scalars["Float"]["output"]>;
   style?: Maybe<SubthreadStyle>;
+  teamId: Scalars["String"]["output"];
   threadId: Scalars["String"]["output"];
   updatedAt: Scalars["DateTimeISO"]["output"];
 };
@@ -614,16 +717,16 @@ export type SubthreadFilter = {
   _id_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
   _id_ne?: InputMaybe<Scalars["String"]["input"]>;
   _id_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
-  address_eq?: InputMaybe<Scalars["String"]["input"]>;
-  address_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
-  address_ne?: InputMaybe<Scalars["String"]["input"]>;
-  address_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
   createdAt_eq?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_gt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_gte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_lt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_lte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_ne?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  teamId_eq?: InputMaybe<Scalars["String"]["input"]>;
+  teamId_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  teamId_ne?: InputMaybe<Scalars["String"]["input"]>;
+  teamId_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
   threadId_eq?: InputMaybe<Scalars["String"]["input"]>;
   threadId_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
   threadId_ne?: InputMaybe<Scalars["String"]["input"]>;
@@ -685,14 +788,49 @@ export type Team = {
   members: Array<TeamMember>;
   name: Scalars["String"]["output"];
   pending: Scalars["Float"]["output"];
+  type: TeamType;
   updatedAt: Scalars["DateTimeISO"]["output"];
+  wallet?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type TeamFilter = {
+  _id_eq?: InputMaybe<Scalars["String"]["input"]>;
+  _id_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  _id_ne?: InputMaybe<Scalars["String"]["input"]>;
+  _id_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  createdAt_eq?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  createdAt_gt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  createdAt_gte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  createdAt_lt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  createdAt_lte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  createdAt_ne?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  creator_eq?: InputMaybe<Scalars["String"]["input"]>;
+  creator_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  creator_ne?: InputMaybe<Scalars["String"]["input"]>;
+  creator_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  type_eq?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type TeamMember = {
   __typename?: "TeamMember";
   address: Scalars["String"]["output"];
   role: TeamRole;
+  status: TeamMemberStatus;
 };
+
+/** Team member status */
+export enum TeamMemberStatus {
+  Active = "ACTIVE",
+  Pending = "PENDING",
+}
+
+export type TeamPage = {
+  __typename?: "TeamPage";
+  items: Array<Team>;
+  metadata: Metadata;
+};
+
+export type TeamPageResult = HandledError | TeamPage;
 
 export type TeamResult = HandledError | Team;
 
@@ -702,12 +840,19 @@ export enum TeamRole {
   Member = "MEMBER",
 }
 
+/** Team type */
+export enum TeamType {
+  Personal = "PERSONAL",
+  Studio = "STUDIO",
+}
+
 export type Thread = {
   __typename?: "Thread";
   _id: Scalars["String"]["output"];
-  address: Scalars["String"]["output"];
+  address?: Maybe<Scalars["String"]["output"]>;
   createdAt: Scalars["DateTimeISO"]["output"];
   style?: Maybe<SubthreadStyle>;
+  teamId: Scalars["String"]["output"];
   title: Scalars["String"]["output"];
   updatedAt: Scalars["DateTimeISO"]["output"];
 };
@@ -717,16 +862,16 @@ export type ThreadFilter = {
   _id_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
   _id_ne?: InputMaybe<Scalars["String"]["input"]>;
   _id_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
-  address_eq?: InputMaybe<Scalars["String"]["input"]>;
-  address_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
-  address_ne?: InputMaybe<Scalars["String"]["input"]>;
-  address_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
   createdAt_eq?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_gt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_gte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_lt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_lte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_ne?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  teamId_eq?: InputMaybe<Scalars["String"]["input"]>;
+  teamId_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  teamId_ne?: InputMaybe<Scalars["String"]["input"]>;
+  teamId_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
   updatedAt_eq?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   updatedAt_gt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   updatedAt_gte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
@@ -746,6 +891,16 @@ export type ThreadsPage = {
 export type Timings = {
   __typename?: "Timings";
   inference?: Maybe<Scalars["Float"]["output"]>;
+};
+
+export type TokenMint = {
+  __typename?: "TokenMint";
+  address: Scalars["String"]["output"];
+  decimals: Scalars["Int"]["output"];
+  freezeAuthority?: Maybe<Scalars["String"]["output"]>;
+  isInitialized: Scalars["Boolean"]["output"];
+  mintAuthority?: Maybe<Scalars["String"]["output"]>;
+  supply: Scalars["String"]["output"];
 };
 
 export type Url = {
@@ -841,7 +996,8 @@ export type GenerateSubthreadMutation = {
     | {
         __typename?: "Subthread";
         _id: string;
-        address: string;
+        teamId: string;
+        address?: string | null;
         createdAt: any;
         updatedAt: any;
         threadId: string;
@@ -863,7 +1019,8 @@ export type GenerateImageMutation = {
         __typename?: "GenRequest";
         _id: string;
         subthreadId: string;
-        address: string;
+        teamId: string;
+        address?: string | null;
         status: GenRequestStatusEnum;
         metadata: any;
         type: string;
@@ -904,7 +1061,8 @@ export type GenerateModelMutation = {
         __typename?: "GenRequest";
         _id: string;
         subthreadId: string;
-        address: string;
+        teamId: string;
+        address?: string | null;
         status: GenRequestStatusEnum;
         metadata: any;
         type: string;
@@ -948,7 +1106,8 @@ export type GetThreadsQuery = {
           _id: string;
           createdAt: any;
           updatedAt: any;
-          address: string;
+          teamId: string;
+          address?: string | null;
           title: string;
           style?: SubthreadStyle | null;
         }>;
@@ -979,7 +1138,8 @@ export type GetSubthreadsQuery = {
         items: Array<{
           __typename?: "Subthread";
           _id: string;
-          address: string;
+          address?: string | null;
+          teamId: string;
           createdAt: any;
           updatedAt: any;
           threadId: string;
@@ -1012,7 +1172,8 @@ export type GetSubthreadQuery = {
     | {
         __typename?: "Subthread";
         _id: string;
-        address: string;
+        address?: string | null;
+        teamId: string;
         createdAt: any;
         updatedAt: any;
         threadId: string;
@@ -1036,7 +1197,8 @@ export type GetSubthreadGenRequestsQuery = {
           __typename?: "GenRequest";
           _id: string;
           subthreadId: string;
-          address: string;
+          address?: string | null;
+          teamId: string;
           status: GenRequestStatusEnum;
           metadata: any;
           type: string;
@@ -1252,7 +1414,7 @@ export type GetShareableBoardQuery = {
         _id: string;
         threadId: string;
         title: string;
-        creator: string;
+        creator?: string | null;
         isPublic: boolean;
         createdAt: any;
         ideas: Array<{
@@ -1304,7 +1466,7 @@ export type GetUserShareableBoardQuery = {
           _id: string;
           threadId: string;
           title: string;
-          creator: string;
+          creator?: string | null;
           isPublic: boolean;
           createdAt: any;
           ideas: Array<{
@@ -1365,7 +1527,7 @@ export type CreateShareableBoardMutation = {
         _id: string;
         threadId: string;
         title: string;
-        creator: string;
+        creator?: string | null;
         isPublic: boolean;
         createdAt: any;
         ideas: Array<{
@@ -1415,7 +1577,7 @@ export type UpdateShareableBoardVisibilityMutation = {
         _id: string;
         threadId: string;
         title: string;
-        creator: string;
+        creator?: string | null;
         isPublic: boolean;
         createdAt: any;
         ideas: Array<{
@@ -1464,7 +1626,7 @@ export type DeleteShareableBoardMutation = {
         _id: string;
         threadId: string;
         title: string;
-        creator: string;
+        creator?: string | null;
         isPublic: boolean;
         createdAt: any;
         ideas: Array<{
@@ -1630,6 +1792,78 @@ export type GetTokenHistoricalPriceResultQuery = {
           __typename?: "BirdeyeHistoricalPriceItemResponse";
           unixTime: number;
           value: number;
+        }>;
+      }
+    | { __typename?: "HandledError"; code: string; message: string };
+};
+
+export type GetStakingGlobalDataQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetStakingGlobalDataQuery = {
+  __typename?: "Query";
+  getStakingGlobalData:
+    | {
+        __typename?: "GetStakingGlobalData";
+        totalEffectiveAmount: string;
+        totalRewardsPerDay: string;
+        totalAmount: string;
+        circulatingSupply: string;
+        totalStakedByUsers: string;
+        tokenMint: {
+          __typename?: "TokenMint";
+          address: string;
+          decimals: number;
+          supply: string;
+          isInitialized: boolean;
+          freezeAuthority?: string | null;
+          mintAuthority?: string | null;
+        };
+        stakeEntries: Array<{
+          __typename?: "StakeEntry";
+          publicKey: string;
+          account: {
+            __typename?: "StakeEntryAccount";
+            authority: string;
+            amount: string;
+            duration: string;
+            effectiveAmount: string;
+            stakePool: string;
+            nonce: number;
+            payer: string;
+            createdTs: string;
+            closedTs: string;
+            unstakeTs: string;
+            priorTotalEffectiveStake: string;
+            buffer: Array<number>;
+          };
+        }>;
+        rewardPools: Array<{
+          __typename?: "RewardPool";
+          publicKey: string;
+          account: {
+            __typename?: "RewardPoolAccount";
+            authority: string;
+            bump: number;
+            buffer: Array<number>;
+            creator: string;
+            claimedAmount: string;
+            fundedAmount: string;
+            lastClaimPeriod: string;
+            lastRewardAmount: string;
+            lastRewardPeriod: string;
+            lastAmountUpdateTs: string;
+            lastPeriodUpdateTs: string;
+            permissionless: boolean;
+            rewardAmount: string;
+            rewardPeriod: string;
+            stakePool: string;
+            createdTs: string;
+            mint: string;
+            nonce: number;
+            vault: string;
+          };
         }>;
       }
     | { __typename?: "HandledError"; code: string; message: string };
@@ -2069,6 +2303,10 @@ export const GenerateSubthreadDocument = {
                       { kind: "Field", name: { kind: "Name", value: "_id" } },
                       {
                         kind: "Field",
+                        name: { kind: "Name", value: "teamId" },
+                      },
+                      {
+                        kind: "Field",
                         name: { kind: "Name", value: "address" },
                       },
                       {
@@ -2182,6 +2420,10 @@ export const GenerateImageDocument = {
                       {
                         kind: "Field",
                         name: { kind: "Name", value: "subthreadId" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "teamId" },
                       },
                       {
                         kind: "Field",
@@ -2406,6 +2648,10 @@ export const GenerateModelDocument = {
                       },
                       {
                         kind: "Field",
+                        name: { kind: "Name", value: "teamId" },
+                      },
+                      {
+                        kind: "Field",
                         name: { kind: "Name", value: "address" },
                       },
                       {
@@ -2618,6 +2864,10 @@ export const GetThreadsDocument = {
                             },
                             {
                               kind: "Field",
+                              name: { kind: "Name", value: "teamId" },
+                            },
+                            {
+                              kind: "Field",
                               name: { kind: "Name", value: "address" },
                             },
                             {
@@ -2796,6 +3046,10 @@ export const GetSubthreadsDocument = {
                             },
                             {
                               kind: "Field",
+                              name: { kind: "Name", value: "teamId" },
+                            },
+                            {
+                              kind: "Field",
                               name: { kind: "Name", value: "createdAt" },
                             },
                             {
@@ -2935,6 +3189,10 @@ export const GetSubthreadDocument = {
                       },
                       {
                         kind: "Field",
+                        name: { kind: "Name", value: "teamId" },
+                      },
+                      {
+                        kind: "Field",
                         name: { kind: "Name", value: "createdAt" },
                       },
                       {
@@ -3054,6 +3312,10 @@ export const GetSubthreadGenRequestsDocument = {
                             {
                               kind: "Field",
                               name: { kind: "Name", value: "address" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "teamId" },
                             },
                             {
                               kind: "Field",
@@ -5977,4 +6239,317 @@ export const GetTokenHistoricalPriceResultDocument = {
 } as unknown as DocumentNode<
   GetTokenHistoricalPriceResultQuery,
   GetTokenHistoricalPriceResultQueryVariables
+>;
+export const GetStakingGlobalDataDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "GetStakingGlobalData" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "getStakingGlobalData" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "GetStakingGlobalData" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "totalEffectiveAmount" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "totalRewardsPerDay" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "totalAmount" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "tokenMint" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "address" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "decimals" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "supply" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "isInitialized" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "freezeAuthority" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "mintAuthority" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "stakeEntries" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "publicKey" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "account" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "authority" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "amount" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "duration" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "effectiveAmount",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "stakePool" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "nonce" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "payer" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "createdTs" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "closedTs" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "unstakeTs" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "priorTotalEffectiveStake",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "buffer" },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "rewardPools" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "publicKey" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "account" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "authority" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "bump" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "buffer" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "creator" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "claimedAmount",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "fundedAmount",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "lastClaimPeriod",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "lastRewardAmount",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "lastRewardPeriod",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "lastAmountUpdateTs",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "lastPeriodUpdateTs",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "permissionless",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "rewardAmount",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "rewardPeriod",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "stakePool" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "createdTs" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "mint" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "nonce" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "vault" },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "circulatingSupply" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "totalStakedByUsers" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "HandledError" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "message" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetStakingGlobalDataQuery,
+  GetStakingGlobalDataQueryVariables
 >;
