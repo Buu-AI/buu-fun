@@ -1,5 +1,6 @@
 "use client";
 import {
+  ConnectedSolanaWallet,
   LoginModalOptions,
   useIdentityToken,
   usePrivy,
@@ -25,6 +26,7 @@ interface WalletInfo {
   name: string;
   icon?: string;
   chainType?: string;
+  walletData?: ConnectedSolanaWallet | undefined;
 }
 
 interface AuthenticationContextType {
@@ -60,6 +62,7 @@ const getWalletIcon = (connector: string): string => {
 
 export const AuthenticationProvider = ({ children }: Props) => {
   const [activeWallet, setActiveWallet] = useState<WalletInfo | undefined>();
+
   const [allWallets, setAllWallets] = useState<WalletInfo[]>([]);
   const [isProcessingWallets, setIsProcessingWallets] = useState(false);
 
@@ -70,6 +73,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
     ready: isSolanaReady,
     exportWallet,
   } = useSolanaWallets();
+
   const { wallets: evmWallets, ready: isEVMReady } = useWallets();
   const EvmWalletDep = evmWallets.length > 0 ? isEVMReady : null;
   const SolanaWalletsDep = solanaWallets.length > 0 ? isSolanaReady : null;
@@ -125,6 +129,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
         solanaWallets.forEach((wallet) => {
           if (wallet?.address) {
             processedWallets.push({
+              walletData: wallet,
               address: wallet.address,
               id: wallet.meta?.id || `solana-${wallet.address.slice(0, 8)}`,
               name: wallet.meta?.name || "Solana Wallet",
@@ -140,8 +145,8 @@ export const AuthenticationProvider = ({ children }: Props) => {
       // Remove duplicates
       const uniqueWallets = Array.from(
         new Map(
-          processedWallets.map((wallet) => [wallet.address, wallet]),
-        ).values(),
+          processedWallets.map((wallet) => [wallet.address, wallet])
+        ).values()
       );
 
       setAllWallets(uniqueWallets);
@@ -150,7 +155,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
       if (uniqueWallets.length > 0) {
         // Try to find the wallet that matches user's primary wallet
         const userPrimaryWallet = uniqueWallets.find(
-          (w) => w.address === user?.wallet?.address,
+          (w) => w.address === user?.wallet?.address
         );
 
         if (userPrimaryWallet) {
@@ -211,7 +216,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
       allWallets,
       login,
       logout,
-    ],
+    ]
   );
 
   return (
@@ -225,7 +230,7 @@ export function useAuthentication() {
   const context = useContext(AuthenticationContext);
   if (context === undefined) {
     throw new Error(
-      `useAuthentication must be used within a AuthenticationProvider`,
+      `useAuthentication must be used within a AuthenticationProvider`
     );
   }
   return context;
