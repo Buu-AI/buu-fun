@@ -4,7 +4,6 @@ import { getStakingGlobalDataQuery } from "@/lib/react-query/staking-api";
 import { useAuthentication } from "@/providers/account.context";
 import { useQuery } from "@tanstack/react-query";
 
-
 export function useGlobalStakingData() {
   const { identityToken, isAuthenticated, loading } = useAuthentication();
   return useQuery({

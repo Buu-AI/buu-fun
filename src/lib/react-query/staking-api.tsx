@@ -1,8 +1,7 @@
 import { serverRequest } from "@/gql/client";
 import { GetStakingGlobalDataQuery } from "@/gql/documents/creative-engine";
 import {
-  GetStakingGlobalDataQuery as TGetStakingGlobalDataQuery,
-  GetStakingGlobalDataQueryVariables,
+  GetStakingGlobalDataQuery as TGetStakingGlobalDataQuery
 } from "@/gql/types/graphql";
 import { getAuthorization } from "../utils";
 
@@ -16,7 +15,7 @@ export async function getStakingGlobalDataQuery({
     {},
     {
       Authorization: getAuthorization(accessToken),
-    }
+    },
   );
   if (!data) {
     throw new Error("Internal server error");

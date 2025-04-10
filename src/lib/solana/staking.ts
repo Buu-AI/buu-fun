@@ -159,6 +159,9 @@ export async function getUserStakingData({
       apy: apy.toNumber() / 100,
     };
   } catch (error) {
+    if (error) {
+      console.log(error);
+    }
     return null;
   }
 }

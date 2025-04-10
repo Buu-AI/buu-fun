@@ -17,12 +17,12 @@ export default function YourEarningsPricing() {
 
   const earnings = formatUnits(
     userStakingData?.yourEarnings ?? "0",
-    userStakingData?.decimals ?? 0
+    userStakingData?.decimals ?? 0,
   );
 
   const EarningPrice = multiplyAndFormatPricing(
     Number(earnings),
-    data?.price ?? 0
+    data?.price ?? 0,
   );
   return (
     <div>

@@ -1,6 +1,5 @@
 "use client";
 
-import { useStakingContext } from "@/hooks/use-staking-context";
 import { useUserStakingData } from "@/hooks/use-staking-data";
 import { formatUnits } from "@/lib/utils";
 
@@ -32,7 +31,7 @@ export default function StakingDataDisplay() {
           <p className="font-medium">
             {formatUnits(
               userStakingData?.yourEarnings ?? "0",
-              userStakingData?.decimals ?? 0
+              userStakingData?.decimals ?? 0,
             )}
           </p>
         </div>

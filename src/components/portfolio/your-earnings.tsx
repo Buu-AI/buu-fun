@@ -1,18 +1,16 @@
 "use client";
-import React from "react";
+import { useBuuPricingData } from "@/hooks/use-pricing-history";
+import { useUserStakingData } from "@/hooks/use-staking-data";
+import { formatUnits, multiplyAndFormatPricing } from "@/lib/utils";
+import toast from "react-hot-toast";
 import { Button } from "../ui/button";
 import EarningAvailableCard from "./earning-available";
-import EarningTotalStakedCard from "./earning-total-staked-card";
 import EarningPlatformCredits from "./earning-platform-credits";
+import EarningTotalStakedCard from "./earning-total-staked-card";
 import YourEarningsPricing from "./your-earning-pricing";
-import { useBuuPricingData } from "@/hooks/use-pricing-history";
-import { formatUnits, multiplyAndFormatPricing } from "@/lib/utils";
-import { useUserStakingData } from "@/hooks/use-staking-data";
-import { useAuthentication } from "@/providers/account.context";
-import toast from "react-hot-toast";
 
 export default function YourEarnings() {
-  const { address, wallet } = useAuthentication();
+  // const { address, wallet } = useAuthentication();
 
   const { data } = useBuuPricingData();
   const {
@@ -49,7 +47,9 @@ export default function YourEarnings() {
                   try {
                     // const data = await wallet?.walletData?.sendTransaction({})
                   } catch (error) {
-                    toast.error("user rejected the request");
+                    if (error) {
+                      toast.error("user rejected the request");
+                    }
                   }
                 }}
                 className="h-[40px]"

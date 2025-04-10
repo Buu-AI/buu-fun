@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import BN from "bn.js";
 import { useGlobalStakingData } from "./use-global-staking";
 
-type StakingData = {
+export type StakingData = {
   decimals: number;
   yourTotalStaked: string;
   yourEarnings: string;
@@ -16,7 +16,7 @@ type StakingData = {
   apy: number;
 };
 
-type UseStakingDataProps = {
+export type UseStakingDataProps = {
   publicKey: PublicKey;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   stakeEntries: any[];

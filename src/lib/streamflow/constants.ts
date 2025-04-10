@@ -13,7 +13,7 @@ export const REWARD_AMOUNT_PRECISION_FACTOR = 1_000_000_000;
 export const REWARD_AMOUNT_PRECISION_FACTOR_BN = new BN(
   REWARD_AMOUNT_PRECISION_FACTOR,
 );
-export const U64_MAX = BigInt(18446744073709551615)
+export const U64_MAX = BigInt(18446744073709551615);
 export const STAKE_ENTRY_DISCRIMINATOR = [187, 127, 9, 35, 155, 68, 86, 40];
 export const STAKE_ENTRY_PREFIX = Buffer.from("stake-entry", "utf-8");
 export const STAKE_POOL_PREFIX = Buffer.from("stake-pool", "utf-8");

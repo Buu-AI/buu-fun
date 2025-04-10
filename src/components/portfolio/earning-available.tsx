@@ -1,13 +1,10 @@
-import React from "react";
-import { Button } from "../ui/button";
 import { useBuuPricingData } from "@/hooks/use-pricing-history";
-import {
-  formatNumber,
-  formatPrice,
-  formatUnits,
-  multiplyAndFormatPricing,
-} from "@/lib/utils";
 import { useUserStakingData } from "@/hooks/use-staking-data";
+import {
+  formatUnits,
+  multiplyAndFormatPricing
+} from "@/lib/utils";
+import { Button } from "../ui/button";
 
 export default function EarningAvailableCard() {
   const { data } = useBuuPricingData();
@@ -17,12 +14,12 @@ export default function EarningAvailableCard() {
 
   const available = formatUnits(
     userStakingData?.available ?? "0",
-    userStakingData?.decimals ?? 0
+    userStakingData?.decimals ?? 0,
   );
 
   const AvailablePrice = multiplyAndFormatPricing(
     Number(available),
-    data?.price ?? 0
+    data?.price ?? 0,
   );
 
   return (

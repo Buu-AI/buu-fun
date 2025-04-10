@@ -40,7 +40,7 @@ export const calculateDecimalsShift = (maxWeight: bigint, maxShift = 999) => {
 export async function calculateAmountWithTransferFees(
   connection: Connection,
   transferFeeConfig: TransferFeeConfig,
-  transferAmount: bigint
+  transferAmount: bigint,
 ): Promise<{ transferAmount: bigint; feeCharged: bigint }> {
   const epoch = await connection.getEpochInfo();
   const transferFee =
