@@ -1,5 +1,6 @@
 "use client";
 import {
+  ConnectedSolanaWallet,
   LoginModalOptions,
   useIdentityToken,
   usePrivy,
@@ -25,6 +26,7 @@ interface WalletInfo {
   name: string;
   icon?: string;
   chainType?: string;
+  walletData?: ConnectedSolanaWallet | undefined;
 }
 
 interface AuthenticationContextType {
@@ -60,6 +62,7 @@ const getWalletIcon = (connector: string): string => {
 
 export const AuthenticationProvider = ({ children }: Props) => {
   const [activeWallet, setActiveWallet] = useState<WalletInfo | undefined>();
+
   const [allWallets, setAllWallets] = useState<WalletInfo[]>([]);
   const [isProcessingWallets, setIsProcessingWallets] = useState(false);
 
@@ -70,6 +73,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
     ready: isSolanaReady,
     exportWallet,
   } = useSolanaWallets();
+
   const { wallets: evmWallets, ready: isEVMReady } = useWallets();
   const EvmWalletDep = evmWallets.length > 0 ? isEVMReady : null;
   const SolanaWalletsDep = solanaWallets.length > 0 ? isSolanaReady : null;
@@ -125,6 +129,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
         solanaWallets.forEach((wallet) => {
           if (wallet?.address) {
             processedWallets.push({
+              walletData: wallet,
               address: wallet.address,
               id: wallet.meta?.id || `solana-${wallet.address.slice(0, 8)}`,
               name: wallet.meta?.name || "Solana Wallet",

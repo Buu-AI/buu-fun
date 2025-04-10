@@ -168,12 +168,12 @@ export function formatUnixTimestamp(unixTime: number) {
   });
 }
 
-export function multiplyAndFormatPricing(token: number, value: number) {
-  const calculatedAmount = token * value;
+export function multiplyAndFormatPricing(token: number, price: number) {
+  const calculatedAmount = token * price;
   return calculatedAmount.toFixed(3);
 }
 
-export function formatTokenValue(value: number): string {
+export function formatPrice(value: number): string {
   // For values of 1 or greater, show 2 decimal places
   if (value >= 1) {
     return value.toFixed(2);

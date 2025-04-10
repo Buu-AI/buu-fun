@@ -1,11 +1,13 @@
 "use client";
 
-import { getUserStakingData } from "@/lib/solana/staking";
+import { getClusterUrl, getUserStakingData } from "@/lib/solana/staking";
+import { useAuthentication } from "@/providers/account.context";
 import { PublicKey } from "@solana/web3.js";
+import { useQuery } from "@tanstack/react-query";
 import BN from "bn.js";
-import { useEffect, useState } from "react";
+import { useGlobalStakingData } from "./use-global-staking";
 
-type StakingData = {
+export type StakingData = {
   decimals: number;
   yourTotalStaked: string;
   yourEarnings: string;
@@ -14,7 +16,7 @@ type StakingData = {
   apy: number;
 };
 
-type UseStakingDataProps = {
+export type UseStakingDataProps = {
   publicKey: PublicKey;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   stakeEntries: any[];
@@ -29,36 +31,61 @@ type UseStakingDataProps = {
   clusterUrl?: string;
 };
 
-export function useStakingData(props: UseStakingDataProps | null) {
-  const [data, setData] = useState<StakingData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+// export function useStakingData(props: UseStakingDataProps | null) {
+//   const [data, setData] = useState<StakingData | null>(null);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState<Error | null>(null);
+//   useEffect(() => {
+//     if (!props) {
+//       setLoading(true);
+//       return;
+//     }
+//     const fetchData = async () => {
+//       try {
+//         setLoading(true);
+//         const result = await getUserStakingData(props);
+//         setData(result);
+//       } catch (err) {
+//         setError(err instanceof Error ? err : new Error(String(err)));
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+//     fetchData();
+//   }, [
+//     props?.publicKey?.toString(),
+//     props?.totalEffectiveAmount?.toString(),
+//     props?.totalRewardsPerDay?.toString(),
+//     props?.clusterUrl,
+//   ]);
+//   return { data, loading, error };
+// }
 
-  useEffect(() => {
-    if (!props) {
-      setLoading(true);
-      return;
-    }
+export function useUserStakingData() {
+  const { identityToken, isAuthenticated, loading, address } =
+    useAuthentication();
+  const globalStaking = useGlobalStakingData();
+  const { data } = globalStaking;
 
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await getUserStakingData(props);
-        setData(result);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error(String(err)));
-      } finally {
-        setLoading(false);
-      }
-    };
+  const userStaking = useQuery({
+    queryKey: ["get-global-staking-data", identityToken, JSON.stringify(data)],
+    enabled: !loading && isAuthenticated,
+    queryFn: async () => {
+      if (!data) return;
+      return await getUserStakingData({
+        publicKey: new PublicKey(address ?? ""),
+        stakeEntries: data.stakeEntries,
+        rewardPools: data.rewardPools,
+        tokenMint: data.tokenMint,
+        totalEffectiveAmount: new BN(data.totalEffectiveAmount),
+        totalRewardsPerDay: new BN(data.totalRewardsPerDay),
+        clusterUrl: getClusterUrl(),
+      });
+    },
+  });
 
-    fetchData();
-  }, [
-    props?.publicKey?.toString(),
-    props?.totalEffectiveAmount?.toString(),
-    props?.totalRewardsPerDay?.toString(),
-    props?.clusterUrl,
-  ]);
-
-  return { data, loading, error };
+  return {
+    userStaking,
+    globalStaking,
+  };
 }

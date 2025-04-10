@@ -102,7 +102,9 @@ export async function getSharableBoardQuery({
     return null;
   }
 }
-export type TGetSharableBoardQuery = Awaited<ReturnType<typeof getSharableBoardQuery>>
+export type TGetSharableBoardQuery = Awaited<
+  ReturnType<typeof getSharableBoardQuery>
+>;
 
 export async function updateBoardsVisibility({
   boardId,

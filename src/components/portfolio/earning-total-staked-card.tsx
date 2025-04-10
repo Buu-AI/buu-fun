@@ -1,8 +1,25 @@
 import React from "react";
 import { Button } from "../ui/button";
 import APRCalculatorIcon from "@/assets/icons/apr-calculator-icon";
+import { useBuuPricingData } from "@/hooks/use-pricing-history";
+import { useUserStakingData } from "@/hooks/use-staking-data";
+import { formatUnits, multiplyAndFormatPricing } from "@/lib/utils";
 
 export default function EarningTotalStakedCard() {
+  const { data } = useBuuPricingData();
+  const {
+    userStaking: { data: userStakingData },
+  } = useUserStakingData();
+
+  const totalStaked = formatUnits(
+    userStakingData?.yourTotalStaked ?? "0",
+    userStakingData?.decimals ?? 0,
+  );
+
+  const totalStakedPrice = multiplyAndFormatPricing(
+    Number(totalStaked),
+    data?.price ?? 0,
+  );
   return (
     <div className="bg-buu shadow-buu-inner grid grid-cols-2 pt-6 pr-4 pb-5 pl-5 rounded-2xl  ">
       <div>
@@ -10,12 +27,19 @@ export default function EarningTotalStakedCard() {
           Your Total Staked{" "}
         </h4>
         <div className="flex gap-2 items-center pt-3 pb-0.5">
-          <p className="text-2xl text-white font-medium leading-3">138.01</p>
+          <p className="text-2xl text-white font-medium leading-3">
+            {" "}
+            {Number(totalStaked).toFixed(2)}
+          </p>
           <p className="text-sm text-muted-foreground/40 font-medium">BUU</p>
         </div>
         <div>
           <p className="text-sm text-muted-foreground/50 tracking-tight font-medium">
-            $ 0.084
+            ${" "}
+            {multiplyAndFormatPricing(
+              data?.price ?? 0,
+              Number(totalStakedPrice),
+            )}
           </p>{" "}
         </div>
       </div>
@@ -26,7 +50,7 @@ export default function EarningTotalStakedCard() {
         <Button variant={"special"} className="h-[40px] w-full bg-apr-button">
           <div className="p-3 flex items-center justify-center gap-1">
             <APRCalculatorIcon />
-            <span className="">APR 88.78%</span>
+            <span className="">APR {userStakingData?.apy}%</span>
           </div>
         </Button>
       </div>

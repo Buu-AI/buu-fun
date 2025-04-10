@@ -1,7 +1,6 @@
 import {
   getUserReferral,
   getUserReferralsData,
-  
 } from "@/lib/react-query/referrals";
 import { useAuthentication } from "@/providers/account.context";
 import { useQuery } from "@tanstack/react-query";
