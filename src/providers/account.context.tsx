@@ -25,7 +25,7 @@ interface WalletInfo {
   id: string;
   name: string;
   icon?: string;
-  chainType?: string;
+  chainType?: "ethereum" | "solana";
   walletData?: ConnectedSolanaWallet | undefined;
 }
 
@@ -67,6 +67,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
   const [isProcessingWallets, setIsProcessingWallets] = useState(false);
 
   const { ready, authenticated, user, login, logout, isModalOpen } = usePrivy();
+
   const { identityToken } = useIdentityToken();
   const {
     wallets: solanaWallets,
@@ -99,7 +100,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
       // Add user's primary wallet if available
       if (user?.wallet?.address) {
         processedWallets.push({
-          address: user.wallet.address,
+          address: user.wallet?.address,
           id: `primary-${user.wallet.address.slice(0, 8)}`,
           name: user.wallet.walletClientType ?? "Privy",
           chainType: user.wallet.chainType,
@@ -145,8 +146,8 @@ export const AuthenticationProvider = ({ children }: Props) => {
       // Remove duplicates
       const uniqueWallets = Array.from(
         new Map(
-          processedWallets.map((wallet) => [wallet.address, wallet]),
-        ).values(),
+          processedWallets.map((wallet) => [wallet.address, wallet])
+        ).values()
       );
 
       setAllWallets(uniqueWallets);
@@ -155,7 +156,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
       if (uniqueWallets.length > 0) {
         // Try to find the wallet that matches user's primary wallet
         const userPrimaryWallet = uniqueWallets.find(
-          (w) => w.address === user?.wallet?.address,
+          (w) => w.address === user?.wallet?.address
         );
 
         if (userPrimaryWallet) {
@@ -216,7 +217,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
       allWallets,
       login,
       logout,
-    ],
+    ]
   );
 
   return (
@@ -230,7 +231,7 @@ export function useAuthentication() {
   const context = useContext(AuthenticationContext);
   if (context === undefined) {
     throw new Error(
-      `useAuthentication must be used within a AuthenticationProvider`,
+      `useAuthentication must be used within a AuthenticationProvider`
     );
   }
   return context;

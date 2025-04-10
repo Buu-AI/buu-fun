@@ -8,6 +8,8 @@ import EarningAvailableCard from "./earning-available";
 import EarningPlatformCredits from "./earning-platform-credits";
 import EarningTotalStakedCard from "./earning-total-staked-card";
 import YourEarningsPricing from "./your-earning-pricing";
+import StakingClaimButton from "./staking-claim-button";
+import StakingClaimAndRestakeButton from "./staking-claim-restake-button";
 
 export default function YourEarnings() {
   // const { address, wallet } = useAuthentication();
@@ -16,7 +18,7 @@ export default function YourEarnings() {
   const {
     userStaking: { data: userStakingData },
   } = useUserStakingData();
-
+  
   const earnings = formatUnits(
     userStakingData?.yourEarnings ?? "0",
     userStakingData?.decimals ?? 0
@@ -38,24 +40,8 @@ export default function YourEarnings() {
           <div className="flex flex-col lg:flex-row items-center justify-between gap-2 pt-3">
             <YourEarningsPricing />
             <div className="flex items-center flex-wrap justify-center gap-3">
-              <Button variant={"special"} className="h-[40px]">
-                <span className="p-3">Claim</span>
-              </Button>
-              <Button
-                onClick={async () => {
-                  toast.success("clicked");
-                  try {
-                    // const data = await wallet?.walletData?.sendTransaction({})
-                  } catch (error) {
-                    if (error) {
-                      toast.error("user rejected the request");
-                    }
-                  }
-                }}
-                className="h-[40px]"
-              >
-                <span className="p-3">Claim & Restake</span>
-              </Button>
+              <StakingClaimButton/>
+              <StakingClaimAndRestakeButton/>
               <Button className="h-[40px]">
                 <span className="p-3">Withdraw</span>
               </Button>

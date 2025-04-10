@@ -71,7 +71,8 @@ export function useUserStakingData() {
     queryKey: ["get-global-staking-data", identityToken, JSON.stringify(data)],
     enabled: !loading && isAuthenticated,
     queryFn: async () => {
-      if (!data) return;
+      if (!data) return null
+      
       return await getUserStakingData({
         publicKey: new PublicKey(address ?? ""),
         stakeEntries: data.stakeEntries,

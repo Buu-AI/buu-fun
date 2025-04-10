@@ -11,23 +11,29 @@ export const BuuPricingTime = [
 export type TBuuPricingTime = (typeof BuuPricingTime)[number];
 
 type BuuPricingState = {
+  amountToStake: number;
   buuPricingHistoryTime: TBuuPricingTime;
 };
 
 const initialState: BuuPricingState = {
   buuPricingHistoryTime: "LAST_HOUR",
+  amountToStake: 0,
 };
 
 const BuuPricingSlice = createSlice({
   name: "BuuPricing",
   initialState,
   reducers: {
+    setSelectedAmountToStake(state, action: PayloadAction<number>) {
+      state.amountToStake = action.payload;
+    },
     setBuuPricingHour(state, action: PayloadAction<TBuuPricingTime>) {
       state.buuPricingHistoryTime = action.payload;
     },
   },
 });
 
-export const { setBuuPricingHour } = BuuPricingSlice.actions;
+export const { setBuuPricingHour, setSelectedAmountToStake } =
+  BuuPricingSlice.actions;
 
 export default BuuPricingSlice.reducer;

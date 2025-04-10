@@ -17,6 +17,7 @@ export const makeStore = () => {
       subscription: SubscriptionSlice,
       apiKey: apiKeySlice,
       BuuPricing: BuuPricingSlice,
+      
     },
   });
 };
