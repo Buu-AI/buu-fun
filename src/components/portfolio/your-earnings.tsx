@@ -6,11 +6,28 @@ import EarningTotalStakedCard from "./earning-total-staked-card";
 import EarningPlatformCredits from "./earning-platform-credits";
 import YourEarningsPricing from "./your-earning-pricing";
 import { useBuuPricingData } from "@/hooks/use-pricing-history";
-import { multiplyAndFormatPricing } from "@/lib/utils";
+import { formatUnits, multiplyAndFormatPricing } from "@/lib/utils";
+import { useUserStakingData } from "@/hooks/use-staking-data";
+import { useAuthentication } from "@/providers/account.context";
+import toast from "react-hot-toast";
 
 export default function YourEarnings() {
-  const { data } = useBuuPricingData();
+  const { address, wallet } = useAuthentication();
 
+  const { data } = useBuuPricingData();
+  const {
+    userStaking: { data: userStakingData },
+  } = useUserStakingData();
+
+  const earnings = formatUnits(
+    userStakingData?.yourEarnings ?? "0",
+    userStakingData?.decimals ?? 0
+  );
+
+  const EarningPrice = multiplyAndFormatPricing(
+    Number(earnings),
+    data?.price ?? 0
+  );
   return (
     <div className="bg-portfolio-statistics mt-5 rounded-lg">
       <div className="px-1  md:px-6 py-6">
@@ -26,7 +43,17 @@ export default function YourEarnings() {
               <Button variant={"special"} className="h-[40px]">
                 <span className="p-3">Claim</span>
               </Button>
-              <Button className="h-[40px]">
+              <Button
+                onClick={async () => {
+                  toast.success("clicked");
+                  try {
+                    // const data = await wallet?.walletData?.sendTransaction({})
+                  } catch (error) {
+                    toast.error("user rejected the request");
+                  }
+                }}
+                className="h-[40px]"
+              >
                 <span className="p-3">Claim & Restake</span>
               </Button>
               <Button className="h-[40px]">
@@ -35,7 +62,7 @@ export default function YourEarnings() {
             </div>
           </div>
           <p className="text-muted-foreground/50 hidden lg:block tracking-tight font-medium text-sm">
-            $ {multiplyAndFormatPricing(data?.price ?? 0, 1388)}
+            $ {EarningPrice}
           </p>
         </div>
 
