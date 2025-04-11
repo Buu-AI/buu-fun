@@ -1,10 +1,9 @@
 import { useBuuPricingData } from "@/hooks/use-pricing-history";
 import { useUserStakingData } from "@/hooks/use-staking-data";
-import {
-  formatUnits,
-  multiplyAndFormatPricing
-} from "@/lib/utils";
+import { formatUnits, multiplyAndFormatPricing } from "@/lib/utils";
 import { Button } from "../ui/button";
+import StakingClaimButton from "./staking-claim-button";
+import BuyBuuButton from "./buy-buu-button";
 
 export default function EarningAvailableCard() {
   const { data } = useBuuPricingData();
@@ -14,12 +13,12 @@ export default function EarningAvailableCard() {
 
   const available = formatUnits(
     userStakingData?.available ?? "0",
-    userStakingData?.decimals ?? 0,
+    userStakingData?.decimals ?? 0
   );
 
   const AvailablePrice = multiplyAndFormatPricing(
     Number(available),
-    data?.price ?? 0,
+    data?.price ?? 0
   );
 
   return (
@@ -42,12 +41,11 @@ export default function EarningAvailableCard() {
         </div>
       </div>
       <div className="flex items-center justify-center gap-2 flex-col">
-        <Button variant={"special"} className="h-[40px] w-full">
-          <span className="p-3">Claim</span>
-        </Button>
-        <Button className="h-[40px] w-full">
-          <span className="p-3">Claim & Restake</span>
-        </Button>
+        <StakingClaimButton className="w-full" />
+        <BuyBuuButton/>
+        {/* <Button className="h-[40px] w-full">
+          <span className="p-3">Buy $Buu</span>
+        </Button> */}
       </div>
     </div>
   );

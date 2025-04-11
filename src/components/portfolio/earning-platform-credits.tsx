@@ -1,7 +1,10 @@
 import FlashIcon from "@/assets/icons/flash-icon";
 import StakingDialog from "./stake-dialog";
+import StakeBuuButton from "./stake-buu-button";
+import useUserCredits from "@/hooks/use-credits";
 
 export default function EarningPlatformCredits() {
+  const credits = useUserCredits();
   return (
     <div className="bg-[#1C202733] border py-4 px-[18px] flex items-center justify-between  border-white/5 rounded-b-lg w-full">
       <div className="flex items-center gap-3.5">
@@ -12,14 +15,17 @@ export default function EarningPlatformCredits() {
         </div>
         <div>
           <p className="text-xl font-medium">
-            <span className="blue-text-clip">1256 </span> Platform Credits
+            <span className="blue-text-clip">{credits.data?.available} </span>{" "}
+            Platform Credits
           </p>
           <p className="text-sm font-medium text-muted-foreground/60">
             Stake $BUU to get more platform credits{" "}
           </p>
         </div>
       </div>
-      <StakingDialog />
+      {/* Dont remove the dialog, it will be replaced in future */}
+      {/* <StakingDialog /> */}
+      <StakeBuuButton />
     </div>
   );
 }
