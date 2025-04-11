@@ -3,7 +3,12 @@ import { Button } from "../ui/button";
 import APRCalculatorIcon from "@/assets/icons/apr-calculator-icon";
 import { useBuuPricingData } from "@/hooks/use-pricing-history";
 import { useUserStakingData } from "@/hooks/use-staking-data";
-import { formatUnits, multiplyAndFormatPricing } from "@/lib/utils";
+import {
+  formatNumber,
+  formatUnits,
+  multiplyAndFormatPricing,
+} from "@/lib/utils";
+import StakeBuuButton from "./stake-buu-button";
 
 export default function EarningTotalStakedCard() {
   const { data } = useBuuPricingData();
@@ -13,12 +18,12 @@ export default function EarningTotalStakedCard() {
 
   const totalStaked = formatUnits(
     userStakingData?.yourTotalStaked ?? "0",
-    userStakingData?.decimals ?? 0,
+    userStakingData?.decimals ?? 0
   );
 
   const totalStakedPrice = multiplyAndFormatPricing(
     Number(totalStaked),
-    data?.price ?? 0,
+    data?.price ?? 0
   );
   return (
     <div className="bg-buu shadow-buu-inner grid grid-cols-2 pt-6 pr-4 pb-5 pl-5 rounded-2xl  ">
@@ -29,24 +34,21 @@ export default function EarningTotalStakedCard() {
         <div className="flex gap-2 items-center pt-3 pb-0.5">
           <p className="text-2xl text-white font-medium leading-3">
             {" "}
-            {Number(totalStaked).toFixed(2)}
+            {formatNumber(Number(totalStaked))}
           </p>
           <p className="text-sm text-muted-foreground/40 font-medium">BUU</p>
         </div>
         <div>
           <p className="text-sm text-muted-foreground/50 tracking-tight font-medium">
-            ${" "}
-            {multiplyAndFormatPricing(
-              data?.price ?? 0,
-              Number(totalStakedPrice),
-            )}
+            $ {totalStakedPrice}
           </p>{" "}
         </div>
       </div>
       <div className="flex items-center justify-center gap-2 flex-col">
-        <Button variant={"special"} className="h-[40px] w-full">
+        {/* <Button variant={"special"} className="h-[40px] w-full">
           <span className="p-3">Unstake</span>
-        </Button>
+        </Button> */}
+        <StakeBuuButton className="w-full" />
         <Button variant={"special"} className="h-[40px] w-full bg-apr-button">
           <div className="p-3 flex items-center justify-center gap-1">
             <APRCalculatorIcon />

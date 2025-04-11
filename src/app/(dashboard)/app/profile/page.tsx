@@ -70,7 +70,7 @@ export default function ProfilePage() {
               Credits Used
             </h3>
             <div className="text-2xl font-medium">
-              <p>${getFixedCredits(data?.available)}</p>
+              <p>{getFixedCredits(data?.available)}</p>
             </div>
           </div>
           <div className="w-[2.5px] min-h-[50px] h-full  bg-gray-700/60" />

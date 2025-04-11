@@ -1,34 +1,33 @@
 "use client";
 import { useBuuPricingData } from "@/hooks/use-pricing-history";
-import { formatNumber } from "@/lib/utils";
+import { useUserStakingData } from "@/hooks/use-staking-data";
+import { formatNumber, formatUnits } from "@/lib/utils";
 import React from "react";
 import { RadialBar, RadialBarChart, ResponsiveContainer } from "recharts";
 
 export default function BuuStakedSupply() {
   // Calculate percentages based on the actual values
+
   const { data: PricingData } = useBuuPricingData();
+  const {
+    globalStaking: { data: globalStakingData },
+  } = useUserStakingData();
 
   const totalSupply = PricingData?.totalSupply ?? 0;
-  const circulatingSupply = PricingData?.price ?? 0;
-  const totalStaked = 12.44 * 10000;
+  const circulatingSupply = Number(formatUnits(globalStakingData?.circulatingSupply ?? "0", 8)) ?? 0
+  const totalStaked = Number(formatUnits(globalStakingData?.totalAmount ?? "0", 8)) ?? 0
   const stakedByUsers = 4.92 * 10000; // Based on 919.94K value shown in the image
 
   // Convert to percentages relative to total supply
+
   const circulatingPercentage = (circulatingSupply / totalSupply) * 100;
+
   const stakedPercentage = (totalStaked / totalSupply) * 100;
+
   const userStakedPercentage = (stakedByUsers / totalSupply) * 100;
 
-  // Format numbers for display
-  // const formatNumber = (num: number) => {
-  //   if (num >= 1) {
-  //     return `${num.toFixed(2)}M`;
-  //   } else {
-  //     return `${(num * 1000).toFixed(2)}K`;
-  //   }
-  // };
-
   // Staking percentage to display in the center
-  const stakingRatio = Math.round((totalStaked / circulatingSupply) * 100);
+  const stakingRatio = Math.round((totalStaked / circulatingSupply) * 100)
 
   // Data for the chart layers
   const data = [
@@ -59,15 +58,15 @@ export default function BuuStakedSupply() {
   ];
 
   return (
-    <div className="flex flex-col w-full h-full bg-buu  rounded-3xl overflow-hidden">
+    <div className="flex flex-col   w-full h-full bg-buu  rounded-3xl overflow-hidden">
       <div className="px-4 py-3 border-b border-white/5 bg-overview-portfolio ">
         <p className="uppercase text-xs text-white font-semibold">
           BUU Staked Supply
         </p>
       </div>
 
-      <div className="flex-1  flex flex-col items-center justify-center p-6 relative">
-        <div className="w-full max-w-sm aspect-square overflow-hidden  relative">
+      <div className="flex-1 max-md:flex-col    flex  w-full items-center justify-center p-6 relative">
+        <div className="w-full max-w-sm   aspect-square overflow-hidden  relative">
           <ResponsiveContainer width="100%" height="100%">
             <RadialBarChart
               cx="50%"
@@ -126,7 +125,7 @@ export default function BuuStakedSupply() {
         </div>
 
         {/* Stats below the chart */}
-        <div className="grid grid-cols-2 gap-y-7">
+        <div className="grid grid-cols-2 w-full gap-y-7">
           <div className="flex items-center justify-center flex-col">
             <p className="text-sm font-medium text-muted-foreground/60">
               Staked by BUU Users

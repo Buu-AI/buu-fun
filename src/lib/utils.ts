@@ -26,19 +26,19 @@ export function isLocalMode() {
 export function pluralize(
   num: number,
   word: string,
-  plural: (value: string) => string = simplePlural,
+  plural: (value: string) => string = simplePlural
 ) {
   return isPlural(num) ? plural(word) : word;
 }
 
 export async function handleResponse(
-  response: Response,
+  response: Response
 ): Promise<TDataMuseWord[]> {
   if (!response.ok) {
     // add other generic messages later for api backends.
     throw new DataMuseError(
       `API request failed: ${response.statusText}`,
-      response.status,
+      response.status
     );
   }
   return response.json();
@@ -85,7 +85,7 @@ export function isImageUrl(value: string | null | undefined) {
 
 export async function blobUrlToFile(
   blobUrl: string,
-  fileName: string,
+  fileName: string
 ): Promise<File | null> {
   try {
     const response = await fetch(blobUrl);
@@ -106,12 +106,11 @@ export function getAllowedContentTypeMaps(key: string) {
 export function truncateString(
   value: string,
   startEnd: number = 4,
-  endStartAt: number = 4,
+  endStartAt: number = 4
 ): string {
   if (value.length <= startEnd + endStartAt) {
     return value;
   }
-
   return `${value.slice(0, startEnd)}...${value.slice(-endStartAt)}`;
 }
 
@@ -119,6 +118,20 @@ export function formatNumber(value: number) {
   return new Intl.NumberFormat("en-US", {
     notation: "compact",
     compactDisplay: "short",
+  }).format(value);
+}
+export function formatNumberWithFractions(value: number) {
+  return new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    compactDisplay: "short",
+    maximumFractionDigits: 2,
+  }).format(value);
+}
+
+export function formatWithComma(value: number) {
+  return new Intl.NumberFormat("en-US", {
+    notation: "standard",
+    compactDisplay: "long",
   }).format(value);
 }
 

@@ -62,16 +62,17 @@ export type UseStakingDataProps = {
 // }
 
 export function useUserStakingData() {
-  const { identityToken, isAuthenticated, loading, address } =
+  const {  address } =
     useAuthentication();
   const globalStaking = useGlobalStakingData();
-  const { data } = globalStaking;
-
+  const { data,isFetched } = globalStaking;
+  
   const userStaking = useQuery({
-    queryKey: ["get-global-staking-data", identityToken, JSON.stringify(data)],
-    enabled: !loading && isAuthenticated,
+    queryKey: ["get-global-staking-data"],
+    enabled: isFetched,
+    staleTime: 10000,
     queryFn: async () => {
-      if (!data) return;
+      if (!data) return null
       return await getUserStakingData({
         publicKey: new PublicKey(address ?? ""),
         stakeEntries: data.stakeEntries,

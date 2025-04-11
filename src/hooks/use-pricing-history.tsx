@@ -5,11 +5,12 @@ import {
 import { useAuthentication } from "@/providers/account.context";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "./redux";
+import { getTokenBalance } from "@/lib/solana/getTokenBalance";
 
 export function usePricingHistoricalPricing() {
   const { identityToken, isAuthenticated, loading } = useAuthentication();
   const buuPricingHistoryTime = useAppSelector(
-    (state) => state.BuuPricing.buuPricingHistoryTime,
+    (state) => state.BuuPricing.buuPricingHistoryTime
   );
   return useQuery({
     queryKey: [
@@ -40,6 +41,23 @@ export function useBuuPricingData() {
       if (!identityToken) return;
       return await getBuuTokenOverview({
         accessToken: identityToken ?? "",
+      });
+    },
+  });
+}
+
+export function useTokenBalance() {
+  const { identityToken, isAuthenticated, loading, address } =
+    useAuthentication();
+
+  return useQuery({
+    queryKey: ["get-token-balance", identityToken],
+    enabled: !loading && isAuthenticated,
+    refetchInterval: 150_000,
+    queryFn: async () => {
+      if (!address) return;
+      return await getTokenBalance({
+        address,
       });
     },
   });
