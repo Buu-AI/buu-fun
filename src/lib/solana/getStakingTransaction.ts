@@ -23,16 +23,10 @@ export async function getStakingTransaction({
       clusterUrl: "https://api.devnet.solana.com",
     });
 
-    const nonce = 0;
+    const nonce = 20;
     const amount = new BN(amountToStake);
     const duration = new BN(60 * 60 * 24 * 30); // 30 days
-    console.log("PREPARE STAKING",{
-      nonce,
-      amount,
-      duration,
-      stakePool,
-      stakePoolMint,
-    });
+
     const { ixs } = await solanaStakingClient.prepareStakeInstructions(
       {
         nonce,
