@@ -1,4 +1,4 @@
-import { clusterApiUrl, Connection, Keypair, PublicKey } from "@solana/web3.js";
+import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
 
 export async function getTokenBalance({ address }: { address: string }) {
   const publicKey = new PublicKey(address);

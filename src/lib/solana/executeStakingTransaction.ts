@@ -1,10 +1,8 @@
-import { bs58 } from "@coral-xyz/anchor/dist/cjs/utils/bytes/index";
 import {
   clusterApiUrl,
   Connection,
-  Keypair,
   PublicKey,
-  Transaction,
+  Transaction
 } from "@solana/web3.js";
 import { BN } from "bn.js";
 import { SolanaStakingClient } from "../streamflow/client";

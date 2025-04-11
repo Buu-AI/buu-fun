@@ -1,12 +1,11 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import {
-  useBuuPricingData,
-  useTokenBalance,
+  useTokenBalance
 } from "@/hooks/use-pricing-history";
 import { useUserStakingData } from "@/hooks/use-staking-data";
 import { setSelectedAmountToStake } from "@/lib/redux/features/buu-pricing";
 import { executeStakingTransaction } from "@/lib/solana/executeStakingTransaction";
-import { formatUnits, formatWithComma } from "@/lib/utils";
+import { formatWithComma } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Connection } from "@solana/web3.js";
@@ -30,11 +29,11 @@ import StakingRewardReview from "./staking-reward-review";
 import StakingSlider from "./staking-slider";
 
 export default function StakingDialog() {
-  const { address, wallet } = useAuthentication();
-  const { data } = useBuuPricingData();
+  const { wallet } = useAuthentication();
+  // const { data } = useBuuPricingData();
   const {
     userStaking: { data: userStakingData },
-    globalStaking: { data: globalStakingData },
+    // globalStaking: { data: globalStakingData },
   } = useUserStakingData();
   
   const { data: tokenData } = useTokenBalance();

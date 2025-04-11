@@ -1,10 +1,8 @@
-import React from "react";
-import { Button } from "../ui/button";
-import { cn, formatUnits } from "@/lib/utils";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { useUserStakingData } from "@/hooks/use-staking-data";
-import { setSelectedAmountToStake } from "@/lib/redux/features/buu-pricing";
 import { useTokenBalance } from "@/hooks/use-pricing-history";
+import { setSelectedAmountToStake } from "@/lib/redux/features/buu-pricing";
+import { cn } from "@/lib/utils";
+import { Button } from "../ui/button";
 
 export default function StakingSlider() {
   const { data: tokenData } = useTokenBalance();

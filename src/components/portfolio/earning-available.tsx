@@ -1,9 +1,8 @@
 import { useBuuPricingData } from "@/hooks/use-pricing-history";
 import { useUserStakingData } from "@/hooks/use-staking-data";
 import { formatUnits, multiplyAndFormatPricing } from "@/lib/utils";
-import { Button } from "../ui/button";
-import StakingClaimButton from "./staking-claim-button";
 import BuyBuuButton from "./buy-buu-button";
+import StakingClaimButton from "./staking-claim-button";
 
 export default function EarningAvailableCard() {
   const { data } = useBuuPricingData();

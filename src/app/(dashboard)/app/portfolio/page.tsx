@@ -1,5 +1,3 @@
-import APICapacityCTA from "@/components/portfolio/api-capacity-cta";
-import BuuNetworkUtilization from "@/components/portfolio/buu-network-utilization";
 import BuuStakedSupply from "@/components/portfolio/buu-staked-supply";
 import BuyBuuRedirectDialog from "@/components/portfolio/buy-buu-redirect-dialog";
 import HeaderLogo from "@/components/portfolio/header-logo";

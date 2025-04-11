@@ -1,9 +1,7 @@
 'use client'
-import React from "react";
-import { Button } from "../ui/button";
-import toast from "react-hot-toast";
-import { setStreamflowDialogOpen } from "@/lib/redux/features/buu-pricing";
 import { useAppDispatch } from "@/hooks/redux";
+import { setStreamflowDialogOpen } from "@/lib/redux/features/buu-pricing";
+import { Button } from "../ui/button";
 
 export default function StakingClaimAndRestake() {
   const dispatch = useAppDispatch()

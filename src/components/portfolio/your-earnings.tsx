@@ -2,15 +2,13 @@
 import { useBuuPricingData } from "@/hooks/use-pricing-history";
 import { useUserStakingData } from "@/hooks/use-staking-data";
 import { formatUnits, multiplyAndFormatPricing } from "@/lib/utils";
-import toast from "react-hot-toast";
-import { Button } from "../ui/button";
 import EarningAvailableCard from "./earning-available";
 import EarningPlatformCredits from "./earning-platform-credits";
 import EarningTotalStakedCard from "./earning-total-staked-card";
-import YourEarningsPricing from "./your-earning-pricing";
 import StakingClaimButton from "./staking-claim-button";
 import StakingClaimAndRestakeButton from "./staking-claim-restake-button";
 import WithdrawButton from "./withdraw-button";
+import YourEarningsPricing from "./your-earning-pricing";
 
 export default function YourEarnings() {
 

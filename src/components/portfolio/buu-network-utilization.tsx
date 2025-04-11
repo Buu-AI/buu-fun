@@ -1,11 +1,10 @@
 "use client";
-import { useBuuPricingData } from "@/hooks/use-pricing-history";
 import { formatNumber } from "@/lib/utils";
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { RadialBar, RadialBarChart, ResponsiveContainer } from "recharts";
 
 export default function BuuNetworkUtilization() {
-  const { data: PricingData } = useBuuPricingData();
+  // const { data: PricingData } = useBuuPricingData();
 
   // Updated more accurate values to match the UI screenshot
   const consumed = 3000;
