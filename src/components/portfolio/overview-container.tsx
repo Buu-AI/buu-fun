@@ -2,10 +2,26 @@
 import React from "react";
 import OverviewTilesContainer from "./overview-tiles";
 import { useBuuPricingData } from "@/hooks/use-pricing-history";
+import {
+  formatNumber,
+  formatNumberWithFractions,
+  formatPrice,
+} from "@/lib/utils";
+import { useGlobalStakingData } from "@/hooks/use-global-staking";
+import Link from "next/link";
+import DexScreenerIcon from "@/assets/icons/dex-screener-icon";
+import { LINKS } from "@/constants/social-links";
+import Image from "next/image";
+import { JupiterAgIcon } from "@/assets/icons";
 
 export default function OverviewContainer() {
   const { data } = useBuuPricingData();
-  console.log("OVERVIEW:", data);
+  const { data: GlobalStakingData } = useGlobalStakingData();
+  const price = data?.price;
+  const FDSupply = data?.fullyDilutedValue;
+  const marketCap = data?.marketCap;
+  const totalSupply = data?.totalSupply;
+  // const
   return (
     <div className="">
       <div className="px-4 py-4   border-white/5 border rounded-t-3xl  bg-overview-portfolio">
@@ -24,17 +40,53 @@ export default function OverviewContainer() {
         </p>
       </div>
       <div className="px-4  bg-buu pb-4 rounded-b-3xl flex items-center justify-center gap-2 flex-col">
-        <OverviewTilesContainer pill="+1,33%" value="$3.26" />
-        <OverviewTilesContainer title="Total Supply" value="101.51M" />
-        <OverviewTilesContainer title="Market Cap" value="$ 91.28M" />
+        <OverviewTilesContainer
+          // pill="+1,33%"
+          value={`$${formatPrice(price ?? 0.0004)}`}
+        />
+        <OverviewTilesContainer
+          title="Total Supply"
+          value={`${formatNumberWithFractions(totalSupply ?? 0)}`}
+        />
+        <OverviewTilesContainer
+          title="Market Cap"
+          value={`$ ${formatNumberWithFractions(marketCap ?? 0)}`}
+        />
         <OverviewTilesContainer
           title="Fully Diluted Value (FDV)"
-          value="$ 328.02M"
+          value={`$ ${formatNumberWithFractions(FDSupply ?? 0)}`}
         />
-        <OverviewTilesContainer pill="APR 88.78%" title="Staking Yield" />
+        {/* <OverviewTilesContainer pill="APR 88.78%" title="Staking Yield" /> */}
         <OverviewTilesContainer title="Contract" value="0xacfE" />
-        <OverviewTilesContainer title="Audit" value="View Audit" />
-        <OverviewTilesContainer title="Buy/Sell" />
+        {/* <Link href={"/"} className="w-full h-full">
+          <OverviewTilesContainer title="Audit" value="View Audit" />
+        </Link> */}
+        <OverviewTilesContainer
+          title="Buy/Sell"
+          value={
+            <div className="flex items-center gap-2">
+              <Link
+                target="_blank"
+                href={LINKS.BUY_BUU_DEX_SCREENER}
+                className="w-4 h-4"
+              >
+                <DexScreenerIcon />
+              </Link>
+              <Link
+                target="_blank"
+                href={LINKS.BUY_BUU_JUPITER_AG}
+                className="w-4 h-4"
+              >
+                <Image
+                  src={JupiterAgIcon}
+                  width={250}
+                  height={250}
+                  alt="jupiter ag swap icon"
+                />
+              </Link>
+            </div>
+          }
+        />
       </div>
     </div>
   );
