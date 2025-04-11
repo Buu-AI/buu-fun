@@ -4,16 +4,11 @@ import { cn, formatUnits } from "@/lib/utils";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useUserStakingData } from "@/hooks/use-staking-data";
 import { setSelectedAmountToStake } from "@/lib/redux/features/buu-pricing";
+import { useTokenBalance } from "@/hooks/use-pricing-history";
 
 export default function StakingSlider() {
-  const {
-    userStaking: { data: userStakingData },
-  } = useUserStakingData();
-
-  const earnings = formatUnits(
-    userStakingData?.yourEarnings ?? "0",
-    userStakingData?.decimals ?? 0
-  );
+  const { data: tokenData } = useTokenBalance();
+  const earnings = tokenData?.value.uiAmount ?? 0
 
   const selected = useAppSelector((state) => state.BuuPricing.amountToStake);
   const dispatch = useAppDispatch();

@@ -1,19 +1,16 @@
+'use client'
 import React from "react";
 import { Button } from "../ui/button";
 import toast from "react-hot-toast";
+import { setStreamflowDialogOpen } from "@/lib/redux/features/buu-pricing";
+import { useAppDispatch } from "@/hooks/redux";
 
 export default function StakingClaimAndRestake() {
-  return (
-    <Button
-      onClick={async () => {
-        toast.success("clicked");
-        try {
-          // const data = await wallet?.walletData?.sendTransaction({})
-        } catch (error) {
-          if (error) {
-            toast.error("user rejected the request");
-          }
-        }
+  const dispatch = useAppDispatch()
+    return (
+      <Button
+      onClick={()=> {
+        dispatch(setStreamflowDialogOpen(true))
       }}
       className="h-[40px]"
     >

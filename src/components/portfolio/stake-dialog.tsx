@@ -1,6 +1,19 @@
-import { useBuuPricingData } from "@/hooks/use-pricing-history";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import {
+  useBuuPricingData,
+  useTokenBalance,
+} from "@/hooks/use-pricing-history";
 import { useUserStakingData } from "@/hooks/use-staking-data";
+import { setSelectedAmountToStake } from "@/lib/redux/features/buu-pricing";
+import { executeStakingTransaction } from "@/lib/solana/executeStakingTransaction";
 import { formatUnits, formatWithComma } from "@/lib/utils";
+import { useAuthentication } from "@/providers/account.context";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Connection } from "@solana/web3.js";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { z } from "zod";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -15,29 +28,23 @@ import { Label } from "../ui/label";
 import StakeConfirmButton from "./stake-confirm-button";
 import StakingRewardReview from "./staking-reward-review";
 import StakingSlider from "./staking-slider";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { setSelectedAmountToStake } from "@/lib/redux/features/buu-pricing";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
-import { useSendTransaction } from "@privy-io/react-auth/solana";
-import { Connection } from "@solana/web3.js";
-import { getStakingTransaction } from "@/lib/solana/getStakingTransaction";
-import { useAuthentication } from "@/providers/account.context";
-import toast from "react-hot-toast";
 
 export default function StakingDialog() {
   const { address, wallet } = useAuthentication();
   const { data } = useBuuPricingData();
   const {
     userStaking: { data: userStakingData },
+    globalStaking: { data: globalStakingData },
   } = useUserStakingData();
+  
+  const { data: tokenData } = useTokenBalance();
+  const earnings = tokenData?.value.uiAmount ?? 0
+  // const earnings = formatUnits(
+  //   userStakingData?.yourEarnings ?? "0",
+  //   userStakingData?.decimals ?? 0
+  // );
 
-  const earnings = formatUnits(
-    userStakingData?.yourEarnings ?? "0",
-    userStakingData?.decimals ?? 0
-  );
+
   const toBeStaked = useAppSelector((state) => state.BuuPricing.amountToStake);
   const dispatch = useAppDispatch();
 
@@ -49,7 +56,7 @@ export default function StakingDialog() {
         invalid_type_error: "Amount must be a number",
       })
       .positive("Amount must be positive")
-      .max(Number(earnings), `Maximum ${earnings} $BUU allowed`),
+      .max(Number(tokenData?.value.uiAmount ?? 0), `Maximum ${earnings} $BUU allowed`),
   });
 
   // Initialize form with react-hook-form
@@ -82,12 +89,13 @@ export default function StakingDialog() {
       setValue("amount", toBeStaked);
     }
   }, [toBeStaked, setValue]);
-  const { sendTransaction } = useSendTransaction();
+
   async function onSubmit(data: z.infer<typeof stakeInputSchema>) {
-    if (!wallet.address) {
+    if (!wallet || !wallet.address) {
       toast.error("Authentication is loading...");
       return;
     }
+
     if (wallet?.chainType !== "solana") {
       toast.error("Please connect using Solana wallet");
       return;
@@ -96,30 +104,66 @@ export default function StakingDialog() {
     try {
       const connection = new Connection("https://api.devnet.solana.com");
 
-      const transaction = await getStakingTransaction({
+      // Show loading state
+      toast.loading(`Creating transaction for ${data.amount}...`);
+      const transaction = await executeStakingTransaction({
         address: wallet.address,
-        amountToStake: data.amount,
+        amountToStake: data.amount * 10 ** (userStakingData?.decimals ?? 1),
       });
 
       if (!transaction) {
+        toast.dismiss();
         toast.error("Failed to create transaction");
         return;
       }
-      const sendTransaction = await wallet.walletData?.sendTransaction(
+
+      toast.dismiss();
+      toast.loading("Please confirm the transaction in your wallet");
+
+      // Use the wallet's sendTransaction method
+      // const signature = await wallet.walletData?.sendTransaction(
+      //   transaction,
+      //   connection
+      // );
+      const signature = await wallet.walletData?.sendTransaction(
         transaction,
         connection
       );
+      console.log(signature);
+      toast.dismiss();
 
-      // const receipt = await sendTransaction({
-      //   transaction: transaction,
-      //   connection: connection,
-      // });
-      console.log("TRANSACTION",sendTransaction);
+      if (signature) {
+        toast.success("Transaction sent! Waiting for confirmation...");
+
+        // Wait for confirmation
+        try {
+          const confirmation = await connection.confirmTransaction(
+            signature,
+            "confirmed"
+          );
+
+          if (confirmation.value.err) {
+            toast.error("Transaction failed on-chain");
+            console.error("Transaction error:", confirmation.value.err);
+          } else {
+            toast.success("Staking successful!");
+          }
+        } catch (confirmError) {
+          toast.error("Failed to confirm transaction");
+          console.error("Confirmation error:", confirmError);
+        }
+      } else {
+        toast.error("Transaction was not sent");
+      }
     } catch (error) {
-      console.log(error);
+      toast.dismiss();
+      toast.error(
+        "Transaction failed: " +
+          (error instanceof Error ? error.message : "Unknown error")
+      );
+      console.error("Transaction error:", error);
     }
   }
-
   return (
     <Dialog>
       <DialogTrigger asChild>

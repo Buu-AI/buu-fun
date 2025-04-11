@@ -10,9 +10,9 @@ import EarningTotalStakedCard from "./earning-total-staked-card";
 import YourEarningsPricing from "./your-earning-pricing";
 import StakingClaimButton from "./staking-claim-button";
 import StakingClaimAndRestakeButton from "./staking-claim-restake-button";
+import WithdrawButton from "./withdraw-button";
 
 export default function YourEarnings() {
-  // const { address, wallet } = useAuthentication();
 
   const { data } = useBuuPricingData();
   const {
@@ -42,9 +42,7 @@ export default function YourEarnings() {
             <div className="flex items-center flex-wrap justify-center gap-3">
               <StakingClaimButton/>
               <StakingClaimAndRestakeButton/>
-              <Button className="h-[40px]">
-                <span className="p-3">Withdraw</span>
-              </Button>
+              <WithdrawButton/>
             </div>
           </div>
           <p className="text-muted-foreground/50 hidden lg:block tracking-tight font-medium text-sm">
