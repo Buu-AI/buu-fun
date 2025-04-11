@@ -120,6 +120,13 @@ export function formatNumber(value: number) {
     compactDisplay: "short",
   }).format(value);
 }
+export function formatNumberWithFractions(value: number) {
+  return new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    compactDisplay: "short",
+    maximumFractionDigits: 2,
+  }).format(value);
+}
 
 export function formatWithComma(value: number) {
   return new Intl.NumberFormat("en-US", {
