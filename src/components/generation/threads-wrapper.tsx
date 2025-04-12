@@ -323,7 +323,7 @@ export default function ThreadsWrapper({ threadId }: TThreadsWrapper) {
         <div
           ref={scrollContainerRef}
           className={cn(
-            "overflow-y-scroll scrollbar-w-hidden snap-y  snap-mandatory w-full h-full relative"
+            "overflow-y-scroll scrollbar-w-hidden snap-y  snap-mandatory w-full h-full relative",
           )}
         >
           <div className={cn("flex  -mt-4 flex-col w-full h-full relative")}>
@@ -353,7 +353,7 @@ export default function ThreadsWrapper({ threadId }: TThreadsWrapper) {
                   className={cn(
                     "min-w-0 shrink-0 grow-0 basis-full",
                     "pt-4",
-                    "relative py-4 w-full h-full snap-start"
+                    "relative py-4 w-full h-full snap-start",
                   )}
                   onAnimationComplete={() => {
                     // After animation completes, check if we need to scroll to bottom

@@ -84,7 +84,7 @@ export default function ToolBarToolTips({
         }
         if (isPending || isChatPending?.isLimitReached) {
           toast.error(
-            "Whoa, you're on fire! You've hit the limit of 4 creations."
+            "Whoa, you're on fire! You've hit the limit of 4 creations.",
           );
           return;
         }

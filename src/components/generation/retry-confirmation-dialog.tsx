@@ -3,9 +3,9 @@ import { RETRY_ALLOWED_VERIFIED_STORAGE_KEY } from "@/constants/request.config";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { mutateGenerateNewImage } from "@/lib/react-query/threads";
 import {
-    setNewGenRequest,
-    setRetryModalOpen,
-    setRetrySubthreadId,
+  setNewGenRequest,
+  setRetryModalOpen,
+  setRetrySubthreadId,
 } from "@/lib/redux/features/chat";
 import { useAuthentication } from "@/providers/account.context";
 import { useLocalStorage } from "@mantine/hooks";
@@ -16,12 +16,12 @@ import toast from "react-hot-toast";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
 } from "../ui/dialog";
 import { Label } from "../ui/label";
 
@@ -49,7 +49,7 @@ export default function RetryConfirmationDialog() {
   });
 
   const isRetryModalOpen = useAppSelector(
-    (state) => state.chat.retry.modalOpened
+    (state) => state.chat.retry.modalOpened,
   );
   const subThreadId = useAppSelector((state) => state.chat.retry.subThreadId);
   const { identityToken: accessToken, login } = useAuthentication();
@@ -110,14 +110,16 @@ export default function RetryConfirmationDialog() {
             Generate Multiple 3D Models
           </DialogTitle>
           <DialogDescription className="text-center mt-2">
-            You're about to generate 3 new variations of your 3D model. This will use 3 credits from your account.
+            You're about to generate 3 new variations of your 3D model. This
+            will use 3 credits from your account.
           </DialogDescription>
         </DialogHeader>
 
         <div className="mt-2 p-3 bg-black/10 rounded-lg text-sm">
           <p>
-            All three models will use your current parameters but will produce unique variations, giving you more options to choose from.
-            Each generation counts as a separate credit usage.
+            All three models will use your current parameters but will produce
+            unique variations, giving you more options to choose from. Each
+            generation counts as a separate credit usage.
           </p>
         </div>
 
