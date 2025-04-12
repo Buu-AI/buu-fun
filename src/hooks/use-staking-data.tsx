@@ -1,6 +1,6 @@
 "use client";
 
-import { getClusterUrl, getUserStakingData } from "@/lib/solana/staking";
+import { getUserStakingData } from "@/lib/solana/staking";
 import { useAuthentication } from "@/providers/account.context";
 import { PublicKey } from "@solana/web3.js";
 import { useQuery } from "@tanstack/react-query";
@@ -49,7 +49,6 @@ export function useUserStakingData() {
         tokenMint: data.tokenMint,
         totalEffectiveAmount: new BN(data.totalEffectiveAmount),
         totalRewardsPerDay: new BN(data.totalRewardsPerDay),
-        clusterUrl: getClusterUrl(),
       });
     },
   });

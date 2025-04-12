@@ -16,7 +16,6 @@ export async function getUserStakingData({
   rewardEntries,
   totalEffectiveAmount,
   totalRewardsPerDay,
-  clusterUrl = "https://api.devnet.solana.com",
 }: {
   publicKey: PublicKey;
   stakeEntries: StakeEntry[];
@@ -27,7 +26,6 @@ export async function getUserStakingData({
   totalRewardsPerDay: BN;
   tokenPublicKey?: PublicKey;
   stakePool?: PublicKey;
-  clusterUrl?: string; // Solana cluster URL
 }) {
   try {
     const userStakeEntries = stakeEntries.filter((stakeEntry) =>
