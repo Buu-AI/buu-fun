@@ -29,18 +29,19 @@ export async function getUserStakingData({
 }) {
   try {
     const userStakeEntries = stakeEntries.filter((stakeEntry) =>
-      new PublicKey(stakeEntry.account.payer).equals(new PublicKey(publicKey))
+      new PublicKey(stakeEntry.account.payer).equals(new PublicKey(publicKey)),
     );
     const rewardEntriesByStakeEntry = stakeEntries.map((stakeEntry) => {
       return rewardEntries.filter(
-        (rewardEntry) => rewardEntry.account.stakeEntry === stakeEntry.publicKey
+        (rewardEntry) =>
+          rewardEntry.account.stakeEntry === stakeEntry.publicKey,
       );
     });
     const userRewardEntries = rewardEntriesByStakeEntry.reduce(
       (acc, innerRewardEntries) => {
         return acc.concat(innerRewardEntries);
       },
-      []
+      [],
     );
     const totalClaimableRewards = userStakeEntries.reduce(
       (acc1, stakeEntry) => {
@@ -48,7 +49,7 @@ export async function getUserStakingData({
           const rewardEntry = userRewardEntries.find(
             (rewardEntry) =>
               rewardEntry.account.stakeEntry === stakeEntry.publicKey &&
-              rewardEntry.account.rewardPool === rewardPool.publicKey
+              rewardEntry.account.rewardPool === rewardPool.publicKey,
           );
           const rewardEntryProgram = rewardEntry
             ? {
@@ -61,10 +62,10 @@ export async function getUserStakingData({
                   claimedAmount: new BN(rewardEntry.account.claimedAmount),
                   lastAccountedTs: new BN(rewardEntry.account.lastAccountedTs),
                   lastRewardAmount: new BN(
-                    rewardEntry.account.lastRewardAmount
+                    rewardEntry.account.lastRewardAmount,
                   ),
                   lastRewardPeriod: new BN(
-                    rewardEntry.account.lastRewardPeriod
+                    rewardEntry.account.lastRewardPeriod,
                   ),
                   buffer: rewardEntry.account.buffer,
                 },
@@ -84,7 +85,7 @@ export async function getUserStakingData({
                 closedTs: new BN(stakeEntry.account.closedTs),
                 unstakeTs: new BN(stakeEntry.account.unstakeTs),
                 priorTotalEffectiveStake: new BN(
-                  stakeEntry.account.priorTotalEffectiveStake
+                  stakeEntry.account.priorTotalEffectiveStake,
                 ),
                 effectiveAmount: new BN(stakeEntry.account.effectiveAmount),
                 amount: new BN(stakeEntry.account.amount),
@@ -108,21 +109,21 @@ export async function getUserStakingData({
                 lastRewardAmount: new BN(rewardPool.account.lastRewardAmount),
                 lastRewardPeriod: new BN(rewardPool.account.lastRewardPeriod),
                 lastAmountUpdateTs: new BN(
-                  rewardPool.account.lastAmountUpdateTs
+                  rewardPool.account.lastAmountUpdateTs,
                 ),
                 lastPeriodUpdateTs: new BN(
-                  rewardPool.account.lastPeriodUpdateTs
+                  rewardPool.account.lastPeriodUpdateTs,
                 ),
                 claimedAmount: new BN(rewardPool.account.claimedAmount),
                 fundedAmount: new BN(rewardPool.account.fundedAmount),
                 rewardAmount: new BN(rewardPool.account.rewardAmount),
                 rewardPeriod: new BN(rewardPool.account.rewardPeriod),
               },
-            }
+            },
           ).add(acc2);
         }, acc1);
       },
-      new BN(0)
+      new BN(0),
     );
     const {
       totalAmount: totalUserAmount,
@@ -131,7 +132,7 @@ export async function getUserStakingData({
       (acc, entry) => {
         const { effectiveAmount, amount } = entry.account;
         acc.totalEffectiveAmount = acc.totalEffectiveAmount.add(
-          new BN(effectiveAmount)
+          new BN(effectiveAmount),
         );
         acc.totalAmount = acc.totalAmount.add(new BN(amount));
         return acc;
@@ -139,7 +140,7 @@ export async function getUserStakingData({
       {
         totalEffectiveAmount: new BN(0),
         totalAmount: new BN(0),
-      }
+      },
     );
     const share = new BN(totalUserEffectiveAmount)
       .mul(new BN(10000))
@@ -155,7 +156,7 @@ export async function getUserStakingData({
       },
       {
         totalClaimedAmount: new BN(0),
-      }
+      },
     );
     const apy = totalRewardsPerDay
       .mul(new BN(365))

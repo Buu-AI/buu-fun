@@ -13,7 +13,7 @@ export async function getStakingGlobalDataQuery({
     {},
     {
       Authorization: getAuthorization(accessToken),
-    }
+    },
   );
   if (!data) {
     throw new Error("Internal server error");
