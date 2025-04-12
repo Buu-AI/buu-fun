@@ -38,7 +38,7 @@ export const ToolTips = [
   {
     type: "DOWNLOAD" as const,
     Icon: <DownloadIcon />,
-    content: "Download",
+    content: "Download GLB",
   },
 ];
 

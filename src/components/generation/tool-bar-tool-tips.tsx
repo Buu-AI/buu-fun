@@ -6,7 +6,11 @@ import {
 } from "@/components/ui/tooltip";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { mutateGenerateNewImage } from "@/lib/react-query/threads";
-import { setNewGenRequest } from "@/lib/redux/features/chat";
+import {
+  setNewGenRequest,
+  setRetryModalOpen,
+  setRetrySubthreadId,
+} from "@/lib/redux/features/chat";
 import { cn, isRetryExceeded } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
 import { motion } from "framer-motion";
@@ -16,6 +20,8 @@ import { ToolTips, TToolTipEvents } from "./handle-tool-calls";
 import { isSubThreadGenerating } from "@/lib/redux/selectors/chat";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ToolTipDownload from "./tool-tip-download";
+import { useLocalStorage } from "@mantine/hooks";
+import { RETRY_ALLOWED_VERIFIED_STORAGE_KEY } from "@/constants/request.config";
 
 type TToolBarToolTips = {
   subThreadId: string;
@@ -38,8 +44,12 @@ export default function ToolBarToolTips({
 }: TToolBarToolTips) {
   const dispatch = useAppDispatch();
   const { identityToken, login } = useAuthentication();
-  // const {}= usePrivy({})
+
   const queryClient = useQueryClient();
+  const [acknowledgedRetry] = useLocalStorage({
+    key: RETRY_ALLOWED_VERIFIED_STORAGE_KEY,
+    defaultValue: false,
+  });
 
   const { mutate: generateNewImage, isPending } = useMutation({
     mutationFn: mutateGenerateNewImage,
@@ -54,6 +64,7 @@ export default function ToolBarToolTips({
       console.log(error);
     },
   });
+
   const isChatPending = useAppSelector(isSubThreadGenerating);
 
   function handleEvent(events: TToolTipEvents) {
@@ -66,14 +77,20 @@ export default function ToolBarToolTips({
       case "TRY_AGAIN": {
         if (isRetryExceeded(totalGenerations)) {
           toast.error("You have exceeded total number of retries.");
+          return;
         }
         if (isPending) {
           return;
         }
         if (isPending || isChatPending?.isLimitReached) {
           toast.error(
-            "Whoa, you're on fire! You've hit the limit of 4 creations.",
+            "Whoa, you're on fire! You've hit the limit of 4 creations."
           );
+          return;
+        }
+        if (!acknowledgedRetry) {
+          dispatch(setRetryModalOpen(true));
+          dispatch(setRetrySubthreadId(subThreadId));
           return;
         }
         new Array(3).fill(0).map(() => {
@@ -84,9 +101,6 @@ export default function ToolBarToolTips({
         });
         break;
       }
-      // case "MODIFY": {
-      //   break;
-      // }
       default: {
         console.log("NOT FOUND");
       }
