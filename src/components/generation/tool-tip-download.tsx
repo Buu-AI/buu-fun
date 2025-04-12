@@ -1,8 +1,6 @@
-import { DownloadIcon } from "@/assets/icons";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { ToolTips, TToolTipsData } from "./handle-tool-calls";
 import { buttonVariants } from "./tool-bar-tool-tips";

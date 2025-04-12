@@ -27,7 +27,7 @@ import { Label } from "../ui/label";
 
 export default function RetryConfirmationDialog() {
   const [checked, setChecked] = useState(false);
-  const [acknowledgedRetry, setAcknowledgedRetry] = useLocalStorage({
+  const [setAcknowledgedRetry] = useLocalStorage({
     key: RETRY_ALLOWED_VERIFIED_STORAGE_KEY,
     defaultValue: false,
   });
@@ -89,11 +89,13 @@ export default function RetryConfirmationDialog() {
         });
       });
 
-      const data = await Promise.all(AllPromises);
+      await Promise.all(AllPromises);
       dispatch(setRetryModalOpen(false));
       dispatch(setRetrySubthreadId(null));
     } catch (error) {
-      toast.error("Something went wrong. Please try again.");
+      if (error) {
+        toast.error("Something went wrong. Please try again.");
+      }
     }
   }
 
@@ -110,8 +112,8 @@ export default function RetryConfirmationDialog() {
             Generate Multiple 3D Models
           </DialogTitle>
           <DialogDescription className="text-center mt-2">
-            You're about to generate 3 new variations of your 3D model. This
-            will use 3 credits from your account.
+            You&apos;re about to generate 3 new variations of your 3D model.
+            This will use 3 credits from your account.
           </DialogDescription>
         </DialogHeader>
 
@@ -135,7 +137,7 @@ export default function RetryConfirmationDialog() {
               }}
             />
             <Label htmlFor="never-ask-checkbox">
-              Don't show this confirmation again
+              Don&apos;t show this confirmation again
             </Label>
           </div>
 
