@@ -27,7 +27,8 @@ import { Label } from "../ui/label";
 
 export default function RetryConfirmationDialog() {
   const [checked, setChecked] = useState(false);
-  const [setAcknowledgedRetry] = useLocalStorage({
+  //eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_acknowledgedRetry, setAcknowledgedRetry] = useLocalStorage({
     key: RETRY_ALLOWED_VERIFIED_STORAGE_KEY,
     defaultValue: false,
   });
@@ -49,7 +50,7 @@ export default function RetryConfirmationDialog() {
   });
 
   const isRetryModalOpen = useAppSelector(
-    (state) => state.chat.retry.modalOpened,
+    (state) => state.chat.retry.modalOpened
   );
   const subThreadId = useAppSelector((state) => state.chat.retry.subThreadId);
   const { identityToken: accessToken, login } = useAuthentication();
