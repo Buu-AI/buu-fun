@@ -2,6 +2,7 @@
 import { JupiterAgIcon } from "@/assets/icons";
 import DexScreenerIcon from "@/assets/icons/dex-screener-icon";
 import { LINKS } from "@/constants/social-links";
+import { useGlobalStakingData } from "@/hooks/use-global-staking";
 import { useBuuPricingData } from "@/hooks/use-pricing-history";
 import { formatNumberWithFractions, formatPrice } from "@/lib/utils";
 import Image from "next/image";
@@ -10,7 +11,8 @@ import OverviewTilesContainer from "./overview-tiles";
 
 export default function OverviewContainer() {
   const { data } = useBuuPricingData();
-  // const { data: GlobalStakingData } = useGlobalStakingData();
+  const { data: GlobalStakingData } = useGlobalStakingData();
+  const apr = GlobalStakingData?.apr;
   const price = data?.price;
   const FDSupply = data?.fullyDilutedValue;
   const marketCap = data?.marketCap;
@@ -50,7 +52,10 @@ export default function OverviewContainer() {
           title="Fully Diluted Value (FDV)"
           value={`$ ${formatNumberWithFractions(FDSupply ?? 0)}`}
         />
-        {/* <OverviewTilesContainer pill="APR 88.78%" title="Staking Yield" /> */}
+        <OverviewTilesContainer
+          pill={`APR ${apr?.toFixed(2) ?? 0}%`}
+          title="Staking Yield"
+        />
         <OverviewTilesContainer title="Contract" value="0xacfE" />
         {/* <Link href={"/"} className="w-full h-full">
           <OverviewTilesContainer title="Audit" value="View Audit" />

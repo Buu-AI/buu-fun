@@ -31,41 +31,10 @@ export type UseStakingDataProps = {
   clusterUrl?: string;
 };
 
-// export function useStakingData(props: UseStakingDataProps | null) {
-//   const [data, setData] = useState<StakingData | null>(null);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState<Error | null>(null);
-//   useEffect(() => {
-//     if (!props) {
-//       setLoading(true);
-//       return;
-//     }
-//     const fetchData = async () => {
-//       try {
-//         setLoading(true);
-//         const result = await getUserStakingData(props);
-//         setData(result);
-//       } catch (err) {
-//         setError(err instanceof Error ? err : new Error(String(err)));
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-//     fetchData();
-//   }, [
-//     props?.publicKey?.toString(),
-//     props?.totalEffectiveAmount?.toString(),
-//     props?.totalRewardsPerDay?.toString(),
-//     props?.clusterUrl,
-//   ]);
-//   return { data, loading, error };
-// }
-
 export function useUserStakingData() {
   const { address } = useAuthentication();
   const globalStaking = useGlobalStakingData();
   const { data, isFetched } = globalStaking;
-
   const userStaking = useQuery({
     queryKey: ["get-global-staking-data"],
     enabled: isFetched,
@@ -76,6 +45,7 @@ export function useUserStakingData() {
         publicKey: new PublicKey(address ?? ""),
         stakeEntries: data.stakeEntries,
         rewardPools: data.rewardPools,
+        rewardEntries: data.rewardEntries,
         tokenMint: data.tokenMint,
         totalEffectiveAmount: new BN(data.totalEffectiveAmount),
         totalRewardsPerDay: new BN(data.totalRewardsPerDay),

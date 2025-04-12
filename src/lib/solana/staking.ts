@@ -1,20 +1,26 @@
-import { PublicKey } from "@solana/web3.js";
-import { SolanaStakingClient } from "@/lib/streamflow/client";
-import BN from "bn.js";
+import {
+  RewardEntry,
+  RewardPool,
+  StakeEntry,
+  TokenMint,
+} from "@/gql/types/graphql";
 import { calcRewards } from "@/lib/streamflow/lib/rewards";
-import { RewardPool, StakeEntry, TokenMint } from "@/gql/types/graphql";
+import { PublicKey } from "@solana/web3.js";
+import BN from "bn.js";
 
 export async function getUserStakingData({
   publicKey,
   stakeEntries,
   rewardPools,
   tokenMint,
+  rewardEntries,
   totalEffectiveAmount,
   totalRewardsPerDay,
   clusterUrl = "https://api.devnet.solana.com",
 }: {
   publicKey: PublicKey;
   stakeEntries: StakeEntry[];
+  rewardEntries: RewardEntry[];
   rewardPools: RewardPool[];
   tokenMint: TokenMint;
   totalEffectiveAmount: BN;
@@ -24,42 +30,50 @@ export async function getUserStakingData({
   clusterUrl?: string; // Solana cluster URL
 }) {
   try {
-    const solanaStakingClient = new SolanaStakingClient({
-      clusterUrl,
-    });
     const userStakeEntries = stakeEntries.filter((stakeEntry) =>
-      new PublicKey(stakeEntry.account.payer).equals(new PublicKey(publicKey)),
+      new PublicKey(stakeEntry.account.payer).equals(new PublicKey(publicKey))
     );
-    const rewardEntriesByStakeEntryPromises = stakeEntries.map(
-      async (stakeEntry) => {
-        return solanaStakingClient.searchRewardEntries({
-          stakeEntry: new PublicKey(stakeEntry.publicKey),
-        });
-      },
-    );
-    const rewardEntriesByStakeEntry = await Promise.all(
-      rewardEntriesByStakeEntryPromises,
-    );
-    const rewardEntries = rewardEntriesByStakeEntry.reduce(
+    const rewardEntriesByStakeEntry = stakeEntries.map((stakeEntry) => {
+      return rewardEntries.filter(
+        (rewardEntry) => rewardEntry.account.stakeEntry === stakeEntry.publicKey
+      );
+    });
+    const userRewardEntries = rewardEntriesByStakeEntry.reduce(
       (acc, innerRewardEntries) => {
         return acc.concat(innerRewardEntries);
       },
-      [],
+      []
     );
     const totalClaimableRewards = userStakeEntries.reduce(
       (acc1, stakeEntry) => {
         return rewardPools.reduce((acc2, rewardPool) => {
-          const rewardEntry = rewardEntries.find(
+          const rewardEntry = userRewardEntries.find(
             (rewardEntry) =>
-              rewardEntry.account.stakeEntry.equals(
-                new PublicKey(stakeEntry.publicKey),
-              ) &&
-              rewardEntry.account.rewardPool.equals(
-                new PublicKey(rewardPool.publicKey),
-              ),
+              rewardEntry.account.stakeEntry === stakeEntry.publicKey &&
+              rewardEntry.account.rewardPool === rewardPool.publicKey
           );
+          const rewardEntryProgram = rewardEntry
+            ? {
+                publicKey: new PublicKey(rewardEntry.publicKey),
+                account: {
+                  rewardPool: new PublicKey(rewardEntry.account.rewardPool),
+                  stakeEntry: new PublicKey(rewardEntry.account.stakeEntry),
+                  createdTs: new BN(rewardEntry.account.createdTs),
+                  accountedAmount: new BN(rewardEntry.account.accountedAmount),
+                  claimedAmount: new BN(rewardEntry.account.claimedAmount),
+                  lastAccountedTs: new BN(rewardEntry.account.lastAccountedTs),
+                  lastRewardAmount: new BN(
+                    rewardEntry.account.lastRewardAmount
+                  ),
+                  lastRewardPeriod: new BN(
+                    rewardEntry.account.lastRewardPeriod
+                  ),
+                  buffer: rewardEntry.account.buffer,
+                },
+              }
+            : undefined;
           return calcRewards(
-            rewardEntry ?? undefined,
+            rewardEntryProgram,
             {
               ...stakeEntry,
               publicKey: new PublicKey(stakeEntry.publicKey),
@@ -72,7 +86,7 @@ export async function getUserStakingData({
                 closedTs: new BN(stakeEntry.account.closedTs),
                 unstakeTs: new BN(stakeEntry.account.unstakeTs),
                 priorTotalEffectiveStake: new BN(
-                  stakeEntry.account.priorTotalEffectiveStake,
+                  stakeEntry.account.priorTotalEffectiveStake
                 ),
                 effectiveAmount: new BN(stakeEntry.account.effectiveAmount),
                 amount: new BN(stakeEntry.account.amount),
@@ -84,6 +98,8 @@ export async function getUserStakingData({
               publicKey: new PublicKey(rewardPool.publicKey),
               account: {
                 ...rewardPool.account,
+                buffer: rewardPool.account.buffer,
+                bump: rewardPool.account.bump,
                 createdTs: new BN(rewardPool.account.createdTs),
                 authority: new PublicKey(rewardPool.account.authority),
                 stakePool: new PublicKey(rewardPool.account.stakePool),
@@ -94,21 +110,21 @@ export async function getUserStakingData({
                 lastRewardAmount: new BN(rewardPool.account.lastRewardAmount),
                 lastRewardPeriod: new BN(rewardPool.account.lastRewardPeriod),
                 lastAmountUpdateTs: new BN(
-                  rewardPool.account.lastAmountUpdateTs,
+                  rewardPool.account.lastAmountUpdateTs
                 ),
                 lastPeriodUpdateTs: new BN(
-                  rewardPool.account.lastPeriodUpdateTs,
+                  rewardPool.account.lastPeriodUpdateTs
                 ),
                 claimedAmount: new BN(rewardPool.account.claimedAmount),
                 fundedAmount: new BN(rewardPool.account.fundedAmount),
                 rewardAmount: new BN(rewardPool.account.rewardAmount),
                 rewardPeriod: new BN(rewardPool.account.rewardPeriod),
               },
-            },
+            }
           ).add(acc2);
         }, acc1);
       },
-      new BN(0),
+      new BN(0)
     );
     const {
       totalAmount: totalUserAmount,
@@ -117,7 +133,7 @@ export async function getUserStakingData({
       (acc, entry) => {
         const { effectiveAmount, amount } = entry.account;
         acc.totalEffectiveAmount = acc.totalEffectiveAmount.add(
-          new BN(effectiveAmount),
+          new BN(effectiveAmount)
         );
         acc.totalAmount = acc.totalAmount.add(new BN(amount));
         return acc;
@@ -125,7 +141,7 @@ export async function getUserStakingData({
       {
         totalEffectiveAmount: new BN(0),
         totalAmount: new BN(0),
-      },
+      }
     );
     const share = new BN(totalUserEffectiveAmount)
       .mul(new BN(10000))
@@ -141,7 +157,7 @@ export async function getUserStakingData({
       },
       {
         totalClaimedAmount: new BN(0),
-      },
+      }
     );
     const apy = totalRewardsPerDay
       .mul(new BN(365))

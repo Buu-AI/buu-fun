@@ -13,7 +13,7 @@ export async function getStakingGlobalDataQuery({
     {},
     {
       Authorization: getAuthorization(accessToken),
-    },
+    }
   );
   if (!data) {
     throw new Error("Internal server error");
@@ -22,5 +22,6 @@ export async function getStakingGlobalDataQuery({
   if ("code" in data.getStakingGlobalData) {
     throw new Error(data.getStakingGlobalData.code, { cause: "INVALID_DATA" });
   }
+
   return data.getStakingGlobalData;
 }
