@@ -1,4 +1,5 @@
 import BottomBarContainer from "@/components/chat-input/bottom-bar-container";
+import RetryConfirmationDialog from "@/components/generation/retry-confirmation-dialog";
 import ThreadsWrapper from "@/components/generation/threads-wrapper";
 import { DndKitProvider } from "@/providers/dnd-kit-provider";
 
@@ -16,7 +17,6 @@ export default async function NewChatPage({ params }: TNewChatPage) {
 
         {/* Centered main content with Help cards */}
         <ThreadsWrapper threadId={threadId} />
-
         {/* Bottom input section */}
         <div className="lg:mr-[0.15vw]">
           <BottomBarContainer
@@ -26,6 +26,7 @@ export default async function NewChatPage({ params }: TNewChatPage) {
           />
         </div>
       </main>
+      <RetryConfirmationDialog />
     </DndKitProvider>
   );
 }
