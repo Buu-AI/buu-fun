@@ -821,6 +821,7 @@ export const GetStakingGlobalDataQuery = gql`
   query GetStakingGlobalData {
     getStakingGlobalData {
       ... on GetStakingGlobalData {
+        apr
         totalEffectiveAmount
         totalRewardsPerDay
         totalAmount
@@ -875,6 +876,20 @@ export const GetStakingGlobalDataQuery = gql`
         }
         circulatingSupply
         totalStakedByUsers
+        rewardEntries {
+          publicKey
+          account {
+            rewardPool
+            stakeEntry
+            createdTs
+            accountedAmount
+            claimedAmount
+            lastAccountedTs
+            lastRewardAmount
+            lastRewardPeriod
+            buffer
+          }
+        }
       }
       ... on HandledError {
         code

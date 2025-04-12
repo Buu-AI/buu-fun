@@ -285,7 +285,9 @@ export type GenerateSubscriptionPaymentLinkResult =
 
 export type GetStakingGlobalData = {
   __typename?: "GetStakingGlobalData";
+  apr: Scalars["Float"]["output"];
   circulatingSupply: Scalars["String"]["output"];
+  rewardEntries: Array<RewardEntry>;
   rewardPools: Array<RewardPool>;
   stakeEntries: Array<StakeEntry>;
   tokenMint: TokenMint;
@@ -594,6 +596,34 @@ export type ReferralRewardPage = {
 };
 
 export type ReferralRewardPageResult = HandledError | ReferralRewardPage;
+
+export type RewardEntry = {
+  __typename?: "RewardEntry";
+  account: RewardEntryAccount;
+  publicKey: Scalars["String"]["output"];
+};
+
+export type RewardEntryAccount = {
+  __typename?: "RewardEntryAccount";
+  /** Sum of accounted amounts, used to correctly issue rewards in case of precision loss */
+  accountedAmount: Scalars["String"]["output"];
+  /** Buffer for additional fields */
+  buffer: Array<Scalars["Int"]["output"]>;
+  /** Sum of already claimed rewards */
+  claimedAmount: Scalars["String"]["output"];
+  /** Timestamp when reward entry has been created */
+  createdTs: Scalars["String"]["output"];
+  /** Timestamp when rewards have been claimed last time */
+  lastAccountedTs: Scalars["String"]["output"];
+  /** Reward amount used on last claim or entry creation */
+  lastRewardAmount: Scalars["String"]["output"];
+  /** Reward Period used on last claim or entry creation */
+  lastRewardPeriod: Scalars["String"]["output"];
+  /** Reward Pool */
+  rewardPool: Scalars["String"]["output"];
+  /** Stake Entry for which reward entry was initialized */
+  stakeEntry: Scalars["String"]["output"];
+};
 
 export type RewardPool = {
   __typename?: "RewardPool";
@@ -1806,6 +1836,7 @@ export type GetStakingGlobalDataQuery = {
   getStakingGlobalData:
     | {
         __typename?: "GetStakingGlobalData";
+        apr: number;
         totalEffectiveAmount: string;
         totalRewardsPerDay: string;
         totalAmount: string;
@@ -1863,6 +1894,22 @@ export type GetStakingGlobalDataQuery = {
             mint: string;
             nonce: number;
             vault: string;
+          };
+        }>;
+        rewardEntries: Array<{
+          __typename?: "RewardEntry";
+          publicKey: string;
+          account: {
+            __typename?: "RewardEntryAccount";
+            rewardPool: string;
+            stakeEntry: string;
+            createdTs: string;
+            accountedAmount: string;
+            claimedAmount: string;
+            lastAccountedTs: string;
+            lastRewardAmount: string;
+            lastRewardPeriod: string;
+            buffer: Array<number>;
           };
         }>;
       }
@@ -6265,6 +6312,7 @@ export const GetStakingGlobalDataDocument = {
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
+                      { kind: "Field", name: { kind: "Name", value: "apr" } },
                       {
                         kind: "Field",
                         name: { kind: "Name", value: "totalEffectiveAmount" },
@@ -6521,6 +6569,79 @@ export const GetStakingGlobalDataDocument = {
                       {
                         kind: "Field",
                         name: { kind: "Name", value: "totalStakedByUsers" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "rewardEntries" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "publicKey" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "account" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "rewardPool" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "stakeEntry" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "createdTs" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "accountedAmount",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "claimedAmount",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "lastAccountedTs",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "lastRewardAmount",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "lastRewardPeriod",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "buffer" },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
                       },
                     ],
                   },

@@ -10,7 +10,6 @@ export default function BuyBuuButton() {
       onClick={() => {
         dispatch(setBuyBuuDialogOpen(true));
       }}
-      
       className="h-[40px] w-full"
     >
       <span className="p-3">Buy $Buu</span>

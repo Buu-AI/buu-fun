@@ -3,10 +3,7 @@ import { JupiterAgIcon } from "@/assets/icons";
 import DexScreenerIcon from "@/assets/icons/dex-screener-icon";
 import { LINKS } from "@/constants/social-links";
 import { useBuuPricingData } from "@/hooks/use-pricing-history";
-import {
-  formatNumberWithFractions,
-  formatPrice
-} from "@/lib/utils";
+import { formatNumberWithFractions, formatPrice } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import OverviewTilesContainer from "./overview-tiles";

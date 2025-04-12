@@ -12,7 +12,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <PrivyProvider
       appId={PRIVY_APP_ID as string}
       config={{
-        
         appearance: {
           theme: "dark",
           accentColor: "#1c20275c",
@@ -20,24 +19,22 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           logo: <img src="/logo.png" className="w-12" alt="Buu.fun Logo" />,
         },
         externalWallets: {
-
-          solana: {  
+          solana: {
             connectors: toSolanaWalletConnectors({
               shouldAutoConnect: true,
             }),
           },
         },
-        
+
         // Create embedded wallets for users who don't have a wallet
         embeddedWallets: {
           ethereum: {
             createOnLogin: "off",
           },
           solana: {
-
             createOnLogin: "users-without-wallets",
           },
-          
+
           showWalletUIs: true,
         },
       }}

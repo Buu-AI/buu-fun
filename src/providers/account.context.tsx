@@ -146,8 +146,8 @@ export const AuthenticationProvider = ({ children }: Props) => {
       // Remove duplicates
       const uniqueWallets = Array.from(
         new Map(
-          processedWallets.map((wallet) => [wallet.address, wallet])
-        ).values()
+          processedWallets.map((wallet) => [wallet.address, wallet]),
+        ).values(),
       );
 
       setAllWallets(uniqueWallets);
@@ -156,7 +156,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
       if (uniqueWallets.length > 0) {
         // Try to find the wallet that matches user's primary wallet
         const userPrimaryWallet = uniqueWallets.find(
-          (w) => w.address === user?.wallet?.address
+          (w) => w.address === user?.wallet?.address,
         );
 
         if (userPrimaryWallet) {
@@ -217,7 +217,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
       allWallets,
       login,
       logout,
-    ]
+    ],
   );
 
   return (
@@ -231,7 +231,7 @@ export function useAuthentication() {
   const context = useContext(AuthenticationContext);
   if (context === undefined) {
     throw new Error(
-      `useAuthentication must be used within a AuthenticationProvider`
+      `useAuthentication must be used within a AuthenticationProvider`,
     );
   }
   return context;

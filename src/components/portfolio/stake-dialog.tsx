@@ -1,7 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import {
-  useTokenBalance
-} from "@/hooks/use-pricing-history";
+import { useTokenBalance } from "@/hooks/use-pricing-history";
 import { useUserStakingData } from "@/hooks/use-staking-data";
 import { setSelectedAmountToStake } from "@/lib/redux/features/buu-pricing";
 import { executeStakingTransaction } from "@/lib/solana/executeStakingTransaction";
@@ -35,14 +33,13 @@ export default function StakingDialog() {
     userStaking: { data: userStakingData },
     // globalStaking: { data: globalStakingData },
   } = useUserStakingData();
-  
+
   const { data: tokenData } = useTokenBalance();
-  const earnings = tokenData?.value.uiAmount ?? 0
+  const earnings = tokenData?.value.uiAmount ?? 0;
   // const earnings = formatUnits(
   //   userStakingData?.yourEarnings ?? "0",
   //   userStakingData?.decimals ?? 0
   // );
-
 
   const toBeStaked = useAppSelector((state) => state.BuuPricing.amountToStake);
   const dispatch = useAppDispatch();
@@ -55,7 +52,10 @@ export default function StakingDialog() {
         invalid_type_error: "Amount must be a number",
       })
       .positive("Amount must be positive")
-      .max(Number(tokenData?.value.uiAmount ?? 0), `Maximum ${earnings} $BUU allowed`),
+      .max(
+        Number(tokenData?.value.uiAmount ?? 0),
+        `Maximum ${earnings} $BUU allowed`,
+      ),
   });
 
   // Initialize form with react-hook-form
@@ -126,7 +126,7 @@ export default function StakingDialog() {
       // );
       const signature = await wallet.walletData?.sendTransaction(
         transaction,
-        connection
+        connection,
       );
       console.log(signature);
       toast.dismiss();
@@ -138,7 +138,7 @@ export default function StakingDialog() {
         try {
           const confirmation = await connection.confirmTransaction(
             signature,
-            "confirmed"
+            "confirmed",
           );
 
           if (confirmation.value.err) {
@@ -158,7 +158,7 @@ export default function StakingDialog() {
       toast.dismiss();
       toast.error(
         "Transaction failed: " +
-          (error instanceof Error ? error.message : "Unknown error")
+          (error instanceof Error ? error.message : "Unknown error"),
       );
       console.error("Transaction error:", error);
     }
