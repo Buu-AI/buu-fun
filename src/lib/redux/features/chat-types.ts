@@ -66,6 +66,10 @@ export type ChatState = {
   threads: ChatMessage;
   subThreads: TSubthreadV1[];
   genRequest: Record<string, TSubThreadsMedia[]>;
+  retry: {
+    modalOpened: boolean;
+    subThreadId: string | null;
+  };
 };
 
 export type TErrorTypeName = { __typename?: "HandledError" };

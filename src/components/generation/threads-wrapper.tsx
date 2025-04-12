@@ -117,7 +117,7 @@ export default function ThreadsWrapper({ threadId }: TThreadsWrapper) {
     let scrollTimeout: NodeJS.Timeout;
 
     const handleScroll = () => {
-      // Ignore if tthe scrolling programmatically is turned on
+      // Ignore if the scrolling programmatically is turned on
       if (isScrollingProgrammatically.current) return;
 
       // Store the current scroll position
