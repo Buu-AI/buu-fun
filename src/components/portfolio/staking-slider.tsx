@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 
 export default function StakingSlider() {
   const { data: tokenData } = useTokenBalance();
-  const earnings = tokenData?.value.uiAmount ?? 0
+  const earnings = tokenData?.value.uiAmount ?? 0;
 
   const selected = useAppSelector((state) => state.BuuPricing.amountToStake);
   const dispatch = useAppDispatch();
@@ -20,7 +20,7 @@ export default function StakingSlider() {
   // Handle button clicks
   const handlePercentageClick = (percentage: number) => {
     dispatch(
-      setSelectedAmountToStake(Math.round(Number(earnings) * percentage))
+      setSelectedAmountToStake(Math.round(Number(earnings) * percentage)),
     );
   };
 

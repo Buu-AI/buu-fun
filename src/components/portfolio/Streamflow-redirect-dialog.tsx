@@ -15,7 +15,7 @@ import { setStreamflowDialogOpen } from "@/lib/redux/features/buu-pricing";
 
 export default function StreamFlowRedirectDialog() {
   const isStreamFlowDialogOpen = useAppSelector(
-    (state) => state.BuuPricing.streamflowDialogOpen
+    (state) => state.BuuPricing.streamflowDialogOpen,
   );
   const dispatch = useAppDispatch();
   return (

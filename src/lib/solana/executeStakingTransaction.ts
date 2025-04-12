@@ -2,7 +2,7 @@ import {
   clusterApiUrl,
   Connection,
   PublicKey,
-  Transaction
+  Transaction,
 } from "@solana/web3.js";
 import { BN } from "bn.js";
 import { SolanaStakingClient } from "../streamflow/client";
@@ -18,10 +18,10 @@ export async function executeStakingTransaction({
   const publicKey = new PublicKey(address);
 
   const stakePool = new PublicKey(
-    "3gv93VfCiwJEsyC1qxPKabcyeudVSqYboif7vF6PZkra"
+    "3gv93VfCiwJEsyC1qxPKabcyeudVSqYboif7vF6PZkra",
   );
   const stakePoolMint = new PublicKey(
-    "FaJY4pmNLk3y6c82KXXuDrivw7jQ5CgyyEyV68g684hu"
+    "FaJY4pmNLk3y6c82KXXuDrivw7jQ5CgyyEyV68g684hu",
   );
 
   const solanaStakingClient = new SolanaStakingClient({
@@ -41,7 +41,7 @@ export async function executeStakingTransaction({
       stakePool,
       stakePoolMint,
     },
-    publicKey
+    publicKey,
   );
 
   const transaction = new Transaction();

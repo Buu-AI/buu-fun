@@ -12,12 +12,12 @@ export default function EarningAvailableCard() {
 
   const available = formatUnits(
     userStakingData?.available ?? "0",
-    userStakingData?.decimals ?? 0
+    userStakingData?.decimals ?? 0,
   );
 
   const AvailablePrice = multiplyAndFormatPricing(
     Number(available),
-    data?.price ?? 0
+    data?.price ?? 0,
   );
 
   return (
@@ -41,7 +41,7 @@ export default function EarningAvailableCard() {
       </div>
       <div className="flex items-center justify-center gap-2 flex-col">
         <StakingClaimButton className="w-full" />
-        <BuyBuuButton/>
+        <BuyBuuButton />
         {/* <Button className="h-[40px] w-full">
           <span className="p-3">Buy $Buu</span>
         </Button> */}

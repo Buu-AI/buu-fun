@@ -11,9 +11,9 @@ export async function getTokenBalance({ address }: { address: string }) {
   });
 
   const tokenBalance = await connection.getTokenAccountBalance(
-    tokenAccount.value[0].pubkey
+    tokenAccount.value[0].pubkey,
   );
 
   //   console.log("Token Balance:", tokenBalance.value.uiAmount);
-  return tokenBalance
+  return tokenBalance;
 }

@@ -6,16 +6,16 @@ import { setBuyBuuDialogOpen } from "@/lib/redux/features/buu-pricing";
 import Link from "next/link";
 import { buttonVariants } from "../ui/button";
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
 } from "../ui/dialog";
 
 export default function BuyBuuRedirectDialog() {
   const isBuyBuuDialogOpen = useAppSelector(
-    (state) => state.BuuPricing.buyBuuDialogOpen
+    (state) => state.BuuPricing.buyBuuDialogOpen,
   );
   const dispatch = useAppDispatch();
   return (

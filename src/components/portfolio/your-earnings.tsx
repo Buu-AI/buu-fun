@@ -11,20 +11,19 @@ import WithdrawButton from "./withdraw-button";
 import YourEarningsPricing from "./your-earning-pricing";
 
 export default function YourEarnings() {
-
   const { data } = useBuuPricingData();
   const {
     userStaking: { data: userStakingData },
   } = useUserStakingData();
-  
+
   const earnings = formatUnits(
     userStakingData?.yourEarnings ?? "0",
-    userStakingData?.decimals ?? 0
+    userStakingData?.decimals ?? 0,
   );
 
   const EarningPrice = multiplyAndFormatPricing(
     Number(earnings),
-    data?.price ?? 0
+    data?.price ?? 0,
   );
   return (
     <div className="bg-portfolio-statistics mt-5 rounded-lg">
@@ -38,9 +37,9 @@ export default function YourEarnings() {
           <div className="flex flex-col lg:flex-row items-center justify-between gap-2 pt-3">
             <YourEarningsPricing />
             <div className="flex items-center flex-wrap justify-center gap-3">
-              <StakingClaimButton/>
-              <StakingClaimAndRestakeButton/>
-              <WithdrawButton/>
+              <StakingClaimButton />
+              <StakingClaimAndRestakeButton />
+              <WithdrawButton />
             </div>
           </div>
           <p className="text-muted-foreground/50 hidden lg:block tracking-tight font-medium text-sm">

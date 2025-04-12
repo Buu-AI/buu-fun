@@ -42,7 +42,7 @@ export default function BuuNetworkUtilization() {
       }
 
       setCountdown(
-        `${String(newHours).padStart(2, "0")}:${String(newMinutes).padStart(2, "0")}:${String(newSeconds).padStart(2, "0")}`
+        `${String(newHours).padStart(2, "0")}:${String(newMinutes).padStart(2, "0")}:${String(newSeconds).padStart(2, "0")}`,
       );
     }, 1000);
 

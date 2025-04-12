@@ -1,8 +1,6 @@
 import { serverRequest } from "@/gql/client";
 import { GetStakingGlobalDataQuery } from "@/gql/documents/creative-engine";
-import {
-  GetStakingGlobalDataQuery as TGetStakingGlobalDataQuery
-} from "@/gql/types/graphql";
+import { GetStakingGlobalDataQuery as TGetStakingGlobalDataQuery } from "@/gql/types/graphql";
 import { getAuthorization } from "../utils";
 
 export async function getStakingGlobalDataQuery({
@@ -24,5 +22,6 @@ export async function getStakingGlobalDataQuery({
   if ("code" in data.getStakingGlobalData) {
     throw new Error(data.getStakingGlobalData.code, { cause: "INVALID_DATA" });
   }
+
   return data.getStakingGlobalData;
 }
