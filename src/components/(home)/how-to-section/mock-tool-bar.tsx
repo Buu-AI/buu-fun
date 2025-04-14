@@ -52,7 +52,7 @@ export const ToolTips = [
   {
     type: "DOWNLOAD" as const,
     Icon: <DownloadIcon />,
-    content: "Download",
+    content: "Download GBL",
   },
 ];
 export type TToolTipsData = typeof ToolTips;
@@ -60,8 +60,9 @@ export type TToolTipEvents = TToolTipsData[number]["type"];
 
 type TMockToolBar = {
   modelUrl?: string;
+  isGenerating?: boolean;
 };
-export default function MockToolBar({ modelUrl }: TMockToolBar) {
+export default function MockToolBar({ modelUrl, isGenerating }: TMockToolBar) {
   function handleEvent(events: TToolTipEvents) {
     if (events) {
       return;
@@ -81,6 +82,8 @@ export default function MockToolBar({ modelUrl }: TMockToolBar) {
               length={ToolTips.length}
               subThreadId={"subThreadId"}
               toolTipData={item}
+              open={isGenerating}
+              // open={isGenerating}
             />
           );
         }

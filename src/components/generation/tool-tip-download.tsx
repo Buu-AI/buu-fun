@@ -11,15 +11,17 @@ type TToolTipModify = {
   toolTipData: TToolTipsData[number];
   index: number;
   length: number;
+  open?: boolean;
 };
 
 export default function ToolTipDownload({
   modelUrl,
   toolTipData,
   index,
+  open,
 }: TToolTipModify) {
   return (
-    <Tooltip>
+    <Tooltip  open={open}>
       <TooltipTrigger asChild>
         {modelUrl ? (
           <motion.a
