@@ -1,8 +1,8 @@
 "use client";
 import {
   boatAndFlowers,
-  comicBoyCropped,
-  comicGirl,
+  whiteChatLady,
+  lizardMermaid,
   Elephant,
   hotAirBallon,
   RoundedLamp3d,
@@ -25,23 +25,25 @@ export function Create3DLayout({
       <Image
         src={RoundedLamp3d.src}
         className={cn(
-          "max-w-28 rounded-2xl transition-all duration-500 ease-in-out group-hover:rotate-[-10deg] rotate-[-6deg] right-8 z-0  absolute -bottom-2",
-          ImageOneClassName,
+          "max-w-28 rounded-2xl transition-all duration-500 ease-in-out group-hover:rotate-[-10deg] rotate-[-8deg] right-12 z-10  absolute -bottom-3",
+          ImageOneClassName
         )}
         alt="Comic boy"
         width={720}
         height={480}
       />
-      <Image
-        src={StepShape3d.src}
-        className={cn(
-          "z-10 max-w-24  shadow-inner shadow-white drop-shadow-md rounded-2xl transition-all duration-500 ease-in-out group-hover:rotate-[15deg] rotate-[12deg] right-0  absolute -bottom-9",
-          ImageTwoClassName,
-        )}
-        alt="Comic boy"
-        width={720}
-        height={480}
-      />
+      <div className="help-card-box-shadow ">
+        <Image
+          src={StepShape3d.src}
+          className={cn(
+            "z-0 max-w-24   shadow-inner shadow-white drop-shadow-md rounded-2xl transition-all duration-500 ease-in-out group-hover:rotate-[15deg] rotate-[12deg] right-0  absolute -bottom-4",
+            ImageTwoClassName
+          )}
+          alt="Comic boy"
+          width={720}
+          height={480}
+        />
+      </div>
     </div>
   );
 }
@@ -55,22 +57,23 @@ export function CreateComicLayout({
   containerClass?: string;
 }) {
   return (
-    <div className={cn(containerClass)}>
+    <div className={cn("", containerClass)}>
       <Image
-        src={comicBoyCropped.src}
+        src={whiteChatLady.src}
         className={cn(
-          "max-w-28 rounded-2xl transition-all duration-500 ease-in-out group-hover:rotate-[-10deg] rotate-[-6deg] right-8 absolute translate-y-[65px] z-10",
-          ImageOneClassName,
+          "max-w-28 rounded-2xl top-6 transition-all duration-500 ease-in-out group-hover:rotate-[-10deg] rotate-[-6deg] right-8 absolute translate-y-[65px] z-0",
+          ImageOneClassName
         )}
         alt="Comic boy"
         width={720}
         height={480}
       />
+
       <Image
-        src={comicGirl.src}
+        src={lizardMermaid.src}
         className={cn(
-          "z-0 max-w-24  shadow-inner shadow-white drop-shadow-md rounded-2xl transition-all duration-500 ease-in-out group-hover:rotate-[15deg] rotate-[12deg] right-0  absolute -bottom-16",
-          ImageTwoClassName,
+          "z-10  max-w-28 absolute  shadow-inner shadow-white drop-shadow-md rounded-2xl transition-all duration-500 ease-in-out group-hover:rotate-[15deg] rotate-[12deg] right-0   top-[60%] ",
+          ImageTwoClassName
         )}
         alt="Comic boy"
         width={720}
@@ -82,25 +85,25 @@ export function CreateComicLayout({
 
 export function CreateVideoLayout() {
   return (
-    <div>
+    <div className="">
       <div>
         <Image
           src={hotAirBallon.src}
-          className="max-w-32 aspect-[6/4] w-full rounded-2xl transition-all duration-500 ease-in-out group-hover:rotate-[-0deg] rotate-[6deg] right-4 z-[3]  absolute -bottom-6"
+          className="object-top max-w-[120px] w-full rounded-2xl object-cover transition-all duration-500 ease-in-out group-hover:scale-90 rotate-[6deg] right-[15%] z-[3]  absolute top-[60%]"
           alt="Comic boy"
           width={720}
           height={480}
         />
         <Image
           src={boatAndFlowers.src}
-          className="z-[2] max-w-32 aspect-[6/4] object-cover object-top shadow-inner shadow-white drop-shadow-md rounded-2xl transition-all duration-500 ease-in-out group-hover:rotate-[-6deg] rotate-[-12deg] right-0  absolute -bottom-2"
+          className="z-2 max-w-32  object-cover object-top shadow-inner shadow-white drop-shadow-md rounded-2xl transition-all duration-500 ease-in-out group-hover:rotate-[18deg] rotate-[12deg] right-0  absolute top-[60%]"
           alt="Comic boy"
           width={720}
           height={480}
         />
         <Image
           src={Elephant.src}
-          className=" max-w-40 w-full rounded-2xl transition-all duration-500 ease-in-out group-hover:rotate-[-10deg] rotate-[-6deg] right-8 z-[1]  absolute -bottom-2"
+          className="max-w-32 w-full rounded-2xl transition-all duration-500 ease-in-out group-hover:rotate-[-10deg] rotate-[-6deg] right-[30%] z-[1]  absolute top-[60%]"
           alt="Comic boy"
           width={720}
           height={480}
