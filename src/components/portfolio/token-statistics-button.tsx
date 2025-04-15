@@ -12,7 +12,7 @@ export default function TokenStatisticsButtons() {
   );
   return (
     <div className="flex items-center justify-center bg-portfolio-statistics-button-background rounded-md px-2 py-2">
-      <Button
+      {/* <Button
         onClick={() => {
           dispatch(setBuuPricingHour("LAST_HOUR"));
         }}
@@ -35,7 +35,7 @@ export default function TokenStatisticsButtons() {
         })}
       >
         3H
-      </Button>
+      </Button> */}
       <Button
         onClick={() => {
           dispatch(setBuuPricingHour("LAST_DAY"));
