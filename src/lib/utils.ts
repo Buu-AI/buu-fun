@@ -57,7 +57,7 @@ export function isOverAllRequestLimitReached(limits: number) {
 }
 
 export function getFixedCredits(credits = 0.0) {
-  return credits.toFixed(2);
+  return credits.toFixed(0);
 }
 
 export function isRetryExceeded(totalGenerations: number) {

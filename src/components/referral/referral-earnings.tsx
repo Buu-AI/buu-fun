@@ -1,6 +1,5 @@
 import { useAllReferrals } from "@/hooks/use-referral";
-import { formatUnits, getFixedCredits } from "@/lib/utils";
-import React from "react";
+import { formatNumber, formatUnits } from "@/lib/utils";
 
 export default function ReferralEarnings() {
   const { data } = useAllReferrals();
@@ -21,7 +20,7 @@ export default function ReferralEarnings() {
       <div className="flex items-center justify-start w-full   flex-col">
         <h3 className=" font-medium text-buu-muted-text">Total Earnings</h3>
         <div className="text-2xl font-medium">
-          <p>${getFixedCredits(totalRewards)} BUU</p>
+          <p>{formatNumber(totalRewards)} $BUU</p>
         </div>
       </div>
       <div className="w-[2.5px] min-h-[50px] h-full  bg-gray-700/60" />
