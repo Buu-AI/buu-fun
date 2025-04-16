@@ -6,7 +6,7 @@ export default function BoardsPage() {
   return (
     <main className="flex flex-col items-center justify-center  relative h-full w-full   ">
       <div className="flex-1 flex items-center justify-center mr-[0.25vw] flex-col">
-        <OpenPricingEffect/>
+        <OpenPricingEffect />
         <HeroHeader
           title="Collect ideas on boards"
           heroDescription={<BoardsButtonWrapper />}

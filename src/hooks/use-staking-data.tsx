@@ -37,7 +37,7 @@ export function useUserStakingData() {
   const { data, isFetched } = globalStaking;
 
   const userStaking = useQuery({
-    queryKey: ["get-global-staking-data"],
+    queryKey: ["get-global-staking-data", isFetched],
     enabled: isFetched,
     staleTime: 10000,
     queryFn: async () => {
@@ -53,7 +53,6 @@ export function useUserStakingData() {
       });
     },
   });
-
   return {
     userStaking,
     globalStaking,

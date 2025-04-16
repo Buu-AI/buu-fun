@@ -40,7 +40,7 @@ export default function SubscriptionPlanDetailWrapper({
         subscriptionDetails={subscriptionDetails}
         subscriptionButton={subscriptionButton}
       />
-      <motion.div variants={buttonVariants} className="grid col-span-2 mt-2">
+      <motion.div variants={buttonVariants} className="grid col-span-2 mt-4">
         {subscriptionButton}
       </motion.div>
     </>

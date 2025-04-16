@@ -146,7 +146,7 @@ export default function SubscriptionPlanDetails({
           variants={sectionVariants}
           className="flex items- flex-col gap-2"
         >
-          <AnimatedPill className="text-[10px] max-w-max uppercase text-muted-foreground/60 font-semibold">
+          <AnimatedPill className="text-[10px] max-w-max uppercase text-muted-foreground/60 font-semibold mb-2">
             Core Features
           </AnimatedPill>
           {subscriptionDetails &&
@@ -176,9 +176,9 @@ export default function SubscriptionPlanDetails({
           {subscriptionDetails && subscriptionDetails.additionalBenefits && (
             <motion.div
               variants={sectionVariants}
-              className="flex items- flex-col gap-2"
+              className="flex items- flex-col gap-2 "
             >
-              <AnimatedPill className="text-[10px] max-w-max uppercase text-muted-foreground/60 font-semibold">
+              <AnimatedPill className="text-[10px] mb-2 max-w-max uppercase text-muted-foreground/60 font-semibold">
                 Additional Benefits
               </AnimatedPill>
               {subscriptionDetails.additionalBenefits.map((item, index) => {
@@ -207,9 +207,9 @@ export default function SubscriptionPlanDetails({
           {subscriptionDetails && subscriptionDetails.restrictions && (
             <motion.div
               variants={sectionVariants}
-              className="flex items- flex-col gap-2"
+              className="flex items- flex-col gap-2 mt-3"
             >
-              <AnimatedPill className="text-[10px] max-w-max uppercase text-muted-foreground/60 font-semibold">
+              <AnimatedPill className="text-[10px] max-w-max mb-2 uppercase text-muted-foreground/60 font-semibold">
                 Restrictions
               </AnimatedPill>
               {subscriptionDetails.restrictions.map((item, index) => {
