@@ -14,16 +14,17 @@ export default function EarningTotalStakedCard() {
   const { data } = useBuuPricingData();
   const {
     userStaking: { data: userStakingData },
+    globalStaking: { data: globalStakingData },
   } = useUserStakingData();
 
   const totalStaked = formatUnits(
     userStakingData?.yourTotalStaked ?? "0",
-    userStakingData?.decimals ?? 0,
+    userStakingData?.decimals ?? 0
   );
 
   const totalStakedPrice = multiplyAndFormatPricing(
     Number(totalStaked),
-    data?.price ?? 0,
+    data?.price ?? 0
   );
   return (
     <div className="bg-buu shadow-buu-inner grid grid-cols-2 pt-6 pr-4 pb-5 pl-5 rounded-2xl  ">
@@ -52,7 +53,7 @@ export default function EarningTotalStakedCard() {
         <Button variant={"special"} className="h-[40px] w-full bg-apr-button">
           <div className="p-3 flex items-center justify-center gap-1">
             <APRCalculatorIcon />
-            <span className="">APR {userStakingData?.apy}%</span>
+            <span className="">APR {globalStakingData?.apr?.toFixed(2)}%</span>
           </div>
         </Button>
       </div>
