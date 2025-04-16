@@ -19,12 +19,12 @@ export default function EarningTotalStakedCard() {
 
   const totalStaked = formatUnits(
     userStakingData?.yourTotalStaked ?? "0",
-    userStakingData?.decimals ?? 0
+    userStakingData?.decimals ?? 0,
   );
 
   const totalStakedPrice = multiplyAndFormatPricing(
     Number(totalStaked),
-    data?.price ?? 0
+    data?.price ?? 0,
   );
   return (
     <div className="bg-buu shadow-buu-inner grid grid-cols-2 pt-6 pr-4 pb-5 pl-5 rounded-2xl  ">

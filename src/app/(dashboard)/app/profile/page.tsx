@@ -23,7 +23,7 @@ export default function ProfilePage() {
   const { address, wallet } = useAuthentication();
   const { data } = useUserCredits();
   const { data: subscription } = useUserSubscription();
-  
+
   return (
     <ProtectedWrapper Fallback={<ProfileSkeleton />} fallbackUrl="/app">
       <main className="flex items-center flex-col justify-center w-full ">

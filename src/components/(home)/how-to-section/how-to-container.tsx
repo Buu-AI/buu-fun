@@ -65,7 +65,7 @@ export default function HowToContainer() {
     const sections = Array.from(container.children) as HTMLElement[];
     const totalSectionsWidth = sections.reduce(
       (acc, section) => acc + section.offsetWidth,
-      0
+      0,
     );
 
     // Calculate the endpoint - don't allow overscrolling
@@ -184,7 +184,7 @@ export default function HowToContainer() {
           ref={mobileRef}
           className="max-h-[584px] p-2 border-2 border-muted-foreground/20 rounded-[40px] flex h-full w-full max-w-[300px]"
         >
-          <MobileMockCard  showModel={showModel} />
+          <MobileMockCard showModel={showModel} />
         </div>
       </div>
     </div>

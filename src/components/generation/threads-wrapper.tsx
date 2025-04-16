@@ -4,12 +4,9 @@ import {
   SUB_THREAD_QUERY_LIMIT,
   VIEW_BEFORE_PX,
 } from "@/constants/infinity.config";
-import { useAppDispatch, useAppSelector, useAppStore } from "@/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useSubThreads } from "@/hooks/use-subthreads";
-import {
-  setInfinitySubThreads,
-  setNewThreadId,
-} from "@/lib/redux/features/chat";
+import { setInfinitySubThreads } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -27,7 +24,6 @@ export type TThreadsWrapper = {
 };
 
 export default function ThreadsWrapper({ threadId }: TThreadsWrapper) {
-
   const dispatch = useAppDispatch();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isUserScrolling, setIsUserScrolling] = useState(false);

@@ -1,12 +1,14 @@
 import ShareAndSaveIcon from "@/assets/icons/share-and-save";
-import ShareIcon from "@/assets/icons/share-icon";
 import { TypedAppError } from "@/class/error";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useSharableBoards } from "@/hooks/use-boards";
+import { useUserSubscription } from "@/hooks/use-credits";
+import { isFreePlan } from "@/lib/helpers/status-checker";
 import {
   createNewBoardsMutation,
   updateBoardsVisibility,
 } from "@/lib/react-query/boards";
+import { setShareableModalOpen } from "@/lib/redux/features/boards";
 import { setSubscriptionModel } from "@/lib/redux/features/subscription";
 import { cn, getSharableUrl } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
@@ -20,12 +22,8 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "../ui/dialog";
 import CopyBoardLink from "./copy-board-link";
-import { useUserSubscription } from "@/hooks/use-credits";
-import { isFreePlan } from "@/lib/helpers/status-checker";
-import { setShareableModalOpen } from "@/lib/redux/features/boards";
 
 export default function ShareableBoardsButton() {
   const path = usePathname();

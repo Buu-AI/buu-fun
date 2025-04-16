@@ -36,7 +36,7 @@ export default function QuickSelectCard({
           "absolute  flex items-center justify-center w-full h-full top-0 left-0  z-50 bg-black/60 ",
           {
             hidden: released,
-          }
+          },
         )}
       >
         <div className="text-lg flex items-center justify-center  font-bold tracking-tight ">

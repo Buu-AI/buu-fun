@@ -19,7 +19,7 @@ const BoardsSlice = createSlice({
   reducers: {
     initializeSharableBoards(
       state,
-      actions: PayloadAction<TGetSharableBoardQuery>
+      actions: PayloadAction<TGetSharableBoardQuery>,
     ) {
       state.SharedBoards = actions.payload;
     },

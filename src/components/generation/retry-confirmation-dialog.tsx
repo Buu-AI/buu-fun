@@ -50,7 +50,7 @@ export default function RetryConfirmationDialog() {
   });
 
   const isRetryModalOpen = useAppSelector(
-    (state) => state.chat.retry.modalOpened
+    (state) => state.chat.retry.modalOpened,
   );
   const subThreadId = useAppSelector((state) => state.chat.retry.subThreadId);
   const { identityToken: accessToken, login } = useAuthentication();
