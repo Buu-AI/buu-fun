@@ -9,21 +9,20 @@ import {
   GetTokenOverviewQuery,
 } from "@/gql/documents/creative-engine";
 import { TBuuPricingTime } from "../redux/features/buu-pricing";
-import { getAuthorization } from "../utils";
-import { AccessToken } from "./user";
 
 export async function getHistoricalPricingResult({
-  accessToken,
   time = "LAST_HOUR",
-}: AccessToken & { time: TBuuPricingTime }) {
+}: {
+  time: TBuuPricingTime;
+}) {
   const data = await serverRequest<TGetTokenHistoricalPriceResultQuery>(
     GetTokenHistoricalPriceQuery,
     {
       time,
-    },
-    {
-      Authorization: getAuthorization(accessToken),
-    },
+    }
+    // {
+    //   Authorization: getAuthorization(accessToken),
+    // },
   );
 
   if (!data) {
@@ -38,13 +37,13 @@ export async function getHistoricalPricingResult({
   return data.getTokenHistoricalPriceResult;
 }
 
-export async function getBuuTokenOverview({ accessToken }: AccessToken) {
+export async function getBuuTokenOverview() {
   const data = await serverRequest<TGetTokenOverviewQuery>(
     GetTokenOverviewQuery,
-    {},
-    {
-      Authorization: getAuthorization(accessToken),
-    },
+    {}
+    // {
+    //   Authorization: getAuthorization(accessToken),
+    // },
   );
 
   if (!data) {

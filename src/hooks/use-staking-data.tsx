@@ -35,6 +35,7 @@ export function useUserStakingData() {
   const { address } = useAuthentication();
   const globalStaking = useGlobalStakingData();
   const { data, isFetched } = globalStaking;
+
   const userStaking = useQuery({
     queryKey: ["get-global-staking-data"],
     enabled: isFetched,
