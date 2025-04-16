@@ -12,6 +12,7 @@ export default function OpenPricingEffect() {
     if (subscriptionData && subscriptionData?.planKey === PlanKeyMapper.FREE) {
       dispatch(setSubscriptionModel(true));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subscriptionData?.planKey]);
   return null;
 }

@@ -8,22 +8,14 @@ import { useAppSelector } from "./redux";
 import { getTokenBalance } from "@/lib/solana/getTokenBalance";
 
 export function usePricingHistoricalPricing() {
-  const { identityToken, isAuthenticated, loading } = useAuthentication();
   const buuPricingHistoryTime = useAppSelector(
-    (state) => state.BuuPricing.buuPricingHistoryTime,
+    (state) => state.BuuPricing.buuPricingHistoryTime
   );
   return useQuery({
-    queryKey: [
-      "get-historical-pricing-result",
-      identityToken,
-      buuPricingHistoryTime,
-    ],
-    enabled: !loading && isAuthenticated,
+    queryKey: ["get-historical-pricing-result", buuPricingHistoryTime],
     refetchInterval: 150_000_00,
     queryFn: async () => {
-      if (!identityToken) return;
       return await getHistoricalPricingResult({
-        accessToken: identityToken ?? "",
         time: buuPricingHistoryTime,
       });
     },
@@ -31,17 +23,11 @@ export function usePricingHistoricalPricing() {
 }
 
 export function useBuuPricingData() {
-  const { identityToken, isAuthenticated, loading } = useAuthentication();
-
   return useQuery({
-    queryKey: ["get-token-overview", identityToken],
-    enabled: !loading && isAuthenticated,
+    queryKey: ["get-token-overview"],
     refetchInterval: 150_000,
     queryFn: async () => {
-      if (!identityToken) return;
-      return await getBuuTokenOverview({
-        accessToken: identityToken ?? "",
-      });
+      return await getBuuTokenOverview();
     },
   });
 }
