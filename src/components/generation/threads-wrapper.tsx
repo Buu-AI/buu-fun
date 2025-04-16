@@ -27,12 +27,6 @@ export type TThreadsWrapper = {
 };
 
 export default function ThreadsWrapper({ threadId }: TThreadsWrapper) {
-  const store = useAppStore();
-  const initialized = useRef(false);
-  if (!initialized.current) {
-    store.dispatch(setNewThreadId(threadId));
-    initialized.current = true;
-  }
 
   const dispatch = useAppDispatch();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
