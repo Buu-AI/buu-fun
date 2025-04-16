@@ -6,6 +6,7 @@ import StreamFlowRedirectDialog from "@/components/portfolio/Streamflow-redirect
 import TokenStatistics from "@/components/portfolio/token-statistics";
 import YourEarnings from "@/components/portfolio/your-earnings";
 import Bounded from "@/components/ui/Bounded";
+import Lanyard from "@/components/ui/lanyard";
 
 export default function PortfolioPage() {
   return (

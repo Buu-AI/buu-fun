@@ -6,6 +6,7 @@ import Base64ImageDiv from "@/components/profile/icon-render";
 import ProfileSkeleton from "@/components/profile/profile-skeleton";
 import RedeemVouchers from "@/components/profile/redeem-vouchers";
 import ManageUserSubscriptionButton from "@/components/subscriptions/manage-subscription-button";
+import Lanyard from "@/components/ui/lanyard";
 import ProtectedWrapper from "@/components/wrapper/protected-wrapper";
 import useUserCredits, { useUserSubscription } from "@/hooks/use-credits";
 import { profilePicture } from "@/lib/dice-bear";
@@ -25,6 +26,9 @@ export default function ProfilePage() {
   const { data: subscription } = useUserSubscription();
   return (
     <ProtectedWrapper Fallback={<ProfileSkeleton />} fallbackUrl="/">
+      <div className="fixed   w-full   top-0 right-0">
+        <Lanyard transparent position={[0, 0, 20]} gravity={[0, -40, 0]} />
+      </div>
       <main className="flex items-center flex-col justify-center w-full ">
         <div className="flex w-16 h-16">
           <Image
