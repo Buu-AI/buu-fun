@@ -136,7 +136,7 @@ export default function APIKeyTable() {
             </Table>
             <div
               className={cn(" hidden items-center justify-center w-full ", {
-                flex: !data || !data.items,
+                flex: !data || !data.items.length,
               })}
             >
               <div className="flex flex-col items-center gap-2 py-4">
