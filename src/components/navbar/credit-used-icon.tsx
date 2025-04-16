@@ -17,12 +17,13 @@ export default function CreditUsedIcon() {
         }}
         variant={"special"}
         size={"special"}
+        className="gap-0"
       >
-        <div className="flex h-4 w-4">
+        <div className="flex">
           <FlashIcon />
         </div>
-        <p className="text-white">{getFixedCredits(data?.available)}</p>
-        <p className="xs:block hidden">Credits Available </p>
+        <p className="text-white pr-1 pl-0.5">{getFixedCredits(data?.available)}</p>
+        <p className="xs:block hidden text-muted-foreground/80">Credits Available </p>
       </Button>
     </div>
   );
