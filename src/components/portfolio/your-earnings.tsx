@@ -5,7 +5,6 @@ import { formatUnits, multiplyAndFormatPricing } from "@/lib/utils";
 import EarningAvailableCard from "./earning-available";
 import EarningPlatformCredits from "./earning-platform-credits";
 import EarningTotalStakedCard from "./earning-total-staked-card";
-import StakingClaimButton from "./staking-claim-button";
 import StakingClaimAndRestakeButton from "./staking-claim-restake-button";
 import WithdrawButton from "./withdraw-button";
 import YourEarningsPricing from "./your-earning-pricing";
@@ -37,7 +36,7 @@ export default function YourEarnings() {
           <div className="flex flex-col lg:flex-row items-center justify-between gap-2 pt-3">
             <YourEarningsPricing />
             <div className="flex items-center flex-wrap justify-center gap-3">
-              <StakingClaimButton />
+              {/* <StakingClaimButton /> */}
               <StakingClaimAndRestakeButton />
               <WithdrawButton />
             </div>
