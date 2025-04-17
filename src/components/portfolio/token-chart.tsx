@@ -31,6 +31,7 @@ interface CustomTooltipProps {
 export default function TokenPriceChart() {
   const { data } = usePricingHistoricalPricing();
 
+  
   const timingData =
     data &&
     data.items?.map((item) => ({
@@ -62,20 +63,29 @@ export default function TokenPriceChart() {
               <XAxis
                 dataKey="time"
                 tick={{ fill: "#999" }}
-                className="text-sm  "
+                className="text-sm"
                 axisLine={{ stroke: "rgba(255, 255, 255, 0.1)" }}
                 tickLine={true}
-                interval={"equidistantPreserveStart"}
+                padding={{ left: 10, right: 10 }} // Add padding to X-axis
+                dy={10} // Move X-axis labels down a bit
+                interval={"preserveStartEnd"}
               />
+
               <YAxis
                 yAxisId="price"
                 domain={["auto", "auto"]}
+                // alignmentBaseline="text-after-edge"
                 tick={{ fill: "#999" }}
-                className="px-2 text-sm w-full "
+                className="px-2 text-sm  w-full "
                 axisLine={false}
-                interval={"equidistantPreserveStart"}
+                interval={"preserveStart"}
                 tickLine={false}
                 orientation="left"
+                dx={-5} // Move Y-axis labels to the left a bit
+                padding={{ top: 0, bottom: 0 }} // Add padding to Y-axis
+                tickFormatter={(value) => value.toFixed(6)} // Format Y-axis ticks
+                
+                
               />
 
               <Tooltip content={<CustomTooltip />} />
