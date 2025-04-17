@@ -60,7 +60,7 @@ export default function BuuStakedSupply() {
   ];
 
   return (
-    <div className="flex flex-col   w-full h-full bg-buu  rounded-3xl overflow-hidden">
+    <div className="flex flex-col   w-full h-full bg-buu backdrop-blur-lg  rounded-3xl overflow-hidden">
       <div className="px-4 py-3 border-b border-white/5 bg-overview-portfolio ">
         <p className="uppercase text-xs text-white font-semibold">
           BUU Staked Supply

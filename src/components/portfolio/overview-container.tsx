@@ -21,7 +21,7 @@ export default function OverviewContainer() {
   const totalSupply = data?.totalSupply;
   // const
   return (
-    <div className="">
+    <div className="backdrop-blur-lg rounded-3xl">
       <div className="px-4 py-4   border-white/5 border rounded-t-3xl  bg-overview-portfolio">
         <p className="uppercase text-xs font-medium">Overview</p>
       </div>
