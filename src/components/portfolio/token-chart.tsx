@@ -31,7 +31,6 @@ interface CustomTooltipProps {
 export default function TokenPriceChart() {
   const { data } = usePricingHistoricalPricing();
 
-  
   const timingData =
     data &&
     data.items?.map((item) => ({
@@ -84,8 +83,6 @@ export default function TokenPriceChart() {
                 dx={-5} // Move Y-axis labels to the left a bit
                 padding={{ top: 0, bottom: 0 }} // Add padding to Y-axis
                 tickFormatter={(value) => value.toFixed(6)} // Format Y-axis ticks
-                
-                
               />
 
               <Tooltip content={<CustomTooltip />} />
