@@ -9,6 +9,9 @@ export default function CopyContractAddress({ address }: { address: string }) {
     toast.success("Address Copied to clipboard");
   }
 
+  const shortedAddress = <span className="blue-text-clip">{address.slice(0, 4)}...{address.slice(address.length - 5, address.length - 1)}</span>
+
+
   return (
     <button
       className="w-full"
@@ -16,7 +19,7 @@ export default function CopyContractAddress({ address }: { address: string }) {
         handleCopy();
       }}
     >
-      <OverviewTilesContainer title="Contract" value={address?.slice(0, 6)} />
+      <OverviewTilesContainer title="Contract" value={shortedAddress} />
     </button>
   );
 }

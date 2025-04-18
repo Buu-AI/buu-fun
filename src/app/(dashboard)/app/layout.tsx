@@ -13,6 +13,7 @@ import { Bricolage_Grotesque } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import SubscriptionDialog from "@/components/subscriptions/subscription-dialog";
 import SplashCursorProvider from "./SplashCursorProvider";
+import Script from "next/script";
 const BricolageGrotesque = Bricolage_Grotesque({
   variable: "--font-bricolage-grotesque",
   subsets: ["latin"],
@@ -61,6 +62,11 @@ export default function RootLayout({
         <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
 
       </head> */}
+      <Script
+        id="cookieyes"
+        type="text/javascript"
+        src="https://cdn-cookieyes.com/client_data/ac51e3b0cec858c94943219d/script.js"
+      />
 
       <body className={` ${BricolageGrotesque.className} antialiased dark `}>
         <Toaster />
@@ -69,7 +75,7 @@ export default function RootLayout({
             <NextUIProviders>
               <Providers>
                 <div className="h-[100dvh] min-h-[100dvh] overflow-hidden relative max-h-[100dvh]   w-full">
-                  <SplashCursorProvider/>
+                  <SplashCursorProvider />
                   <div className=" w-[200px] h-[100px] bg-overlay-secondary  bg-[#69CCD5]  rounded-full right-[20%] absolute bottom-[-140px] -z-10 blur-[100px]  rotate-[-10deg]" />
 
                   <div className="grid-container w-full h-full">

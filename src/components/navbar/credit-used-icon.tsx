@@ -5,15 +5,20 @@ import { Button } from "../ui/button";
 import useUserCredits from "@/hooks/use-credits";
 import { getFixedCredits } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/hooks/redux";
+import { setSubscriptionModel } from "@/lib/redux/features/subscription";
 
 export default function CreditUsedIcon() {
   const { data } = useUserCredits();
-  const router = useRouter();
+  const dispatch = useAppDispatch()
+  function handleClick() {
+    dispatch(setSubscriptionModel(true))
+  }
   return (
     <div>
       <Button
         onClick={() => {
-          router.push("/app/profile");
+          handleClick();
         }}
         variant={"special"}
         size={"special"}

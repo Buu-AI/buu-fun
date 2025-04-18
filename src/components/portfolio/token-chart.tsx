@@ -43,7 +43,7 @@ export default function TokenPriceChart() {
       return (
         <div className="bg-gray-800 p-2 rounded border border-gray-700 text-gray-200 text-xs">
           <p>{`Time: ${payload[0].payload.time}`}</p>
-          <p>{`Price: ${payload[0].value}`}</p>
+          <p>{`Price: ${payload[0].value.toFixed(7)}`}</p>
         </div>
       );
     }
@@ -62,12 +62,12 @@ export default function TokenPriceChart() {
               <XAxis
                 dataKey="time"
                 tick={{ fill: "#999" }}
-                className="text-xs md:text-sm"
-                axisLine={{ stroke: "rgba(255, 255, 255, 0.1)" }}
+                className="text-sm"
+                axisLine={{ stroke: "#0000000" }}
                 tickLine={true}
                 padding={{ left: 10, right: 10 }} // Add padding to X-axis
                 dy={10} // Move X-axis labels down a bit
-                interval={"preserveStartEnd"}
+                interval={"equidistantPreserveStart"}
               />
 
               <YAxis
@@ -77,12 +77,12 @@ export default function TokenPriceChart() {
                 tick={{ fill: "#999" }}
                 className="px-2 text-xs md:text-sm  w-full "
                 axisLine={false}
-                interval={"preserveStart"}
+                interval={"equidistantPreserveStart"}
                 tickLine={false}
                 orientation="left"
-                dx={-5} // Move Y-axis labels to the left a bit
-                padding={{ top: 0, bottom: 0 }} // Add padding to Y-axis
-                tickFormatter={(value) => value.toFixed(6)} // Format Y-axis ticks
+                dx={5} // Move Y-axis labels to the left a bit
+                padding={{ top: 0, bottom: 20 }} // Add padding to Y-axis
+                tickFormatter={(value) => value.toFixed(5)} // Format Y-axis ticks
               />
 
               <Tooltip content={<CustomTooltip />} />
