@@ -43,7 +43,7 @@ export default function TokenPriceChart() {
       return (
         <div className="bg-gray-800 p-2 rounded border border-gray-700 text-gray-200 text-xs">
           <p>{`Time: ${payload[0].payload.time}`}</p>
-          <p>{`Price: ${payload[0].value}`}</p>
+          <p>{`Price: ${payload[0].value.toFixed(7)}`}</p>
         </div>
       );
     }
@@ -82,7 +82,7 @@ export default function TokenPriceChart() {
                 orientation="left"
                 dx={-5} // Move Y-axis labels to the left a bit
                 padding={{ top: 0, bottom: 0 }} // Add padding to Y-axis
-                tickFormatter={(value) => value.toFixed(6)} // Format Y-axis ticks
+                tickFormatter={(value) => value.toFixed(5)} // Format Y-axis ticks
               />
 
               <Tooltip content={<CustomTooltip />} />

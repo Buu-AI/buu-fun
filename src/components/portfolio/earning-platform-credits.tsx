@@ -24,7 +24,7 @@ export default function EarningPlatformCredits() {
       </div>
       {/* Dont remove the dialog, it will be replaced in future */}
       {/* <StakingDialog /> */}
-      <StakeBuuButton />
+      {/* <StakeBuuButton /> */}
     </div>
   );
 }

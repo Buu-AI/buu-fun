@@ -35,7 +35,7 @@ export default function EarningAvailableCard() {
         <div>
           <p className="text-sm text-muted-foreground/50 tracking-tight font-medium">
             {/*  */}
-            {AvailablePrice}
+            $ {AvailablePrice}
           </p>{" "}
         </div>
       </div>

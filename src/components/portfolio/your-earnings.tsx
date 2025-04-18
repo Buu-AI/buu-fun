@@ -37,8 +37,8 @@ export default function YourEarnings() {
             <YourEarningsPricing />
             <div className="flex items-center flex-wrap justify-center gap-3">
               {/* <StakingClaimButton /> */}
-              <StakingClaimAndRestakeButton />
-              <WithdrawButton />
+              {/* <StakingClaimAndRestakeButton /> */}
+              {/* <WithdrawButton /> */}
             </div>
           </div>
           <p className="text-muted-foreground/50 hidden lg:block tracking-tight font-medium text-sm">
@@ -46,7 +46,7 @@ export default function YourEarnings() {
           </p>
         </div>
 
-        <div className="w-full p-5">
+        <div className="w-full py-5 ">
           <div className="grid md:grid-cols-2 gap-3">
             <EarningAvailableCard />
             <EarningTotalStakedCard />
