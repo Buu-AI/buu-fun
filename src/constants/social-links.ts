@@ -1,3 +1,5 @@
+import { getStreamflowUrl } from "@/lib/utils";
+
 export const LINKS = {
   DISCORD: "https://discord.gg/BUUFUN",
   TWITTER: "https://x.com/buudotfun",
@@ -5,8 +7,7 @@ export const LINKS = {
   CONTACT_SUPPORT_MAIL: "mailto:support@buu.fun",
   DOCS: "https://docs.buu.fun/",
   YT_TUTORIALS: "https://www.youtube.com/@buuonsol/videos",
-  STREAMFLOW_STAKING:
-    "https://app.streamflow.finance/staking/solana/devnet/3gv93VfCiwJEsyC1qxPKabcyeudVSqYboif7vF6PZkra",
+  STREAMFLOW_STAKING: getStreamflowUrl(),
   BUY_BUU_DEX_SCREENER:
     "https://dexscreener.com/solana/88n8pbt6dob5rhp7wcaag8tuvy1bawazzxas7bm8virt",
   BUY_BUU_JUPITER_AG:

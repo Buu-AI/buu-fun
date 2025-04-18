@@ -63,7 +63,7 @@ export default function TokenPriceChart() {
                 dataKey="time"
                 tick={{ fill: "#999" }}
                 className="text-sm"
-                axisLine={{ stroke: "rgba(255, 255, 255, 0.1)" }}
+                axisLine={{ stroke: "#0000000" }}
                 tickLine={true}
                 padding={{ left: 10, right: 10 }} // Add padding to X-axis
                 dy={10} // Move X-axis labels down a bit
@@ -75,13 +75,13 @@ export default function TokenPriceChart() {
                 domain={["auto", "auto"]}
                 // alignmentBaseline="text-after-edge"
                 tick={{ fill: "#999" }}
-                className="px-2 text-sm  w-full "
+                className="px-2 text-sm  w-full"
                 axisLine={false}
                 interval={"equidistantPreserveStart"}
                 tickLine={false}
                 orientation="left"
-                dx={-5} // Move Y-axis labels to the left a bit
-                padding={{ top: 0, bottom: 0 }} // Add padding to Y-axis
+                dx={5} // Move Y-axis labels to the left a bit
+                padding={{ top: 0, bottom: 20 }} // Add padding to Y-axis
                 tickFormatter={(value) => value.toFixed(5)} // Format Y-axis ticks
               />
 
