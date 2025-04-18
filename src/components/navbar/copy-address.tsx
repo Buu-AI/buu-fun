@@ -28,7 +28,7 @@ export default function CopyAddress({ isNavigation, className }: TCopyAddress) {
       className={cn(
         "flex items-center flex-row-reverse gap-1.5 w-full",
         {
-          "hover:bg-buu-secondary py-2 flex-row rounded-md px-2 font-medium":
+          "hover:bg-buu-button/60 py-2 flex-row rounded-md px-2 font-medium":
             isNavigation,
         },
         className,
