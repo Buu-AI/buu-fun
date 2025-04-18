@@ -5,8 +5,6 @@ import { formatUnits, multiplyAndFormatPricing } from "@/lib/utils";
 import EarningAvailableCard from "./earning-available";
 import EarningPlatformCredits from "./earning-platform-credits";
 import EarningTotalStakedCard from "./earning-total-staked-card";
-import StakingClaimAndRestakeButton from "./staking-claim-restake-button";
-import WithdrawButton from "./withdraw-button";
 import YourEarningsPricing from "./your-earning-pricing";
 
 export default function YourEarnings() {

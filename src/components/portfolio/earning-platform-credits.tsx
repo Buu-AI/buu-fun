@@ -1,6 +1,5 @@
 import FlashIcon from "@/assets/icons/flash-icon";
 import useUserCredits from "@/hooks/use-credits";
-import StakeBuuButton from "./stake-buu-button";
 
 export default function EarningPlatformCredits() {
   const credits = useUserCredits();
