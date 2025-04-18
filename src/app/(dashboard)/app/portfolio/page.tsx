@@ -4,7 +4,7 @@ import HeaderLogo from "@/components/portfolio/header-logo";
 import OverviewContainer from "@/components/portfolio/overview-container";
 import StreamFlowRedirectDialog from "@/components/portfolio/Streamflow-redirect-dialog";
 import TokenStatistics from "@/components/portfolio/token-statistics";
-import YourEarnings from "@/components/portfolio/your-earnings";
+import YourEarnings from "@/components/portfolio/your-earning-new/your-earnings";
 import Bounded from "@/components/ui/Bounded";
 
 export default function PortfolioPage() {
@@ -15,11 +15,9 @@ export default function PortfolioPage() {
       <div className="grid overflow-hidden h-full  relative 2xl:grid-cols-[65%_35%]   max-h-[calc(100dvh-90px)] overflow-y-scroll  scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-orange scrollbar-thumb-rounded px-1 lg:px-24 lg:mt-9 pb-12">
         <div className="">
           <HeaderLogo />
-          <TokenStatistics />
+          {/* <TokenStatistics /> */}
           <YourEarnings />
-          {/* <div className="mb-4">
-              <StakingDataDisplay />
-            </div> */}
+
           <div className="py-6">{/* <APICapacityCTA /> */}</div>
           {/* <div className="flex justify-center flex-wrap place-content-center place-items-center  md:grid md:grid-cols-2  gap-2"> */}
           <div className="w-full">

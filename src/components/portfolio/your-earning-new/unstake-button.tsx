@@ -1,18 +1,19 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { useAppDispatch } from "@/hooks/redux";
 import { setStreamflowDialogOpen } from "@/lib/redux/features/buu-pricing";
-import { Button } from "../ui/button";
 
-export default function StakingClaimAndRestake() {
+export default function UnstakeButton() {
   const dispatch = useAppDispatch();
   return (
     <Button
       onClick={() => {
         dispatch(setStreamflowDialogOpen(true));
       }}
+      variant={"special"}
       className="h-[40px]"
     >
-      <span className="p-3">Restake Rewards</span>
+      <span className="p-3">Unstake</span>
     </Button>
   );
 }
