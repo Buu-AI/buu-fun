@@ -62,7 +62,7 @@ export default function TokenPriceChart() {
               <XAxis
                 dataKey="time"
                 tick={{ fill: "#999" }}
-                className="text-sm"
+                className="text-xs md:text-sm"
                 axisLine={{ stroke: "rgba(255, 255, 255, 0.1)" }}
                 tickLine={true}
                 padding={{ left: 10, right: 10 }} // Add padding to X-axis
@@ -75,7 +75,7 @@ export default function TokenPriceChart() {
                 domain={["auto", "auto"]}
                 // alignmentBaseline="text-after-edge"
                 tick={{ fill: "#999" }}
-                className="px-2 text-sm  w-full "
+                className="px-2 text-xs md:text-sm  w-full "
                 axisLine={false}
                 interval={"preserveStart"}
                 tickLine={false}

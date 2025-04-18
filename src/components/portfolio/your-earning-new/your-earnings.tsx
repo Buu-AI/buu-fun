@@ -1,17 +1,12 @@
 "use client";
-import React from "react";
-import YourEarningsPricing from "../your-earning-pricing";
 import { useBuuPricingData } from "@/hooks/use-pricing-history";
 import { useUserStakingData } from "@/hooks/use-staking-data";
 import {
-  formatNumberWithFractions,
-  formatPrice,
+  cn,
   formatUnits,
   formatWithComma,
   multiplyAndFormatPricing,
 } from "@/lib/utils";
-import EarningAvailableCard from "../earning-available";
-import EarningTotalStakedCard from "../earning-total-staked-card";
 import EarningPlatformCredits from "../earning-platform-credits";
 import TotalStaked from "./total-staked";
 import UserStakedCards from "./user-staked-cards";
@@ -54,12 +49,16 @@ export default function YourEarnings() {
       <div className="px-1  md:px-6">
         <TotalStaked />
       </div>
-      <div className="px-1  md:px-6">
+      <div
+        className={cn("px-1  md:px-6", {
+          hidden: !userStakingData || !userStakingData?.userStakes?.length,
+        })}
+      >
         <p className="font-medium text-muted-foreground/60 tracking-tight">
           Your Stakes
         </p>
         <div className="w-full my-6">
-        <UserStakedCards />
+          <UserStakedCards />
         </div>
       </div>
       <EarningPlatformCredits />

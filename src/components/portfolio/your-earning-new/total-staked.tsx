@@ -1,6 +1,7 @@
 import { useBuuPricingData } from "@/hooks/use-pricing-history";
 import { useUserStakingData } from "@/hooks/use-staking-data";
 import {
+  formatNumber,
   formatUnits,
   formatWithComma,
   multiplyAndFormatPricing,
@@ -34,7 +35,7 @@ export default function TotalStaked() {
         </p>
         <div className="flex items-center gap-1 pt-3 ">
           <p className="text-2xl font-medium tracking-tight leading-none ">
-            {formatWithComma(Number(totalStaked ?? "0"))}
+            {formatNumber(Number(totalStaked ?? "0"))}
           </p>{" "}
           <span className="text-muted-foreground/60">$BUU</span>
         </div>

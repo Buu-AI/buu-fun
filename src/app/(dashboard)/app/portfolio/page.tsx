@@ -15,7 +15,7 @@ export default function PortfolioPage() {
       <div className="grid overflow-hidden h-full  relative 2xl:grid-cols-[65%_35%]   max-h-[calc(100dvh-90px)] overflow-y-scroll  scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-orange scrollbar-thumb-rounded px-1 lg:px-24 lg:mt-9 pb-12">
         <div className="">
           <HeaderLogo />
-          {/* <TokenStatistics /> */}
+          <TokenStatistics />
           <YourEarnings />
 
           <div className="py-6">{/* <APICapacityCTA /> */}</div>

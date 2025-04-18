@@ -43,7 +43,7 @@ export async function getUserStakingData({
     []
   );
 
-  let totalClaimableRewards = new BN(0);
+  const totalClaimableRewards = new BN(0);
   const userStakes = userStakeEntries.map((stakeEntry) => {
     const rewardEntry = userRewardEntries.find(
       (rewardEntry) =>
