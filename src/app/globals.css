@@ -834,5 +834,14 @@ body {
 }
 
 .help-card-box-shadow {
-  box-shadow: 0px 0px 99.473px 25.726px rgba(255, 255, 255, 0.42) inset, 34.301px 34.301px 174.077px 0px rgba(7, 54, 81, 0.25);
+  box-shadow:
+    0px 0px 99.473px 25.726px rgba(255, 255, 255, 0.42) inset,
+    34.301px 34.301px 174.077px 0px rgba(7, 54, 81, 0.25);
+}
+
+.bg-total-staked {
+  border-radius: 12px;
+  background: rgba(28, 32, 39, 0.4);
+  box-shadow: 0px 0px 46.6px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(10px);
 }
