@@ -67,7 +67,7 @@ export default function TokenPriceChart() {
                 tickLine={true}
                 padding={{ left: 10, right: 10 }} // Add padding to X-axis
                 dy={10} // Move X-axis labels down a bit
-                interval={"preserveStartEnd"}
+                interval={"equidistantPreserveStart"}
               />
 
               <YAxis
@@ -77,7 +77,7 @@ export default function TokenPriceChart() {
                 tick={{ fill: "#999" }}
                 className="px-2 text-sm  w-full "
                 axisLine={false}
-                interval={"preserveStart"}
+                interval={"equidistantPreserveStart"}
                 tickLine={false}
                 orientation="left"
                 dx={-5} // Move Y-axis labels to the left a bit

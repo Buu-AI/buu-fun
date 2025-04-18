@@ -49,7 +49,7 @@ export default function DesktopProfileNavigation() {
           <PopoverContent
             sideOffset={8}
             align="end"
-            className="px-1 pb-1 pt-1 max-w-[210px] bg-buu border-buu"
+            className="px-1 pb-1 pt-1 max-w-[210px] bg-buu backdrop-blur-lg border-buu"
           >
             <ExportSolanaWallet className="w-full" />
             <div className="w-full mt-2">
@@ -57,7 +57,7 @@ export default function DesktopProfileNavigation() {
             </div>
             <Link
               href={"/app/portfolio"}
-              className="flex w-full items-center gap-1.5 hover:bg-buu-secondary py-2 rounded-md px-2 font-medium"
+              className="flex w-full items-center gap-1.5 hover:bg-buu-button/60 py-2 rounded-md px-2 font-medium"
             >
               <div className="flex w-5 h-5 ">
                 {/* fill="#78DBFF" */}
@@ -68,7 +68,7 @@ export default function DesktopProfileNavigation() {
             </Link>
             <Link
               href={"/app/api-key"}
-              className="flex w-full items-center gap-1.5 hover:bg-buu-secondary py-2 rounded-md px-2 font-medium"
+              className="flex w-full items-center gap-1.5 hover:bg-buu-button/60 py-2 rounded-md px-2 font-medium"
             >
               <div className="flex w-5 h-5 ">
                 <ApiKeyHeaderIcon fill="#78DBFF" />
@@ -78,7 +78,7 @@ export default function DesktopProfileNavigation() {
             </Link>
             <Link
               href={"/app/profile"}
-              className="flex w-full items-center gap-1.5 hover:bg-buu-secondary py-2 rounded-md px-2 font-medium"
+              className="flex w-full items-center gap-1.5 hover:bg-buu-button/60 py-2 rounded-md px-2 font-medium"
             >
               <div className="w-5 h-5">
                 <SettingsIcon />
@@ -89,7 +89,7 @@ export default function DesktopProfileNavigation() {
 
             <Link
               href={"/app/referral"}
-              className="flex w-full items-center gap-1.5 hover:bg-buu-secondary py-2 rounded-md px-2 font-medium"
+              className="flex w-full items-center gap-1.5 hover:bg-buu-button/60 py-2 rounded-md px-2 font-medium"
             >
               <div className="w-5 h-5">
                 <ReferralIcon />
