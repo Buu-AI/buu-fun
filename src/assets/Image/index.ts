@@ -1,18 +1,18 @@
-import comicBoyCropped from "./help-card-images/comic-boy-cropped.png";
-import hotAirBallon from "./help-card-images/image-five.webp";
-import comicGirl from "./help-card-images/image-four.webp";
+import whiteChatLady from "./help-card-images/white-cat-lady.png";
+import hotAirBallon from "./help-card-images/pheonix-girl.png";
+import lizardMermaid from "./help-card-images/lizard-mermaid.png";
 import StepShape3d from "./help-card-images/image-one.webp";
-import Elephant from "./help-card-images/image-seven.webp";
-import boatAndFlowers from "./help-card-images/image-six.webp";
-import comicBoy from "./help-card-images/image-three.webp";
+import Elephant from "./help-card-images/dragon-sword.png";
+import boatAndFlowers from "./help-card-images/groot-wizard.png";
+import comicBoy from "./help-card-images/white-cat-lady.png";
 import RoundedLamp3d from "./help-card-images/image-two.webp";
 import ThreeDMeshIcon from "./three-d-materials/metallic.png";
 
 export {
   boatAndFlowers,
   comicBoy,
-  comicBoyCropped,
-  comicGirl,
+  whiteChatLady,
+  lizardMermaid,
   Elephant,
   hotAirBallon,
   RoundedLamp3d,

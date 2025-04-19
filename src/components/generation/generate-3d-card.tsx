@@ -65,7 +65,7 @@ export default function Generate3DCard({
       transition={{ ease: "easeInOut", duration: 0.5 }}
       className="w-full min-w-[264px]  lg:w-[264px] h-full lg:h-[370px] relative p-0"
     >
-      <div className="relative bg-[#151924]  -z-[10] rounded-2xl w-full h-full overflow-hidden">
+      <div className="relative bg-[#15192480] backdrop-blur-md   -z-[10] rounded-2xl w-full h-full overflow-hidden">
         <div className="w-[78px] h-[170px] top-0 right-[10%] absolute  bg-overlay-card   rounded-full   rotate-[-10deg]" />
 
         <motion.div

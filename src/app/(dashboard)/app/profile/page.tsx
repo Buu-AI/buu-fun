@@ -23,8 +23,9 @@ export default function ProfilePage() {
   const { address, wallet } = useAuthentication();
   const { data } = useUserCredits();
   const { data: subscription } = useUserSubscription();
+
   return (
-    <ProtectedWrapper Fallback={<ProfileSkeleton />} fallbackUrl="/">
+    <ProtectedWrapper Fallback={<ProfileSkeleton />} fallbackUrl="/app">
       <main className="flex items-center flex-col justify-center w-full ">
         <div className="flex w-16 h-16">
           <Image
@@ -70,7 +71,7 @@ export default function ProfilePage() {
               Credits Used
             </h3>
             <div className="text-2xl font-medium">
-              <p>${getFixedCredits(data?.available)}</p>
+              <p>{getFixedCredits(data?.available)}</p>
             </div>
           </div>
           <div className="w-[2.5px] min-h-[50px] h-full  bg-gray-700/60" />

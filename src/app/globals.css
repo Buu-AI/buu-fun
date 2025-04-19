@@ -739,8 +739,100 @@ body {
   background: rgba(45, 50, 60, 0.7);
   backdrop-filter: blur(25px);
 }
-
+.bg-tile-muted {
+  background: rgba(26, 33, 41, 0.36);
+}
 .muted-button {
   border-radius: 10px;
   background: rgba(26, 33, 41, 0.36);
+}
+
+.blue-plus-icon-gradient {
+  background: linear-gradient(0deg, #48b1f8 0%, #78c1e5 100%);
+}
+
+.text-star {
+  text-overflow: "*";
+  background: #8f6fb2;
+}
+
+.bg-api-key-table-header {
+  background: rgba(28, 32, 39, 0.2);
+}
+
+.orange-pill {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 135, 70, 0.5);
+  box-shadow: 0px 0px 10.5px 3px rgba(179, 187, 197, 0.2) inset;
+}
+
+.destructive-pill {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 70, 70, 0.5);
+  box-shadow: 0px 0px 10.5px 3px rgba(179, 187, 197, 0.2) inset;
+}
+
+.bg-api-key-display {
+  border: 1.5px solid rgba(120, 219, 255, 0);
+  background: rgba(26, 33, 41, 0.36);
+  box-shadow: 0px 0px 23.4px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(10px);
+}
+
+.bg-button-muted {
+  background: rgba(28, 32, 39, 0.36);
+  box-shadow: 0px 0px 7.8px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(10px);
+}
+
+.border-button-muted {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bg-api-key-table-header {
+  background: rgba(28, 32, 39, 0.2);
+  box-shadow: 0px 0px 46.6px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(40px);
+}
+
+.bg-api-key-table-radius {
+  border-radius: 20px 20px 0px 0px;
+}
+
+.bg-background-select-item {
+  background: #252931cc;
+}
+
+.bg-portfolio-statistics {
+  background: rgba(45, 50, 60, 0.4);
+  backdrop-filter: blur(25px);
+}
+
+.bg-portfolio-statistics-button-background {
+  background: rgba(26, 30, 36, 0.5);
+}
+
+.bg-overview-portfolio {
+  background: rgba(28, 32, 39, 0.2);
+  box-shadow: 0px 0px 46.6px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(40px);
+}
+
+.bg-apr-button {
+  background: radial-gradient(
+    50% 181.71% at 50% 50%,
+    rgba(73, 207, 255, 0.4) 0%,
+    rgba(120, 219, 255, 0.04) 100%
+  );
+}
+
+.bg-platform-credit {
+  background: #1a2129;
+  box-shadow:
+    4.848px -5.333px 33.333px 0px rgba(16, 19, 28, 0.3),
+    0px 0px 11.556px 4.444px rgba(44, 55, 68, 0.8) inset;
+}
+
+.help-card-box-shadow {
+  box-shadow: 0px 0px 99.473px 25.726px rgba(255, 255, 255, 0.42) inset, 34.301px 34.301px 174.077px 0px rgba(7, 54, 81, 0.25);
 }

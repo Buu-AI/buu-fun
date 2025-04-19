@@ -25,8 +25,10 @@ export default function MobileMockCard({ showModel }: { showModel: boolean }) {
         </div>
 
         <div className="flex gap-1  justify-center items-start">
-          <button className="flex gap-1  max-h-[40px]items-center justify-center bg-buu shadow-buu-secondary border-buu py-2 px-1 rounded-xl">
-            <FlashIcon />
+          <button className="flex gap-1  max-h-[40px] items-center justify-center bg-buu shadow-buu-secondary border-buu py-2 px-1 rounded-xl">
+            <div className="w-5 h-5 flex">
+              <FlashIcon />
+            </div>
             <p className="text-white text-[11px]">${getFixedCredits(1.9)}</p>
             <p className="text-[11px]"> Credits used </p>
           </button>

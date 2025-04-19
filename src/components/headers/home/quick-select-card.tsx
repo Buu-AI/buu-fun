@@ -1,47 +1,66 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
+import Image from "next/image";
+import Icon from "./Star Icon.png";
 export default function QuickSelectCard({
   title,
   gradient,
   backgroundImage,
   released = true,
 }: {
-  title: ReactNode;
-  gradient: ReactNode;
-  backgroundImage: ReactNode;
+  title?: ReactNode;
+  gradient: string;
+  backgroundImage?: ReactNode;
   released?: boolean;
 }) {
   return (
-    <button
-      disabled={!released}
-      className="relative  p-[16px] group w-72  aspect-video bg-transparent  overflow-hidden  flex  border  h-full rounded-[20px] "
+    <div
+      // disabled={!released}
+      className="relative  group w-72  overflow-hidden  aspect-video border h-full rounded-[20px] "
     >
+      <div className="w-full h-full overflow-hidden  absolute z-50  left-0 top-0">
+        {backgroundImage}
+      </div>
+      <div className="absolute w-full h-full top-0 left-0">
+        <Image
+          src={gradient}
+          alt="hello"
+          width={1980}
+          height={1080}
+          className=" w-full h-full"
+        />
+      </div>
       <div
         className={cn(
-          "absolute flex items-center justify-center w-full h-full top-0 left-0   z-50 bg-black/60 ",
+          "absolute  flex items-center justify-center w-full h-full top-0 left-0  z-50 bg-black/60 ",
           {
             hidden: released,
           },
         )}
       >
-        <h4 className="text-lg  font-bold tracking-tighter text-bla">
-          Coming soon ✨
-        </h4>
+        <div className="text-lg flex items-center justify-center  font-bold tracking-tight ">
+          <p>Coming soon</p>
+          <div className="w-8 h-8">
+            <Image
+              src={Icon}
+              width={100}
+              className="w-full"
+              height={100}
+              alt="Star Icon"
+            />
+          </div>
+        </div>
       </div>
-      <div className="z-10  text-2xl font-medium relative text-white text-left">
-        <p>
-          Help me to create <br /> {title}
-        </p>
+      <div className="z-10 absolute py-4 pl-3 top-0 left-0 w-full h-full  text-2xl  font-medium  text-white text-left">
+        <p className="">{title}</p>
       </div>
-      <div
+      {/* {gradient} */}
+      {/* <div
         className={cn(
-          "absolute w-[105%]  overflow-hidden h-[105%]  max-w-full top-0 left-0",
+          "absolute w-full h-full  overflow-hidden  border-2 object-cover  max-w-full top-0 left-0"
         )}
-      >
-        {gradient}
-      </div>
-      <div>{backgroundImage}</div>
-    </button>
+      ></div> */}
+    </div>
   );
 }

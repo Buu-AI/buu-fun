@@ -1,5 +1,5 @@
 import { Plans, TPricing } from "@/constants/subscription/subscription-plans";
-import { isPlanEnterprise } from "@/lib/helpers/subscription-plan-checker";
+import { isPlanEnterprise, isPlanFree } from "@/lib/helpers/subscription-plan-checker";
 import { cn } from "@/lib/utils";
 import Pill from "../elements/pill";
 
@@ -82,7 +82,7 @@ export default function SubscriptionPricingHeader({
         )}
       >
         <h4 className="text-muted-foreground/60 text-sm font-medium mt-2 md:mt-0">
-          Included Monthly Credits
+        {isPlanFree(plan) ? "Initial trial credits": "Included Monthly Credits"}
         </h4>
         <div className="flex justify-center">
           <p className="text-3xl md:text-5xl font-medium tracking-tight">

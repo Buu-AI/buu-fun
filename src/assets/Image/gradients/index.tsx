@@ -6,10 +6,12 @@ import gradientRainbowImage from "./gradient-rainbow.png";
 import { GeneralClassName } from "@/types";
 import { cn } from "@/lib/utils";
 
+export { gradientBluePurpleImage, gradientBlueyRedImage, gradientRainbowImage };
+
 export function GradientPurpleBlue({ className }: GeneralClassName) {
   return (
     <Image
-      className={cn("w-full h-full bg-transparent ", className)}
+      className={cn("w-full h-full  object-cover ", className)}
       alt="Gradient Blue color"
       width={1920}
       height={1080}
@@ -21,7 +23,7 @@ export function GradientPurpleBlue({ className }: GeneralClassName) {
 export function GradientBlueyRed({ className }: GeneralClassName) {
   return (
     <Image
-      className={cn("w-full h-full bg-transparent", className)}
+      className={cn("w-full h-full", className)}
       alt="Gradient Blue color"
       width={1920}
       height={1080}
@@ -33,7 +35,7 @@ export function GradientBlueyRed({ className }: GeneralClassName) {
 export function GradientRainbow({ className }: GeneralClassName) {
   return (
     <Image
-      className={cn("w-full h-full bg-transparent", className)}
+      className={cn("w-full h-full object-cover", className)}
       alt="Gradient Blue color"
       width={1920}
       height={1080}
@@ -42,4 +44,4 @@ export function GradientRainbow({ className }: GeneralClassName) {
   );
 }
 
-export { gradientBluePurpleImage, gradientBlueyRedImage, gradientRainbowImage };
+// export { gradientBluePurpleImage, gradientBlueyRedImage, gradientRainbowImage };

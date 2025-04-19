@@ -25,11 +25,16 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             }),
           },
         },
+
         // Create embedded wallets for users who don't have a wallet
         embeddedWallets: {
+          ethereum: {
+            createOnLogin: "off",
+          },
           solana: {
             createOnLogin: "users-without-wallets",
           },
+
           showWalletUIs: true,
         },
       }}

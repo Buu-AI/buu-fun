@@ -1,12 +1,14 @@
 import ShareAndSaveIcon from "@/assets/icons/share-and-save";
-import ShareIcon from "@/assets/icons/share-icon";
 import { TypedAppError } from "@/class/error";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useSharableBoards } from "@/hooks/use-boards";
+import { useUserSubscription } from "@/hooks/use-credits";
+import { isFreePlan } from "@/lib/helpers/status-checker";
 import {
   createNewBoardsMutation,
   updateBoardsVisibility,
 } from "@/lib/react-query/boards";
+import { setShareableModalOpen } from "@/lib/redux/features/boards";
 import { setSubscriptionModel } from "@/lib/redux/features/subscription";
 import { cn, getSharableUrl } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
@@ -20,19 +22,18 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "../ui/dialog";
 import CopyBoardLink from "./copy-board-link";
 
 export default function ShareableBoardsButton() {
   const path = usePathname();
-
+  const { data: userSubScription } = useUserSubscription();
   const threadId = useAppSelector((state) => state.chat.threads.threadId);
 
   // const subThreads = useAppSelector((state) => state.chat.subThreads);
 
   const dispatch = useAppDispatch();
-
+  const isModalOpen = useAppSelector((state) => state.boards.isShareModalOpen);
   const { identityToken: accessToken, login } = useAuthentication();
 
   // const { data: userSubscription } = useUserSubscription();
@@ -129,6 +130,10 @@ export default function ShareableBoardsButton() {
       login();
       return;
     }
+    if (isFreePlan(userSubScription?.planKey)) {
+      dispatch(setSubscriptionModel(true));
+      return;
+    }
     createNewBoard({
       accessToken,
       threadId,
@@ -152,8 +157,13 @@ export default function ShareableBoardsButton() {
     return null;
   }
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <Dialog
+      open={isModalOpen}
+      onOpenChange={(value) => {
+        dispatch(setShareableModalOpen(value));
+      }}
+    >
+      {/* <DialogTrigger asChild>
         <Button
           variant={"ghost"}
           className="px-3 flex items-center hover:bg-buu-button justify-center gap-1 text-base h-[40px] group  py-2  rounded-[10px]"
@@ -163,7 +173,7 @@ export default function ShareableBoardsButton() {
           </div>
           <span className="hidden lg:block">Share</span>
         </Button>
-      </DialogTrigger>
+      </DialogTrigger> */}
       <DialogContent className="bg-referral-modal px-6 py-8">
         <DialogHeader className="flex items-center justify-center">
           <DialogTitle>Share Board</DialogTitle>

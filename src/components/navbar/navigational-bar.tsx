@@ -3,10 +3,10 @@ import MagicPenIcon from "@/assets/icons/magicpen";
 import Image from "next/image";
 import Link from "next/link";
 import KnowMorePopover from "./know-more-pop-over";
-import { SizePenIcon } from "@/assets/icons";
+import { CoinStackIcon, SizePenIcon } from "@/assets/icons";
 export default function NavigationalBar() {
   return (
-    <nav className="px-3 py-4   w-full h-full">
+    <nav className="px-3 py-4  w-full h-full lg:h-screen">
       <div className="lg:bg-buu lg:py-4  flex flex-col items-center justify-between lg:rounded-[20px] overflow-hidden lg:h-full lg:w-[72px]">
         <div className="flex items-center justify-center">
           <Link
@@ -41,14 +41,14 @@ export default function NavigationalBar() {
               <MagicPenIcon />
             </div>
           </Link>
-          {/* <Link
-            href={"/"}
+          <Link
+            href={"/app/portfolio"}
             className="w-10 flex group items-center justify-center px-2 py-3 h-10 "
           >
-            <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-gray-500" >
+            <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-gray-500">
               <CoinStackIcon />
             </div>
-          </Link> */}
+          </Link>
         </div>
         <div className="hidden lg:flex">
           <KnowMorePopover />

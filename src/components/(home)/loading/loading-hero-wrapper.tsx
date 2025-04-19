@@ -19,6 +19,7 @@ export default function HeroLoadingWrapper({
   const intervalRef = useRef<NodeJS.Timeout>(null);
   const progressRef = useRef(20);
   const [finishedLoading, setFinishedLoading] = useState(false);
+
   useEffect(() => {
     if (finishedLoading) {
       if (intervalRef.current) {
@@ -31,7 +32,7 @@ export default function HeroLoadingWrapper({
         setFinishedLoading(true);
         clearInterval(intervalRef.current);
       }
-      progressRef.current = progressRef.current + Math.random() * 8;
+      progressRef.current = progressRef.current + Math.random() * 15;
     }, 200);
     return () => {
       if (intervalRef.current) {
