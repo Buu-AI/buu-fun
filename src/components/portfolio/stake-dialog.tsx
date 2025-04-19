@@ -25,9 +25,10 @@ import { Label } from "../ui/label";
 import StakeConfirmButton from "./stake-confirm-button";
 import StakingRewardReview from "./staking-reward-review";
 import StakingSlider from "./staking-slider";
+import { getClusterUrl } from "@/lib/solana/staking";
 
 export default function StakingDialog() {
-  const { wallet } = useAuthentication();
+  const { wallet, connectSolanaWallet } = useAuthentication();
   // const { data } = useBuuPricingData();
   const {
     userStaking: { data: userStakingData },
@@ -54,7 +55,7 @@ export default function StakingDialog() {
       .positive("Amount must be positive")
       .max(
         Number(tokenData?.value.uiAmount ?? 0),
-        `Maximum ${earnings} $BUU allowed`,
+        `Maximum ${earnings} $BUU allowed`
       ),
   });
 
@@ -91,17 +92,18 @@ export default function StakingDialog() {
 
   async function onSubmit(data: z.infer<typeof stakeInputSchema>) {
     if (!wallet || !wallet.address) {
-      toast.error("Authentication is loading...");
+      connectSolanaWallet();
       return;
     }
 
     if (wallet?.chainType !== "solana") {
+      connectSolanaWallet();
       toast.error("Please connect using Solana wallet");
       return;
     }
 
     try {
-      const connection = new Connection("https://api.devnet.solana.com");
+      const connection = new Connection(getClusterUrl());
 
       // Show loading state
       toast.loading(`Creating transaction for ${data.amount}...`);
@@ -126,7 +128,7 @@ export default function StakingDialog() {
       // );
       const signature = await wallet.walletData?.sendTransaction(
         transaction,
-        connection,
+        connection
       );
       console.log(signature);
       toast.dismiss();
@@ -138,7 +140,7 @@ export default function StakingDialog() {
         try {
           const confirmation = await connection.confirmTransaction(
             signature,
-            "confirmed",
+            "confirmed"
           );
 
           if (confirmation.value.err) {
@@ -158,7 +160,7 @@ export default function StakingDialog() {
       toast.dismiss();
       toast.error(
         "Transaction failed: " +
-          (error instanceof Error ? error.message : "Unknown error"),
+          (error instanceof Error ? error.message : "Unknown error")
       );
       console.error("Transaction error:", error);
     }

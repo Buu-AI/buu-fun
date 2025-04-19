@@ -1,25 +1,28 @@
-import { SolanaStakingClient } from "../streamflow/client.js";
 import { PublicKey, Transaction } from "@solana/web3.js";
+import { SolanaStakingClient } from "../streamflow/client";
 
 type TGetUnStakingTransactions = {
   address: string;
+  depositNonce: number;
 };
 export async function getUnStakingTransactions({
   address,
+  depositNonce,
 }: TGetUnStakingTransactions) {
   const publicKey = new PublicKey(address);
-  
+
   const stakePool = new PublicKey(
-    "3gv93VfCiwJEsyC1qxPKabcyeudVSqYboif7vF6PZkra"
+    process.env.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL ?? ""
   );
   const stakePoolMint = new PublicKey(
-    "FaJY4pmNLk3y6c82KXXuDrivw7jQ5CgyyEyV68g684hu"
+    process.env.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL_MINT ?? ""
   );
+  
   const solanaStakingClient = new SolanaStakingClient({
     clusterUrl: "https://api.devnet.solana.com",
   });
 
-  const nonce = 0;
+  const nonce = depositNonce;
 
   const { ixs } = await solanaStakingClient.prepareUnstakeInstructions(
     {
@@ -32,6 +35,5 @@ export async function getUnStakingTransactions({
 
   const transaction = new Transaction();
   transaction.add(...ixs);
-
-  console.log("Transaction:", transaction);
+  return transaction;
 }

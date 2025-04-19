@@ -1,5 +1,6 @@
 import { useUserStakingData } from "@/hooks/use-staking-data";
 import UserStakedCard from "./user-staked-card";
+import { useAuthentication } from "@/providers/account.context";
 
 export default function UserStakedCards() {
   const {

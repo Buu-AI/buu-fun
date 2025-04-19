@@ -3,10 +3,11 @@ import { RewardEntry } from "@/gql/types/graphql";
 import { formatNumber, formatUnits } from "@/lib/utils";
 import { format } from "date-fns";
 import prettyMs from "pretty-ms";
-import RestakeRewardButton from "./restake-rewards-button";
+// import ClaimRewardButton from "./restake-rewards-button";
 import UnstakeButton from "./unstake-button";
+import ClaimRewardButton from "./claim-rewards-button";
 
-type TUserStakedCard = {
+export type TUserStakedCard = {
   staked: string;
   duration: string;
   stakeLockedTs: Date;
@@ -28,15 +29,15 @@ export default function UserStakedCard({
   staking: TUserStakedCard;
   decimals?: number;
 }) {
-
   const duration = prettyMs(Number(staking?.duration ?? "0") * 1000, {
     verbose: true,
     compact: true,
   });
 
   const staked = formatUnits(staking?.staked ?? "0", decimals ?? 0);
-
   const rewards = formatUnits(staking?.rewards ?? "0", decimals ?? 0);
+  const depositNonce = staking.depositNonce;
+  const rewardPoolNonce = staking.rewardPoolNonce;
 
   return (
     <div className="border-2 bg-buu  rounded-2xl px-2 md:px-5 py-4 md:py-6">
@@ -110,8 +111,8 @@ export default function UserStakedCard({
         </div>
       </div>
       <div className="mt-4 flex items-center gap-2">
-        <UnstakeButton />
-        <RestakeRewardButton />
+        <UnstakeButton depositNonce={staking.depositNonce} />
+        <ClaimRewardButton {...staking} />
       </div>
     </div>
   );

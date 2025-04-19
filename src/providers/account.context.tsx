@@ -42,6 +42,7 @@ interface AuthenticationContextType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   login: (options?: LoginModalOptions | React.MouseEvent<any, any>) => void;
   logout: () => Promise<void>;
+  connectSolanaWallet: () => void;
 }
 
 const AuthenticationContext = createContext<
@@ -66,7 +67,8 @@ export const AuthenticationProvider = ({ children }: Props) => {
   const [allWallets, setAllWallets] = useState<WalletInfo[]>([]);
   const [isProcessingWallets, setIsProcessingWallets] = useState(false);
 
-  const { ready, authenticated, user, login, logout, isModalOpen } = usePrivy();
+  const { ready, authenticated, user, login, logout, isModalOpen, linkWallet } =
+    usePrivy();
 
   const { identityToken } = useIdentityToken();
   const {
@@ -146,8 +148,8 @@ export const AuthenticationProvider = ({ children }: Props) => {
       // Remove duplicates
       const uniqueWallets = Array.from(
         new Map(
-          processedWallets.map((wallet) => [wallet.address, wallet]),
-        ).values(),
+          processedWallets.map((wallet) => [wallet.address, wallet])
+        ).values()
       );
 
       setAllWallets(uniqueWallets);
@@ -156,7 +158,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
       if (uniqueWallets.length > 0) {
         // Try to find the wallet that matches user's primary wallet
         const userPrimaryWallet = uniqueWallets.find(
-          (w) => w.address === user?.wallet?.address,
+          (w) => w.address === user?.wallet?.address
         );
 
         if (userPrimaryWallet) {
@@ -191,6 +193,10 @@ export const AuthenticationProvider = ({ children }: Props) => {
   // Get the address from the active wallet
   const address = activeWallet?.address || user?.wallet?.address;
 
+  const connectSolanaWallet = () => {
+    linkWallet({ walletChainType: "solana-only" });
+  };
+
   const value = useMemo(
     () => ({
       address,
@@ -217,11 +223,11 @@ export const AuthenticationProvider = ({ children }: Props) => {
       allWallets,
       login,
       logout,
-    ],
+    ]
   );
 
   return (
-    <AuthenticationContext.Provider value={value}>
+    <AuthenticationContext.Provider value={{ ...value, connectSolanaWallet }}>
       {children}
     </AuthenticationContext.Provider>
   );
@@ -231,7 +237,7 @@ export function useAuthentication() {
   const context = useContext(AuthenticationContext);
   if (context === undefined) {
     throw new Error(
-      `useAuthentication must be used within a AuthenticationProvider`,
+      `useAuthentication must be used within a AuthenticationProvider`
     );
   }
   return context;
