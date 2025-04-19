@@ -1,6 +1,10 @@
 import { useBuuPricingData } from "@/hooks/use-pricing-history";
 import { useUserStakingData } from "@/hooks/use-staking-data";
-import { formatNumber, formatUnits, multiplyAndFormatPricing } from "@/lib/utils";
+import {
+  formatNumber,
+  formatUnits,
+  multiplyAndFormatPricing,
+} from "@/lib/utils";
 import BuyBuuButton from "./buy-buu-button";
 import StakingClaimButton from "./staking-claim-button";
 
@@ -34,8 +38,7 @@ export default function EarningAvailableCard() {
         </div>
         <div>
           <p className="text-sm text-muted-foreground/50 tracking-tight font-medium">
-            {/*  */}
-            $ {AvailablePrice}
+            {/*  */}$ {AvailablePrice}
           </p>{" "}
         </div>
       </div>
