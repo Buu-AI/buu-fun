@@ -8,9 +8,9 @@ import { Button } from "../ui/button";
 
 export default function CreditUsedIcon() {
   const { data } = useUserCredits();
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   function handleClick() {
-    dispatch(setSubscriptionModel(true))
+    dispatch(setSubscriptionModel(true));
   }
   return (
     <div>

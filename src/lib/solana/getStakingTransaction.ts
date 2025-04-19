@@ -14,10 +14,10 @@ export async function getStakingTransaction({
     const publicKey = new PublicKey(address);
 
     const stakePool = new PublicKey(
-      process?.env?.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL ?? ""
+      process?.env?.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL ?? "",
     );
     const stakePoolMint = new PublicKey(
-      process?.env?.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL_MINT ?? ""
+      process?.env?.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL_MINT ?? "",
     );
     const solanaStakingClient = new SolanaStakingClient({
       clusterUrl: "https://api.devnet.solana.com",
@@ -35,7 +35,7 @@ export async function getStakingTransaction({
         stakePool,
         stakePoolMint,
       },
-      publicKey
+      publicKey,
     );
     console.log("INSTRUCTIONS", ixs);
     const transaction = new Transaction();

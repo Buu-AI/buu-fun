@@ -18,10 +18,10 @@ export async function executeStakingTransaction({
   const publicKey = new PublicKey(address);
 
   const stakePool = new PublicKey(
-    process?.env?.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL ?? ""
+    process?.env?.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL ?? "",
   );
   const stakePoolMint = new PublicKey(
-    process?.env?.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL_MINT ?? ""
+    process?.env?.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL_MINT ?? "",
   );
 
   const solanaStakingClient = new SolanaStakingClient({
@@ -41,7 +41,7 @@ export async function executeStakingTransaction({
       stakePool,
       stakePoolMint,
     },
-    publicKey
+    publicKey,
   );
 
   const transaction = new Transaction();
