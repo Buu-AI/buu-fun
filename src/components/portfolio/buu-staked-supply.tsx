@@ -12,21 +12,24 @@ export default function BuuStakedSupply() {
   const {
     globalStaking: { data: globalStakingData },
   } = useUserStakingData();
+  
 
   const totalSupply = PricingData?.totalSupply ?? 0;
   const circulatingSupply =
     Number(formatUnits(globalStakingData?.circulatingSupply ?? "0", 8)) ?? 0;
   const totalStaked =
     Number(formatUnits(globalStakingData?.totalAmount ?? "0", 8)) ?? 0;
-  const stakedByUsers = 4.92 * 10000; // Based on 919.94K value shown in the image
+    
 
+  const stakedByUsers =
+    Number(formatUnits(globalStakingData?.totalStakedByUsers ?? "0", 8)) ?? 0;
   // Convert to percentages relative to total supply
 
   const circulatingPercentage = (circulatingSupply / totalSupply) * 100;
 
   const stakedPercentage = (totalStaked / totalSupply) * 100;
 
-  const userStakedPercentage = (stakedByUsers / totalSupply) * 100;
+  const userStakedPercentage = (Number(stakedByUsers) / totalSupply) * 100;
 
   // Staking percentage to display in the center
   const stakingRatio = Math.round((totalStaked / circulatingSupply) * 100);
