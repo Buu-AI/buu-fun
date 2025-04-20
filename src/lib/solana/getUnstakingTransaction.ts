@@ -1,5 +1,6 @@
 import { PublicKey, Transaction } from "@solana/web3.js";
 import { SolanaStakingClient } from "../streamflow/client";
+import { getClusterUrl } from "./staking";
 
 type TGetUnStakingTransactions = {
   address: string;
@@ -19,7 +20,7 @@ export async function getUnStakingTransactions({
   );
   
   const solanaStakingClient = new SolanaStakingClient({
-    clusterUrl: "https://api.devnet.solana.com",
+    clusterUrl: getClusterUrl(),
   });
 
   const nonce = depositNonce;

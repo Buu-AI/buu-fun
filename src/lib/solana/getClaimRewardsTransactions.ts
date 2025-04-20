@@ -1,6 +1,7 @@
 import { PublicKey, Transaction } from "@solana/web3.js";
 import { SolanaStakingClient } from "../streamflow/client";
 import { TUserStakedCard } from "@/components/portfolio/your-earning-new/user-staked-card";
+import { getClusterUrl } from "./staking";
 
 export async function getClaimRewardsTransactions({
   address,
@@ -12,7 +13,7 @@ export async function getClaimRewardsTransactions({
   const publicKey = new PublicKey(address);
   const transaction = new Transaction();
   const solanaStakingClient = new SolanaStakingClient({
-    clusterUrl: "https://api.devnet.solana.com",
+    clusterUrl: getClusterUrl(),
   });
   const { ixs: createRewardEntryInstructions } =
     await solanaStakingClient.prepareCreateRewardEntryInstructions(
