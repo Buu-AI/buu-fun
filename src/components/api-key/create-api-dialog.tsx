@@ -1,7 +1,7 @@
 "use client";
 import PlusIcon from "@/assets/icons/plus-blue-icon.png";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import Image from "next/image";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -14,26 +14,27 @@ import {
 import CreateAPIForm from "./create-api-form";
 import DisplayAPIKey from "./display-api-key";
 import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
-import { clearState } from "@/lib/redux/features/api-key";
+import {
+  clearApiKeyState,
+  setCreateModalChange,
+} from "@/lib/redux/features/api-key";
 export default function CreateAPIDialog() {
   const isApiKeyRetrieved = useAppSelector(
-    (state) => state.apiKey.isAPIKeyRetrieved,
+    (state) => state.apiKey.isAPIKeyRetrieved
   );
+  const isModalOpen = useAppSelector((state) => state.apiKey.isCreateModalOpen);
   const dispatch = useAppDispatch();
   return (
     <Dialog
-      onOpenChange={() => {
-        dispatch(clearState());
+      open={isModalOpen}
+      onOpenChange={(value) => {
+        if (!value) {
+          dispatch(clearApiKeyState());
+          return;
+        }
+        dispatch(setCreateModalChange(value));
       }}
     >
-      <DialogTrigger asChild>
-        <Button size={"special"}>
-          <div className=" items-center justify-center w-6 h-6 flex">
-            <Image src={PlusIcon} alt="das" width={100} height={100} />
-          </div>
-          Create New Key
-        </Button>
-      </DialogTrigger>
       <DialogContent className="rounded-[20px]  lg:rounded-[20px]  bg-buu/80 backdrop-blur-lg border-buu ">
         <DialogHeader className="flex items-center justify-center ">
           <DialogTitle className="text-2xl">
