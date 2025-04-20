@@ -1,6 +1,7 @@
 import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
 import APIKeyTable from "@/components/api-key/api-key-table";
 import CreateAPIDialog from "@/components/api-key/create-api-dialog";
+import CreateAPIKeyButton from "@/components/api-key/create-api-key-button";
 export default function ApiKeyPage() {
   return (
     <div>
@@ -14,6 +15,7 @@ export default function ApiKeyPage() {
             Your API Keys{" "}
           </h2>
         </div>
+        <CreateAPIKeyButton/>
         <CreateAPIDialog />
       </div>
       <div className="flex   items-center flex-col justify-center pt-10 pb-2">

@@ -1,18 +1,16 @@
 "use client";
 import FlashIcon from "@/assets/icons/flash-icon";
-import React from "react";
-import { Button } from "../ui/button";
-import useUserCredits from "@/hooks/use-credits";
-import { getFixedCredits } from "@/lib/utils";
-import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/hooks/redux";
+import useUserCredits from "@/hooks/use-credits";
 import { setSubscriptionModel } from "@/lib/redux/features/subscription";
+import { getFixedCredits } from "@/lib/utils";
+import { Button } from "../ui/button";
 
 export default function CreditUsedIcon() {
   const { data } = useUserCredits();
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   function handleClick() {
-    dispatch(setSubscriptionModel(true))
+    dispatch(setSubscriptionModel(true));
   }
   return (
     <div>

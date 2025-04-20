@@ -2,7 +2,6 @@
 import { SERVER_URL } from "@/config";
 import { GraphQLClient, type RequestDocument } from "graphql-request";
 
-// const ponderClient = new GraphQLClient(PONDER_URL);
 const serverClient = (() => {
   try {
     return new GraphQLClient(`${SERVER_URL}/graphql`, {
