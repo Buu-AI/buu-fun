@@ -1,23 +1,19 @@
 "use client";
-import PlusIcon from "@/assets/icons/plus-blue-icon.png";
-import Image from "next/image";
+import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { Button } from "../ui/button";
+import {
+  clearApiKeyState,
+  setCreateModalChange,
+} from "@/lib/redux/features/api-key";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle
 } from "../ui/dialog";
 import CreateAPIForm from "./create-api-form";
 import DisplayAPIKey from "./display-api-key";
-import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
-import {
-  clearApiKeyState,
-  setCreateModalChange,
-} from "@/lib/redux/features/api-key";
 export default function CreateAPIDialog() {
   const isApiKeyRetrieved = useAppSelector(
     (state) => state.apiKey.isAPIKeyRetrieved
