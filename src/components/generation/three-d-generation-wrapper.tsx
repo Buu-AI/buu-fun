@@ -72,7 +72,7 @@ export default function ThreeDGenerationWrapper({
       >
         {subThread?.prompt}
       </h2>
-      <div className="flex items-center bor md:max-h-[370px]   justify-center w-full h-full">
+      <div className="flex items-center  md:max-h-[370px]   justify-center w-full h-full">
         <div className="flex items-center  md:max-h-[370px] h-full   justify-center w-full md:max-w-sm ">
           <CurvedEmblaCarousel
             GenRequests={medias}
