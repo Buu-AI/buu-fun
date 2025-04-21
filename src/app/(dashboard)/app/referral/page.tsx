@@ -21,7 +21,7 @@ export default function ReferralPage() {
               <span className="blue-text-clip"> 20% </span>
               of your referrals spending in $BUU!
             </p>
-            <h2 className="grayish-text-gradient font-medium text-2xl lg:text-5xl tracking-tighter">
+            <h2 className="rainbow-text font-medium text-2xl lg:text-5xl tracking-tighter">
               Welcome to Referral Program
             </h2>
           </div>

@@ -32,18 +32,18 @@ export default function CreateAPIForm() {
   const { register, handleSubmit, setValue, watch } = useForm<TCreateAPISchema>(
     {
       resolver: zodResolver(createAPISchema),
-    },
+    }
   );
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
-  const { mutate: createAPIKeyMutation } = useMutation({
+  const { mutate: createAPIKeyMutation, isPending } = useMutation({
     mutationFn: createApiKey,
     onSuccess(data) {
       dispatch(
         setApiKey({
           key: data.key,
           name: data.name,
-        }),
+        })
       );
       dispatch(isApiKeyRetrieved(true));
       queryClient.invalidateQueries({
@@ -183,7 +183,7 @@ export default function CreateAPIForm() {
         </div>
 
         <div className="w-full mt-4">
-          <Button className="w-full" size={"special"}>
+          <Button disabled={isPending} className="w-full" size={"special"}>
             <div className="">
               <MagicPenIcon className="fill-black" />
             </div>
