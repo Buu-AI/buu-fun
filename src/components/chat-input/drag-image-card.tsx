@@ -1,10 +1,11 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { setInputFile } from "@/lib/redux/features/chat";
-import { cn } from "@/lib/utils";
+import { cn, getAllowedContentTypeMaps } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import toast from "react-hot-toast";
 
 export interface ImageData {
   url: string;
@@ -28,48 +29,46 @@ export default function InteractiveDropzone({
 
   const dispatch = useAppDispatch();
 
-  const { getRootProps, getInputProps } = useDropzone({
+  // Configure dropzone to prevent default behavior
+  const { getRootProps, getInputProps, open } = useDropzone({
     accept: { "image/*": [] },
+    noClick: true,
+    noKeyboard: true,
+    preventDropOnDocument: false,
     onDrop: (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      if (file) {
-        const imageUrl = URL.createObjectURL(file);
-        const imageData = {
-          url: imageUrl,
-          name: file.name,
-          size: file.size,
-          type: file.type,
-        };
-
-        dispatch(setInputFile(imageData));
-        onImageSelected?.(imageData);
-      }
-
-      setTimeout(() => {
-        setIsDraggingOver(false);
-      }, 200);
-    },
-    onDragEnter: () => {
-      // this condition is not working
-      // if (image) return;
-      setIsDraggingOver(true);
-    },
-    onDragLeave: () => {
-      setTimeout(() => {
-        setIsDraggingOver(false);
-      }, 200);
+      handleImageDrop(acceptedFiles);
     },
   });
+
+  const handleImageDrop = (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      if (!getAllowedContentTypeMaps(file.type)) {
+        toast.error(`Image type ${file.type} is not supported yet`);
+        return;
+      }
+      const imageUrl = URL.createObjectURL(file);
+      const imageData = {
+        url: imageUrl,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      };
+      toast.success(`${imageUrl}`);
+      console.log(imageUrl);
+      dispatch(setInputFile(imageData));
+      onImageSelected?.(imageData);
+    }
+
+    setTimeout(() => {
+      setIsDraggingOver(false);
+      setRotation({ x: 0, y: 0 });
+    }, 200);
+  };
 
   useEffect(() => {
     const handleWindowDragOver = (e: DragEvent) => {
       e.preventDefault();
-      // this condition is not working
-      // if (image) {
-      //   //this is not triggering or working.
-      //   return;
-      // }
-      console.log("There is Image But its still showing image again!!");
 
       // Calculate rotation based on drag position relative to window
       const windowWidth = window.innerWidth;
@@ -92,30 +91,57 @@ export default function InteractiveDropzone({
       if (
         items &&
         Array.from(items).some(
-          (item) => item.kind === "file" && item.type.startsWith("image/"),
+          (item) => item.kind === "file" && item.type.startsWith("image/")
         )
       ) {
         setIsDraggingOver(true);
       }
     };
 
-    const handleWindowDrop = () => {
+    const handleWindowDrop = (e: DragEvent) => {
+      e.preventDefault();
+
+      // Get the dropped files
+      const files = e.dataTransfer?.files;
+      if (files && files.length > 0) {
+        const fileArray = Array.from(files);
+        // Filter for images
+        const imageFiles = fileArray.filter((file) =>
+          file.type.startsWith("image/")
+        );
+
+        if (imageFiles.length > 0) {
+          handleImageDrop(imageFiles);
+        }
+      }
+
       setTimeout(() => {
         setIsDraggingOver(false);
         setRotation({ x: 0, y: 0 });
       }, 200);
-      // Reset rotation
     };
 
-    window.addEventListener("dragover", handleWindowDragOver);
-    window.addEventListener("drop", handleWindowDrop);
+    const handleDragLeave = (e: DragEvent) => {
+      // Only reset if leaving the document
+      if (e.relatedTarget === null) {
+        setTimeout(() => {
+          setIsDraggingOver(false);
+          setRotation({ x: 0, y: 0 });
+        }, 200);
+      }
+    };
+
+    // Add events to the document body to capture drags everywhere
+    document.body.addEventListener("dragover", handleWindowDragOver);
+    document.body.addEventListener("drop", handleWindowDrop);
+    document.body.addEventListener("dragleave", handleDragLeave);
 
     return () => {
-      window.removeEventListener("dragover", handleWindowDragOver);
-      window.removeEventListener("drop", handleWindowDrop);
+      document.body.removeEventListener("dragover", handleWindowDragOver);
+      document.body.removeEventListener("drop", handleWindowDrop);
+      document.body.removeEventListener("dragleave", handleDragLeave);
     };
-  }, [image]);
-
+  }, []);
   const handleRemoveImage = () => {
     if (image) {
       // Revoke the object URL to free up memory
@@ -159,32 +185,27 @@ export default function InteractiveDropzone({
 
   return (
     <>
-      <div
-        {...getRootProps()}
-        className="w-[150%] -z-10 h-[150%]   absolute -top-24 -left-[25%] p-24"
-      />
+      <div {...getRootProps()} className="hidden ">
+        <input {...getInputProps()} />
+      </div>
       <AnimatePresence>
         {isDraggingOver && (
-          <>
-            {/* hidden surface area for dropping image */}
-
-            <div
-              style={{
-                transformStyle: "preserve-3d",
-                rotate: `${rotation.x}deg`,
-              }}
-              className="absolute top-[-20px] "
+          <div
+            style={{
+              transformStyle: "preserve-3d",
+              rotate: `${rotation.x}deg`,
+            }}
+            className="absolute top-[-20px]"
+          >
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={dropzoneVariants}
+              className={cn("z-50 pointer-events-auto", className)}
             >
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                variants={dropzoneVariants}
-                className={cn(" z-50 pointer-events-none", className)}
-              >
-                <input {...getInputProps()} />
-                <div
-                  className={`
+              <div
+                className={`
                   w-[77px] h-[106px] 
                   border-2 border-dashed 
                   border-blue-500 
@@ -192,25 +213,22 @@ export default function InteractiveDropzone({
                   bg-black/80 
                   backdrop-blur-sm
                   flex items-center justify-center
-                  `}
-                >
-                  <p className="text-xs text-gray-500 text-center">
-                    Drop Image
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-          </>
+                `}
+              >
+                <p className="text-xs text-gray-500 text-center">Drop Image</p>
+              </div>
+            </motion.div>
+          </div>
         )}
 
         {!isDraggingOver && image && (
           <div
             className="
-        absolute -left-[20px] top-[-20px]
-        transform -rotate-12 
-        border-buu border rounded-xl z-50 pointer-events-none
-        w-[77px] h-[106px]
-        "
+              absolute -left-[20px] top-[-20px]
+              transform -rotate-12 
+              border-buu border rounded-xl z-50 pointer-events-none
+              w-[77px] h-[106px]
+            "
           >
             <div className="relative w-full h-full group">
               <Image
@@ -220,17 +238,21 @@ export default function InteractiveDropzone({
                 className="object-cover rounded-lg"
               />
               <button
-                onClick={handleRemoveImage}
-                className=" pointer-events-auto
-              absolute top-1 right-1 
-              bg-red-500 text-white 
-              rounded-full animate-pulse
-              w-5 h-5 
-              flex items-center justify-center
-              text-xs
-              transition-opacity
-              z-50
-              "
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleRemoveImage();
+                }}
+                className="
+                  pointer-events-auto
+                  absolute top-1 right-1 
+                  bg-red-500 text-white 
+                  rounded-full animate-pulse
+                  w-5 h-5 
+                  flex items-center justify-center
+                  text-xs
+                  transition-opacity
+                  z-50
+                "
               >
                 ✕
               </button>

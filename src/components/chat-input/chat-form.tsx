@@ -115,7 +115,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
 
   const handleImageUploadUrl = async (
     ImageData: ImageData,
-    accessToken: string,
+    accessToken: string
   ) => {
     try {
       toast.loading("Preparing image for uploading....");
@@ -136,7 +136,6 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         contentType: contentType,
         accessToken,
       });
-
       if (!data) {
         toast.dismiss();
         toast.error("Failed to upload the image");
@@ -162,7 +161,6 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       return data.url;
     } catch (error) {
       toast.error("Failed to upload the image");
-      console.log(error);
       return null;
     } finally {
       toast.dismiss();
@@ -180,7 +178,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
     if (isChatLoading) {
       if (isOverAllRequestLimitReached(isChatPending.totalRequest)) {
         return toast.error(
-          "Whoa, you're on fire 🔥. You've hit the limit of 4 creations.",
+          "Whoa, you're on fire 🔥. You've hit the limit of 4 creations."
         );
       }
       return toast.error("Hold on!, Still generating your model...");
@@ -192,7 +190,6 @@ export default function ChatForm({ action }: TBottomBarContainer) {
     let imageUrl: string | null = null;
     if (inputFile?.url) {
       imageUrl = await handleImageUploadUrl(inputFile, identityToken);
-      console.log("GOT THE URL", imageUrl);
       // stopper condition, because error message is done in `handleImageUploadUrl` already
       if (!imageUrl) {
         return;
@@ -225,7 +222,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         "relative flex-col gap-1 flex items-start w-full p-4  mb-2  rounded-[20px]  shadow-buu-inner bg-buu",
         {
           // "p-0": !inputFile?.url.length
-        },
+        }
       )}
     >
       <button
@@ -234,7 +231,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
           "bg-buu-button     shadow-buu-button rounded-xl left-0 absolute w-full h-full top-0",
           {
             hidden: !inputFile?.url.length,
-          },
+          }
         )}
       >
         <div className="flex   gap-2 items-center justify-center">
@@ -260,6 +257,10 @@ export default function ChatForm({ action }: TBottomBarContainer) {
             onChange={(e) => {
               const file = e.target?.files && e.target?.files[0];
               if (file) {
+                if (!getAllowedContentTypeMaps(file.type)) {
+                  toast.error(`Image type ${file.type} is not supported yet`);
+                  return;
+                }
                 const imageUrl = URL.createObjectURL(file);
                 const imageData = {
                   url: imageUrl,

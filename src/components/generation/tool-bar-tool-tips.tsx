@@ -84,21 +84,20 @@ export default function ToolBarToolTips({
         }
         if (isPending || isChatPending?.isLimitReached) {
           toast.error(
-            "Whoa, you're on fire! You've hit the limit of 4 creations.",
+            "Whoa, you're on fire! You've hit the limit of 4 creations."
           );
           return;
         }
-        if (!acknowledgedRetry) {
-          dispatch(setRetryModalOpen(true));
-          dispatch(setRetrySubthreadId(subThreadId));
-          return;
-        }
-        new Array(3).fill(0).map(() => {
-          return generateNewImage({
-            subthreadId: subThreadId,
-            accessToken,
-          });
+        // if (!acknowledgedRetry) {
+        //   dispatch(setRetryModalOpen(true));
+        //   dispatch(setRetrySubthreadId(subThreadId));
+        //   return;
+        // }
+        generateNewImage({
+          subthreadId: subThreadId,
+          accessToken,
         });
+        return;
         break;
       }
       default: {
