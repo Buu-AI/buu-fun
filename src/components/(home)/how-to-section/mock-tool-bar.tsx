@@ -36,7 +36,7 @@ export const ToolTips = [
   },
   {
     type: "ANIMATE" as const,
-    Icon: <MagicPenIcon />,
+    Icon: <MagicPenIcon className="fill-current" />,
     content: "Animate",
   },
   {
@@ -102,7 +102,7 @@ export default function MockToolBar({ modelUrl, isGenerating }: TMockToolBar) {
                 className="group bg-buu-button pointer-events-auto hover:bg-white hover:shadow-none group shadow-buu-button min-w-[25px] rounded-md flex items-center justify-center p-1.5"
               >
                 <motion.div
-                  className="w-full h-full group-hover:text-black group-hover:fill-black"
+                  className="w-full h-full group-hover:text-black fill-white group-hover:fill-black"
                   transition={{ duration: 0.2 }}
                 >
                   {item.Icon}

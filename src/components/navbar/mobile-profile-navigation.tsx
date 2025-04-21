@@ -93,7 +93,7 @@ export default function MobileProfileNavigation() {
                   >
                     <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
                       <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
-                        <MagicPenIcon />
+                        <MagicPenIcon className="text-[#78DBFF]"  />
                       </div>
                       <p className="text-xl">Home</p>
                     </DrawerClose>
