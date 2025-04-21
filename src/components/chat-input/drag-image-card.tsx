@@ -3,7 +3,7 @@ import { setInputFile } from "@/lib/redux/features/chat";
 import { cn, getAllowedContentTypeMaps } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { MouseEvent, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 
@@ -30,7 +30,7 @@ export default function InteractiveDropzone({
   const dispatch = useAppDispatch();
 
   // Configure dropzone to prevent default behavior
-  const { getRootProps, getInputProps, open } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     accept: { "image/*": [] },
     noClick: true,
     noKeyboard: true,
@@ -40,31 +40,34 @@ export default function InteractiveDropzone({
     },
   });
 
-  const handleImageDrop = (acceptedFiles: File[]) => {
-    const file = acceptedFiles[0];
-    if (file) {
-      if (!getAllowedContentTypeMaps(file.type)) {
-        toast.error(`Image type ${file.type} is not supported yet`);
-        return;
+  const handleImageDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        if (!getAllowedContentTypeMaps(file.type)) {
+          toast.error(`Image type ${file.type} is not supported yet`);
+          return;
+        }
+        const imageUrl = URL.createObjectURL(file);
+        const imageData = {
+          url: imageUrl,
+          name: file.name,
+          size: file.size,
+          type: file.type,
+        };
+        toast.success(`${imageUrl}`);
+        console.log(imageUrl);
+        dispatch(setInputFile(imageData));
+        onImageSelected?.(imageData);
       }
-      const imageUrl = URL.createObjectURL(file);
-      const imageData = {
-        url: imageUrl,
-        name: file.name,
-        size: file.size,
-        type: file.type,
-      };
-      toast.success(`${imageUrl}`);
-      console.log(imageUrl);
-      dispatch(setInputFile(imageData));
-      onImageSelected?.(imageData);
-    }
 
-    setTimeout(() => {
-      setIsDraggingOver(false);
-      setRotation({ x: 0, y: 0 });
-    }, 200);
-  };
+      setTimeout(() => {
+        setIsDraggingOver(false);
+        setRotation({ x: 0, y: 0 });
+      }, 200);
+    },
+    [dispatch, onImageSelected, setIsDraggingOver, setRotation],
+  );
 
   useEffect(() => {
     const handleWindowDragOver = (e: DragEvent) => {
@@ -91,7 +94,7 @@ export default function InteractiveDropzone({
       if (
         items &&
         Array.from(items).some(
-          (item) => item.kind === "file" && item.type.startsWith("image/")
+          (item) => item.kind === "file" && item.type.startsWith("image/"),
         )
       ) {
         setIsDraggingOver(true);
@@ -107,7 +110,7 @@ export default function InteractiveDropzone({
         const fileArray = Array.from(files);
         // Filter for images
         const imageFiles = fileArray.filter((file) =>
-          file.type.startsWith("image/")
+          file.type.startsWith("image/"),
         );
 
         if (imageFiles.length > 0) {
@@ -141,6 +144,7 @@ export default function InteractiveDropzone({
       document.body.removeEventListener("drop", handleWindowDrop);
       document.body.removeEventListener("dragleave", handleDragLeave);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleRemoveImage = () => {
     if (image) {

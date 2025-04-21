@@ -97,8 +97,6 @@ export default function DesktopProfileNavigation() {
               <p>Settings</p>
             </Link>
 
-            
-
             <button
               onClick={async () => {
                 await logout();

@@ -7,7 +7,10 @@ import { useAppDispatch } from "@/hooks/redux";
 import { setCreateModalChange } from "@/lib/redux/features/api-key";
 import { useUserSubscription } from "@/hooks/use-credits";
 import { isFreePlan } from "@/lib/helpers/status-checker";
-import { setSubscriptionModel, setSubscriptionModelPlanType } from "@/lib/redux/features/subscription";
+import {
+  setSubscriptionModel,
+  setSubscriptionModelPlanType,
+} from "@/lib/redux/features/subscription";
 
 export default function CreateAPIKeyButton() {
   const { data } = useUserSubscription();

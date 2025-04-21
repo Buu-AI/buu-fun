@@ -10,13 +10,13 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
 } from "../ui/dialog";
 import CreateAPIForm from "./create-api-form";
 import DisplayAPIKey from "./display-api-key";
 export default function CreateAPIDialog() {
   const isApiKeyRetrieved = useAppSelector(
-    (state) => state.apiKey.isAPIKeyRetrieved
+    (state) => state.apiKey.isAPIKeyRetrieved,
   );
   const isModalOpen = useAppSelector((state) => state.apiKey.isCreateModalOpen);
   const dispatch = useAppDispatch();

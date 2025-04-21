@@ -19,7 +19,7 @@ export default function BuuStakedSupply() {
   const totalSupply = PricingData?.totalSupply ?? 0;
   const circulatingSupply =
     Number(
-      formatUnits(globalStakingData?.circulatingSupply ?? "0", decimals)
+      formatUnits(globalStakingData?.circulatingSupply ?? "0", decimals),
     ) ?? 0;
 
   const totalStaked =
@@ -27,7 +27,7 @@ export default function BuuStakedSupply() {
 
   const stakedByUsers =
     Number(
-      formatUnits(globalStakingData?.totalStakedByUsers ?? "0", decimals)
+      formatUnits(globalStakingData?.totalStakedByUsers ?? "0", decimals),
     ) ?? 0;
   // Convert to percentages relative to total supply
 

@@ -15,7 +15,7 @@ export default function SubscriptionButton() {
     login,
   } = useAuthentication();
   const planKey = useAppSelector(
-    (state) => state.subscription.SubscriptionModelPlan
+    (state) => state.subscription.SubscriptionModelPlan,
   );
   const { data, refetch } = useUserSubscription();
 
