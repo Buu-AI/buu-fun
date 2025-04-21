@@ -33,7 +33,7 @@ export default function CreateAPIForm() {
   const { register, handleSubmit, setValue, watch } = useForm<TCreateAPISchema>(
     {
       resolver: zodResolver(createAPISchema),
-    }
+    },
   );
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
@@ -44,7 +44,7 @@ export default function CreateAPIForm() {
         setApiKey({
           key: data.key,
           name: data.name,
-        })
+        }),
       );
       dispatch(isApiKeyRetrieved(true));
       queryClient.invalidateQueries({
@@ -184,7 +184,7 @@ export default function CreateAPIForm() {
         </div>
 
         <div className="w-full mt-4">
-          <Button disabled={isPending}  className="w-full" size={"special"}>
+          <Button disabled={isPending} className="w-full" size={"special"}>
             {isPending ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />

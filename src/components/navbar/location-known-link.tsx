@@ -28,7 +28,7 @@ export default function LocationKnownLink({
           "w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-gray-500",
           {
             "text-white": isCurrent,
-          }
+          },
         )}
       >
         {children}

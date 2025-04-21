@@ -93,7 +93,7 @@ export default function MobileProfileNavigation() {
                   >
                     <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
                       <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
-                        <MagicPenIcon className="text-[#78DBFF]"  />
+                        <MagicPenIcon className="text-[#78DBFF]" />
                       </div>
                       <p className="text-xl">Home</p>
                     </DrawerClose>
@@ -109,7 +109,9 @@ export default function MobileProfileNavigation() {
                       <div className="w-6 h-6">
                         <ReferralIcon />
                       </div>
-                      <p className="text-xl rainbow-text ">Referral Program</p>{" "}
+                      <p className="text-xl rainbow-text ">
+                        Referral Program
+                      </p>{" "}
                     </DrawerClose>
                   </Link>
                 </div>
@@ -133,7 +135,6 @@ export default function MobileProfileNavigation() {
                     </DrawerClose>
                   </Link>
                 </div>
-                
                 <div className="flex border-b w-full ">
                   <Link href={"/app/api-key"}>
                     {" "}
@@ -159,7 +160,6 @@ export default function MobileProfileNavigation() {
                     </DrawerClose>
                   </Link>
                 </div>{" "}
-                
                 <div className="flex border-b  w-full">
                   <button
                     onClick={async () => {

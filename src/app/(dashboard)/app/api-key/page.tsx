@@ -15,7 +15,7 @@ export default function ApiKeyPage() {
             Your API Keys{" "}
           </h2>
         </div>
-        <CreateAPIKeyButton/>
+        <CreateAPIKeyButton />
         <CreateAPIDialog />
       </div>
       <div className="flex   items-center flex-col justify-center pt-10 pb-2">

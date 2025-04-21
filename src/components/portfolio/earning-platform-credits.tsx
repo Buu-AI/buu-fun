@@ -14,7 +14,9 @@ export default function EarningPlatformCredits() {
         </div>
         <div>
           <p className="text-xl font-medium">
-            <span className="blue-text-clip">{getFixedCredits(credits.data?.available)} </span>{" "}
+            <span className="blue-text-clip">
+              {getFixedCredits(credits.data?.available)}{" "}
+            </span>{" "}
             Platform Credits
           </p>
           <p className="text-sm font-medium text-muted-foreground/60">
