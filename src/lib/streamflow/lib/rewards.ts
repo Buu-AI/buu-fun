@@ -245,7 +245,21 @@ export const calcRewards = (
   );
   rewardEntryAccumulator.addAccountedAmount(accountableAmount);
 
-  return rewardEntryAccumulator.getClaimableAmount();
+  const nextClaimDate = new Date(
+    rewardEntryAccumulator
+      .getLastAccountedTs(
+        stakedTs,
+        new BN(Math.floor(Date.now() / 1000)),
+        rewardPool.rewardPeriod,
+      )
+      .add(rewardPool.rewardPeriod)
+      .toNumber() * 1000,
+  );
+
+  return {
+    amount: rewardEntryAccumulator.getClaimableAmount(),
+    nextClaimAvailableOn: nextClaimDate,
+  };
 };
 
 export const calculateRewardRateFromAmount = (
