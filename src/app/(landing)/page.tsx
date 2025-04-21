@@ -14,15 +14,15 @@ export default function HomePage() {
   return (
     <main className="relative max-w-screen overflow-hidden smooth-scroll ">
       <div className="w-full  relative ">
-        {/* <HeroLoadingWrapper>
+        <HeroLoadingWrapper>
           <>
             <TopNavigationBar />
             <HomeNavigationBar />
           </>
-        </HeroLoadingWrapper> */}
+        </HeroLoadingWrapper>
         <BringYourIdeasSection />
       </div>
-      {/* <section id="how-it-works" className="w-full h-full">
+      <section id="how-it-works" className="w-full h-full">
         <HowToContainer />
       </section>
       <div className="relative w-full h-full ">
@@ -45,7 +45,7 @@ export default function HomePage() {
       </section>
       <footer className="w-full h-full relative">
         <FooterContainer />
-      </footer> */}
+      </footer>
     </main>
   );
 }
