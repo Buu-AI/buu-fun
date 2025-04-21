@@ -49,7 +49,6 @@ export function useUserStakingData() {
         rewardEntries: data.rewardEntries,
         tokenMint: data.tokenMint,
         totalEffectiveAmount: new BN(data.totalEffectiveAmount),
-        totalRewardsPerDay: new BN(data.totalRewardsPerDay),
       });
     },
   });
