@@ -14,8 +14,6 @@ export default function LocationKnownLink({
   children: ReactNode;
 }) {
   const pathname = usePathname();
-  const Path = pathname.split("/");
-  //   console.log();
 
   const isCurrent =
     pathname === `/app/${LinkIn}` || (LinkIn === "" && pathname === "/app");

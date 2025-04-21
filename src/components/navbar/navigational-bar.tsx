@@ -34,21 +34,29 @@ export default function NavigationalBar() {
               <SizePenIcon />
             </div>
           </Link> */}
+
           <LocationKnownLink
             LinkIn="boards"
             LinkTo="/app/boards"
-            children={<SizePenIcon />}
-          />
+            // children={}
+          >
+            <SizePenIcon />
+          </LocationKnownLink>
           <LocationKnownLink
             LinkIn=""
             LinkTo="/app"
-            children={<MagicPenIcon className="fill-current" />}
-          />
+            // children={}
+          >
+            <MagicPenIcon className="fill-current" />
+          </LocationKnownLink>
           <LocationKnownLink
             LinkIn="portfolio"
             LinkTo="/app/portfolio"
-            children={<CoinStackIcon />}
-          />
+            // children={}
+          >
+            <CoinStackIcon />
+          </LocationKnownLink>
+
           {/* <Link
             href={"/app"}
             className="w-10 flex  items-center group   justify-center    h-10 "
