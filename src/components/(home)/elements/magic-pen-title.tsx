@@ -17,7 +17,7 @@ export default function MagicPenTitle({
       )}
     >
       <div className="w-5 h-5 text-blue-300">
-        <MagicPenIcon />
+        <MagicPenIcon className="fill-blue-300" />
       </div>
       <p>{title}</p>
     </div>

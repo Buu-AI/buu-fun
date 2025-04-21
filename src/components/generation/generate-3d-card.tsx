@@ -83,8 +83,8 @@ export default function Generate3DCard({
             )}
           >
             <div className="flex items-center justify-center gap-2 ">
-              <div className="text-blue-400 w-6 h-6">
-                <MagicPenIcon />
+              <div className=" w-6 h-6">
+                <MagicPenIcon className=" text-white" />
               </div>
               <p className="text-base tracking-tight text-white  animate-pulse">
                 Generating

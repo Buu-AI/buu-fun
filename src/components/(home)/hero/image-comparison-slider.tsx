@@ -156,11 +156,11 @@ export default function ImageComparisonSlider() {
 
     // Position of character in the design (estimated from image)
     const characterCenterX = 940; // Center X position in original design
-    const characterTopY = 105; // Top Y position in original design
+    const characterTopY = 110; // Top Y position in original design
 
     // Slider dimensions in design (41% of width)
     const designSliderWidth = designWidth * 0.415;
-    const designSliderHeight = designHeight * 0.78; // Estimated from image
+    const designSliderHeight = designHeight * 0.79; // Estimated from image
 
     // Function to update slider position based on current viewport
     const updateSliderPosition = () => {
