@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
 import { capitalizeFirstLetter } from "@/lib/utils";
+import { isFreePlan } from "@/lib/helpers/status-checker";
 
 export default function SubscriptionButton() {
   const {
@@ -14,7 +15,7 @@ export default function SubscriptionButton() {
     login,
   } = useAuthentication();
   const planKey = useAppSelector(
-    (state) => state.subscription.SubscriptionModelPlan,
+    (state) => state.subscription.SubscriptionModelPlan
   );
   const { data, refetch } = useUserSubscription();
 
@@ -37,6 +38,7 @@ export default function SubscriptionButton() {
     },
   });
   const isCurrentPlan = data?.planKey === planKey;
+  const isUserPlanFree = isFreePlan(data?.planKey);
   return (
     <Button
       variant={isCurrentPlan ? "secondary" : undefined}
@@ -45,7 +47,7 @@ export default function SubscriptionButton() {
           login();
           return;
         }
-        if (isCurrentPlan) {
+        if (!isUserPlanFree) {
           const { data } = await refetch();
           if (data?.customerPortalLink) {
             window.location.href = data?.customerPortalLink;
@@ -53,6 +55,15 @@ export default function SubscriptionButton() {
         } else {
           getPaymentLink();
         }
+
+        // if (isCurrentPlan) {
+        // const { data } = await refetch();
+        // if (data?.customerPortalLink) {
+        //   window.location.href = data?.customerPortalLink;
+        // }
+        // } else {
+        //   getPaymentLink();
+        // }
       }}
       className="w-full"
     >

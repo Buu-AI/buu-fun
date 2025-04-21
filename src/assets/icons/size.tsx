@@ -7,7 +7,7 @@ export default function SizePenIcon() {
       //   height="20"
       viewBox="0 0 20 20"
       xmlns="http://www.w3.org/2000/svg"
-      className="fill-white transition-colors duration-200"
+      className=" transition-colors duration-200"
       fill="currentColor"
     >
       <g id="vuesax/bulk/size">

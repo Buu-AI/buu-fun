@@ -63,7 +63,7 @@ export default function DesktopProfileNavigation() {
                 <ReferralIcon />
               </div>
               {/* <SettingsIcon /> */}
-              <p className="blue-text-clip">Referral Program</p>
+              <p className="rainbow-text">Referral Program</p>
             </Link>
             <Link
               href={"/app/portfolio"}

@@ -109,7 +109,7 @@ export default function MobileProfileNavigation() {
                       <div className="w-6 h-6">
                         <ReferralIcon />
                       </div>
-                      <p className="text-xl blue-text-clip ">Referral Program</p>{" "}
+                      <p className="text-xl rainbow-text ">Referral Program</p>{" "}
                     </DrawerClose>
                   </Link>
                 </div>

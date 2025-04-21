@@ -834,5 +834,49 @@ body {
 }
 
 .help-card-box-shadow {
-  box-shadow: 0px 0px 99.473px 25.726px rgba(255, 255, 255, 0.42) inset, 34.301px 34.301px 174.077px 0px rgba(7, 54, 81, 0.25);
+  box-shadow:
+    0px 0px 99.473px 25.726px rgba(255, 255, 255, 0.42) inset,
+    34.301px 34.301px 174.077px 0px rgba(7, 54, 81, 0.25);
+}
+
+.rainbow-text {
+  display: inline-block;
+  position: relative;
+
+  background-image: repeating-linear-gradient(
+    90deg,
+    #14ffe9 0%,
+    #ffc800 16.66666%,
+    #ff00e0 33.33333%,
+    #14ffe9 50%
+  );
+  background-size: 400% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+
+  /* Smoother animation with easing function */
+  animation: move 8s linear infinite;
+
+  /* Add a subtle glow effect */
+}
+
+@keyframes move {
+  0% {
+    /* transform: translateX(0); */
+    background-position: 0% center;
+  }
+  100% {
+    /* transform: translateX(50%); */
+    background-position: -200% center;
+  }
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  /* For Internet Explorer which doesn't support background-clip: text */
+  .rainbow-text {
+    background-image: none;
+    animation: rainbow-text-simple 2s linear infinite;
+  }
 }
