@@ -1,7 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useAppDispatch } from "@/hooks/redux";
-import { setStreamflowDialogOpen } from "@/lib/redux/features/buu-pricing";
 import { getClaimRewardsTransactions } from "@/lib/solana/getClaimRewardsTransactions";
 import { getClusterUrl } from "@/lib/solana/staking";
 import { useAuthentication } from "@/providers/account.context";

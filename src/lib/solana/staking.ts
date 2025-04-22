@@ -14,7 +14,6 @@ export async function getUserStakingData({
   rewardPools,
   rewardEntries,
   tokenMint,
-  tokenMint,
   totalEffectiveAmount,
 }: {
   publicKey: PublicKey;

@@ -1,4 +1,4 @@
-import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
+import { Connection, PublicKey } from "@solana/web3.js";
 import { getClusterUrl } from "./staking";
 
 export async function getTokenBalance({ address }: { address: string }) {

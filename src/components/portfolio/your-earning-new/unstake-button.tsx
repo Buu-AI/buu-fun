@@ -1,10 +1,9 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useAppDispatch } from "@/hooks/redux";
 import { getUnStakingTransactions } from "@/lib/solana/getUnstakingTransaction";
 import { getClusterUrl } from "@/lib/solana/staking";
 import { useAuthentication } from "@/providers/account.context";
-import { usePrivy, useSolanaWallets } from "@privy-io/react-auth";
+import { useSolanaWallets } from "@privy-io/react-auth";
 import { Connection } from "@solana/web3.js";
 import toast from "react-hot-toast";
 

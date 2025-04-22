@@ -36,8 +36,8 @@ export default function UserStakedCard({
 
   const staked = formatUnits(staking?.staked ?? "0", decimals ?? 0);
   const rewards = formatUnits(staking?.rewards ?? "0", decimals ?? 0);
-  const depositNonce = staking.depositNonce;
-  const rewardPoolNonce = staking.rewardPoolNonce;
+  // const depositNonce = staking.depositNonce;
+  // const rewardPoolNonce = staking.rewardPoolNonce;
 
   return (
     <div className="border-2 bg-buu  rounded-2xl px-2 md:px-5 py-4 md:py-6">

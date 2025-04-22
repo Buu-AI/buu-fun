@@ -85,7 +85,7 @@ interface Programs {
   feeManagerProgram: Program<FeeManagerProgramType>;
 }
 
-type CreationResult = ITransactionResult & { metadataId: PublicKey };
+export type CreationResult = ITransactionResult & { metadataId: PublicKey };
 
 interface IInitOptions {
   clusterUrl: string;
@@ -515,9 +515,11 @@ export class SolanaStakingClient {
     const treasuryATA =
       !existingFee || existingFee.streamflowFee.gtn(0)
         ? await checkOrCreateAtaBatch(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             this.connection as any,
             [STREAMFLOW_TREASURY_PUBLIC_KEY],
             rewardMintPk,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             extParams.invoker as any,
             tokenProgramPk
           )
@@ -659,14 +661,18 @@ export class SolanaStakingClient {
     extParams: IInteractSolanaExt
   ) {
     const { tx, hash, context } = await prepareTransaction(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       this.connection as any,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       prepareBaseInstructions(this.connection as any, extParams).concat(ixs),
       extParams.invoker.publicKey
     );
 
     try {
       const signature = await signAndExecuteTransaction(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.connection as any,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         extParams.invoker as any,
         tx,
         {
@@ -677,6 +683,7 @@ export class SolanaStakingClient {
         { sendThrottler: this.sendThrottler }
       );
       return { signature };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (err instanceof Error) {
         const parsed: AnchorError | ProgramError | typeof err = translateError(

@@ -1,15 +1,13 @@
+import APRCalculatorIcon from "@/assets/icons/apr-calculator-icon";
+import { Button } from "@/components/ui/button";
 import { useBuuPricingData } from "@/hooks/use-pricing-history";
 import { useUserStakingData } from "@/hooks/use-staking-data";
 import {
   formatNumber,
   formatUnits,
-  formatWithComma,
-  multiplyAndFormatPricing,
+  multiplyAndFormatPricing
 } from "@/lib/utils";
-import React from "react";
 import StakeBuuButton from "../stake-buu-button";
-import { Button } from "@/components/ui/button";
-import APRCalculatorIcon from "@/assets/icons/apr-calculator-icon";
 
 export default function TotalStaked() {
   const { data } = useBuuPricingData();

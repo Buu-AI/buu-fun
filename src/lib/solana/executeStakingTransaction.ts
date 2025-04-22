@@ -1,8 +1,7 @@
 import {
-  clusterApiUrl,
   Connection,
   PublicKey,
-  Transaction,
+  Transaction
 } from "@solana/web3.js";
 import { BN } from "bn.js";
 import { SolanaStakingClient } from "../streamflow/client";
