@@ -13,6 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ExportSolanaWallet from "../referral/export-wallet";
 import CopyAddress from "./copy-address";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function DesktopProfileNavigation() {
   const { address, isAuthenticated, logout } = useAuthentication();

@@ -16,7 +16,7 @@ export default function useMediaResponse({
   );
 
   return useQuery({
-    queryKey: [subThreadId, "get-sub-thread-requests"],
+    queryKey: [subThreadId, "get-sub-thread-requests", identityToken],
     enabled: () => {
       if (!identityToken) {
         return false;
