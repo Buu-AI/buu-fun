@@ -45,7 +45,7 @@ export default function StakingDataDisplay() {
         </div>
         <div>
           <p className="text-sm ">APY</p>
-          <p className="font-medium">{userStakingData?.apy}%</p>
+          <p className="font-medium">{globalStakingData?.apr}%</p>
         </div>
       </div>
     </div>
