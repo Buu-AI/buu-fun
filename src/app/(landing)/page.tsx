@@ -10,6 +10,7 @@ import TopNavigationBar from "@/components/(home)/navigation/top-navigation-bar"
 import TestimonialsContainer from "@/components/(home)/testimonials/testimonials-container";
 import OverlayColor from "./overlay";
 import HomePagePricingContainer from "@/components/(home)/pricing/pricing-container";
+import JamCard from "@/components/(home)/jam-card/jam-card";
 export default function HomePage() {
   return (
     <main className="relative max-w-screen overflow-hidden smooth-scroll ">
@@ -22,6 +23,7 @@ export default function HomePage() {
         </HeroLoadingWrapper>
         <BringYourIdeasSection />
       </div>
+      <JamCard />
       <section id="how-it-works" className="w-full h-full">
         <HowToContainer />
       </section>
