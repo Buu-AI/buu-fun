@@ -16,7 +16,7 @@ export function useRetrieveApikeys(
 ) {
   const { identityToken: accessToken } = useAuthentication();
   return useQuery({
-    queryKey: ["retrieve-api-keys", JSON.stringify(input)],
+    queryKey: ["retrieve-api-keys", JSON.stringify(input), accessToken],
     enabled: accessToken !== null,
     queryFn: () => {
       if (!accessToken) return;

@@ -13,7 +13,7 @@ export function useSubThreads({
   const { identityToken } = useAuthentication();
 
   return useInfiniteQuery({
-    queryKey: ["get-sub-threads", threadId],
+    queryKey: ["get-sub-threads", threadId, identityToken],
     enabled: () => {
       if (!identityToken) return false;
       return identityToken?.length > 0;

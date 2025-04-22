@@ -56,6 +56,16 @@ export default function DesktopProfileNavigation() {
               <CopyAddress isNavigation />
             </div>
             <Link
+              href={"/app/referral"}
+              className="flex w-full items-center gap-1.5 hover:bg-buu-button/60 py-2 rounded-md px-2 font-medium"
+            >
+              <div className="w-5 h-5">
+                <ReferralIcon />
+              </div>
+              {/* <SettingsIcon /> */}
+              <p className="rainbow-text">Referral Program</p>
+            </Link>
+            <Link
               href={"/app/portfolio"}
               className="flex w-full items-center gap-1.5 hover:bg-buu-button/60 py-2 rounded-md px-2 font-medium"
             >
@@ -64,7 +74,7 @@ export default function DesktopProfileNavigation() {
                 <WalletIcon2 />
               </div>
               {/* <SettingsIcon /> */}
-              <p>Portfolio</p>
+              <p>$BUU Token</p>
             </Link>
             <Link
               href={"/app/api-key"}
@@ -87,17 +97,6 @@ export default function DesktopProfileNavigation() {
               <p>Settings</p>
             </Link>
 
-            <Link
-              href={"/app/referral"}
-              className="flex w-full items-center gap-1.5 hover:bg-buu-button/60 py-2 rounded-md px-2 font-medium"
-            >
-              <div className="w-5 h-5">
-                <ReferralIcon />
-              </div>
-              {/* <SettingsIcon /> */}
-              <p>Referral Program</p>
-            </Link>
-
             <button
               onClick={async () => {
                 await logout();
@@ -108,7 +107,7 @@ export default function DesktopProfileNavigation() {
               <div className="w-5 h-5">
                 <LogoutIcon />{" "}
               </div>
-              <p>Disconnect</p>
+              <p>Logout</p>
             </button>
           </PopoverContent>
         </Popover>

@@ -7,7 +7,7 @@ export default function FilterIcon() {
       // width="17"
       // height="17"
       viewBox="0 0 17 17"
-      className="fill-white transition-colors duration-200"
+      className=" transition-colors duration-200"
       fill="currentColor"
     >
       <path

@@ -12,8 +12,9 @@ import DownloadIcon from "./download";
 import FilterIcon from "./filter";
 import MaximizeIcon from "./maximize";
 import RetryIcon from "./retry";
-
+import ArrowLeft from "@/assets/icons/arrow-left.png";
 export {
+  ArrowLeft,
   AddImage,
   ArrowUp,
   BoneIcon,

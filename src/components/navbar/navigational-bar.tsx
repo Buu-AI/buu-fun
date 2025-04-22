@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import KnowMorePopover from "./know-more-pop-over";
 import { CoinStackIcon, SizePenIcon } from "@/assets/icons";
+import LocationKnownLink from "./location-known-link";
 export default function NavigationalBar() {
   return (
     <nav className="px-3 py-4  w-full h-full lg:h-screen">
@@ -24,7 +25,7 @@ export default function NavigationalBar() {
         </div>
 
         <div className="hidden lg:flex flex-col gap-4 items-center justify-center">
-          <Link
+          {/* <Link
             href={"/app/boards"}
             // group bg-buu-button  hover:bg-white hover:shadow-none  group shadow-buu-button min-w-[30px]  rounded-md flex items-center justify-center p-1.5
             className="w-10 flex  items-center group   justify-center    h-10  text-black"
@@ -32,23 +33,44 @@ export default function NavigationalBar() {
             <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-gray-500">
               <SizePenIcon />
             </div>
-          </Link>
-          <Link
+          </Link> */}
+
+          <LocationKnownLink
+            LinkIn="boards"
+            LinkTo="/app/boards"
+            // children={}
+          >
+            <SizePenIcon />
+          </LocationKnownLink>
+          <LocationKnownLink
+            LinkIn=""
+            LinkTo="/app"
+            // children={}
+          >
+            <MagicPenIcon className="fill-current" />
+          </LocationKnownLink>
+          <LocationKnownLink
+            LinkIn="portfolio"
+            LinkTo="/app/portfolio"
+            // children={}
+          >
+            <CoinStackIcon />
+          </LocationKnownLink>
+
+          {/* <Link
             href={"/app"}
             className="w-10 flex  items-center group   justify-center    h-10 "
           >
-            <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-gray-500">
-              <MagicPenIcon />
-            </div>
-          </Link>
-          <Link
+            <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-gray-500"></div>
+          </Link> */}
+          {/* <Link
             href={"/app/portfolio"}
             className="w-10 flex group items-center justify-center px-2 py-3 h-10 "
           >
             <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-gray-500">
               <CoinStackIcon />
             </div>
-          </Link>
+          </Link> */}
         </div>
         <div className="hidden lg:flex">
           <KnowMorePopover />

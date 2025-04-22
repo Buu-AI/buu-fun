@@ -63,7 +63,7 @@ export default function Generate3DCard({
       initial={{ opacity: 0.5 }}
       animate={{ opacity: 1 }}
       transition={{ ease: "easeInOut", duration: 0.5 }}
-      className="w-full min-w-[264px]  lg:w-[264px] h-full lg:h-[370px] relative p-0"
+      className="w-full min-w-[264px]  lg:max-w-[264px] h-full lg:max-h-[370px]  relative p-0"
     >
       <div className="relative bg-[#15192480] backdrop-blur-md   -z-[10] rounded-2xl w-full h-full overflow-hidden">
         <div className="w-[78px] h-[170px] top-0 right-[10%] absolute  bg-overlay-card   rounded-full   rotate-[-10deg]" />
@@ -83,8 +83,8 @@ export default function Generate3DCard({
             )}
           >
             <div className="flex items-center justify-center gap-2 ">
-              <div className="text-blue-400 w-6 h-6">
-                <MagicPenIcon />
+              <div className=" w-6 h-6">
+                <MagicPenIcon className=" text-white" />
               </div>
               <p className="text-base tracking-tight text-white  animate-pulse">
                 Generating

@@ -241,8 +241,8 @@ export const calcRewards = (
     stakeEntry.effectiveAmount,
     rewardPool.rewardAmount,
     rewardPool.rewardPeriod,
-  )
-  rewardEntryAccumulator.addAccountedAmount(accountableAmount)
+  );
+  rewardEntryAccumulator.addAccountedAmount(accountableAmount);
 
   const nextClaimDate = new Date(
     rewardEntryAccumulator
@@ -253,13 +253,13 @@ export const calcRewards = (
       )
       .add(rewardPool.rewardPeriod)
       .toNumber() * 1000,
-  )
+  );
 
   return {
     amount: rewardEntryAccumulator.getClaimableAmount(),
     nextClaimAvailableOn: nextClaimDate,
-  }
-}
+  };
+};
 
 export const calculateRewardRateFromAmount = (
   rewardAmount: BN,

@@ -7,7 +7,7 @@ export default function MaximizeIcon() {
       // width="17"
       // height="16"
       viewBox="0 0 17 16"
-      className="fill-white   transition-colors duration-200"
+      className="   transition-colors duration-200"
       fill="currentColor"
     >
       <path

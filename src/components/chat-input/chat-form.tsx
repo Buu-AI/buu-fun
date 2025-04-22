@@ -136,7 +136,6 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         contentType: contentType,
         accessToken,
       });
-
       if (!data) {
         toast.dismiss();
         toast.error("Failed to upload the image");
@@ -161,8 +160,9 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       URL.revokeObjectURL(ImageData.url);
       return data.url;
     } catch (error) {
+      if (error) {
+      }
       toast.error("Failed to upload the image");
-      console.log(error);
       return null;
     } finally {
       toast.dismiss();
@@ -192,7 +192,6 @@ export default function ChatForm({ action }: TBottomBarContainer) {
     let imageUrl: string | null = null;
     if (inputFile?.url) {
       imageUrl = await handleImageUploadUrl(inputFile, identityToken);
-      console.log("GOT THE URL", imageUrl);
       // stopper condition, because error message is done in `handleImageUploadUrl` already
       if (!imageUrl) {
         return;
@@ -260,6 +259,10 @@ export default function ChatForm({ action }: TBottomBarContainer) {
             onChange={(e) => {
               const file = e.target?.files && e.target?.files[0];
               if (file) {
+                if (!getAllowedContentTypeMaps(file.type)) {
+                  toast.error(`Image type ${file.type} is not supported yet`);
+                  return;
+                }
                 const imageUrl = URL.createObjectURL(file);
                 const imageData = {
                   url: imageUrl,

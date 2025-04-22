@@ -93,19 +93,25 @@ export default function MobileProfileNavigation() {
                   >
                     <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
                       <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
-                        <MagicPenIcon />
+                        <MagicPenIcon className="text-[#78DBFF]" />
                       </div>
                       <p className="text-xl">Home</p>
                     </DrawerClose>
                   </Link>
                 </div>
                 <div className="flex border-b w-full ">
-                  <Link href={"/app/boards"}>
+                  <Link
+                    href={"/app/referral"}
+                    // className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium"
+                  >
+                    {" "}
                     <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
-                      <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
-                        <SizePenIcon />
+                      <div className="w-6 h-6">
+                        <ReferralIcon />
                       </div>
-                      <p className="text-xl">boards</p>{" "}
+                      <p className="text-xl rainbow-text ">
+                        Referral Program
+                      </p>{" "}
                     </DrawerClose>
                   </Link>
                 </div>
@@ -115,7 +121,17 @@ export default function MobileProfileNavigation() {
                       <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
                         <WalletIcon2 />
                       </div>
-                      <p className="text-xl">Portfolio</p>{" "}
+                      <p className="text-xl">$BUU Token</p>{" "}
+                    </DrawerClose>
+                  </Link>
+                </div>
+                <div className="flex border-b w-full ">
+                  <Link href={"/app/boards"}>
+                    <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
+                      <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
+                        <SizePenIcon />
+                      </div>
+                      <p className="text-xl">Boards</p>{" "}
                     </DrawerClose>
                   </Link>
                 </div>
@@ -126,7 +142,7 @@ export default function MobileProfileNavigation() {
                       <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
                         <ApiKeyHeaderIcon />
                       </div>
-                      <p className="text-xl">API Key</p>{" "}
+                      <p className="text-xl">API Keys</p>{" "}
                     </DrawerClose>
                   </Link>
                 </div>
@@ -144,20 +160,6 @@ export default function MobileProfileNavigation() {
                     </DrawerClose>
                   </Link>
                 </div>{" "}
-                <div className="flex border-b w-full ">
-                  <Link
-                    href={"/app/referral"}
-                    // className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium"
-                  >
-                    {" "}
-                    <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
-                      <div className="w-6 h-6">
-                        <ReferralIcon />
-                      </div>
-                      <p className="text-xl">Referral Program</p>{" "}
-                    </DrawerClose>
-                  </Link>
-                </div>
                 <div className="flex border-b  w-full">
                   <button
                     onClick={async () => {

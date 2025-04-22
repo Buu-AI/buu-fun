@@ -33,7 +33,7 @@ const ApiKeySlice = createSlice({
       state.key = null;
       state.name = null;
       state.isAPIKeyRetrieved = false;
-      state.isCreateModalOpen = false
+      state.isCreateModalOpen = false;
     },
     setApiKey(state, action: PayloadAction<{ key: string; name: string }>) {
       state.key = action.payload?.key;
@@ -44,7 +44,7 @@ const ApiKeySlice = createSlice({
     },
     setDeleteApiKeyData(
       state,
-      action: PayloadAction<{ key: string; name: string; id: string } | null>
+      action: PayloadAction<{ key: string; name: string; id: string } | null>,
     ) {
       state.keyToDeleteData = action.payload;
     },

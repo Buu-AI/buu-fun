@@ -91,7 +91,7 @@ export default function ViewBoardCarousal({
                   key={`carousel-${index}-button-${item.GenId}`}
                   className="py-2  md:basis-full relative"
                 >
-                  <div className=" border-buu border-2 my-1 overflow-hidden rounded-2xl w-full bg-[#15192420] backdrop-blur-3xl h-full">
+                  <div className=" border-buu border-2 my-1 overflow-hidden rounded-2xl w-full bg-[#15192420]  backdrop-blur-lg h-full">
                     <ModelViewer src={item.modelUrl ?? ""} />
                   </div>
                 </CarouselItem>
