@@ -12,4 +12,5 @@ export const LINKS = {
     "https://dexscreener.com/solana/88n8pbt6dob5rhp7wcaag8tuvy1bawazzxas7bm8virt",
   BUY_BUU_JUPITER_AG:
     "https://jup.ag/swap/SOL-88n8pBT6doB5rHP7WcAaG8TuVY1baWazzxAS7Bm8virt",
+  BUU_MONTHLY_JAM: "https://ln.onl/jam",
 };
