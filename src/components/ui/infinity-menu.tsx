@@ -5,6 +5,7 @@ import { Button } from "./button";
 import { default as NextImage } from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "@/assets/icons";
+import { LINKS } from "@/constants/social-links";
 
 // -------- Shader Sources --------
 
@@ -997,7 +998,6 @@ class InfiniteGridMenu {
       this.items.map(
         (item) =>
           new Promise<HTMLImageElement>((resolve) => {
-            
             const img = new Image();
             img.crossOrigin = "anonymous";
             img.onload = () => resolve(img);
@@ -1135,7 +1135,9 @@ class InfiniteGridMenu {
     gl.enable(gl.CULL_FACE);
     gl.enable(gl.DEPTH_TEST);
 
-    gl.clearColor(14 / 255, 16 / 255, 25 / 255, 1);
+    //     --background: 226 32% 8%;
+
+    gl.clearColor(0.054, 0.063, 0.106, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     gl.uniformMatrix4fv(
@@ -1369,9 +1371,12 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
         <>
           {/* Title */}
           <div
-            className={cn("absolute left-[1%]  flex  flex-col xl:left-[10%] top-[40%]", {
-              "opacity-0 pointer-events-none duration-[100ms]": isMoving,
-            })}
+            className={cn(
+              "absolute left-[1%]   flex  flex-col xl:left-[10%] top-[40%]",
+              {
+                "opacity-0 pointer-events-none duration-[100ms]": isMoving,
+              }
+            )}
           >
             <h2
               className={cn(
@@ -1380,11 +1385,6 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
                   "opacity-0 pointer-events-none duration-[100ms]": isMoving,
                 }
               )}
-              // ${
-              //   isMoving
-              //     ? "opacity-0 pointer-events-none duration-[100ms]"
-              //     : "opacity-100 pointer-events-auto duration-[500ms]"
-              // }
             >
               <span className="grayish-text-gradient">Monthly JAM</span>
               <br />
@@ -1404,12 +1404,12 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
           } */}
               Best Creators Get Paid Every Month. Join Our Game Jams Program Now
             </p>
-            {/* <Button>
-              <Image />
-              Read more
-            </Button> */}
 
-            <Link href={"/app"} className="bg-white self-center mt-4 max-w-max py-2 px-2.5 rounded-xl flex">
+            <Link
+              href={LINKS.BUU_MONTHLY_JAM}
+              target="_blank"
+              className="bg-white xl:self-center mt-4 max-w-max py-2 px-2.5 rounded-xl flex"
+            >
               <div className="flex gap-2 items-center  ">
                 <div className="max-w-[28px] w-full flex items-center border border-blue-300/40 rounded-md overflow-hidden justify-center">
                   <NextImage
@@ -1426,36 +1426,6 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
           </div>
 
           {/* Action Button */}
-          <div
-            onClick={handleButtonClick}
-            className={`
-          absolute
-          left-1/2
-          top-[80%]
-          z-10
-          w-[60px]
-          h-[60px]
-          grid
-          place-items-center
-          bg-[#00ffff]
-          border-[5px]
-          border-black
-          rounded-full
-          cursor-pointer
-          transition-all
-          ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
-         
-        `}
-          >
-            {/*  ${
-            isMoving
-              ? "bottom-[-80px] opacity-0 pointer-events-none duration-[100ms] scale-0 -translate-x-1/2"
-              : "bottom-[3.8em] opacity-100 pointer-events-auto duration-[500ms] scale-100 -translate-x-1/2"
-          } */}
-            <p className="select-none relative text-[#060606] top-[2px] text-[26px]">
-              &#x2197;
-            </p>
-          </div>
         </>
       )}
     </div>
