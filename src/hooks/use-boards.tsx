@@ -15,7 +15,7 @@ export function useSharableBoards({
   const { identityToken: accessToken } = useAuthentication();
 
   return useQuery({
-    queryKey: ["user-shareable-boards", threadId],
+    queryKey: ["user-shareable-boards", threadId, accessToken],
     enabled: !!(accessToken && accessToken?.length > 1),
     queryFn: () => {
       if (!accessToken) return;
