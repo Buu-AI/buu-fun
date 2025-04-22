@@ -7,8 +7,13 @@ import { useSolanaWallets } from "@privy-io/react-auth";
 import { Connection } from "@solana/web3.js";
 import toast from "react-hot-toast";
 import { TUserStakedCard } from "./user-staked-card";
+import { GeneralClassName } from "@/types";
+import { cn } from "@/lib/utils";
 
-export default function ClaimRewardButton(staking: TUserStakedCard) {
+export default function ClaimRewardButton({
+  className,
+  ...staking
+}: TUserStakedCard & GeneralClassName) {
   const { address, connectSolanaWallet, wallet } = useAuthentication();
   const { wallets } = useSolanaWallets();
   async function handleClaimRewards() {
@@ -22,7 +27,7 @@ export default function ClaimRewardButton(staking: TUserStakedCard) {
         address,
         staking,
       });
-      const signature = await wallet.walletData?.sendTransaction(
+      const signature = await wallet?.walletData?.sendTransaction(
         transaction,
         connection
       );
@@ -32,7 +37,7 @@ export default function ClaimRewardButton(staking: TUserStakedCard) {
 
         // Wait for confirmation
         try {
-          const confirmation = await connection.confirmTransaction(
+          const confirmation = await connection?.confirmTransaction(
             signature,
             "confirmed"
           );
@@ -61,11 +66,15 @@ export default function ClaimRewardButton(staking: TUserStakedCard) {
   }
   return (
     <Button
-      disabled={Number(staking.rewards) <= 0}
+      disabled={
+        Number(staking.rewards) <= 0 ||
+        staking.stakeUnlockedTs >= new Date(Date.now())
+      }
       onClick={async () => {
         await handleClaimRewards();
       }}
-      className="h-[40px]"
+      size={"special"}
+      className={cn(className)}
     >
       <span className="p-3">Claim Rewards</span>
     </Button>

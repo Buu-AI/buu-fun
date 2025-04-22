@@ -1,3 +1,4 @@
+import { BooleanKeys } from "@/types/utils";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 export const BuuPricingTime = [
   "ALL",
@@ -15,6 +16,7 @@ type BuuPricingState = {
   buuPricingHistoryTime: TBuuPricingTime;
   streamflowDialogOpen: boolean;
   buyBuuDialogOpen: boolean;
+  unclaimedRewardsModalOpen: boolean;
 };
 
 const initialState: BuuPricingState = {
@@ -22,6 +24,7 @@ const initialState: BuuPricingState = {
   amountToStake: 0,
   streamflowDialogOpen: false,
   buyBuuDialogOpen: false,
+  unclaimedRewardsModalOpen: false,
 };
 
 const BuuPricingSlice = createSlice({
@@ -40,6 +43,15 @@ const BuuPricingSlice = createSlice({
     setBuyBuuDialogOpen(state, action: PayloadAction<boolean>) {
       state.buyBuuDialogOpen = action.payload;
     },
+    setTogglers(
+      state,
+      action: PayloadAction<{
+        value: boolean;
+        key: BooleanKeys<BuuPricingState>;
+      }>
+    ) {
+      state[action.payload.key] = action.payload.value;
+    },
   },
 });
 
@@ -48,6 +60,7 @@ export const {
   setSelectedAmountToStake,
   setBuyBuuDialogOpen,
   setStreamflowDialogOpen,
+  setTogglers,
 } = BuuPricingSlice.actions;
 
 export default BuuPricingSlice.reducer;

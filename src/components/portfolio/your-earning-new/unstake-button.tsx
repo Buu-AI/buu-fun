@@ -6,19 +6,27 @@ import { useAuthentication } from "@/providers/account.context";
 import { useSolanaWallets } from "@privy-io/react-auth";
 import { Connection } from "@solana/web3.js";
 import toast from "react-hot-toast";
+import { TUserStakedCard } from "./user-staked-card";
+import { useAppDispatch } from "@/hooks/redux";
+import { setTogglers } from "@/lib/redux/features/buu-pricing";
 
 export default function UnstakeButton({
   depositNonce,
-}: {
-  depositNonce: number;
-}) {
+  rewards,
+}: TUserStakedCard) {
   const { address, connectSolanaWallet, wallet } = useAuthentication();
   const { wallets } = useSolanaWallets();
+  const dispatch = useAppDispatch();
   async function handleUnstakeTransaction() {
     try {
       if (!wallets.length || !address || !wallet) {
-        console.log("NOT LOGGED IN");
         connectSolanaWallet();
+        return;
+      }
+      if (Number(rewards) > 0) {
+        dispatch(
+          setTogglers({ key: "unclaimedRewardsModalOpen", value: true })
+        );
         return;
       }
       const connection = new Connection(getClusterUrl());

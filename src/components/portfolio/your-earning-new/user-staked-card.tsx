@@ -6,6 +6,7 @@ import prettyMs from "pretty-ms";
 // import ClaimRewardButton from "./restake-rewards-button";
 import UnstakeButton from "./unstake-button";
 import ClaimRewardButton from "./claim-rewards-button";
+import UnClaimedRewardsDialog from "./unclaimed-rewards-dialog";
 
 export type TUserStakedCard = {
   staked: string;
@@ -111,8 +112,9 @@ export default function UserStakedCard({
         </div>
       </div>
       <div className="mt-4 flex items-center gap-2">
-        <UnstakeButton depositNonce={staking.depositNonce} />
+        <UnstakeButton {...staking} />
         <ClaimRewardButton {...staking} />
+        <UnClaimedRewardsDialog {...staking} />
       </div>
     </div>
   );
