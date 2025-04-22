@@ -62,6 +62,7 @@
     "embla-carousel-react": "^8.5.2",
     "embla-carousel-wheel-gestures": "^8.0.1",
     "framer-motion": "^12.4.5",
+    "gl-matrix": "^3.4.3",
     "google": "link:@next/third-parties/google",
     "graphql": "^16.10.0",
     "graphql-request": "^7.1.2",
