@@ -1,9 +1,10 @@
 import { RectangleRounded } from "@/lib/helpers/threejs/rectangle-rounded";
+import { getCachedTexture } from "@/lib/home/utils";
 import { useGSAP } from "@gsap/react";
 import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import { useMemo, useRef } from "react";
-import { DoubleSide, Mesh, TextureLoader } from "three";
+import { DoubleSide, Mesh } from "three";
 import { getPositionByIndex, getRotationByIndex } from "./get-positions";
 gsap.registerPlugin(useGSAP);
 export default function ImageCard({
@@ -20,15 +21,7 @@ export default function ImageCard({
   const meshRef = useRef<Mesh>(null);
 
   const texture = useMemo(() => {
-    const loader = new TextureLoader();
-    const tex = loader.load(
-      imageUrl,
-      // () => console.log(`Loaded: ${imageUrl}`),
-      undefined,
-      // (error) => console.error(`Texture loading failed for ${imageUrl}`, error),
-    );
-    tex.anisotropy = 4;
-    return tex;
+    return getCachedTexture(imageUrl);
   }, [imageUrl]);
 
   const radius = 8; // Increased from 6 to create more space between cards

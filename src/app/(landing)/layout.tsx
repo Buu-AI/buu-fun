@@ -1,9 +1,9 @@
 import "@/app/globals.css";
+import CratePopover from "@/components/(home)/CratePopover";
 import SmoothScrollWrapper from "@/components/(home)/scroll-smoother";
 import { constructMetadata } from "@/lib/construct-metadata";
 import HomeStoreProvider from "@/providers/home-redux";
 import { GoogleAnalytics } from "@next/third-parties/google";
-
 import type { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 import Script from "next/script";
@@ -49,12 +49,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       {/* uncomment for checking performance */}
       {/* <head>
         <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
       </head> */}
+     
       <Script
         id="cookieyes"
         type="text/javascript"
@@ -65,6 +67,7 @@ export default function RootLayout({
         <HomeStoreProvider>
           <SmoothScrollWrapper>{children}</SmoothScrollWrapper>
         </HomeStoreProvider>
+        <CratePopover/>
       </body>
       <GoogleAnalytics gaId="G-DDL82EPESF" />
     </html>
