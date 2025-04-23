@@ -17,34 +17,33 @@ export default function ImageGlobeV3({
 
   // Set up animations when finishedLoading changes
   useEffect(() => {
-    if (!finishedLoading && isAnimationRan.current && !groupRef.current) return;
-    
-    isAnimationRan.current = true;
     const ctx = gsap.context(() => {
-      if (!groupRef?.current) return;
-      // Animate the camera to move inside the sphere
-      gsap.to(camera.position, {
-        z: 5, // Move camera to the center of the sphere
-        duration: 3,
-        ease: "power2.inOut",
-      });
+      if (finishedLoading && !isAnimationRan.current && groupRef.current) {
+        isAnimationRan.current = true;
+        // Animate the camera to move inside the sphere
+        gsap.to(camera.position, {
+          z: 5, // Move camera to the center of the sphere
+          duration: 3,
+          ease: "power2.inOut",
+        });
 
-      // Smoothly transition the rotation to zero
-      gsap.to(groupRef.current?.rotation, {
-        x: 0,
-        y: 0,
-        z: 0,
-        duration: 3.5,
-        ease: "power3.out",
-        onComplete: () => {
-          if (!groupRef.current) return;
-          gsap.to(groupRef.current.rotation, {
-            z: 0,
-            duration: 4, // Slower easing for a smooth stop
-            ease: "power4.out",
-          });
-        },
-      });
+        // Smoothly transition the rotation to zero
+        gsap.to(groupRef.current?.rotation, {
+          x: 0,
+          y: 0,
+          z: 0,
+          duration: 3.5,
+          ease: "power3.out",
+          onComplete: () => {
+            if (!groupRef.current) return;
+            gsap.to(groupRef.current.rotation, {
+              z: 0,
+              duration: 4, // Slower easing for a smooth stop
+              ease: "power4.out",
+            });
+          },
+        });
+      }
     });
     return () => {
       ctx.revert();
