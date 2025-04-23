@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, RefObject } from "react";
+import { RefObject, useLayoutEffect } from "react";
 
 // Type definitions for our configurations
 export interface DesignConfig {

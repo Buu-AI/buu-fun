@@ -1,7 +1,7 @@
 "use client";
-import React, { RefObject, useEffect, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { RefObject, useState } from "react";
 
 gsap.registerPlugin(useGSAP);
 
@@ -34,7 +34,6 @@ export const features = [
 ];
 
 export default function FeatureTextSliderV2({
-  index,
   progressRef,
 }: {
   index: number;
@@ -42,9 +41,6 @@ export default function FeatureTextSliderV2({
 }) {
   const [state] = useState(progressRef.current);
   console.log(state);
-  useGSAP(() => {
-    const ctx = gsap.context(() => {});
-  });
   return (
     <div className="flex items-end w-full h-full justify-center ">
       <h1>hello</h1>

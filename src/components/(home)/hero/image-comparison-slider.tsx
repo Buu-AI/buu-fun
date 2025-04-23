@@ -25,7 +25,6 @@ import useResponsivePositioning, {
 } from "@/hooks/use-responsive-positioning";
 import { useMediaQuery } from "@mantine/hooks";
 import FeatureTextSlider from "../feature/feature-text-slider";
-import FeatureTextSliderV2 from "../feature/new-components/feature-text-slider";
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(useGSAP);
 
@@ -253,7 +252,7 @@ export default function ImageComparisonSlider() {
               opacity: 0,
               transition: { duration: 1.5, ease: "easeInOut" },
             }}
-            className="w-full relative border-2 h-full"
+            className="w-full relative  h-full"
           >
             <Image
               ref={imageRef}
