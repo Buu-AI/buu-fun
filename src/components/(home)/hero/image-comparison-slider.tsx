@@ -21,6 +21,7 @@ import { AnimatedBringYourIdeas } from "./bring-ideas";
 import SliderHandle from "./slider-handle";
 // import FeatureTextSlider from "@/app/(landing)/(navigated)/test/feature-arch";
 import FeatureTextSlider from "../feature/feature-text-slider";
+import { useMediaQuery } from "@mantine/hooks";
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(useGSAP);
 
@@ -30,8 +31,11 @@ export default function ImageComparisonSlider() {
   const [position, setPosition] = useState(40);
   const [sliderInView, setSliderInView] = useState(false);
   const sliderInViewRef = useRef(false);
+  const is650 = useMediaQuery('(min-width: 650px)')
   const containerRef = useRef<HTMLDivElement>(null);
   const sliderContainerRef = useRef<HTMLDivElement>(null);
+  const ReactCompareSliderRef = useRef<HTMLDivElement>(null);
+  const featureImageRef = useRef<HTMLDivElement>(null);
   const featureContainerRef = useRef<HTMLElement>(null);
   const backgroundImageRef = useRef<HTMLDivElement>(null);
   const bringYourIdeaContent = useRef<HTMLDivElement>(null);
@@ -75,14 +79,20 @@ export default function ImageComparisonSlider() {
                 !sliderContainerRef.current ||
                 !featureContainerRef.current ||
                 !backgroundImageRef.current ||
-                !bringYourIdeaContent.current
+                !bringYourIdeaContent.current ||
+                !ReactCompareSliderRef.current ||
+                !featureImageRef.current
               ) {
                 return;
               }
 
               const progress = event.progress * 100;
-              sliderContainerRef.current.style.opacity = `${Math.round(100 - progress * 5)}%`;
+
+              ReactCompareSliderRef.current.style.opacity = is650 ? `${Math.round(100 - progress * 5)}%` : "0"
+              featureImageRef.current.style.opacity = is650 ? `${progress * 5}%` : "100"
+
               bringYourIdeaContent.current.style.opacity = `${Math.round(100 - progress * 5)}%`;
+
               backgroundImageRef.current.style.filter = `blur(${Math.round(progress * 0.1)}px)`;
               featureContainerRef.current.style.opacity = `${progress * 5}%`;
               featureContainerRef.current.style.zIndex = `0`;
@@ -96,13 +106,12 @@ export default function ImageComparisonSlider() {
                 }
               }
               if (progress > 20) {
-                sliderContainerRef.current.style.zIndex = `0`;
+                // sliderContainerRef.current.style.zIndex = `0`;
               } else {
-                sliderContainerRef.current.style.zIndex = `50`;
+                // sliderContainerRef.current.style.zIndex = `50`;
               }
 
               progressRef.current = progress;
-              console.log(`INDEX:`, index);
               // if (progress <= 30 && index !== 0) {
               //   setIndex(0);
               //   setPrevIndex(0);
@@ -123,7 +132,7 @@ export default function ImageComparisonSlider() {
                 // Calculate which feature index we should be on (starting from index 1)
                 const mappedIndex = Math.min(
                   features.length - 1,
-                  Math.floor(adjustedProgress / segmentSize),
+                  Math.floor(adjustedProgress / segmentSize)
                 );
 
                 // Only update state if index is actually changing
@@ -144,7 +153,7 @@ export default function ImageComparisonSlider() {
         ctx.revert();
       };
     },
-    { dependencies: [], revertOnUpdate: true },
+    { dependencies: [is650], revertOnUpdate: true }
   );
 
   // Set up responsive positioning that works with any aspect ratio
@@ -372,33 +381,59 @@ export default function ImageComparisonSlider() {
         ref={sliderContainerRef}
         className="absolute z-10 overflow-visible"
       >
-        <ReactCompareSlider
-          className="w-full h-full z-[20] overflow-visible"
-          style={{
-            overflow: "visible",
-          }}
-          changePositionOnHover
-          handle={<SliderHandle />}
-          position={position}
-          itemTwo={
-            <ReactCompareSliderImage
-              width={"auto"}
-              height={"auto"}
-              src={MutantAlienWireFrame.src}
-              alt="Wireframe version"
-              className="w-full h-full"
-            />
-          }
-          itemOne={
-            <ReactCompareSliderImage
-              src={MutantAlien.src}
-              width={"auto"}
-              height={"auto"}
-              alt="Full color version"
-              className="w-full h-full relative "
-            />
-          }
-        />
+        <div ref={featureImageRef} className="absolute top-0 left-0 max-md:opacity-100 opacity-0 w-full h-full">
+          <AnimatePresence mode="popLayout" initial={false}>
+            <div className="absolute top-0 left-0  w-full h-full">
+              <motion.div
+                key={`image-${index}`}
+                custom={direction}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={imageVariants}
+                className=" w-full h-full "
+              >
+                <Image
+                  src={features[index].image}
+                  alt="Alien Image"
+                  width={1920}
+                  height={1080}
+                  className="z-10 relative object-contain w-full h-full"
+                  priority
+                />
+              </motion.div>
+            </div>
+          </AnimatePresence>
+        </div>
+        <div className="max-md:hidden" ref={ReactCompareSliderRef}>
+          <ReactCompareSlider
+            className="w-full h-full z-[20] overflow-visible"
+            style={{
+              overflow: "visible",
+            }}
+            changePositionOnHover
+            handle={<SliderHandle />}
+            position={position}
+            itemTwo={
+              <ReactCompareSliderImage
+                width={"auto"}
+                height={"auto"}
+                src={MutantAlienWireFrame.src}
+                alt="Wireframe version"
+                className="w-full h-full"
+              />
+            }
+            itemOne={
+              <ReactCompareSliderImage
+                src={MutantAlien.src}
+                width={"auto"}
+                height={"auto"}
+                alt="Full color version"
+                className="w-full h-full relative "
+              />
+            }
+          />
+        </div>
       </section>
 
       <section
@@ -477,7 +512,7 @@ export default function ImageComparisonSlider() {
           </AnimatePresence>
 
           {/* Image morphing container */}
-          <AnimatePresence mode="popLayout" initial={false}>
+          {/* <AnimatePresence mode="popLayout" initial={false}>
             <div className="absolute bottom-[0%] -left-[17%] w-full h-full">
               <motion.div
                 key={`image-${index}`}
@@ -498,7 +533,7 @@ export default function ImageComparisonSlider() {
                 />
               </motion.div>
             </div>
-          </AnimatePresence>
+          </AnimatePresence> */}
 
           <motion.div className="absolute top-0 left-0 h-full w-full z-50 overflow-hidden pointer-events-none">
             <div className="flip absolute bottom-0  w-full h-[6%]">
