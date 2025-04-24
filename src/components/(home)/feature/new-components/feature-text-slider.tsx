@@ -2,7 +2,7 @@ import { SliderIconSecondary } from "@/assets/icons/slider-icon-secondary";
 import { features } from "@/components/(home)/feature/feature-data";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(useGSAP);
 
@@ -21,8 +21,10 @@ export default function FeatureTextSlider({
   const animationRef = useRef<number | null>(null);
   const activeItemRef = useRef<number>(0);
   const textAnimatedRef = useRef<Set<number>>(new Set());
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+
   // Initialize positions in a circle
-  useEffect(() => {
+  const updateCirclePositions = () => {
     const container = containerRef.current;
     if (!container) return;
 
@@ -48,9 +50,57 @@ export default function FeatureTextSlider({
       });
     });
 
-    // Initial text animation for first item
+    // Animate text for first item if not already animated
     animateTextForItem(0);
+  };
+
+  // Add resize listener
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Set initial size
+    setContainerSize({
+      width: container.clientWidth,
+      height: container.clientHeight,
+    });
+
+    // Initial layout
+    updateCirclePositions();
+
+    // Create ResizeObserver
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        
+        // Only update if size actually changed
+        if (width !== containerSize.width || height !== containerSize.height) {
+          setContainerSize({
+            width,
+            height,
+          });
+          
+          // Update positions when container size changes
+          updateCirclePositions();
+        }
+      }
+    });
+
+    // Start observing the container
+    resizeObserver.observe(container);
+
+    // Cleanup
+    return () => {
+      resizeObserver.disconnect();
+    };
   }, []);
+
+  // Reapply positions when container size changes
+  useEffect(() => {
+    if (containerSize.width > 0 && containerSize.height > 0) {
+      updateCirclePositions();
+    }
+  }, [containerSize]);
 
   // Function to animate text for a specific item
   const animateTextForItem = (itemIndex: number) => {
