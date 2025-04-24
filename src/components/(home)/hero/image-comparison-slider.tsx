@@ -61,7 +61,7 @@ export default function ImageComparisonSlider() {
     () => {
       if (!sliderContainerRef.current) return;
 
-      const featureWidth = sliderContainerRef.current.clientHeight
+      const featureWidth = sliderContainerRef.current.clientHeight;
 
       const ctx = gsap.context(() => {
         gsap.to(containerRef, {
@@ -90,7 +90,7 @@ export default function ImageComparisonSlider() {
                 !ReactCompareSliderRef.current ||
                 !featureImageRef.current
               ) {
-                return; 
+                return;
               }
 
               ReactCompareSliderRef.current.style.opacity = is650
@@ -134,7 +134,7 @@ export default function ImageComparisonSlider() {
 
                 const adjustedProgress = progress - 20;
                 // Divide the remaining 70% among features.length - 1 (since index 0 is already shown)
-                const remainingFeatures = features.length - 1
+                const remainingFeatures = features.length - 1;
                 const segmentSize = 70 / remainingFeatures;
 
                 // Calculate which feature index we should be on (starting from index 1)
@@ -317,7 +317,10 @@ export default function ImageComparisonSlider() {
               </div>
               <div className="w-full relative h-full z-[100]">
                 <AnimatePresence mode="wait" initial={false}>
-                  <FeatureTextSliderV2 progressRef={progressRef} index={index} />
+                  <FeatureTextSliderV2
+                    progressRef={progressRef}
+                    index={index}
+                  />
                 </AnimatePresence>
               </div>
             </motion.div>

@@ -29,7 +29,7 @@ export default function FeatureTextSlider({
     if (!container) return;
 
     const divElements = gsap.utils.toArray(
-      ".feature-content-container"
+      ".feature-content-container",
     ) as HTMLElement[];
     const totalItems = divElements.length;
 
@@ -72,14 +72,14 @@ export default function FeatureTextSlider({
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const { width, height } = entry.contentRect;
-        
+
         // Only update if size actually changed
         if (width !== containerSize.width || height !== containerSize.height) {
           setContainerSize({
             width,
             height,
           });
-          
+
           // Update positions when container size changes
           updateCirclePositions();
         }
@@ -107,7 +107,7 @@ export default function FeatureTextSlider({
     if (textAnimatedRef.current.has(itemIndex)) return;
 
     const words = gsap.utils.toArray(
-      `#feature-title-${itemIndex} .words`
+      `#feature-title-${itemIndex} .words`,
     ) as HTMLElement[];
 
     gsap.set(words, {
@@ -186,7 +186,7 @@ export default function FeatureTextSlider({
 
         // Update all items with counter-rotation to keep text upright
         const divElements = gsap.utils.toArray(
-          ".feature-content-container"
+          ".feature-content-container",
         ) as HTMLElement[];
         divElements.forEach((item, idx) => {
           // Calculate opacity for smooth cross-fade between items
@@ -208,7 +208,7 @@ export default function FeatureTextSlider({
 
         // Handle paragraph transitions - with smoother transitions
         const paragraphs = gsap.utils.toArray(
-          ".feature-content-text-paragraph"
+          ".feature-content-text-paragraph",
         ) as HTMLElement[];
 
         paragraphs.forEach((para, idx) => {

@@ -61,7 +61,6 @@ void main() {
     vInstanceId = gl_InstanceID;
 }
 `;
-
 const discFragShaderSource = `#version 300 es
 precision highp float;
 
@@ -94,7 +93,7 @@ void main() {
                      containerAspect / imageAspect);
     
     // Rotate 180 degrees and adjust UVs for cover
-     vec2 st = vec2(vUvs.x, vUvs.y);
+    vec2 st = vec2(vUvs.x, 1.0 - vUvs.y);
     st = (st - 0.5) * scale + 0.5;
     
     // Clamp coordinates to prevent repeating
@@ -356,47 +355,28 @@ class IcosahedronGeometry extends Geometry {
 }
 
 class DiscGeometry extends Geometry {
-  constructor(width = 1.33, height = 1) {
+  constructor(steps = 4, radius = 1) {
     super();
-    // Create a 4:3 rectangle (width = 4/3, height = 1)
-    const halfWidth = width / 2;
-    const halfHeight = height / 2;
+    const safeSteps = Math.max(4, steps);
+    const alpha = (2 * Math.PI) / safeSteps;
 
-    // Add vertices (4 corners of rectangle)
-    this.addVertex(
-      -halfWidth,
-      -halfHeight,
-      0, // bottom-left
-      halfWidth,
-      -halfHeight,
-      0, // bottom-right
-      halfWidth,
-      halfHeight,
-      0, // top-right
-      -halfWidth,
-      halfHeight,
-      0 // top-left
-    );
+    // center vertex
+    this.addVertex(0, 0, 0);
+    this.lastVertex.uv[0] = 0.5;
+    this.lastVertex.uv[1] = 0.5;
 
-    // Set UV coordinates for each vertex
-    this.vertices[0].uv[0] = 0;
-    this.vertices[0].uv[1] = 1; // bottom-left
-    this.vertices[1].uv[0] = 1;
-    this.vertices[1].uv[1] = 1; // bottom-right
-    this.vertices[2].uv[0] = 1;
-    this.vertices[2].uv[1] = 0; // top-right
-    this.vertices[3].uv[0] = 0;
-    this.vertices[3].uv[1] = 0; // top-left
+    for (let i = 0; i < safeSteps; ++i) {
+      const x = Math.cos(alpha * i);
+      const y = Math.sin(alpha * i);
+      this.addVertex(radius * x, radius * y, 0);
+      this.lastVertex.uv[0] = x * 0.5 + 0.5;
+      this.lastVertex.uv[1] = y * 0.5 + 0.5;
 
-    // Add faces (2 triangles that form the rectangle)
-    this.addFace(
-      0,
-      2,
-      3, // second triangle
-      0,
-      1,
-      2 // first triangle
-    );
+      if (i > 0) {
+        this.addFace(0, i, i + 1);
+      }
+    }
+    this.addFace(0, safeSteps, 1);
   }
 }
 
@@ -821,7 +801,7 @@ class InfiniteGridMenu {
   public camera: Camera = {
     matrix: mat4.create(),
     near: 0.1,
-    far: 40,
+    far: 60,
     fov: Math.PI / 4,
     aspect: 1,
     position: vec3.fromValues(0, 0, 3),
@@ -930,7 +910,7 @@ class InfiniteGridMenu {
     };
 
     // Geometry
-    this.discGeo = new DiscGeometry(3 / 4, 1);
+    this.discGeo = new DiscGeometry(56, 1);
     this.discBuffers = this.discGeo.data;
     this.discVAO = makeVertexArray(
       gl,
@@ -1353,77 +1333,105 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
       <canvas
         id="infinite-grid-menu-canvas"
         ref={canvasRef}
-        className="cursor-grab w-full h-full overflow-hidden relative outline-none active:cursor-grabbing"
+        className="cursor-grab w-full h-full overflow-hidden relative outline-none  active:cursor-grabbing"
       />
-
+      <div className="absolute md:hidden block  top-0 left-0 h-full w-full ">
+        <div className="relative h-full w-full ">
+          <div className=" top-[15%] relative h-full w-full ">
+            <h2
+              className={cn(
+                "select-none  text-4xl md:text-7xl uppercase  text-center ",
+                " tracking-tighter leading-normal"
+              )}
+            >
+              <span className="grayish-text-gradient ">Monthly JAM</span>
+              <br />
+              <span className="leading-3 grayish-text-gradient tracking-normal font-medium text-6xl md:text-9xl">
+                Series
+              </span>{" "}
+            </h2>
+            <p className="text-center px-4 font-medium tracking-tight">
+              Best Creators Get Paid Every Month. Join Our Game Jams Program Now
+            </p>
+          </div>
+        </div>
+        <div className="absolute top-[80%]  w-full ">
+          <div className="flex items-center justify-center">
+            <Link
+              href={LINKS.BUU_MONTHLY_JAM}
+              target="_blank"
+              className="bg-white xl:self-center max-w-max py-2 px-2.5 rounded-xl flex"
+            >
+              <div className="flex gap-2 items-center  ">
+                <div className="flex items-center border border-blue-300/40 rounded-md overflow-hidden justify-center">
+                  <NextImage
+                    src={ArrowLeft}
+                    width={100}
+                    className="w-8 h-8"
+                    height={100}
+                    alt="Star Icon"
+                  />
+                </div>
+                <p className="text-black font- ">Read more</p>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </div>
       {activeItem && (
         <>
           {/* Title */}
           <h2
-            className={`
-        select-none
-        absolute
-text-7xl        left-[1.6em]
-        top-1/2
-        transform
-        translate-x-[20%]
-        xl:text-center tracking-tighter leading-normal
-        -translate-y-1/2
-        transition-all
-        uppercase
-        ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
-        ${
-          isMoving
-            ? "opacity-0 pointer-events-none duration-[100ms]"
-            : "opacity-100 pointer-events-auto duration-[500ms]"
-        }
-      `}
+            className={cn(
+              "select-none absolute text-4xl md:text-7xl max-md:hidden max-md:w-full max-md:text-center md:left-[1rem] top-[10%] md:top-1/2",
+              "transform md:translate-x-[20%] md:-translate-y-1/2",
+              "xl:text-center tracking-tighter leading-normal",
+              "transition-all uppercase",
+              "ease-[cubic-bezier(0.25,0.1,0.25,1.0)]",
+              {
+                "opacity-0 pointer-events-none duration-[100ms]": isMoving,
+                "opacity-100 pointer-events-auto duration-[500ms]": !isMoving,
+              }
+            )}
           >
             <span className="grayish-text-gradient ">Monthly JAM</span>
             <br />
-            <span className="leading-3 grayish-text-gradient tracking-normal font-medium text-9xl">
+            <span className="leading-3 grayish-text-gradient tracking-normal font-medium text-6xl md:text-9xl">
               Series
             </span>{" "}
           </h2>
 
           {/* Description */}
           <p
-            className={`
-        select-none
-        absolute
-        max-w-[20ch]
-
-        text-[1.5rem]
-        top-1/2
-        right-[0%]
-        transition-all
-        ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
-        ${
-          isMoving
-            ? "opacity-0 pointer-events-none duration-[100ms] translate-x-[-60%] -translate-y-1/2"
-            : "opacity-100 pointer-events-auto duration-[500ms] translate-x-[-90%] -translate-y-1/2"
-        }
-      `}
+            className={cn(
+              // Base classes
+              "select-none absolute max-md:w-full max-md:hidden md:max-w-[15ch]",
+              "max-md:text-lg max-md:text-center md:text-[1.5rem] md:top-1/2 max-md:mt-2 top-[23%] max-md:left-0 md:right-[1%]",
+              "transition-all ease-[cubic-bezier(0.25,0.1,0.25,1.0)]",
+              {
+                "opacity-0 pointer-events-none duration-[100ms] translate-x-[-60%] -translate-y-1/2":
+                  isMoving,
+                "opacity-100 pointer-events-auto duration-[500ms] md:translate-x-[-90%] md:-translate-y-1/2":
+                  !isMoving,
+              }
+            )}
           >
             Best Creators Get Paid Every Month. Join Our Game Jams Program Now
           </p>
 
           {/* Action Button */}
-          <div
-            className={`
-        absolute
-        left-1/2
-        z-10
-        cursor-pointer
-        transition-all
-        ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
-         xl:self-center mt-4 max-w-max py-2 px-2.5 rounded-xl flex
-        ${
-          isMoving
-            ? "bottom-[-80px] opacity-0 pointer-events-none duration-[100ms] scale-0 -translate-x-1/2"
-            : "bottom-[3.8em] opacity-100 pointer-events-auto duration-[500ms] scale-100 -translate-x-1/2"
-        }
-      `}
+          {/* <div
+            className={cn(
+              "absolute left-1/2 z-10 cursor-pointer transition-all",
+              "ease-[cubic-bezier(0.25,0.1,0.25,1.0)]",
+              " mt-4 max-w-max py-2 px-2.5 rounded-xl flex",
+              {
+                "bottom-[-80px] opacity-0 pointer-events-none duration-[100ms] scale-0 -translate-x-1/2":
+                  isMoving,
+                "bottom-[3.8em] opacity-100 pointer-events-auto duration-[500ms] scale-100 -translate-x-1/2":
+                  !isMoving,
+              },
+            )}
           >
             <Link
               href={LINKS.BUU_MONTHLY_JAM}
@@ -1443,6 +1451,29 @@ text-7xl        left-[1.6em]
                 <p className="text-black font- ">Read more</p>
               </div>
             </Link>
+          </div> */}
+          <div
+            className={`absolute max-md:hidden left-1/2 z-10
+          w-[60px]
+          h-[60px]
+          grid
+          place-items-center
+          blue-plus-icon-gradient
+          rounded-full
+          cursor-pointer
+          transition-all
+          ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
+          icon-blue-with-shadow
+          ${
+            isMoving
+              ? "bottom-[-80px] opacity-0 pointer-events-none duration-[100ms] scale-0 -translate-x-1/2"
+              : "top-[80%] opacity-100 pointer-events-auto duration-[500ms] scale-100 -translate-x-1/2"
+          }
+        `}
+          >
+            <p className="select-none relative text-gray-200  top-[2px] text-[26px]">
+              &#x2197;
+            </p>
           </div>
         </>
       )}

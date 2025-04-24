@@ -54,16 +54,16 @@
 //   // Function to animate text for a specific item
 //   const animateTextForItem = (itemIndex: number) => {
 //     if (textAnimatedRef.current.has(itemIndex)) return;
-    
+
 //     const words = gsap.utils.toArray(`#feature-title-${itemIndex} .word`) as HTMLElement[];
-    
-//     gsap.set(words, { 
-//       visibility: "hidden", 
+
+//     gsap.set(words, {
+//       visibility: "hidden",
 //       opacity: 0,
 //       filter: "blur(4px)",
-//       y: 100 
+//       y: 100
 //     });
-    
+
 //     gsap.to(words, {
 //       visibility: "visible",
 //       opacity: 1,
@@ -154,7 +154,7 @@
 //         const paragraphs = gsap.utils.toArray(
 //           ".feature-text-paragraph"
 //         ) as HTMLElement[];
-        
+
 //         paragraphs.forEach((para, idx) => {
 //           if (idx === currentIdx) {
 //             gsap.to(para, {
@@ -169,7 +169,7 @@
 //               activeItemRef.current = nextIdx;
 //               animateTextForItem(nextIdx);
 //             }
-            
+
 //             gsap.to(para, {
 //               opacity: Math.min(1, itemProgress * 8), // Fade in faster
 //               y: 40 - itemProgress * 40,
@@ -212,7 +212,7 @@
 //             >
 //               <div className="relative">
 //                 <div className="flex items-center gap-2 justify-center flex-col text-center">
-//                   <h1 
+//                   <h1
 //                     id={`feature-title-${itemIndex}`}
 //                     className="text-lg md:text-2xl  font-medium tracking-tight"
 //                   >

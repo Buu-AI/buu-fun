@@ -20,7 +20,7 @@ export function AnimatedBringYourIdeas() {
           </div>
         </div>
       </div>
-      <div  />
+      <div />
       <div className="relative flex justify-start  md:justify-center">
         <div className="absolute md:bottom-[15%] z-[50]">
           <div className="relative">

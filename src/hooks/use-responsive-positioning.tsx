@@ -17,9 +17,9 @@ export interface PositioningConfig {
 // Reusable function to position elements responsively based on reference design
 const useResponsivePositioning = (
   containerRef: RefObject<HTMLElement | null>,
-  elementRef: RefObject<HTMLElement| null>,
+  elementRef: RefObject<HTMLElement | null>,
   designConfig: DesignConfig,
-  positioningConfig: PositioningConfig
+  positioningConfig: PositioningConfig,
 ): void => {
   useLayoutEffect(() => {
     const { designWidth, designHeight } = designConfig;
