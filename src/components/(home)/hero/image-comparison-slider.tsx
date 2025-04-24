@@ -24,7 +24,7 @@ import useResponsivePositioning, {
   DesignConfig,
 } from "@/hooks/use-responsive-positioning";
 import { useMediaQuery } from "@mantine/hooks";
-import FeatureTextSlider from "../feature/feature-text-slider";
+import FeatureTextSliderV2 from "../feature/new-components/feature-text-slider";
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(useGSAP);
 
@@ -57,13 +57,11 @@ export default function ImageComparisonSlider() {
       .map(() => createRef<HTMLDivElement>());
   }
 
-
-
   useGSAP(
     () => {
-      if (!featureContainerRef.current) return;
+      if (!sliderContainerRef.current) return;
 
-      const featureWidth = featureContainerRef.current.clientHeight;
+      const featureWidth = sliderContainerRef.current.clientHeight
 
       const ctx = gsap.context(() => {
         gsap.to(containerRef, {
@@ -74,12 +72,12 @@ export default function ImageComparisonSlider() {
             setPosition((this.progress() + 0.4) * 100);
           },
           scrollTrigger: {
-            end: featureWidth * features.length + window.innerHeight,
+            end: featureWidth * features.length + window.innerWidth,
             pin: true,
             trigger: containerRef.current,
             start: "top top",
             toggleActions: "play none none reverse",
-            
+
             onUpdate(event) {
               const progress = event.progress * 100;
               progressRef.current = progress;
@@ -92,7 +90,7 @@ export default function ImageComparisonSlider() {
                 !ReactCompareSliderRef.current ||
                 !featureImageRef.current
               ) {
-                return;
+                return; 
               }
 
               ReactCompareSliderRef.current.style.opacity = is650
@@ -110,7 +108,7 @@ export default function ImageComparisonSlider() {
 
               // Handle slider opacity
               // Handle z-index changes
-              if (progress < 20) {
+              if (progress < 15) {
                 if (sliderInViewRef.current) {
                   sliderInViewRef.current = false;
                   setSliderInView(false);
@@ -127,7 +125,7 @@ export default function ImageComparisonSlider() {
               //   setPrevIndex(0);
               //   console.log(`Setting index to 0 at progress ${progress}`);
               // } else
-              if (progress >= 20) {
+              if (progress >= 15) {
                 bringYourIdeaContent.current.style.zIndex = "50";
                 if (!sliderInViewRef.current) {
                   sliderInViewRef.current = true;
@@ -136,13 +134,13 @@ export default function ImageComparisonSlider() {
 
                 const adjustedProgress = progress - 20;
                 // Divide the remaining 70% among features.length - 1 (since index 0 is already shown)
-                const remainingFeatures = features.length - 1;
-                const segmentSize = 60 / remainingFeatures;
+                const remainingFeatures = features.length - 1
+                const segmentSize = 70 / remainingFeatures;
 
                 // Calculate which feature index we should be on (starting from index 1)
                 const mappedIndex = Math.min(
                   features.length - 1,
-                  Math.floor(adjustedProgress / segmentSize)
+                  Math.floor(adjustedProgress / segmentSize),
                 );
 
                 // Only update state if index is actually changing
@@ -163,7 +161,7 @@ export default function ImageComparisonSlider() {
         ctx.revert();
       };
     },
-    { dependencies: [is650], revertOnUpdate: true }
+    { dependencies: [is650], revertOnUpdate: true },
   );
 
   // Set up responsive positioning that works with any aspect ratio
@@ -277,18 +275,18 @@ export default function ImageComparisonSlider() {
           className="absolute top-0 left-0 max-md:opacity-100 opacity-0 w-full h-full"
         >
           <AnimatePresence mode="popLayout" initial={false}>
-          {features[index].autoRig ? (
-            <motion.div
-              key={`auto-rig-${index}`}
-              initial={{ opacity: 0.4 }}
-              animate={{ opacity: 1, transition: { duration: 0.8 } }}
-              exit={{ opacity: 0, transition: { duration: 0.6 } }}
-              className="w-[115%] z-50 h-full bottom-0 absolute "
-            >
-              <MutantMesh />
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
+            {features[index].autoRig ? (
+              <motion.div
+                key={`auto-rig-${index}`}
+                initial={{ opacity: 0.4 }}
+                animate={{ opacity: 1, transition: { duration: 0.8 } }}
+                exit={{ opacity: 0, transition: { duration: 0.6 } }}
+                className="w-[115%] z-50 h-full bottom-0 absolute "
+              >
+                <MutantMesh />
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
           <AnimatePresence mode="popLayout" initial={false}>
             <div className="absolute top-0 left-0  w-full h-full">
               <motion.div
@@ -314,12 +312,12 @@ export default function ImageComparisonSlider() {
           <div className="relative w-full h-full ">
             {/* <FeatureTextSliderV2 progressRef={progressRef} index={index} /> */}
             <motion.div className="absolute top-0 left-0 h-full w-full z-50 overflow-hidden pointer-events-none">
-              <div className="flip absolute bottom-0  w-full h-full aspect-square max-h-[6%]">
+              <div className="flip absolute bottom-2  w-full h-full aspect-square max-h-[6%]">
                 {sliderInView ? <ArchGradient /> : null}
               </div>
-              <div className="w-full  relative h-full z-50">
+              <div className="w-full relative h-full z-[100]">
                 <AnimatePresence mode="wait" initial={false}>
-                  <FeatureTextSlider progressRef={progressRef} index={index} />
+                  <FeatureTextSliderV2 progressRef={progressRef} index={index} />
                 </AnimatePresence>
               </div>
             </motion.div>
@@ -397,7 +395,7 @@ export default function ImageComparisonSlider() {
         </motion.div>
 
         <div className="w-[100%] rounded-full h-[50%] bg-[#0C0C0D] blur-[150px] absolute left-[-10%] bottom-[-30%] z-[200]" />
-        <div className="relative overflow-visible border-white/20 w-full h-full  border-2 rounded-2xl">
+        <div className="relative overflow-visible border-white/20 w-full h-full  border md:border-2 rounded-2xl">
           {/* <motion.div
             style={{
               zIndex: 102,

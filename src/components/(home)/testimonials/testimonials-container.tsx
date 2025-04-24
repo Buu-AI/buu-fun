@@ -125,7 +125,7 @@ export default function TestimonialsContainer() {
               <p
                 key={`${testimonialsData[currentIndex]?.testimonial.trim()}-${testimonialsData[currentIndex]?.id}-text`}
                 ref={textRef}
-                className="text-4xl md:text-6xl max-w-5xl font-medium text-white/80  w-full  tracking-tight text-center"
+                className="text-3xl md:text-6xl max-w-5xl font-medium text-white/80  w-full  tracking-tight text-center"
               >
                 {splitText}
               </p>
