@@ -2,7 +2,7 @@ import { SliderIconSecondary } from "@/assets/icons/slider-icon-secondary";
 import { features } from "@/components/(home)/feature/feature-data";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(useGSAP);
 
@@ -21,12 +21,16 @@ export default function FeatureTextSlider({
   const animationRef = useRef<number | null>(null);
   const activeItemRef = useRef<number>(0);
   const textAnimatedRef = useRef<Set<number>>(new Set());
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+
   // Initialize positions in a circle
-  useEffect(() => {
+  const updateCirclePositions = () => {
     const container = containerRef.current;
     if (!container) return;
 
-    const divElements = gsap.utils.toArray(".feature-content-container") as HTMLElement[];
+    const divElements = gsap.utils.toArray(
+      ".feature-content-container"
+    ) as HTMLElement[];
     const totalItems = divElements.length;
 
     const radius = container.clientWidth / 2;
@@ -46,23 +50,73 @@ export default function FeatureTextSlider({
       });
     });
 
-    // Initial text animation for first item
+    // Animate text for first item if not already animated
     animateTextForItem(0);
+  };
+
+  // Add resize listener
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Set initial size
+    setContainerSize({
+      width: container.clientWidth,
+      height: container.clientHeight,
+    });
+
+    // Initial layout
+    updateCirclePositions();
+
+    // Create ResizeObserver
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        
+        // Only update if size actually changed
+        if (width !== containerSize.width || height !== containerSize.height) {
+          setContainerSize({
+            width,
+            height,
+          });
+          
+          // Update positions when container size changes
+          updateCirclePositions();
+        }
+      }
+    });
+
+    // Start observing the container
+    resizeObserver.observe(container);
+
+    // Cleanup
+    return () => {
+      resizeObserver.disconnect();
+    };
   }, []);
+
+  // Reapply positions when container size changes
+  useEffect(() => {
+    if (containerSize.width > 0 && containerSize.height > 0) {
+      updateCirclePositions();
+    }
+  }, [containerSize]);
 
   // Function to animate text for a specific item
   const animateTextForItem = (itemIndex: number) => {
     if (textAnimatedRef.current.has(itemIndex)) return;
-    
-    const words = gsap.utils.toArray(`#feature-title-${itemIndex} .words`) as HTMLElement[];
-    
-    gsap.set(words, { 
-      visibility: "hidden", 
+
+    const words = gsap.utils.toArray(
+      `#feature-title-${itemIndex} .words`
+    ) as HTMLElement[];
+
+    gsap.set(words, {
+      visibility: "hidden",
       opacity: 0,
       filter: "blur(4px)",
-      y: 100 
+      y: 100,
     });
-    
+
     gsap.to(words, {
       visibility: "visible",
       opacity: 1,
@@ -73,7 +127,7 @@ export default function FeatureTextSlider({
       stagger: 0.15,
       onComplete: () => {
         textAnimatedRef.current.add(itemIndex);
-      }
+      },
     });
   };
 
@@ -107,7 +161,7 @@ export default function FeatureTextSlider({
 
       // Only update if progress changed
       if (currentProgress !== prevProgressRef.current) {
-        const totalItems = features.length
+        const totalItems = features.length;
 
         // Convert progress (0-1) to rotation angle
         const progressAngle = (currentProgress / 100) * 360;
@@ -116,7 +170,8 @@ export default function FeatureTextSlider({
         const normalizedProgress = (currentProgress / 100) * totalItems;
         const currentIdx = Math.floor(normalizedProgress) % totalItems;
         const nextIdx = (currentIdx + 1) % totalItems;
-        const itemProgress = normalizedProgress - Math.floor(normalizedProgress); // 0-1 progress between current and next item
+        const itemProgress =
+          normalizedProgress - Math.floor(normalizedProgress); // 0-1 progress between current and next item
 
         // Apply rotation based on continuous progress
         gsap.to(container, {
@@ -130,7 +185,9 @@ export default function FeatureTextSlider({
         });
 
         // Update all items with counter-rotation to keep text upright
-        const divElements = gsap.utils.toArray(".feature-content-container") as HTMLElement[];
+        const divElements = gsap.utils.toArray(
+          ".feature-content-container"
+        ) as HTMLElement[];
         divElements.forEach((item, idx) => {
           // Calculate opacity for smooth cross-fade between items
           let opacity = 0.1;
@@ -153,7 +210,7 @@ export default function FeatureTextSlider({
         const paragraphs = gsap.utils.toArray(
           ".feature-content-text-paragraph"
         ) as HTMLElement[];
-        
+
         paragraphs.forEach((para, idx) => {
           if (idx === currentIdx) {
             gsap.to(para, {
@@ -168,7 +225,7 @@ export default function FeatureTextSlider({
               activeItemRef.current = nextIdx;
               animateTextForItem(nextIdx);
             }
-            
+
             gsap.to(para, {
               opacity: Math.min(1, itemProgress * 8), // Fade in faster
               y: 40 - itemProgress * 40,
@@ -194,15 +251,12 @@ export default function FeatureTextSlider({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [progressRef.current]);
+  }, [progressRef.current, progressRef]);
 
   return (
     <div className="w-full h-full relative overflow-hidden">
       <div className="w-[100%] max-md:px-2 aspect-square -bottom-[78%] md:-bottom-[80%] absolute mx-auto rounded-full">
-        <div
-          className="rounded-full aspect-square "
-          ref={containerRef}
-        >
+        <div className="rounded-full aspect-square " ref={containerRef}>
           {features.map((item, itemIndex) => (
             <div
               key={`feature-text-key-${itemIndex}`}
@@ -211,7 +265,7 @@ export default function FeatureTextSlider({
             >
               <div className="relative">
                 <div className="flex items-center gap-2 justify-center flex-col text-center">
-                  <h1 
+                  <h1
                     id={`feature-title-${itemIndex}`}
                     className="text-lg md:text-2xl font-medium tracking-tight"
                   >
