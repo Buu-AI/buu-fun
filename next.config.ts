@@ -23,27 +23,26 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
+        // protocol: "https",
         hostname: "v3.fal.media",
       },
       {
-        protocol: "https",
+        // protocol: "https",
         hostname: "*.r2.cloudflarestorage.com",
       },
       {
-        protocol: "https",
+        // protocol: "https",
         hostname: "api.dicebear.com",
       },
       {
-        protocol: "https",
+        // protocol: "https",
         hostname: "avatars.githubusercontent.com",
       },
       {
-        protocol: "https",
+        // protocol: "https",
         hostname: "via.placeholder.com",
       },
       {
-        protocol: "https",
         hostname: "cdn.buu.fun",
       },
     ],
