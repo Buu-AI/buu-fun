@@ -21,8 +21,8 @@ export default function HomePage() {
             <HomeNavigationBar />
           </>
         </HeroLoadingWrapper>
-        <BringYourIdeasSection />
       </div>
+      <BringYourIdeasSection />
       <JamCard />
       <section id="how-it-works" className="w-full h-full">
         <HowToContainer />
