@@ -72,7 +72,7 @@ export default function ImageGlobeV3({
           total={imageUrls.length}
         />
       )),
-    [finishedLoading]
+    [finishedLoading],
   );
 
   return <group ref={groupRef}>{images}</group>;

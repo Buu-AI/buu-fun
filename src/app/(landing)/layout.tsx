@@ -49,14 +49,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
       {/* uncomment for checking performance */}
       {/* <head>
         <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
       </head> */}
-     
+
       <Script
         id="cookieyes"
         type="text/javascript"
@@ -67,7 +66,7 @@ export default function RootLayout({
         <HomeStoreProvider>
           <SmoothScrollWrapper>{children}</SmoothScrollWrapper>
         </HomeStoreProvider>
-        <CratePopover/>
+        <CratePopover />
       </body>
       <GoogleAnalytics gaId="G-DDL82EPESF" />
     </html>

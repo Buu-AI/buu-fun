@@ -765,6 +765,11 @@ body {
   box-shadow: 0px 0px 10.5px 3px rgba(179, 187, 197, 0.2) inset;
 }
 
+.golden-pill {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 215, 0, 0.5);  /* Gold color */
+  box-shadow: 0px 0px 10.5px 3px rgba(179, 187, 197, 0.2) inset;
+}
 .destructive-pill {
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 70, 70, 0.5);

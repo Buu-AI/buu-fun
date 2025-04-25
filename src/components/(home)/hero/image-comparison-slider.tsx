@@ -61,7 +61,7 @@ export default function ImageComparisonSlider() {
     () => {
       if (!sliderContainerRef.current) return;
 
-      const featureWidth = sliderContainerRef.current.clientHeight
+      const featureWidth = sliderContainerRef.current.clientHeight;
 
       const ctx = gsap.context(() => {
         gsap.to(containerRef, {
@@ -72,7 +72,7 @@ export default function ImageComparisonSlider() {
             setPosition((this.progress() + 0.4) * 100);
           },
           scrollTrigger: {
-            end: featureWidth * features.length + window.innerWidth,
+            end: featureWidth * features.length + window.innerWidth * 2,
             pin: true,
             trigger: containerRef.current,
             start: "top top",
@@ -90,17 +90,18 @@ export default function ImageComparisonSlider() {
                 !ReactCompareSliderRef.current ||
                 !featureImageRef.current
               ) {
-                return; 
+                return;
               }
 
               ReactCompareSliderRef.current.style.opacity = is650
                 ? `${Math.round(100 - progress * 5)}%`
                 : "0";
+
               featureImageRef.current.style.opacity = is650
                 ? `${progress * 5}%`
                 : "100";
 
-              bringYourIdeaContent.current.style.opacity = `${Math.round(100 - progress * 5)}%`;
+              bringYourIdeaContent.current.style.opacity = `${Math.round(100 - progress * 10)}%`;
 
               backgroundImageRef.current.style.filter = `blur(${Math.round(progress * 0.1)}px)`;
               featureContainerRef.current.style.opacity = `${progress * 5}%`;
@@ -134,7 +135,7 @@ export default function ImageComparisonSlider() {
 
                 const adjustedProgress = progress - 20;
                 // Divide the remaining 70% among features.length - 1 (since index 0 is already shown)
-                const remainingFeatures = features.length - 1
+                const remainingFeatures = features.length - 1;
                 const segmentSize = 70 / remainingFeatures;
 
                 // Calculate which feature index we should be on (starting from index 1)
@@ -317,7 +318,10 @@ export default function ImageComparisonSlider() {
               </div>
               <div className="w-full relative h-full z-[100]">
                 <AnimatePresence mode="wait" initial={false}>
-                  <FeatureTextSliderV2 progressRef={progressRef} index={index} />
+                  <FeatureTextSliderV2
+                    progressRef={progressRef}
+                    index={index}
+                  />
                 </AnimatePresence>
               </div>
             </motion.div>
@@ -357,7 +361,7 @@ export default function ImageComparisonSlider() {
       <section
         id="features"
         ref={featureContainerRef}
-        className="relative opacity-0  "
+        className="relative opacity-0 "
       >
         {/* <AnimatePresence mode="popLayout" initial={false}>
           {features[index].autoRig ? (

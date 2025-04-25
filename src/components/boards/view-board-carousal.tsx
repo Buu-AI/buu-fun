@@ -59,7 +59,6 @@ export default function ViewBoardCarousal({
               >
                 <div>
                   <Image
-                  
                     src={item.ImageUrl}
                     alt="Generated AI Image Url"
                     width={1920}
