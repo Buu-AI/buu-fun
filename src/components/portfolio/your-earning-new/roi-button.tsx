@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch } from "@/hooks/redux";
 import { setBooleanToggler } from "@/lib/redux/features/buu-pricing";

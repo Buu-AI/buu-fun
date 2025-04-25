@@ -23,7 +23,7 @@ export default function RoiStakingDialog() {
         dispatch(setBooleanToggler({ key: "roiStakingDialogOpen", value }));
       }}
     >
-      <DialogContent className="rounded-[20px] px-6 lg:rounded-[20px]  bg-buu/80 backdrop-blur-lg border-buu ">
+      <DialogContent className="rounded-[20px] px-6 max-w-sm lg:rounded-[20px]  bg-buu/80 backdrop-blur-lg border-buu ">
         <DialogHeader className="flex items-center justify-center ">
           <DialogTitle className="text-2xl text-center font-medium max-w-xs">
             ROI Calculator{" "}

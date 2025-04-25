@@ -884,3 +884,8 @@ body {
     animation: rainbow-text-simple 2s linear infinite;
   }
 }
+
+
+input[type=number] {
+  -moz-appearance: textfield;
+}

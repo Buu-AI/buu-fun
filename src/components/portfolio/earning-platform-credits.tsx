@@ -1,3 +1,4 @@
+"use client";
 import FlashIcon from "@/assets/icons/flash-icon";
 import useUserCredits from "@/hooks/use-credits";
 import { getFixedCredits } from "@/lib/utils";
