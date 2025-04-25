@@ -7,8 +7,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useAllReferrals } from "@/hooks/use-referral";
-import { formatUnits, truncateString } from "@/lib/utils";
+import { cn, formatUnits, truncateString } from "@/lib/utils";
 import { format } from "date-fns";
+import { Ghost } from "lucide-react";
 import Pill from "../elements/pill";
 import Bounded from "../ui/Bounded";
 
@@ -18,65 +19,75 @@ export default function ReferralShowcaseTable() {
     <Bounded className="max-w-screen-md">
       <div
         style={{
-          borderRadius: "10px",
           overflow: "hidden",
         }}
-        className="w-full overflow-x-auto mt-8 border border-[#1c202788]"
+        className={cn(
+          "w-full bg-api-key-table-radius overflow-x-auto mt-6 border  border-muted-foreground/10",
+        )}
       >
-        <div className="max-h-[300px] overflow-y-auto">
-          {data && data.items && data.items.length ? (
-            <div className="h-[300px] relative w-full overflow-auto  scrollbar-w-hidden scrollbar-thumb-orange scrollbar-thumb-rounded">
-              <Table className="w-full">
-                <TableHeader className="h-auto bg-buu-table shadow-buu sticky top-0 z-10">
-                  <TableRow className="hover:bg-muted/0 h-auto !border-b-0 bg-clip-border !border-0 rounded-t-xl">
-                    <TableHead className="text-xs h-auto py-4 text-white/60 font-semibold uppercase w-1/4">
-                      WALLET ADDRESS
-                    </TableHead>
-                    <TableHead className="text-xs text-white/60 font-semibold uppercase w-1/4">
-                      REGISTRATION DATE
-                    </TableHead>
-                    <TableHead className="text-xs text-white/60 font-semibold uppercase w-1/4">
-                      your earnings
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {data &&
-                    data?.items?.map((item, index) => {
-                      return (
-                        <TableRow
-                          key={`${item._id}`}
-                          className="h-auto border-[#1c202788]"
-                        >
-                          <TableCell className="h-auto py-4">
-                            <div className="flex items-center gap-1 pl-2">
-                              <Pill className="text-[10px] truncate text-white/40 font-medium py-0 px-2">
-                                {index.toLocaleString()}
-                              </Pill>
-                              {truncateString(item.referral, 6, 4)}
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-muted-foreground/40 font-medium">
-                            {format(
-                              new Date(item.createdAt),
-                              "MMMM dd, yyyy hh:mm:a",
-                            )}
-                          </TableCell>
-                          {/* <TableCell className="text- font-medium">
+        <div className="">
+          <div className="max-h-[40vh] relative w-full overflow-scroll scrollbar-w-hidden scrollbar-thumb-orange scrollbar-thumb-rounded">
+            <Table className="w-full">
+              <TableHeader className="h-auto bg-api-key-table-header  sticky top-0 left-2 z-10">
+                <TableRow className="hover:bg-muted/0 h-auto !border-b-0 bg-clip-border !border-0 rounded-t-xl">
+                  <TableHead className="text-xs h-auto py-4 text-white/60 font-semibold uppercase w-1/4">
+                    WALLET ADDRESS
+                  </TableHead>
+                  <TableHead className="text-xs text-white/60 font-semibold uppercase w-1/4">
+                    REGISTRATION DATE
+                  </TableHead>
+                  <TableHead className="text-xs text-white/60 font-semibold uppercase w-1/4">
+                    your earnings
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {data &&
+                  data?.items?.map((item, index) => {
+                    return (
+                      <TableRow
+                        key={`${item._id}`}
+                        className="h-auto border-[#1c202788]"
+                      >
+                        <TableCell className="h-auto py-4">
+                          <div className="flex items-center gap-1 pl-2">
+                            <Pill className="text-[10px] truncate text-white/40 font-medium py-0 px-2">
+                              {index.toLocaleString()}
+                            </Pill>
+                            {truncateString(item.referral, 6, 4)}
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-muted-foreground/40 font-medium">
+                          {format(
+                            new Date(item.createdAt),
+                            "MMMM dd, yyyy hh:mm:a",
+                          )}
+                        </TableCell>
+                        {/* <TableCell className="text- font-medium">
                             $ {formatNumber(parseInt(item.tokens ?? "0"))} USD
                           </TableCell> */}
-                          <TableCell className="text- font-medium">
-                            ${" "}
-                            {formatUnits(item.tokens ?? "", item.decimals ?? 0)}{" "}
-                            BUU
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                </TableBody>
-              </Table>{" "}
+                        <TableCell className="text- font-medium">
+                          $ {formatUnits(item.tokens ?? "", item.decimals ?? 0)}{" "}
+                          BUU
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>{" "}
+            <div
+              className={cn(" hidden items-center justify-center w-full ", {
+                flex: !data || !data.items.length,
+              })}
+            >
+              <div className="flex flex-col items-center gap-2 py-4">
+                <div className="w-8 h-8">
+                  <Ghost className="w-full h-full" />
+                </div>
+                <h4 className="text-xl font-medium">No referral&apos;s Yet</h4>
+              </div>
             </div>
-          ) : null}
+          </div>
         </div>
       </div>
     </Bounded>

@@ -6,11 +6,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { mutateGenerateNewImage } from "@/lib/react-query/threads";
-import {
-  setNewGenRequest,
-  setRetryModalOpen,
-  setRetrySubthreadId,
-} from "@/lib/redux/features/chat";
+import { setNewGenRequest } from "@/lib/redux/features/chat";
 import { cn, isRetryExceeded } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
 import { motion } from "framer-motion";
@@ -20,8 +16,6 @@ import { ToolTips, TToolTipEvents } from "./handle-tool-calls";
 import { isSubThreadGenerating } from "@/lib/redux/selectors/chat";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ToolTipDownload from "./tool-tip-download";
-import { useLocalStorage } from "@mantine/hooks";
-import { RETRY_ALLOWED_VERIFIED_STORAGE_KEY } from "@/constants/request.config";
 
 type TToolBarToolTips = {
   subThreadId: string;
@@ -46,10 +40,10 @@ export default function ToolBarToolTips({
   const { identityToken, login } = useAuthentication();
 
   const queryClient = useQueryClient();
-  const [acknowledgedRetry] = useLocalStorage({
-    key: RETRY_ALLOWED_VERIFIED_STORAGE_KEY,
-    defaultValue: false,
-  });
+  // const [acknowledgedRetry] = useLocalStorage({
+  //   key: RETRY_ALLOWED_VERIFIED_STORAGE_KEY,
+  //   defaultValue: false,
+  // });
 
   const { mutate: generateNewImage, isPending } = useMutation({
     mutationFn: mutateGenerateNewImage,
@@ -88,17 +82,16 @@ export default function ToolBarToolTips({
           );
           return;
         }
-        if (!acknowledgedRetry) {
-          dispatch(setRetryModalOpen(true));
-          dispatch(setRetrySubthreadId(subThreadId));
-          return;
-        }
-        new Array(3).fill(0).map(() => {
-          return generateNewImage({
-            subthreadId: subThreadId,
-            accessToken,
-          });
+        // if (!acknowledgedRetry) {
+        //   dispatch(setRetryModalOpen(true));
+        //   dispatch(setRetrySubthreadId(subThreadId));
+        //   return;
+        // }
+        generateNewImage({
+          subthreadId: subThreadId,
+          accessToken,
         });
+        return;
         break;
       }
       default: {

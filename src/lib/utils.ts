@@ -208,3 +208,7 @@ export function formatPrice(value: number): string {
   // Fallback to 2 decimal places if something goes wrong
   return value.toFixed(2);
 }
+
+export function getStreamflowUrl() {
+  return `${process.env?.NEXT_PUBLIC_STREAMFLOW_BASE_URL}/${process.env?.NEXT_PUBLIC_STREAMFLOW_CLUSTER}/${process.env?.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL}`;
+}

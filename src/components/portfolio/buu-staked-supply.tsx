@@ -9,24 +9,33 @@ export default function BuuStakedSupply() {
   // Calculate percentages based on the actual values
 
   const { data: PricingData } = useBuuPricingData();
+
   const {
     globalStaking: { data: globalStakingData },
   } = useUserStakingData();
 
+  const decimals = globalStakingData?.tokenMint?.decimals ?? 0;
+
   const totalSupply = PricingData?.totalSupply ?? 0;
   const circulatingSupply =
-    Number(formatUnits(globalStakingData?.circulatingSupply ?? "0", 8)) ?? 0;
-  const totalStaked =
-    Number(formatUnits(globalStakingData?.totalAmount ?? "0", 8)) ?? 0;
-  const stakedByUsers = 4.92 * 10000; // Based on 919.94K value shown in the image
+    Number(
+      formatUnits(globalStakingData?.circulatingSupply ?? "0", decimals),
+    ) ?? 0;
 
+  const totalStaked =
+    Number(formatUnits(globalStakingData?.totalAmount ?? "0", decimals)) ?? 0;
+
+  const stakedByUsers =
+    Number(
+      formatUnits(globalStakingData?.totalStakedByUsers ?? "0", decimals),
+    ) ?? 0;
   // Convert to percentages relative to total supply
 
   const circulatingPercentage = (circulatingSupply / totalSupply) * 100;
 
   const stakedPercentage = (totalStaked / totalSupply) * 100;
 
-  const userStakedPercentage = (stakedByUsers / totalSupply) * 100;
+  const userStakedPercentage = (Number(stakedByUsers) / totalSupply) * 100;
 
   // Staking percentage to display in the center
   const stakingRatio = Math.round((totalStaked / circulatingSupply) * 100);
@@ -60,7 +69,7 @@ export default function BuuStakedSupply() {
   ];
 
   return (
-    <div className="flex flex-col   w-full h-full bg-buu  rounded-3xl overflow-hidden">
+    <div className="flex flex-col   w-full h-full bg-buu backdrop-blur-lg  rounded-3xl overflow-hidden">
       <div className="px-4 py-3 border-b border-white/5 bg-overview-portfolio ">
         <p className="uppercase text-xs text-white font-semibold">
           BUU Staked Supply

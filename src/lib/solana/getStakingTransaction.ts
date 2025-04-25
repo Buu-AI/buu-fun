@@ -14,10 +14,10 @@ export async function getStakingTransaction({
     const publicKey = new PublicKey(address);
 
     const stakePool = new PublicKey(
-      "3gv93VfCiwJEsyC1qxPKabcyeudVSqYboif7vF6PZkra",
+      process?.env?.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL ?? "",
     );
     const stakePoolMint = new PublicKey(
-      "FaJY4pmNLk3y6c82KXXuDrivw7jQ5CgyyEyV68g684hu",
+      process?.env?.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL_MINT ?? "",
     );
     const solanaStakingClient = new SolanaStakingClient({
       clusterUrl: "https://api.devnet.solana.com",

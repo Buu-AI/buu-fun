@@ -1,7 +1,7 @@
 import {
   gradientBluePurpleImage,
   gradientBlueyRedImage,
-  gradientRainbowImage
+  gradientRainbowImage,
 } from "@/assets/Image/gradients";
 import {
   Create3DLayout,
@@ -28,7 +28,13 @@ export default function HeaderQuickSelectButton() {
           released={false}
           backgroundImage={<CreateComicLayout />}
           gradient={gradientBlueyRedImage.src}
-          title={<>Make a 3D model <br />game-production <br />ready</>}
+          title={
+            <>
+              Make a 3D model <br />
+              game-production <br />
+              ready
+            </>
+          }
         />
         <QuickSelectCard
           key={"quick-select-card-video"}

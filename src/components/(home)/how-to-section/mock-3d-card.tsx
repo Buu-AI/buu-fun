@@ -89,8 +89,8 @@ const Mock3DCard = memo(function Mock3DCard({
             )}
           >
             <div className="flex items-center justify-center gap-2">
-              <div className="text-blue-400 w-6 h-6">
-                <MagicPenIcon />
+              <div className=" w-6 h-6">
+                <MagicPenIcon className="fill-blue-300" />
               </div>
               <p className="text-base tracking-tight text-white animate-pulse">
                 Generating
@@ -130,7 +130,7 @@ const Mock3DCard = memo(function Mock3DCard({
       </div>
 
       <div className="absolute -bottom-4 z-50 flex items-center gap-2 justify-center w-full">
-        <MockToolBar isGenerating={!isGenerating} modelUrl={modelUrl}  />
+        <MockToolBar isGenerating={!isGenerating} modelUrl={modelUrl} />
       </div>
 
       {isGenerating && (

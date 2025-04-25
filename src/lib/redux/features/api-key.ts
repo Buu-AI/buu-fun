@@ -10,6 +10,7 @@ type ApiKeyState = {
     name: string;
   } | null;
   isDeleteModalOpen: boolean;
+  isCreateModalOpen: boolean;
 };
 
 const initialState: ApiKeyState = {
@@ -18,16 +19,21 @@ const initialState: ApiKeyState = {
   name: null,
   keyToDeleteData: null,
   isDeleteModalOpen: false,
+  isCreateModalOpen: false,
 };
 
 const ApiKeySlice = createSlice({
   name: "ApiKey",
   initialState,
   reducers: {
-    clearState(state) {
+    setCreateModalChange(state, action: PayloadAction<boolean>) {
+      state.isCreateModalOpen = action.payload;
+    },
+    clearApiKeyState(state) {
       state.key = null;
       state.name = null;
       state.isAPIKeyRetrieved = false;
+      state.isCreateModalOpen = false;
     },
     setApiKey(state, action: PayloadAction<{ key: string; name: string }>) {
       state.key = action.payload?.key;
@@ -51,9 +57,10 @@ const ApiKeySlice = createSlice({
 export const {
   setApiKey,
   isApiKeyRetrieved,
-  clearState,
+  clearApiKeyState,
   setDeleteApiKeyData,
   setIsDeleteModalOpen,
+  setCreateModalChange,
 } = ApiKeySlice.actions;
 
 export default ApiKeySlice.reducer;

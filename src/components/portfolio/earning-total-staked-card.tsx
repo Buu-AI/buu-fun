@@ -14,6 +14,7 @@ export default function EarningTotalStakedCard() {
   const { data } = useBuuPricingData();
   const {
     userStaking: { data: userStakingData },
+    globalStaking: { data: globalStakingData },
   } = useUserStakingData();
 
   const totalStaked = formatUnits(
@@ -52,7 +53,7 @@ export default function EarningTotalStakedCard() {
         <Button variant={"special"} className="h-[40px] w-full bg-apr-button">
           <div className="p-3 flex items-center justify-center gap-1">
             <APRCalculatorIcon />
-            <span className="">APR {userStakingData?.apy}%</span>
+            <span className="">APR {globalStakingData?.apr?.toFixed(2)}%</span>
           </div>
         </Button>
       </div>

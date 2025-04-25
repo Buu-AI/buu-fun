@@ -24,7 +24,7 @@ export default function KnowMorePopover() {
       </PopoverTrigger>
       <PopoverContent
         sideOffset={4}
-        className="mb-8 bg-buu border-buu shadow-buu-inner opacity-100 max-w-[250px]"
+        className="mb-8 bg-buu pb-5 border-buu shadow-buu-inner opacity-100 max-w-[250px]"
         side="right"
       >
         <KnowMoreContent />

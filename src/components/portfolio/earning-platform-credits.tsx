@@ -1,6 +1,6 @@
 import FlashIcon from "@/assets/icons/flash-icon";
 import useUserCredits from "@/hooks/use-credits";
-import StakeBuuButton from "./stake-buu-button";
+import { getFixedCredits } from "@/lib/utils";
 
 export default function EarningPlatformCredits() {
   const credits = useUserCredits();
@@ -14,7 +14,9 @@ export default function EarningPlatformCredits() {
         </div>
         <div>
           <p className="text-xl font-medium">
-            <span className="blue-text-clip">{credits.data?.available} </span>{" "}
+            <span className="blue-text-clip">
+              {getFixedCredits(credits.data?.available)}{" "}
+            </span>{" "}
             Platform Credits
           </p>
           <p className="text-sm font-medium text-muted-foreground/60">
@@ -24,7 +26,7 @@ export default function EarningPlatformCredits() {
       </div>
       {/* Dont remove the dialog, it will be replaced in future */}
       {/* <StakingDialog /> */}
-      <StakeBuuButton />
+      {/* <StakeBuuButton /> */}
     </div>
   );
 }

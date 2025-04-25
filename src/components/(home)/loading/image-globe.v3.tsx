@@ -20,7 +20,6 @@ export default function ImageGlobeV3({
     const ctx = gsap.context(() => {
       if (finishedLoading && !isAnimationRan.current && groupRef.current) {
         isAnimationRan.current = true;
-
         // Animate the camera to move inside the sphere
         gsap.to(camera.position, {
           z: 5, // Move camera to the center of the sphere
@@ -29,7 +28,7 @@ export default function ImageGlobeV3({
         });
 
         // Smoothly transition the rotation to zero
-        gsap.to(groupRef.current.rotation, {
+        gsap.to(groupRef.current?.rotation, {
           x: 0,
           y: 0,
           z: 0,

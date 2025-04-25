@@ -21,7 +21,7 @@ export default function ToolTipDownload({
   open,
 }: TToolTipModify) {
   return (
-    <Tooltip  open={open}>
+    <Tooltip open={open}>
       <TooltipTrigger asChild>
         {modelUrl ? (
           <motion.a

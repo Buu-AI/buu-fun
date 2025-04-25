@@ -5,9 +5,6 @@ import { formatUnits, multiplyAndFormatPricing } from "@/lib/utils";
 import EarningAvailableCard from "./earning-available";
 import EarningPlatformCredits from "./earning-platform-credits";
 import EarningTotalStakedCard from "./earning-total-staked-card";
-import StakingClaimButton from "./staking-claim-button";
-import StakingClaimAndRestakeButton from "./staking-claim-restake-button";
-import WithdrawButton from "./withdraw-button";
 import YourEarningsPricing from "./your-earning-pricing";
 
 export default function YourEarnings() {
@@ -37,9 +34,9 @@ export default function YourEarnings() {
           <div className="flex flex-col lg:flex-row items-center justify-between gap-2 pt-3">
             <YourEarningsPricing />
             <div className="flex items-center flex-wrap justify-center gap-3">
-              <StakingClaimButton />
-              <StakingClaimAndRestakeButton />
-              <WithdrawButton />
+              {/* <StakingClaimButton /> */}
+              {/* <StakingClaimAndRestakeButton /> */}
+              {/* <WithdrawButton /> */}
             </div>
           </div>
           <p className="text-muted-foreground/50 hidden lg:block tracking-tight font-medium text-sm">
@@ -47,7 +44,7 @@ export default function YourEarnings() {
           </p>
         </div>
 
-        <div className="w-full p-5">
+        <div className="w-full py-5 ">
           <div className="grid md:grid-cols-2 gap-3">
             <EarningAvailableCard />
             <EarningTotalStakedCard />

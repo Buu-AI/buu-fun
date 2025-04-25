@@ -24,8 +24,9 @@ export default function ProfilePage() {
   const { address, wallet } = useAuthentication();
   const { data } = useUserCredits();
   const { data: subscription } = useUserSubscription();
+
   return (
-    <ProtectedWrapper Fallback={<ProfileSkeleton />} fallbackUrl="/">
+    <ProtectedWrapper Fallback={<ProfileSkeleton />} fallbackUrl="/app">
       <div className="fixed   w-full   top-0 right-0">
         <Lanyard transparent position={[0, 0, 20]} gravity={[0, -40, 0]} />
       </div>

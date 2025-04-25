@@ -25,6 +25,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { Loader2 } from "lucide-react";
 
 export default function CreateAPIForm() {
   const { identityToken: accessToken, login } = useAuthentication();
@@ -36,7 +37,7 @@ export default function CreateAPIForm() {
   );
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
-  const { mutate: createAPIKeyMutation } = useMutation({
+  const { mutate: createAPIKeyMutation, isPending } = useMutation({
     mutationFn: createApiKey,
     onSuccess(data) {
       dispatch(
@@ -183,11 +184,25 @@ export default function CreateAPIForm() {
         </div>
 
         <div className="w-full mt-4">
-          <Button className="w-full" size={"special"}>
-            <div className="">
+          <Button disabled={isPending} className="w-full" size={"special"}>
+            {isPending ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              <>
+                <div className="">
+                  <MagicPenIcon className="fill-black" />
+                </div>
+                <p>Generate</p>
+              </>
+            )}
+
+            {/* <div className="">
               <MagicPenIcon className="fill-black" />
             </div>
-            <p>Generate</p>
+            <p>Generate</p> */}
           </Button>
         </div>
       </div>

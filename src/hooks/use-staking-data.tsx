@@ -37,7 +37,7 @@ export function useUserStakingData() {
   const { data, isFetched } = globalStaking;
 
   const userStaking = useQuery({
-    queryKey: ["get-global-staking-data"],
+    queryKey: ["get-global-staking-data", isFetched, address],
     enabled: isFetched,
     staleTime: 10000,
     queryFn: async () => {
@@ -49,11 +49,9 @@ export function useUserStakingData() {
         rewardEntries: data.rewardEntries,
         tokenMint: data.tokenMint,
         totalEffectiveAmount: new BN(data.totalEffectiveAmount),
-        totalRewardsPerDay: new BN(data.totalRewardsPerDay),
       });
     },
   });
-
   return {
     userStaking,
     globalStaking,

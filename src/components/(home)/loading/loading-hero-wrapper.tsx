@@ -15,10 +15,10 @@ export default function HeroLoadingWrapper({
 }: {
   children?: ReactNode;
 }) {
-  // const [progress, setProgress] = useState<number>(20);
   const intervalRef = useRef<NodeJS.Timeout>(null);
-  const progressRef = useRef(20);
+  const progressRef = useRef(60);
   const [finishedLoading, setFinishedLoading] = useState(false);
+
   useEffect(() => {
     if (finishedLoading) {
       if (intervalRef.current) {
@@ -31,7 +31,7 @@ export default function HeroLoadingWrapper({
         setFinishedLoading(true);
         clearInterval(intervalRef.current);
       }
-      progressRef.current = progressRef.current + Math.random() * 8;
+      progressRef.current = progressRef.current + Math.random() * 15;
     }, 200);
     return () => {
       if (intervalRef.current) {
@@ -43,7 +43,7 @@ export default function HeroLoadingWrapper({
     <div className="w-full h-full relative">
       <div className="w-full h-screen relative ">
         <Canvas
-          camera={{ position: [0, 0, 20], fov: 60 }}
+          camera={{ position: [0, 0, 15], fov: 60 }}
           className="w-full h-full z-10 relative"
         >
           <ambientLight intensity={1} />
@@ -54,7 +54,6 @@ export default function HeroLoadingWrapper({
           </EffectComposer>
         </Canvas>
         <div className="w-full  h-full flex items-center justify-center absolute top-0 left-0">
-          {/* bg-overlay-primary  bg-[#6A69D580] left-[45%]  rounded-full  absolute top-[5%] -z-10 blur-[100px] md:block hidden  rotate-[-10deg] */}
           <div className="relative w-full mx-auto">
             <div className="bg-overlay-primary bg-slate-500/50  backdrop-blur-3xl left-[45%]  rounded-full max-w-[350px] rotate-45 w-full h-[200px] max-h-[200px]  top-[50%] mx-auto flex items-center justify-center -z-10 blur-[100px]" />
           </div>
@@ -78,7 +77,7 @@ export default function HeroLoadingWrapper({
           Transform ideas into fully animated 3D models with BUU.FUN&apos;s
           advanced AI technology
         </p>
-        <div className="flex items-center gap-4 text-white/40 mt-10">
+        <div className="flex flex-col items-center gap-4 text-white/40 mt-10">
           <TryNow />
           <Link
             onClick={(e) => {

@@ -8,10 +8,12 @@ import { formatNumberWithFractions, formatPrice } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import OverviewTilesContainer from "./overview-tiles";
+import CopyContractAddress from "./copy-contract-address";
 
 export default function OverviewContainer() {
   const { data } = useBuuPricingData();
   const { data: GlobalStakingData } = useGlobalStakingData();
+
   const apr = GlobalStakingData?.apr;
   const price = data?.price;
   const FDSupply = data?.fullyDilutedValue;
@@ -19,7 +21,7 @@ export default function OverviewContainer() {
   const totalSupply = data?.totalSupply;
   // const
   return (
-    <div className="">
+    <div className="backdrop-blur-lg rounded-3xl">
       <div className="px-4 py-4   border-white/5 border rounded-t-3xl  bg-overview-portfolio">
         <p className="uppercase text-xs font-medium">Overview</p>
       </div>
@@ -56,7 +58,11 @@ export default function OverviewContainer() {
           pill={`APR ${apr?.toFixed(2) ?? 0}%`}
           title="Staking Yield"
         />
-        <OverviewTilesContainer title="Contract" value="0xacfE" />
+        <CopyContractAddress address={`${data?.address ?? ""}`} />
+        {/* <OverviewTilesContainer
+          title="Contract"
+          value={data?.address?.slice(0, 6)}
+        /> */}
         {/* <Link href={"/"} className="w-full h-full">
           <OverviewTilesContainer title="Audit" value="View Audit" />
         </Link> */}
