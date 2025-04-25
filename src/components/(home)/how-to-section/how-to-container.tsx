@@ -31,7 +31,7 @@ export default function HowToContainer() {
     const sections = Array.from(container.children) as HTMLElement[];
     const totalSectionsWidth = sections.reduce(
       (acc, section) => acc + section.offsetWidth,
-      0
+      0,
     );
 
     // Calculate the endpoint - don't allow overscrolling
@@ -51,7 +51,7 @@ export default function HowToContainer() {
           anticipatePin: 1,
           snap: {
             snapTo: (progress) => {
-              if(!is650) return progress;
+              if (!is650) return progress;
               if (sections.length <= 1) return progress;
               const index = Math.round(progress * (sections.length - 1));
               return index / (sections.length - 1);
