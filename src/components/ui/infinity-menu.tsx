@@ -1,10 +1,12 @@
 import { ArrowLeft } from "@/assets/icons";
+import GoldOne from "@/assets/icons/medals/gold-1";
 import { LINKS } from "@/constants/social-links";
 import { cn } from "@/lib/utils";
 import { mat4, quat, vec2, vec3 } from "gl-matrix";
 import { default as NextImage } from "next/image";
 import Link from "next/link";
 import { FC, MutableRefObject, useEffect, useRef, useState } from "react";
+import Pill, { TPillVariant } from "../elements/pill";
 
 // -------- Shader Sources --------
 
@@ -717,7 +719,8 @@ class ArcballControl {
 
 // -------- InfiniteGridMenu --------
 
-interface MenuItem {
+export interface MenuItem {
+  winner: number;
   image: string;
   link: string;
   title: string;
@@ -1272,6 +1275,7 @@ class InfiniteGridMenu {
 
 const defaultItems: MenuItem[] = [
   {
+    winner: 1,
     image: "https://picsum.photos/900/900?grayscale",
     link: "https://google.com/",
     title: "",
@@ -1291,7 +1295,7 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
   ) as MutableRefObject<HTMLCanvasElement | null>;
   const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
   const [isMoving, setIsMoving] = useState<boolean>(false);
-
+  console.log(activeItem);
   useEffect(() => {
     const canvas = canvasRef.current;
     let sketch: InfiniteGridMenu | null = null;
@@ -1327,6 +1331,15 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, [items]);
+  const handleButtonClick = () => {
+    if (!activeItem?.link) return;
+    if (activeItem.link.startsWith("http")) {
+      window.open(activeItem.link, "_blank");
+    } else {
+      // internal route logic here
+      console.log("Internal route:", activeItem.link);
+    }
+  };
 
   return (
     <div className="relative w-full h-full">
@@ -1335,8 +1348,9 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
         ref={canvasRef}
         className="cursor-grab w-full h-full overflow-hidden relative outline-none  active:cursor-grabbing"
       />
+
       <div className="absolute md:hidden block  top-0 left-0 h-full w-full ">
-        <div className="relative h-full w-full ">
+        <div className="relative h-full w-full  ">
           <div className=" top-[15%] relative h-full w-full ">
             <h2
               className={cn(
@@ -1357,9 +1371,9 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
         </div>
         <div className="absolute top-[80%]  w-full ">
           <div className="flex items-center justify-center">
-            <Link
-              href={LINKS.BUU_MONTHLY_JAM}
-              target="_blank"
+            <button
+              onClick={handleButtonClick}
+              // href={LINKS.BUU_MONTHLY_JAM}
               className="bg-white xl:self-center max-w-max py-2 px-2.5 rounded-xl flex"
             >
               <div className="flex gap-2 items-center  ">
@@ -1374,12 +1388,76 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
                 </div>
                 <p className="text-black font- ">Read more</p>
               </div>
-            </Link>
+            </button>
           </div>
         </div>
       </div>
       {activeItem && (
         <>
+          {/* Winner bar */}
+          <div
+            className={cn(
+              "absolute select-none top-[70%] md:top-[20%] left-[50%] transform -translate-x-1/2 ",
+              "transition-all ease-[cubic-bezier(0.25,0.1,0.25,1.0)]",
+              {
+                hidden: activeItem.winner > 3,
+                "opacity-0 pointer-events-none duration-[100ms] translate-x-[-60%] -translate-y-1/2":
+                  isMoving,
+                "opacity-100 pointer-events-auto duration-[500ms]  md:-translate-y-1/2":
+                  !isMoving,
+              }
+            )}
+          >
+            <div className="flex select-none">
+              <Pill
+                variant={((): TPillVariant["variant"] => {
+                  if (activeItem.winner === 1) {
+                    return "golden";
+                  }
+                  if (activeItem.winner === 2) {
+                    return "blue";
+                  }
+                  if (activeItem.winner === 3) {
+                    return "orange";
+                  }
+
+                  return "golden";
+                })()}
+                className={cn({
+                  "!bg-[#C0C0C0]": activeItem.winner === 2,
+                })}
+              >
+                <div
+                  className={cn("w-10 relative  h-10  z-50", {
+                    "text-yellow-400": activeItem.winner === 1,
+                    "text-orange-500": activeItem.winner === 3,
+                  })}
+                >
+                  <GoldOne />
+                  <p
+                    className={cn(
+                      "absolute top-1.5 left-[42%]  leading-none text-white text-sm font-bold",
+                      {
+                        "text-[#C0C0C0]": activeItem.winner === 2,
+                        "left-[40%]": activeItem.winner === 2,
+                        "text-gray-600": activeItem.winner === 2,
+                      }
+                    )}
+                  >
+                    {activeItem.winner}
+                  </p>
+                </div>
+                <p
+                  className={cn("font-medium", {
+                    "text-gray-800 ": activeItem.winner === 2,
+                  })}
+                >
+                  {" "}
+                  Winner
+                </p>
+              </Pill>
+            </div>
+          </div>
           {/* Title */}
           <h2
             className={cn(
@@ -1452,8 +1530,9 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
               </div>
             </Link>
           </div> */}
-          <div
-            className={`absolute max-md:hidden left-1/2 z-10
+          <button
+            onClick={handleButtonClick}
+            className={`absolute  select-none max-md:hidden left-1/2 z-10
           w-[60px]
           h-[60px]
           grid
@@ -1474,7 +1553,7 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
             <p className="select-none relative text-gray-200  top-[2px] text-[26px]">
               &#x2197;
             </p>
-          </div>
+          </button>
         </>
       )}
     </div>

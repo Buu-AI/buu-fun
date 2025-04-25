@@ -11,10 +11,11 @@ import TestimonialsContainer from "@/components/(home)/testimonials/testimonials
 import OverlayColor from "./overlay";
 import HomePagePricingContainer from "@/components/(home)/pricing/pricing-container";
 import JamCard from "@/components/(home)/jam-card/jam-card";
+import HowToContainerMobile from "@/components/(home)/how-to-section/how-to-container-mobile";
 export default function HomePage() {
   return (
     <main className="relative max-w-screen overflow-hidden smooth-scroll ">
-      <div className="w-full  relative ">
+      {/* <div className="w-full  relative ">
         <HeroLoadingWrapper>
           <>
             <TopNavigationBar />
@@ -22,10 +23,12 @@ export default function HomePage() {
           </>
         </HeroLoadingWrapper>
       </div>
-      <BringYourIdeasSection />
+      <BringYourIdeasSection /> */}
       <JamCard />
-      <section id="how-it-works" className="w-full h-full">
-        <HowToContainer />
+      {/* <section id="how-it-works" className="w-full h-full">
+        <div className="w-full h-full ">
+          <HowToContainer />
+        </div>
       </section>
       <div className="relative w-full h-full ">
         <section id="reviews" className="h-full w-full relative trigger-color">
@@ -47,7 +50,7 @@ export default function HomePage() {
       </section>
       <footer className="w-full h-full relative">
         <FooterContainer />
-      </footer>
+      </footer> */}
     </main>
   );
 }

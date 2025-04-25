@@ -72,7 +72,7 @@ export default function ImageComparisonSlider() {
             setPosition((this.progress() + 0.4) * 100);
           },
           scrollTrigger: {
-            end: featureWidth * features.length + window.innerWidth,
+            end: featureWidth * features.length + window.innerWidth * 2,
             pin: true,
             trigger: containerRef.current,
             start: "top top",
@@ -96,11 +96,12 @@ export default function ImageComparisonSlider() {
               ReactCompareSliderRef.current.style.opacity = is650
                 ? `${Math.round(100 - progress * 5)}%`
                 : "0";
+
               featureImageRef.current.style.opacity = is650
                 ? `${progress * 5}%`
                 : "100";
 
-              bringYourIdeaContent.current.style.opacity = `${Math.round(100 - progress * 5)}%`;
+              bringYourIdeaContent.current.style.opacity = `${Math.round(100 - progress * 10)}%`;
 
               backgroundImageRef.current.style.filter = `blur(${Math.round(progress * 0.1)}px)`;
               featureContainerRef.current.style.opacity = `${progress * 5}%`;
@@ -140,7 +141,7 @@ export default function ImageComparisonSlider() {
                 // Calculate which feature index we should be on (starting from index 1)
                 const mappedIndex = Math.min(
                   features.length - 1,
-                  Math.floor(adjustedProgress / segmentSize),
+                  Math.floor(adjustedProgress / segmentSize)
                 );
 
                 // Only update state if index is actually changing
@@ -161,7 +162,7 @@ export default function ImageComparisonSlider() {
         ctx.revert();
       };
     },
-    { dependencies: [is650], revertOnUpdate: true },
+    { dependencies: [is650], revertOnUpdate: true }
   );
 
   // Set up responsive positioning that works with any aspect ratio
@@ -360,7 +361,7 @@ export default function ImageComparisonSlider() {
       <section
         id="features"
         ref={featureContainerRef}
-        className="relative opacity-0  "
+        className="relative opacity-0 "
       >
         {/* <AnimatePresence mode="popLayout" initial={false}>
           {features[index].autoRig ? (

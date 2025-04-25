@@ -1,16 +1,28 @@
-import { LoaderImageMap } from "@/assets/Image";
-import InfiniteMenu from "@/components/ui/infinity-menu";
+import InfiniteMenu, { MenuItem } from "@/components/ui/infinity-menu";
+import { LostCivilization } from "@/constants/home/jam/lost-civilization";
 
-const items = LoaderImageMap.map((item, index) => {
-  return {
-    image: item,
-    link: "https://google.com/",
-    title: `Item ${index}`,
-    description: "Item image",
-  };
-});
-
-import React from "react";
+const items: MenuItem[] = [
+  LostCivilization.submission_5,
+  LostCivilization.submission_2,
+  LostCivilization.winner_3,
+  LostCivilization.submission_1,
+  LostCivilization.winner_3,
+  LostCivilization.winner_2,
+  LostCivilization.submission_4,
+  LostCivilization.winner_3,
+  LostCivilization.winner_1,
+  LostCivilization.submission_2,
+  LostCivilization.submission_1,
+  LostCivilization.winner_2,
+  LostCivilization.submission_5,
+  LostCivilization.winner_2,
+  LostCivilization.winner_1,
+  LostCivilization.submission_4,
+  LostCivilization.submission_3,
+  LostCivilization.winner_3,
+  LostCivilization.submission_3,
+  LostCivilization.winner_1,
+];
 
 export default function JamCard() {
   return (

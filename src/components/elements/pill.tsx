@@ -11,12 +11,13 @@ const pillVariant = cva(
         destructive: "destructive-pill",
         orange: "orange-pill",
         blue: "border-pill bg-pill-blue shadow-pill-blue",
+        golden: "golden-pill",
       },
       size: {
         default: "px-1.5 py-1",
       },
     },
-  },
+  }
 );
 export type TPillVariant = VariantProps<typeof pillVariant>;
 export default function Pill({
