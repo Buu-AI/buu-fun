@@ -1,6 +1,7 @@
 import FlashIcon from "@/assets/icons/flash-icon";
 import useUserCredits from "@/hooks/use-credits";
 import { getFixedCredits } from "@/lib/utils";
+import RoiButton from "./your-earning-new/roi-button";
 
 export default function EarningPlatformCredits() {
   const credits = useUserCredits();
@@ -24,6 +25,7 @@ export default function EarningPlatformCredits() {
           </p>
         </div>
       </div>
+      <RoiButton />
       {/* Dont remove the dialog, it will be replaced in future */}
       {/* <StakingDialog /> */}
       {/* <StakeBuuButton /> */}
