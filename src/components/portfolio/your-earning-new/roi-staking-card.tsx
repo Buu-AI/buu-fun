@@ -51,7 +51,7 @@ export default function RoiStakingCard() {
           </button>
         </div>
         <div className="mt-6">
-          <p className="font-semibold tracking-tight text-xs uppercase">
+          <p className="font-semibold tracking-tight text-xs mb-3 uppercase">
             Staked up
           </p>
           <div className="flex items-center gap-4 justify-between bg-portfolio-statistics-button-background rounded-md px-2 py-2">
