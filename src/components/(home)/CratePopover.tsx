@@ -42,12 +42,6 @@ export default function CratePopover() {
         );
       };
 
-      // Add randomness to timing to make it feel more natural
-      const randomizeTime = (baseTime: number, variance = 0.3) => {
-        const variance_ms = baseTime * variance;
-        return baseTime + Math.floor((Math.random() * 2 - 1) * variance_ms);
-      };
-
       // Define user groups to simulate conversation between multiple people
       const users = [
         { name: "BUU", color: "#ff5555" },
