@@ -1,13 +1,11 @@
-import { CSSProperties } from 'react';
-import { Root } from 'react-dom/client';
-import { createStore } from 'jotai';
-import { Wallet } from '@jup-ag/wallet-adapter';
-import { Connection, PublicKey, TransactionError } from '@solana/web3.js';
-import { SwapResult } from '@jup-ag/react-hook';
-import { WalletContextState } from '@jup-ag/wallet-adapter';
-import EventEmitter from 'events';
-import { QuoteResponse } from 'src/contexts/SwapContext';
-import { SwapMode } from './constants';
+import { SwapResult } from "@jup-ag/react-hook";
+import { WalletContextState } from "@jup-ag/wallet-adapter";
+import { Connection, TransactionError } from "@solana/web3.js";
+import { createStore } from "jotai";
+import { CSSProperties } from "react";
+import { Root } from "react-dom/client";
+import { QuoteResponse } from "src/contexts/SwapContext";
+import { SwapMode } from "./constants";
 declare global {
   interface Window {
     Jupiter: JupiterTerminal;
@@ -16,9 +14,13 @@ declare global {
 
 /** The position of the widget */
 
-export type WidgetPosition = 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
+export type WidgetPosition =
+  | "bottom-left"
+  | "bottom-right"
+  | "top-left"
+  | "top-right";
 /** The size of the widget */
-export type WidgetSize = 'sm' | 'default';
+export type WidgetSize = "sm" | "default";
 
 export type SwapMode = (typeof SwapMode)[keyof typeof SwapMode];
 export interface FormProps {
@@ -39,7 +41,11 @@ export interface FormProps {
 }
 
 /** Built in support for these explorers */
-export type DEFAULT_EXPLORER = 'Solana Explorer' | 'Solscan' | 'Solana Beach' | 'SolanaFM';
+export type DEFAULT_EXPLORER =
+  | "Solana Explorer"
+  | "Solscan"
+  | "Solana Beach"
+  | "SolanaFM";
 
 export interface TransactionInstruction {
   accounts: {
@@ -76,7 +82,7 @@ export interface IInit {
 
   /** Display & Styling */
   /** Display mode */
-  displayMode?: 'modal' | 'integrated' | 'widget';
+  displayMode?: "modal" | "integrated" | "widget";
   /** When displayMode is 'integrated', this is the id of the element to render the integrated widget into */
   integratedTargetId?: string;
   /** When displayMode is 'widget', this is the behaviour and style of the widget */
@@ -135,15 +141,17 @@ export interface JupiterTerminal {
 
   /** Passthrough */
   enableWalletPassthrough: boolean;
-  onRequestConnectWallet: IInit['onRequestConnectWallet'];
+  onRequestConnectWallet: IInit["onRequestConnectWallet"];
   store: ReturnType<typeof createStore>;
-  syncProps: (props: { passthroughWalletContextState?: IInit['passthroughWalletContextState'] }) => void;
+  syncProps: (props: {
+    passthroughWalletContextState?: IInit["passthroughWalletContextState"];
+  }) => void;
 
   /** Callbacks */
-  onSwapError: IInit['onSwapError'];
-  onSuccess: IInit['onSuccess'];
-  onFormUpdate: IInit['onFormUpdate'];
-  onScreenUpdate: IInit['onScreenUpdate'];
+  onSwapError: IInit["onSwapError"];
+  onSuccess: IInit["onSuccess"];
+  onFormUpdate: IInit["onFormUpdate"];
+  onScreenUpdate: IInit["onScreenUpdate"];
 
   /** Special props */
   localStoragePrefix: string;
