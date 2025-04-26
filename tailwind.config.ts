@@ -21,6 +21,7 @@ export default {
       colors: {
         buu: {
           DEFAULT: "rgba(28, 32, 39, 0.36)",
+          blue: "#78D8FC",
           button: {
             DEFAULT: "#1a2129",
             muted: "rgba(26, 33, 41, 0.36);",
@@ -120,7 +121,7 @@ export default {
 function addVariablesForColors({ addBase, theme }: any) {
   let allColors = flattenColorPalette(theme("colors"));
   let newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val]),
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
   );
 
   addBase({
