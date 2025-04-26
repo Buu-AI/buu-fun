@@ -26,56 +26,121 @@ export default function CratePopover() {
       // Store crate instance on window for cleanup
       window.crateInstance = crate;
 
-      // Define notifications with relative delays
+      // Calculate realistic typing delay based on message length and typing speed
+      const calculateTypingDelay = (message: string, wpm = 40) => {
+        const wordsCount = message.split(/\s+/).length;
+        const secondsPerWord = 60 / wpm;
+        // Add some natural variance in typing speed (±20%)
+        const variance = 0.2;
+        const varianceFactor = 1 + (Math.random() * 2 - 1) * variance;
+
+        // Base typing time plus small initial delay to simulate reading previous message
+        return Math.max(
+          500,
+          wordsCount * secondsPerWord * 1000 * varianceFactor +
+            Math.random() * 500
+        );
+      };
+
+      // Define user groups to simulate conversation between multiple people
+      const users = [
+        { name: "BUU", color: "#ff5555" },
+        { name: "DevGamer42", color: "#55aaff" },
+        { name: "PixelArtist", color: "#55ff55" },
+        { name: "CodeWizard", color: "#aa55ff" },
+        { name: "ArtDesigner", color: "#ffaa55" },
+      ];
+
+      // Define more realistic notifications with typing indicators
       const notifications = [
         {
+          user: users[0],
           content: "$2000 Game Jam is live!",
-          delay: 3000,
-          timeout: 10000, // Default timeout
+          initialDelay: 6000, // First message after 6 seconds
+          timeout: 20000,
         },
         {
+          user: users[1],
           content: "Awesome! Can't wait!!",
-          delay: 1200,
-          timeout: 9400,
+          timeout: 4000,
+          // Will calculate typing delay based on content
         },
         {
-          content: "Who else is joining",
-          delay: 1500,
-          timeout: 8400,
+          user: users[2],
+          content: "Who else is joining this time?",
+          timeout: 4000,
+          pauseAfter: 500, // Natural pause in conversation
         },
         {
-          content: "I am ready for this",
-          delay: 1400,
-          timeout: 6400,
+          user: users[3],
+          content: "I am ready for this. Got my tools prepared already.",
+          timeout: 4000,
         },
         {
-          content: "Me too",
-          delay: 1700,
-          timeout: 5400,
+          user: users[4],
+          content: "Me too! Looking forward to collaboration.",
+          timeout: 1400,
+        },
+        {
+          user: users[0],
+          content: "Theme will be announced in Jam Announcement channel!",
+          timeout: 2000,
+          pauseAfter:2000, // Longer pause to group conversations
+        },
+        {
+          user: users[1],
+          content: "Hoping for something sci-fi themed",
+          timeout: 2000,
         },
       ];
 
-      // Calculate absolute delay for each notification
+      // Calculate and schedule all notifications with typing indicators
       let cumulativeDelay = 0;
-      notifications.forEach((notification) => {
-        cumulativeDelay += notification.delay;
 
-        // Create timeout and store its ID
-        const timeoutId = setTimeout(() => {
+      notifications.forEach((notification, index) => {
+        const isFirstMessage = index === 0;
+
+        if (isFirstMessage) {
+          cumulativeDelay = notification.initialDelay || 0;
+        } else {
+          // Add a reading delay - time to read the previous message
+          const previousMessageLength = notifications[index - 1].content.length;
+          const readingDelay = Math.min(1500, previousMessageLength * 15);
+
+          // Add previous pause if specified
+          const previousPause = notifications[index - 1].pauseAfter || 0;
+
+          // Calculate typing delay based on current message length
+          const typingDelay = calculateTypingDelay(notification.content);
+
+          cumulativeDelay += readingDelay + previousPause + typingDelay;
+        }
+
+        // First show typing indicator
+        const typingTimeoutId = setTimeout(() => {
           if (isMounted && window.crateInstance) {
-            // For the first notification, content is directly a string
-            if (typeof notification.content === "string") {
-              window.crateInstance.notify(notification.content);
-            } else {
-              window.crateInstance.notify({
-                content: notification.content,
-                timeout: notification.timeout,
-              });
-            }
+            window.crateInstance.notify({
+              content: `${notification.user.name} is typing...`,
+              timeout: 2000,
+              avatarURL: `https://ui-avatars.com/api/?name=${notification.user.name}&background=${notification.user.color.substring(1)}&color=fff`,
+            });
+          }
+        }, cumulativeDelay - 2000); // Show typing indicator 2 seconds before message
+
+        timeoutIds.push(typingTimeoutId);
+
+        // Then show the actual message
+        const messageTimeoutId = setTimeout(() => {
+          if (isMounted && window.crateInstance) {
+            window.crateInstance.notify({
+              content: notification.content,
+              timeout: notification.timeout,
+              avatarURL: `https://ui-avatars.com/api/?name=${notification.user.name}&background=${notification.user.color.substring(1)}&color=fff`,
+            });
           }
         }, cumulativeDelay);
 
-        timeoutIds.push(timeoutId);
+        timeoutIds.push(messageTimeoutId);
       });
     };
 
