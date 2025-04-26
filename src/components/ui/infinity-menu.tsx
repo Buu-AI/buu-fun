@@ -1350,6 +1350,11 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
       <div className="absolute md:hidden block  top-0 left-0 h-full w-full ">
         <div className="relative h-full w-full  ">
           <div className=" top-[15%] relative h-full w-full ">
+            <div className="mx-auto flex items-center justify-center w-full">
+              <Pill className="flex font-medium max-w-max px-3 text-xs items-center justify-center">
+                100% generated with Buu AI
+              </Pill>{" "}
+            </div>
             <h2
               className={cn(
                 "select-none  text-4xl md:text-7xl uppercase  text-center ",
@@ -1457,25 +1462,33 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
             </div>
           </div>
           {/* Title */}
-          <h2
-            className={cn(
-              "select-none absolute text-4xl md:text-7xl max-md:hidden max-md:w-full max-md:text-center md:left-[1rem] top-[10%] md:top-1/2",
-              "transform md:translate-x-[20%] md:-translate-y-1/2",
-              "xl:text-center tracking-tighter leading-normal",
-              "transition-all uppercase",
-              "ease-[cubic-bezier(0.25,0.1,0.25,1.0)]",
-              {
-                "opacity-0 pointer-events-none duration-[100ms]": isMoving,
-                "opacity-100 pointer-events-auto duration-[500ms]": !isMoving,
-              },
-            )}
-          >
-            <span className="grayish-text-gradient ">Monthly JAM</span>
-            <br />
-            <span className="leading-3 grayish-text-gradient tracking-normal font-medium text-6xl md:text-9xl">
-              Series
-            </span>{" "}
-          </h2>
+          <div className="absolute md:left-[1rem] max-md:hidden top-[10%] md:top-1/2 transform md:translate-x-[20%] transition-all  md:-translate-y-1/2">
+            <div className="mx-auto flex items-center justify-center">
+              <Pill className="flex font-medium max-w-max px-3 text-sm items-center justify-center">
+                100% generated with Buu AI
+              </Pill>
+            </div>
+            <h2
+              className={cn(
+                "select-none  text-4xl md:text-7xl  max-md:w-full max-md:text-center ",
+                "xl:text-center tracking-tighter leading-normal",
+                "uppercase",
+                "ease-[cubic-bezier(0.25,0.1,0.25,1.0)]",
+                {
+                  "opacity-0 pointer-events-none duration-[100ms]": isMoving,
+                  "opacity-100 pointer-events-auto duration-[500ms]": !isMoving,
+                },
+              )}
+            >
+              <span className="grayish-text-gradient text-nowrap">
+                Monthly JAM
+              </span>
+              <br />
+              <span className="leading-3 grayish-text-gradient tracking-normal font-medium text-6xl md:text-9xl">
+                Series
+              </span>{" "}
+            </h2>
+          </div>
 
           {/* Description */}
           <p

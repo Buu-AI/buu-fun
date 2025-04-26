@@ -16,7 +16,7 @@ export default function HeroLoadingWrapper({
   children?: ReactNode;
 }) {
   const intervalRef = useRef<NodeJS.Timeout>(null);
-  const progressRef = useRef(40);
+  const progressRef = useRef(60);
   const [finishedLoading, setFinishedLoading] = useState(false);
 
   useEffect(() => {
