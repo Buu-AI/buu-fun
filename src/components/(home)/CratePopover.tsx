@@ -63,35 +63,35 @@ export default function CratePopover() {
           user: users[0],
           content: "$2000 Game Jam is live!",
           initialDelay: 6000, // First message after 6 seconds
-          timeout: 12000,
+          timeout: 20000,
         },
         {
           user: users[1],
           content: "Awesome! Can't wait!!",
-          timeout: 2000,
+          timeout: 4000,
           // Will calculate typing delay based on content
         },
         {
           user: users[2],
           content: "Who else is joining this time?",
-          timeout: 9000,
-          pauseAfter: 2000, // Natural pause in conversation
+          timeout: 4000,
+          pauseAfter: 500, // Natural pause in conversation
         },
         {
           user: users[3],
           content: "I am ready for this. Got my tools prepared already.",
-          timeout: 2000,
+          timeout: 4000,
         },
         {
           user: users[4],
           content: "Me too! Looking forward to collaboration.",
-          timeout: 3000,
+          timeout: 1400,
         },
         {
           user: users[0],
           content: "Theme will be announced in Jam Announcement channel!",
           timeout: 2000,
-          pauseAfter: 3000, // Longer pause to group conversations
+          pauseAfter:2000, // Longer pause to group conversations
         },
         {
           user: users[1],
@@ -148,14 +148,6 @@ export default function CratePopover() {
 
         timeoutIds.push(messageTimeoutId);
       });
-
-      // Open the crate after all messages have been delivered
-      setTimeout(() => {
-        if (isMounted && window.crateInstance) {
-          // Optional: auto-open the crate after messages are delivered
-          // window.crateInstance.toggle(true);
-        }
-      }, cumulativeDelay + 5000);
     };
 
     // Append script to document

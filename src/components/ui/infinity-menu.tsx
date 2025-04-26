@@ -1463,7 +1463,12 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
           </div>
           {/* Title */}
           <div className="absolute md:left-[1rem] max-md:hidden top-[10%] md:top-1/2 transform md:translate-x-[20%] transition-all  md:-translate-y-1/2">
-            <div className="mx-auto flex items-center justify-center">
+            <div
+              className={cn("mx-auto flex items-center justify-center", {
+                "opacity-0 pointer-events-none duration-[500ms] translate-x-[-60%] -translate-y-1/2":
+                  isMoving,
+              })}
+            >
               <Pill className="flex font-medium max-w-max px-3 text-sm items-center justify-center">
                 100% generated with Buu AI
               </Pill>
