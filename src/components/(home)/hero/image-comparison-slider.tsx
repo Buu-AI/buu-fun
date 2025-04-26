@@ -6,7 +6,7 @@ import { AnimatePresence, motion, Variants } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-import { createRef, useLayoutEffect, useRef, useState } from "react";
+import { createRef, useRef, useState } from "react";
 import {
   ReactCompareSlider,
   ReactCompareSliderImage,
@@ -20,7 +20,11 @@ import {
 import { AnimatedBringYourIdeas } from "./bring-ideas";
 import SliderHandle from "./slider-handle";
 // import FeatureTextSlider from "@/app/(landing)/(navigated)/test/feature-arch";
-import FeatureTextSlider from "../feature/feature-text-slider";
+import useResponsivePositioning, {
+  DesignConfig,
+} from "@/hooks/use-responsive-positioning";
+import { useMediaQuery } from "@mantine/hooks";
+import FeatureTextSliderV2 from "../feature/new-components/feature-text-slider";
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(useGSAP);
 
@@ -30,8 +34,11 @@ export default function ImageComparisonSlider() {
   const [position, setPosition] = useState(40);
   const [sliderInView, setSliderInView] = useState(false);
   const sliderInViewRef = useRef(false);
+  const is650 = useMediaQuery("(min-width: 650px)");
   const containerRef = useRef<HTMLDivElement>(null);
   const sliderContainerRef = useRef<HTMLDivElement>(null);
+  const ReactCompareSliderRef = useRef<HTMLDivElement>(null);
+  const featureImageRef = useRef<HTMLDivElement>(null);
   const featureContainerRef = useRef<HTMLElement>(null);
   const backgroundImageRef = useRef<HTMLDivElement>(null);
   const bringYourIdeaContent = useRef<HTMLDivElement>(null);
@@ -52,9 +59,9 @@ export default function ImageComparisonSlider() {
 
   useGSAP(
     () => {
-      if (!featureContainerRef.current) return;
+      if (!sliderContainerRef.current) return;
 
-      const featureWidth = featureContainerRef.current.clientHeight;
+      const featureWidth = sliderContainerRef.current.clientHeight;
 
       const ctx = gsap.context(() => {
         gsap.to(containerRef, {
@@ -65,51 +72,62 @@ export default function ImageComparisonSlider() {
             setPosition((this.progress() + 0.4) * 100);
           },
           scrollTrigger: {
-            end: featureWidth * features.length + window.innerHeight,
+            end: featureWidth * features.length + window.innerWidth * 2,
             pin: true,
             trigger: containerRef.current,
             start: "top top",
             toggleActions: "play none none reverse",
+
             onUpdate(event) {
+              const progress = event.progress * 100;
+              progressRef.current = progress;
+
               if (
                 !sliderContainerRef.current ||
                 !featureContainerRef.current ||
                 !backgroundImageRef.current ||
-                !bringYourIdeaContent.current
+                !bringYourIdeaContent.current ||
+                !ReactCompareSliderRef.current ||
+                !featureImageRef.current
               ) {
                 return;
               }
 
-              const progress = event.progress * 100;
-              sliderContainerRef.current.style.opacity = `${Math.round(100 - progress * 5)}%`;
-              bringYourIdeaContent.current.style.opacity = `${Math.round(100 - progress * 5)}%`;
+              ReactCompareSliderRef.current.style.opacity = is650
+                ? `${Math.round(100 - progress * 5)}%`
+                : "0";
+
+              featureImageRef.current.style.opacity = is650
+                ? `${progress * 5}%`
+                : "100";
+
+              bringYourIdeaContent.current.style.opacity = `${Math.round(100 - progress * 10)}%`;
+
               backgroundImageRef.current.style.filter = `blur(${Math.round(progress * 0.1)}px)`;
               featureContainerRef.current.style.opacity = `${progress * 5}%`;
               featureContainerRef.current.style.zIndex = `0`;
 
               // Handle slider opacity
               // Handle z-index changes
-              if (progress < 20) {
+              if (progress < 15) {
                 if (sliderInViewRef.current) {
                   sliderInViewRef.current = false;
                   setSliderInView(false);
                 }
               }
               if (progress > 20) {
-                sliderContainerRef.current.style.zIndex = `0`;
+                // sliderContainerRef.current.style.zIndex = `0`;
               } else {
-                sliderContainerRef.current.style.zIndex = `50`;
+                // sliderContainerRef.current.style.zIndex = `50`;
               }
 
-              progressRef.current = progress;
-              console.log(`INDEX:`, index);
               // if (progress <= 30 && index !== 0) {
               //   setIndex(0);
               //   setPrevIndex(0);
               //   console.log(`Setting index to 0 at progress ${progress}`);
               // } else
-              if (progress >= 20) {
-                bringYourIdeaContent.current.style.zIndex = "100";
+              if (progress >= 15) {
+                bringYourIdeaContent.current.style.zIndex = "50";
                 if (!sliderInViewRef.current) {
                   sliderInViewRef.current = true;
                   setSliderInView(true);
@@ -118,7 +136,7 @@ export default function ImageComparisonSlider() {
                 const adjustedProgress = progress - 20;
                 // Divide the remaining 70% among features.length - 1 (since index 0 is already shown)
                 const remainingFeatures = features.length - 1;
-                const segmentSize = 60 / remainingFeatures;
+                const segmentSize = 70 / remainingFeatures;
 
                 // Calculate which feature index we should be on (starting from index 1)
                 const mappedIndex = Math.min(
@@ -144,148 +162,29 @@ export default function ImageComparisonSlider() {
         ctx.revert();
       };
     },
-    { dependencies: [], revertOnUpdate: true },
+    { dependencies: [is650], revertOnUpdate: true },
   );
 
   // Set up responsive positioning that works with any aspect ratio
-  useLayoutEffect(() => {
-    // These are the coordinates and dimensions from the design
-    // Based on the 1920x1080 reference.
-    const designWidth = 1920;
-    const designHeight = 1080;
+  const designConfig: DesignConfig = {
+    designWidth: 1920,
+    designHeight: 1080,
+  };
+  useResponsivePositioning(containerRef, sliderContainerRef, designConfig, {
+    centerX: 940,
+    topY: 110,
+    elementWidth: designConfig.designWidth * 0.415,
+    elementHeight: designConfig.designHeight * 0.79,
+    offsetXFactor: 2.05,
+  });
 
-    // Position of character in the design (estimated from image)
-    const characterCenterX = 940; // Center X position in original design
-    const characterTopY = 110; // Top Y position in original design
-
-    // Slider dimensions in design (41% of width)
-    const designSliderWidth = designWidth * 0.415;
-    const designSliderHeight = designHeight * 0.79; // Estimated from image
-
-    // Function to update slider position based on current viewport
-    const updateSliderPosition = () => {
-      if (!sliderContainerRef.current || !containerRef.current) return;
-
-      // Get current container dimensions
-      const containerWidth = containerRef.current.offsetWidth;
-      const containerHeight = containerRef.current.offsetHeight;
-
-      // Get background image dimensions as it's rendered
-      const bgRatio = designWidth / designHeight;
-      const containerRatio = containerWidth / containerHeight;
-
-      let renderedBgWidth, renderedBgHeight;
-
-      // Determine how the object-cover scales the background
-      if (containerRatio > bgRatio) {
-        // Background is wider than container's aspect ratio
-        renderedBgWidth = containerWidth;
-        renderedBgHeight = containerWidth / bgRatio;
-      } else {
-        // Background is taller than container's aspect ratio
-        renderedBgHeight = containerHeight;
-        renderedBgWidth = containerHeight * bgRatio;
-      }
-
-      // Calculate scaling factors based on how the background is actually rendered
-      const scaleX = renderedBgWidth / designWidth;
-      const scaleY = renderedBgHeight / designHeight;
-
-      // Calculate offset if background is centered
-      const offsetX = (containerWidth - renderedBgWidth) / 2;
-      const offsetY = (containerHeight - renderedBgHeight) / 2;
-
-      // Calculate the position where the character should be
-      const characterX = characterCenterX * scaleX + offsetX;
-      const characterY = characterTopY * scaleY + offsetY;
-
-      // Calculate the slider dimensions based on the rendered background
-      const sliderWidth = designSliderWidth * scaleX;
-
-      // Position the slider centered on the character position
-      sliderContainerRef.current.style.width = `${sliderWidth}px`;
-      sliderContainerRef.current.style.height = `${designSliderHeight * scaleY}px`;
-      sliderContainerRef.current.style.left = `${characterX - sliderWidth / 2.05}px`;
-      sliderContainerRef.current.style.top = `${characterY}px`;
-    };
-
-    // Run on mount and resize
-    updateSliderPosition();
-    window.addEventListener("resize", updateSliderPosition);
-
-    return () => window.removeEventListener("resize", updateSliderPosition);
-  }, []);
-
+  useResponsivePositioning(containerRef, featureContainerRef, designConfig, {
+    centerX: 960,
+    topY: 150,
+    elementWidth: designConfig.designWidth * 0.3281,
+    elementHeight: designConfig.designHeight * 0.74,
+  });
   const direction = 1;
-
-  useLayoutEffect(() => {
-    const designWidth = 1920;
-    const designHeight = 1080;
-
-    // Position of character in the design (estimated from image)
-    const characterCenterX = 960; // Center X position in original design
-    const characterTopY = 150; // Top Y position in original design
-
-    // Slider dimensions in design (41% of width)
-    const designSliderWidth = designWidth * 0.3281;
-    const designSliderHeight = designHeight * 0.74; // Estimated from image
-
-    // Function to update slider position based on current viewport
-    const updateSliderPosition = () => {
-      if (!featureContainerRef.current || !containerRef.current) return;
-
-      // Get current container dimensions
-      const containerWidth = containerRef.current.offsetWidth;
-      const containerHeight = containerRef.current.offsetHeight;
-
-      // Get background image dimensions as it's rendered
-      const bgRatio = designWidth / designHeight;
-      const containerRatio = containerWidth / containerHeight;
-
-      let renderedBgWidth, renderedBgHeight;
-
-      // Determine how the object-cover scales the background
-      if (containerRatio > bgRatio) {
-        // Background is wider than container's aspect ratio
-        renderedBgWidth = containerWidth;
-        renderedBgHeight = containerWidth / bgRatio;
-      } else {
-        // Background is taller than container's aspect ratio
-        renderedBgHeight = containerHeight;
-        renderedBgWidth = containerHeight * bgRatio;
-      }
-
-      // Calculate scaling factors based on how the background is actually rendered
-      const scaleX = renderedBgWidth / designWidth;
-      const scaleY = renderedBgHeight / designHeight;
-
-      // Calculate offset if background is centered
-      const offsetX = (containerWidth - renderedBgWidth) / 2;
-      const offsetY = (containerHeight - renderedBgHeight) / 2;
-
-      // Calculate the position where the character should be
-      const characterX = characterCenterX * scaleX + offsetX;
-      const characterY = characterTopY * scaleY + offsetY;
-
-      // Calculate the slider dimensions based on the rendered background
-      const sliderWidth = designSliderWidth * scaleX;
-
-      // Position the slider centered on the character position
-      featureContainerRef.current.style.width = `${sliderWidth}px`;
-      featureContainerRef.current.style.height = `${designSliderHeight * scaleY}px`;
-      featureContainerRef.current.style.left = `${characterX - sliderWidth / 2}px`;
-      featureContainerRef.current.style.top = `${characterY}px`;
-    };
-
-    // Run on mount and resize
-    updateSliderPosition();
-
-    window.addEventListener("resize", updateSliderPosition);
-
-    return () => {
-      window.removeEventListener("resize", updateSliderPosition);
-    };
-  }, []);
 
   // Define enhanced variants for smoother animations
   const backgroundVariants = {
@@ -352,7 +251,7 @@ export default function ImageComparisonSlider() {
               opacity: 0,
               transition: { duration: 1.5, ease: "easeInOut" },
             }}
-            className="w-full h-full"
+            className="w-full relative  h-full"
           >
             <Image
               ref={imageRef}
@@ -372,41 +271,99 @@ export default function ImageComparisonSlider() {
         ref={sliderContainerRef}
         className="absolute z-10 overflow-visible"
       >
-        <ReactCompareSlider
-          className="w-full h-full z-[20] overflow-visible"
-          style={{
-            overflow: "visible",
-          }}
-          changePositionOnHover
-          handle={<SliderHandle />}
-          position={position}
-          itemTwo={
-            <ReactCompareSliderImage
-              width={"auto"}
-              height={"auto"}
-              src={MutantAlienWireFrame.src}
-              alt="Wireframe version"
-              className="w-full h-full"
-            />
-          }
-          itemOne={
-            <ReactCompareSliderImage
-              src={MutantAlien.src}
-              width={"auto"}
-              height={"auto"}
-              alt="Full color version"
-              className="w-full h-full relative "
-            />
-          }
-        />
+        <div
+          ref={featureImageRef}
+          className="absolute top-0 left-0 max-md:opacity-100 opacity-0 w-full h-full"
+        >
+          <AnimatePresence mode="popLayout" initial={false}>
+            {features[index].autoRig ? (
+              <motion.div
+                key={`auto-rig-${index}`}
+                initial={{ opacity: 0.4 }}
+                animate={{ opacity: 1, transition: { duration: 0.8 } }}
+                exit={{ opacity: 0, transition: { duration: 0.6 } }}
+                className="w-[115%] z-50 h-full bottom-0 absolute "
+              >
+                <MutantMesh />
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
+          <AnimatePresence mode="popLayout" initial={false}>
+            <div className="absolute top-0 left-0  w-full h-full">
+              <motion.div
+                key={`image-${index}`}
+                custom={direction}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={imageVariants}
+                className=" w-full h-full "
+              >
+                <Image
+                  src={features[index].image}
+                  alt="Alien Image"
+                  width={1920}
+                  height={1080}
+                  className="z-0 relative object-contain w-full h-full"
+                  priority
+                />
+              </motion.div>
+            </div>
+          </AnimatePresence>
+          <div className="relative w-full h-full ">
+            {/* <FeatureTextSliderV2 progressRef={progressRef} index={index} /> */}
+            <motion.div className="absolute top-0 left-0 h-full w-full z-50 overflow-hidden pointer-events-none">
+              <div className="flip absolute bottom-2  w-full h-full aspect-square max-h-[6%]">
+                {sliderInView ? <ArchGradient /> : null}
+              </div>
+              <div className="w-full relative h-full z-[100]">
+                <AnimatePresence mode="wait" initial={false}>
+                  <FeatureTextSliderV2
+                    progressRef={progressRef}
+                    index={index}
+                  />
+                </AnimatePresence>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+        <div className="max-md:hidden" ref={ReactCompareSliderRef}>
+          <ReactCompareSlider
+            className="w-full h-full z-[20] overflow-visible"
+            style={{
+              overflow: "visible",
+            }}
+            changePositionOnHover
+            handle={<SliderHandle />}
+            position={position}
+            itemTwo={
+              <ReactCompareSliderImage
+                width={"auto"}
+                height={"auto"}
+                src={MutantAlienWireFrame.src}
+                alt="Wireframe version"
+                className="w-full h-full"
+              />
+            }
+            itemOne={
+              <ReactCompareSliderImage
+                src={MutantAlien.src}
+                width={"auto"}
+                height={"auto"}
+                alt="Full color version"
+                className="w-full h-full relative "
+              />
+            }
+          />
+        </div>
       </section>
 
       <section
         id="features"
         ref={featureContainerRef}
-        className="relative opacity-0 z-50 max-md:px-4"
+        className="relative opacity-0 "
       >
-        <AnimatePresence mode="popLayout" initial={false}>
+        {/* <AnimatePresence mode="popLayout" initial={false}>
           {features[index].autoRig ? (
             <motion.div
               key={`auto-rig-${index}`}
@@ -418,7 +375,7 @@ export default function ImageComparisonSlider() {
               <MutantMesh />
             </motion.div>
           ) : null}
-        </AnimatePresence>
+        </AnimatePresence> */}
 
         <motion.div
           initial={{ y: -10, opacity: 0 }}
@@ -441,8 +398,23 @@ export default function ImageComparisonSlider() {
           </AnimatePresence>
         </motion.div>
 
-        <div className="w-[100%] rounded-full h-[50%] bg-[#0C0C0D] blur-[150px] absolute left-[-10%] bottom-[-30%] z-30" />
-        <div className="relative overflow-visible border-white/20 w-full h-full  border-2 rounded-2xl">
+        <div className="w-[100%] rounded-full h-[50%] bg-[#0C0C0D] blur-[150px] absolute left-[-10%] bottom-[-30%] z-[200]" />
+        <div className="relative overflow-visible border-white/20 w-full h-full  border md:border-2 rounded-2xl">
+          {/* <motion.div
+            style={{
+              zIndex: 102,
+            }}
+            className="absolute  h-full w-full z-[200] overflow-hidden pointer-events-none"
+          >
+            <div className="flip absolute bottom-0  w-full h-[6%]">
+              {sliderInView ? <ArchGradient /> : null}
+            </div>
+            <div className="w-full relative h-full z-[200]">
+              <AnimatePresence mode="wait" initial={false}>
+                <FeatureTextSlider progressRef={progressRef} index={index} />
+              </AnimatePresence>
+            </div>
+          </motion.div> */}
           <AnimatePresence mode="popLayout" initial={false}>
             {features[index].scan ? (
               <motion.div
@@ -471,45 +443,10 @@ export default function ImageComparisonSlider() {
                 height={1080}
                 src={features[index].bgExcluded}
                 alt="Wireframe version"
-                className="rounded-2xl object-cover"
+                className="rounded-2xl "
               />
             </motion.div>
           </AnimatePresence>
-
-          {/* Image morphing container */}
-          <AnimatePresence mode="popLayout" initial={false}>
-            <div className="absolute bottom-[0%] -left-[17%] w-full h-full">
-              <motion.div
-                key={`image-${index}`}
-                custom={direction}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                variants={imageVariants}
-                className="absolute w-[130%] h-full "
-              >
-                <Image
-                  src={features[index].image}
-                  alt="Alien Image"
-                  width={1920}
-                  height={1080}
-                  className="z-10 relative object-contain w-full h-full"
-                  priority
-                />
-              </motion.div>
-            </div>
-          </AnimatePresence>
-
-          <motion.div className="absolute top-0 left-0 h-full w-full z-50 overflow-hidden pointer-events-none">
-            <div className="flip absolute bottom-0  w-full h-[6%]">
-              {sliderInView ? <ArchGradient /> : null}
-            </div>
-            <div className="w-full relative h-full z-50">
-              <AnimatePresence mode="wait" initial={false}>
-                <FeatureTextSlider progressRef={progressRef} index={index} />
-              </AnimatePresence>
-            </div>
-          </motion.div>
         </div>
       </section>
       <div ref={bringYourIdeaContent} className="w-full h-full">

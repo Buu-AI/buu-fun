@@ -30,7 +30,7 @@ export default function MutantMesh() {
   return (
     <svg
       ref={svgRef}
-      viewBox="-65 -72 622 681"
+      viewBox="-130 -80 750 800"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

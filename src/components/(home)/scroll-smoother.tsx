@@ -30,6 +30,9 @@ export default function SmoothScrollWrapper({
   return (
     <ReactLenis
       options={{
+        autoResize: true,
+        gestureOrientation: "both",
+
         // autoRaf: false,
         anchors: { immediate: false },
       }}
