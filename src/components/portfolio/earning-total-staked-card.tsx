@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Button } from "../ui/button";
 import APRCalculatorIcon from "@/assets/icons/apr-calculator-icon";
@@ -9,6 +10,8 @@ import {
   multiplyAndFormatPricing,
 } from "@/lib/utils";
 import StakeBuuButton from "./stake-buu-button";
+import { useAppDispatch } from "@/hooks/redux";
+import { setBooleanToggler } from "@/lib/redux/features/buu-pricing";
 
 export default function EarningTotalStakedCard() {
   const { data } = useBuuPricingData();
@@ -21,7 +24,7 @@ export default function EarningTotalStakedCard() {
     userStakingData?.yourTotalStaked ?? "0",
     userStakingData?.decimals ?? 0,
   );
-
+  const dispatch = useAppDispatch();
   const totalStakedPrice = multiplyAndFormatPricing(
     Number(totalStaked),
     data?.price ?? 0,
@@ -50,7 +53,15 @@ export default function EarningTotalStakedCard() {
           <span className="p-3">Unstake</span>
         </Button> */}
         <StakeBuuButton className="w-full" />
-        <Button variant={"special"} className="h-[40px] w-full bg-apr-button">
+        <Button
+          onClick={() => {
+            dispatch(
+              setBooleanToggler({ key: "roiStakingDialogOpen", value: true }),
+            );
+          }}
+          variant={"special"}
+          className="h-[40px] w-full bg-apr-button"
+        >
           <div className="p-3 flex items-center justify-center gap-1">
             <APRCalculatorIcon />
             <span className="">APR {globalStakingData?.apr?.toFixed(2)}%</span>

@@ -31,7 +31,7 @@ export default function HowToContainer() {
     const sections = Array.from(container.children) as HTMLElement[];
     const totalSectionsWidth = sections.reduce(
       (acc, section) => acc + section.offsetWidth,
-      0,
+      0
     );
 
     // Calculate the endpoint - don't allow overscrolling
@@ -95,6 +95,7 @@ export default function HowToContainer() {
     cleanup.current = () => {
       ctx.revert();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Optimized resize handler with debounce

@@ -4,6 +4,7 @@ import HeaderLogo from "@/components/portfolio/header-logo";
 import OverviewContainer from "@/components/portfolio/overview-container";
 import StreamFlowRedirectDialog from "@/components/portfolio/Streamflow-redirect-dialog";
 import TokenStatistics from "@/components/portfolio/token-statistics";
+import RoiStakingDialog from "@/components/portfolio/your-earning-new/roi-staking-dialog";
 import YourEarnings from "@/components/portfolio/your-earnings";
 import Bounded from "@/components/ui/Bounded";
 
@@ -34,6 +35,7 @@ export default function PortfolioPage() {
           </div>
         </div>
       </div>
+      <RoiStakingDialog />
       <StreamFlowRedirectDialog />
       <BuyBuuRedirectDialog />
       {/* </StakingDataProvider> */}
