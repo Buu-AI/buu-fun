@@ -1,11 +1,11 @@
 import React from "react";
 
 export default function RoiDetailedLine({
-  title = "APR (Staking Rewards)",
-  value = "$ 20.5",
+  title,
+  value,
 }: {
-  title?: string;
-  value?: string;
+  title: string;
+  value: string;
 }) {
   return (
     <div className="flex w-full items-center relative z-50 justify-between">

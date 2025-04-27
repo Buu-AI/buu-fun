@@ -18,40 +18,42 @@ import {
 import { cn, formatNumberWithFractions } from "@/lib/utils";
 import { ArrowDown } from "lucide-react";
 import { useState } from "react";
-import {
-  calculateROI,
-  calculateStakingROI,
-  ROICalculatorParams,
-} from "./roi-calcuation";
+import { calculateROI } from "./roi-calculations";
 import RoiDetailedLine from "./roi-detail-line";
 import RoiListInfo from "./roi-list-info";
 export default function RoiStakingCard() {
   const { data } = useBuuPricingData();
   const { data: globalStakingData } = useGlobalStakingData();
   const { data: tokenData } = useTokenBalance();
-  const earnings = tokenData?.value?.uiAmount;
+  const tokenBalance = tokenData?.value?.uiAmount;
+  const tokenPrice = (tokenBalance ?? 0) * (data?.price ?? 0);
   const aprPersentage = globalStakingData?.apr ?? 0;
 
-  const [balance, setBalance] = useState(earnings ?? 10_000_000);
-
-  const [amount, setAmount] = useState<number | null>(0);
+  const [amount, setAmount] = useState<number | null>(100);
 
   const [stakedUpto, setStakedTo] = useState<1 | 7 | 30 | 365>(1);
-
+  const [isCompounding, setIsCompounding] = useState<boolean>(true);
   const [compoundDays, setCompoundDays] = useState<1 | 7 | 14 | 30>(1);
-  const aprCreditsPercentage = 30;
-  // const { aprPercent, earnedTokens, earnedUSD, finalValueUSD, roiPercent }
-  const params: ROICalculatorParams = {
-    stakedAmount: amount ?? 0,
-    stakingPeriodDays: stakedUpto,
-    aprRewardsPercentage: 1,
-    aprCreditsPercentage: aprCreditsPercentage,
-    tokenPrice: data?.price ?? 0,
-    isCompounding: true,
-    compoundingPeriodDays: 7,
-  };
-  const { finalROI, } = calculateROI(params);
 
+  const { creditsValue, stakingRewards, totalROI } = calculateROI({
+    amountStaked: amount ?? 0,
+    apr: globalStakingData?.apr ?? 0,
+    compoundFrequencyDays: compoundDays,
+    stakingPeriodDays: stakedUpto,
+    useCompounding: isCompounding,
+  });
+
+  function calculatePercentage(
+    totalROI: number,
+    amount: number | null
+  ): number {
+    if (amount && !isNaN(Number(amount)) && Number(amount) > 0) {
+      return (totalROI / Number(amount)) * 100;
+    }
+    return 0;
+  }
+
+  const totalRoiInPercentage = calculatePercentage(totalROI, amount);
 
   return (
     <div className="">
@@ -62,7 +64,7 @@ export default function RoiStakingCard() {
             <div className="flex  py-1">
               <p className="pr-1 font-medium text-muted-foreground/60">$</p>
               <input
-                value={amount ?? ""}
+                value={amount?.toFixed(2) ?? ""}
                 onChange={(e) => {
                   const value = e.target.value;
                   if (value === "") {
@@ -82,21 +84,53 @@ export default function RoiStakingCard() {
             </button>
           </div>
           <p className="text-sm font-medium text-muted-foreground/60">
-            {balance} <span>$BUU</span>
+            {formatNumberWithFractions(tokenBalance ?? 0)} <span>$BUU</span>
           </p>
         </div>
 
         <div className="flex items-center gap-1">
-          <button className="font-semibold uppercase text-muted-foreground/60">
-            <Pill size={"sm"} className="">
+          <button
+            onClick={() => {
+              setAmount(100);
+            }}
+            className="font-semibold uppercase text-muted-foreground/60"
+          >
+            <Pill
+              size={"sm"}
+              className=""
+              variant={amount === 100 ? "white" : "default"}
+            >
               $100
             </Pill>
           </button>
-          <button className="font-semibold uppercase text-muted-foreground/60">
-            <Pill size={"sm"}>$1000</Pill>
+          <button
+            onClick={() => {
+              setAmount(1000);
+            }}
+            className="font-semibold uppercase text-muted-foreground/60"
+          >
+            <Pill
+              size={"sm"}
+              className=""
+              variant={amount === 1000 ? "white" : "default"}
+            >
+              $1000
+            </Pill>
           </button>
-          <button className="font-semibold uppercase">
-            <Pill size={"sm"} variant={"white"}>
+          <button
+            // tokenPrice
+
+            onClick={() => {
+              if (tokenPrice) {
+                setAmount(tokenPrice);
+              }
+            }}
+            className="font-semibold uppercase"
+          >
+            <Pill
+              size={"sm"}
+              variant={amount === tokenPrice ? "white" : "default"}
+            >
               My Balance
             </Pill>
           </button>
@@ -165,7 +199,12 @@ export default function RoiStakingCard() {
               Compounding every
             </Label>
             <Checkbox
-              onCheckedChange={(value) => {}}
+              checked={isCompounding}
+              onCheckedChange={(value) => {
+                if (typeof value === "boolean") {
+                  setIsCompounding(value);
+                }
+              }}
               id="compound-checkbox"
               className="rounded-[4px] w-4 h-4  
               data-[state=checked]:bg-buu-blue/40
@@ -181,6 +220,7 @@ export default function RoiStakingCard() {
               onClick={() => {
                 setCompoundDays(1);
               }}
+              disabled={!isCompounding}
               variant={compoundDays === 1 ? "default" : "ghost"}
               className={cn("w-full", {
                 "hover:text-white text-sm  text-muted-foreground/60 transition-all duration-300 ease-in-out hover:bg-buu-button-muted":
@@ -193,6 +233,7 @@ export default function RoiStakingCard() {
               onClick={() => {
                 setCompoundDays(7);
               }}
+              disabled={!isCompounding}
               variant={compoundDays === 7 ? "default" : "ghost"}
               className={cn("w-full", {
                 "hover:text-white text-sm  text-muted-foreground/60 transition-all duration-300 ease-in-out hover:bg-buu-button-muted":
@@ -205,6 +246,7 @@ export default function RoiStakingCard() {
               onClick={() => {
                 setCompoundDays(14);
               }}
+              disabled={!isCompounding}
               variant={compoundDays === 14 ? "default" : "ghost"}
               className={cn("w-full", {
                 "hover:text-white text-sm  text-muted-foreground/60 transition-all duration-300 ease-in-out hover:bg-buu-button-muted":
@@ -217,6 +259,7 @@ export default function RoiStakingCard() {
               onClick={() => {
                 setCompoundDays(30);
               }}
+              disabled={!isCompounding}
               variant={compoundDays === 30 ? "default" : "ghost"}
               className={cn("w-full", {
                 "hover:text-white text-sm  text-muted-foreground/60 transition-all duration-300 ease-in-out hover:bg-buu-button-muted":
@@ -233,19 +276,19 @@ export default function RoiStakingCard() {
               <p className="pr-1 font-medium text-muted-foreground/60">$</p>
               <div className="flex items-center gap-2">
                 <p className="bg-transparent w-full font-medium tracking-tight appearance-none text-2xl outline-none">
-                  {formatNumberWithFractions(finalROI)}
+                  {formatNumberWithFractions(totalROI)}
                 </p>
                 <Pill
                   size={"sm"}
                   className="font-semibold px-1.5 text-muted-foreground/60"
                 >
-                  22.74%
+                  {formatNumberWithFractions(totalRoiInPercentage)}%
                 </Pill>
               </div>
             </div>
           </div>
           <p className="uppercase text-xs font-semibold text-muted-foreground/60">
-            Roi AT Current rates
+            ROI AT Current rates
           </p>
           <BorderBeam
             initialOffset={0}
@@ -266,7 +309,6 @@ export default function RoiStakingCard() {
             <AccordionTrigger
               className="flex group  group  items-center justify-center w-full"
               arrowClass="hidden"
-              //   asChild
             >
               <div className="flex justify-center  items-center gap-1.5  py-2 rounded-md px-2 font-medium">
                 <p className="text-base">Details</p>
@@ -278,15 +320,21 @@ export default function RoiStakingCard() {
             <AccordionContent className="mb-10 text-base">
               <div>
                 <div className="px-4 max-w-sm flex gap-3.5 flex-col items-center justify-center">
-                  <RoiDetailedLine />
+                  <RoiDetailedLine
+                    title="APR (Staking Rewards)"
+                    value={`$${formatNumberWithFractions(stakingRewards)}`}
+                  />
                   <RoiDetailedLine
                     title="Credits Value (Current rate)"
-                    value="$1.73"
+                    value={`$${formatNumberWithFractions(creditsValue)}`}
                   />
-                  <RoiDetailedLine title="APR Rewards" value="20%" />
-                  <RoiDetailedLine title="APR Credits" value="3%" />
+                  <RoiDetailedLine
+                    title="APR Rewards"
+                    value={`${aprPersentage}%`}
+                  />
+                  <RoiDetailedLine title="APR Credits" value="30%" />
                 </div>
-                <div>
+                <div className="mt-2">
                   <RoiListInfo description="Rewards are calculated using current rates." />
                   <RoiListInfo description="Credits are awarded with each new deposit. After they unlock every three months, we recommend relocking them to earn additional credits." />
                   <RoiListInfo description="APR Credits are determined by the current USD-per-credit rate and assume that unlocked amounts are restaked every three months." />
