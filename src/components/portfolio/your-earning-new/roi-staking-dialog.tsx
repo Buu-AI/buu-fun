@@ -13,7 +13,7 @@ import RoiStakingCard from "./roi-staking-card";
 
 export default function RoiStakingDialog() {
   const state = useAppSelector(
-    (state) => state.BuuPricing.roiStakingDialogOpen
+    (state) => state.BuuPricing.roiStakingDialogOpen,
   );
   const dispatch = useAppDispatch();
   return (

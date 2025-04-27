@@ -19,7 +19,7 @@ const pillVariant = cva(
         sm: "px-3 py-0.5 text-xs",
       },
     },
-  }
+  },
 );
 export type TPillVariant = VariantProps<typeof pillVariant>;
 export default function Pill({

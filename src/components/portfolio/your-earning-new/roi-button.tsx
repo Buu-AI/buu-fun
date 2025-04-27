@@ -10,7 +10,7 @@ export default function RoiButton() {
     <Button
       onClick={() => {
         dispatch(
-          setBooleanToggler({ key: "roiStakingDialogOpen", value: true })
+          setBooleanToggler({ key: "roiStakingDialogOpen", value: true }),
         );
       }}
     >

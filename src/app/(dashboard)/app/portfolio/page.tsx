@@ -1,4 +1,3 @@
-
 import BuuStakedSupply from "@/components/portfolio/buu-staked-supply";
 import BuyBuuRedirectDialog from "@/components/portfolio/buy-buu-redirect-dialog";
 import HeaderLogo from "@/components/portfolio/header-logo";
@@ -36,7 +35,7 @@ export default function PortfolioPage() {
           </div>
         </div>
       </div>
-      <RoiStakingDialog/>
+      <RoiStakingDialog />
       <StreamFlowRedirectDialog />
       <BuyBuuRedirectDialog />
       {/* </StakingDataProvider> */}

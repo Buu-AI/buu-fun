@@ -2,7 +2,6 @@
 import FlashIcon from "@/assets/icons/flash-icon";
 import useUserCredits from "@/hooks/use-credits";
 import { getFixedCredits } from "@/lib/utils";
-import RoiButton from "./your-earning-new/roi-button";
 
 export default function EarningPlatformCredits() {
   const credits = useUserCredits();

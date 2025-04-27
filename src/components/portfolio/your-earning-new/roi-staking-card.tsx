@@ -397,11 +397,15 @@ export default function RoiStakingCard() {
         >
           <AccordionItem value="item-1">
             <AccordionTrigger
-              className="flex group group items-center justify-center w-full"
+              className="flex group  items-center justify-center w-full"
               arrowClass="hidden"
             >
               <div className="flex justify-center items-center gap-1.5 py-2 rounded-md px-2 font-medium">
-                <p className="text-base">Details</p>
+                <p className="text-base">
+                Details
+                {/* <span className="group-[&[data-state=open]]:hidden">Details</span>
+                <span className="group-[&[data-state=closed]]:hidden">hide</span>                   */}
+                </p>
                 <div className="w-6 h-6 group-[&[data-state=open]]:rotate-180 transition-transform duration-700 ease-in-out">
                   <ArrowDown />
                 </div>
