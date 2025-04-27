@@ -93,6 +93,7 @@ export default function FeatureTextSlider({
     return () => {
       resizeObserver.disconnect();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Reapply positions when container size changes
@@ -100,6 +101,7 @@ export default function FeatureTextSlider({
     if (containerSize.width > 0 && containerSize.height > 0) {
       updateCirclePositions();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [containerSize]);
 
   // Function to animate text for a specific item
@@ -251,6 +253,7 @@ export default function FeatureTextSlider({
         cancelAnimationFrame(animationRef.current);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [progressRef.current, progressRef]);
 
   return (

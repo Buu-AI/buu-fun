@@ -95,6 +95,7 @@ export default function HowToContainer() {
     cleanup.current = () => {
       ctx.revert();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Optimized resize handler with debounce

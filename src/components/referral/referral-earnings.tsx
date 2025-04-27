@@ -25,7 +25,7 @@ export default function ReferralEarnings() {
       </div>
       <div className="w-[2.5px] min-h-[50px] h-full  bg-gray-700/60" />
       <div className="flex items-center justify-start w-full flex-col">
-        <h3 className=" font-medium text-buu-muted-text">Referrals</h3>
+        <h3 className=" font-medium text-buu-muted-text">referees</h3>
         <div className="text-2xl font-medium">
           <p>{uniqueReferrals}</p>
         </div>

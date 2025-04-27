@@ -19,7 +19,7 @@ export default function ReferralPage() {
             <p className="text-xs lg:text-base">
               Get
               <span className="blue-text-clip"> 20% </span>
-              of your referrals spending in $BUU!
+              of your referees spending in $BUU!
             </p>
             <h2 className="rainbow-text font-medium text-2xl lg:text-5xl tracking-tighter">
               Welcome to Referral Program
@@ -31,7 +31,7 @@ export default function ReferralPage() {
         </div>
         <div className="flex items-center flex-col justify-center  pt-10">
           <h4 className="text-xl font-medium tracking-tight ">
-            Your Referrals
+            Your Referral Rewards
           </h4>
           <ReferralShowcaseTable />
         </div>

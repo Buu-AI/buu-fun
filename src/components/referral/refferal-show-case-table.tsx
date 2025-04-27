@@ -7,14 +7,32 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useAllReferrals } from "@/hooks/use-referral";
-import { cn, formatUnits, truncateString } from "@/lib/utils";
+import {
+  cn,
+  formatNumber,
+  formatUnits,
+  getSolanaExplorerUrl,
+  truncateString,
+} from "@/lib/utils";
 import { format } from "date-fns";
 import { Ghost } from "lucide-react";
+import toast from "react-hot-toast";
 import Pill from "../elements/pill";
 import Bounded from "../ui/Bounded";
 
 export default function ReferralShowcaseTable() {
   const { data } = useAllReferrals();
+  function handleUrlClick(txHash: string) {
+    try {
+      const url = getSolanaExplorerUrl(`/tx/${txHash}`);
+      window.open(url, "_blank");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error) {
+      }
+      toast.error("Invalid transaction");
+    }
+  }
   return (
     <Bounded className="max-w-screen-md">
       <div
@@ -22,7 +40,7 @@ export default function ReferralShowcaseTable() {
           overflow: "hidden",
         }}
         className={cn(
-          "w-full bg-api-key-table-radius overflow-x-auto mt-6 border  border-muted-foreground/10",
+          "w-full bg-api-key-table-radius overflow-x-auto mt-6 border  border-muted-foreground/10"
         )}
       >
         <div className="">
@@ -30,14 +48,14 @@ export default function ReferralShowcaseTable() {
             <Table className="w-full">
               <TableHeader className="h-auto bg-api-key-table-header  sticky top-0 left-2 z-10">
                 <TableRow className="hover:bg-muted/0 h-auto !border-b-0 bg-clip-border !border-0 rounded-t-xl">
-                  <TableHead className="text-xs h-auto py-4 text-white/60 font-semibold uppercase w-1/4">
-                    WALLET ADDRESS
+                  <TableHead className="text-xs  h-auto py-4 text-white/60 font-semibold uppercase w-1/4">
+                    <span className="ml-2.5">Referee</span>
                   </TableHead>
                   <TableHead className="text-xs text-white/60 font-semibold uppercase w-1/4">
-                    REGISTRATION DATE
+                    Reward Date
                   </TableHead>
                   <TableHead className="text-xs text-white/60 font-semibold uppercase w-1/4">
-                    your earnings
+                    Amount
                   </TableHead>
                 </TableRow>
               </TableHeader>
@@ -46,8 +64,13 @@ export default function ReferralShowcaseTable() {
                   data?.items?.map((item, index) => {
                     return (
                       <TableRow
+                        onClick={() => {
+                          if (item.transactionHash) {
+                            handleUrlClick(item.transactionHash);
+                          }
+                        }}
                         key={`${item._id}`}
-                        className="h-auto border-[#1c202788]"
+                        className="h-auto cursor-pointer  border-[#1c202788]"
                       >
                         <TableCell className="h-auto py-4">
                           <div className="flex items-center gap-1 pl-2">
@@ -60,14 +83,14 @@ export default function ReferralShowcaseTable() {
                         <TableCell className="text-muted-foreground/40 font-medium">
                           {format(
                             new Date(item.createdAt),
-                            "MMMM dd, yyyy hh:mm:a",
+                            "MMMM dd, yyyy hh:mm:a"
                           )}
                         </TableCell>
                         {/* <TableCell className="text- font-medium">
                             $ {formatNumber(parseInt(item.tokens ?? "0"))} USD
                           </TableCell> */}
                         <TableCell className="text- font-medium">
-                          $ {formatUnits(item.tokens ?? "", item.decimals ?? 0)}{" "}
+                          {formatNumber(Number(formatUnits(item.tokens ?? "", item.decimals ?? 0)))}{" "}
                           BUU
                         </TableCell>
                       </TableRow>
