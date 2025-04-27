@@ -69,7 +69,7 @@ export default function RoiStakingCard() {
 
   function calculatePercentage(
     totalROI: number,
-    amount: number | null
+    amount: number | null,
   ): number {
     if (amount && !isNaN(Number(amount)) && Number(amount) > 0) {
       return (totalROI / Number(amount)) * 100;
@@ -402,8 +402,8 @@ export default function RoiStakingCard() {
             >
               <div className="flex justify-center items-center gap-1.5 py-2 rounded-md px-2 font-medium">
                 <p className="text-base">
-                Details
-                {/* <span className="group-[&[data-state=open]]:hidden">Details</span>
+                  Details
+                  {/* <span className="group-[&[data-state=open]]:hidden">Details</span>
                 <span className="group-[&[data-state=closed]]:hidden">hide</span>                   */}
                 </p>
                 <div className="w-6 h-6 group-[&[data-state=open]]:rotate-180 transition-transform duration-700 ease-in-out">

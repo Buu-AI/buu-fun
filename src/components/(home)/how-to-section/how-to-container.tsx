@@ -31,7 +31,7 @@ export default function HowToContainer() {
     const sections = Array.from(container.children) as HTMLElement[];
     const totalSectionsWidth = sections.reduce(
       (acc, section) => acc + section.offsetWidth,
-      0
+      0,
     );
 
     // Calculate the endpoint - don't allow overscrolling

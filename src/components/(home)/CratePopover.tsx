@@ -38,7 +38,7 @@ export default function CratePopover() {
         return Math.max(
           500,
           wordsCount * secondsPerWord * 1000 * varianceFactor +
-            Math.random() * 500
+            Math.random() * 500,
         );
       };
 
@@ -85,7 +85,7 @@ export default function CratePopover() {
           user: users[0],
           content: "Theme will be announced in Jam Announcement channel!",
           timeout: 2000,
-          pauseAfter:2000, // Longer pause to group conversations
+          pauseAfter: 2000, // Longer pause to group conversations
         },
         {
           user: users[1],

@@ -212,3 +212,7 @@ export function formatPrice(value: number): string {
 export function getStreamflowUrl() {
   return `${process.env?.NEXT_PUBLIC_STREAMFLOW_BASE_URL}/${process.env?.NEXT_PUBLIC_STREAMFLOW_CLUSTER}/${process.env?.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL}`;
 }
+
+export function getSolanaExplorerUrl(route: string) {
+  return "https://explorer.solana.com" + route;
+}

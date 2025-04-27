@@ -31,7 +31,7 @@ export default function ReferralPage() {
         </div>
         <div className="flex items-center flex-col justify-center  pt-10">
           <h4 className="text-xl font-medium tracking-tight ">
-            Your Referrals
+            Your Referral Rewards
           </h4>
           <ReferralShowcaseTable />
         </div>
