@@ -18,7 +18,6 @@ export default function RoiStakingDialog() {
   const dispatch = useAppDispatch();
   return (
     <Dialog
-    
       open={state}
       onOpenChange={(value) => {
         dispatch(setBooleanToggler({ key: "roiStakingDialogOpen", value }));

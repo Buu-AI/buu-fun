@@ -26,7 +26,7 @@ export default function EarningPlatformCredits() {
           </p>
         </div>
       </div>
-      <RoiButton />
+      {/* <RoiButton /> */}
       {/* Dont remove the dialog, it will be replaced in future */}
       {/* <StakingDialog /> */}
       {/* <StakeBuuButton /> */}
