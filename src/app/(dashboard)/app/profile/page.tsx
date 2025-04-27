@@ -53,11 +53,12 @@ export default function ProfilePage() {
             />
           ) : null}
           <p className="text-xs font-semibold px-0.5 uppercase text-[#D5D9DF60] line-clamp-2">
-            {wallet?.name && wallet?.name.length > 8
+          {wallet?.name}
+            {/* {wallet?.name && wallet?.name.length > 8
               ? `${wallet?.name.slice(0, 3)}...${wallet?.name.slice(wallet?.name.length - 3, wallet?.name.length)}`
               : wallet?.name
                 ? `${wallet?.name}`
-                : null}
+                : null} */}
           </p>
         </div>
 
