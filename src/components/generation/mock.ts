@@ -248,7 +248,7 @@ export const mockReferralReward: {
   tokens?: string | null;
   decimals?: number | null;
   transactionHash?: string | null;
-  createdAt: any;
+  createdAt: string;
 } = {
   __typename: "ReferralReward",
   _id: "reward_abc123",

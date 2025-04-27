@@ -25,7 +25,11 @@ export default function ReferralShowcaseTable() {
     try {
       const url = getSolanaExplorerUrl(`/tx/${txHash}`);
       window.open(url, "_blank");
-    } catch (error) {
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error) {
+      }
       toast.error("Invalid transaction");
     }
   }
