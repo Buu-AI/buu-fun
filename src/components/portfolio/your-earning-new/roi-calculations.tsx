@@ -1,3 +1,23 @@
+export const STAKED_UP_TO = {
+  "90_months": {
+    value: 90,
+    title: "3M",
+  },
+  "6_months": {
+    value: 180,
+    title: "6M",
+  },
+  "1_year": {
+    value: 365,
+    title: "1Y",
+  },
+  "2_year": {
+    value: 730,
+    title: "2Y",
+  },
+} as const;
+export type TStakedUptoValues = (typeof STAKED_UP_TO)[keyof typeof STAKED_UP_TO]["value"];
+
 export type TCalculateROI = {
   apr: number; // e.g. 20 for 20% APR
   amountStaked: number; // e.g. 500
