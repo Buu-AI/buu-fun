@@ -77,7 +77,7 @@ export default function ReferralShowcaseTable() {
                             <Pill className="text-[10px] truncate text-white/40 font-medium py-0 px-2">
                               {index.toLocaleString()}
                             </Pill>
-                            {truncateString(item.referral, 6, 4)}
+                            {truncateString(item.referralName, 6, 4)}
                           </div>
                         </TableCell>
                         <TableCell className="text-muted-foreground/40 font-medium">
