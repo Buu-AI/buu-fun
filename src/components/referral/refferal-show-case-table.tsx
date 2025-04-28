@@ -40,7 +40,7 @@ export default function ReferralShowcaseTable() {
           overflow: "hidden",
         }}
         className={cn(
-          "w-full bg-api-key-table-radius overflow-x-auto mt-6 border  border-muted-foreground/10"
+          "w-full bg-api-key-table-radius overflow-x-auto mt-6 border  border-muted-foreground/10",
         )}
       >
         <div className="">
@@ -83,14 +83,21 @@ export default function ReferralShowcaseTable() {
                         <TableCell className="text-muted-foreground/40 font-medium">
                           {format(
                             new Date(item.createdAt),
-                            "MMMM dd, yyyy hh:mm:a"
+                            "MMMM dd, yyyy hh:mm:a",
                           )}
                         </TableCell>
                         {/* <TableCell className="text- font-medium">
                             $ {formatNumber(parseInt(item.tokens ?? "0"))} USD
                           </TableCell> */}
                         <TableCell className="text- font-medium">
-                          {formatNumber(Number(formatUnits(item.tokens ?? "", item.decimals ?? 0)))}{" "}
+                          {formatNumber(
+                            Number(
+                              formatUnits(
+                                item.tokens ?? "",
+                                item.decimals ?? 0,
+                              ),
+                            ),
+                          )}{" "}
                           BUU
                         </TableCell>
                       </TableRow>

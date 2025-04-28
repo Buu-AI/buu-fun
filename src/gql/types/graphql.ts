@@ -227,6 +227,7 @@ export enum GenRequestApp {
   FluxDevImageToImage = "FluxDevImageToImage",
   FluxLora = "FluxLora",
   FluxLoraCanny = "FluxLoraCanny",
+  Hunyuan3dV2 = "Hunyuan3dV2",
   Trellis = "Trellis",
 }
 
@@ -343,8 +344,10 @@ export type Mutation = {
   createTeam: TeamResult;
   deleteApiKey: ApiKeyResult;
   deleteShareableBoard: ShareableBoardResult;
+  disableTeam: TeamResult;
   disconnectTelegram: AccountResult;
   disconnectTwitter: AccountResult;
+  enableTeam: TeamResult;
   generateImage: GenRequestResult;
   generateModel: GenRequestResult;
   generatePresignedPost: GeneratePresignedPostResult;
@@ -564,6 +567,7 @@ export type ReferralReward = {
   decimals?: Maybe<Scalars["Int"]["output"]>;
   referee: Scalars["String"]["output"];
   referral: Scalars["String"]["output"];
+  referralName: Scalars["String"]["output"];
   tokens?: Maybe<Scalars["String"]["output"]>;
   transactionHash?: Maybe<Scalars["String"]["output"]>;
 };
@@ -815,9 +819,13 @@ export type Team = {
   confirmed: Scalars["Float"]["output"];
   createdAt: Scalars["DateTimeISO"]["output"];
   creator: Scalars["String"]["output"];
+  email?: Maybe<Scalars["String"]["output"]>;
   members: Array<TeamMember>;
   name: Scalars["String"]["output"];
   pending: Scalars["Float"]["output"];
+  referralCode: Scalars["String"]["output"];
+  stripeActiveSubscriptionProduct: Scalars["JSON"]["output"];
+  stripeCustomerId?: Maybe<Scalars["String"]["output"]>;
   type: TeamType;
   updatedAt: Scalars["DateTimeISO"]["output"];
   wallet?: Maybe<Scalars["String"]["output"]>;
@@ -1356,6 +1364,7 @@ export type GetReferralRewardsQuery = {
           __typename?: "ReferralReward";
           _id: string;
           referral: string;
+          referralName: string;
           referee: string;
           creditsPurchaseId?: string | null;
           tokens?: string | null;
@@ -3966,6 +3975,10 @@ export const GetReferralRewardsDocument = {
                             {
                               kind: "Field",
                               name: { kind: "Name", value: "referral" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "referralName" },
                             },
                             {
                               kind: "Field",
