@@ -9,9 +9,9 @@ import ProtectedWrapper from "@/components/wrapper/protected-wrapper";
 
 export default function ReferralPage() {
   return (
-    <main className="h-[100dvh]">
+    <main className="max-h-[calc(100dvh-80px)] h-full overflow-y-scroll scrollbar-w-hidden">
       <ProtectedWrapper Fallback={<ProfileSkeleton />} fallbackUrl="/app">
-        <div className="w-10 mx-auto h-10 mt-5">
+        <div className="w-10 mx-auto h-10 mt-5 ">
           <ReferralHeaderIcon />
         </div>
         <div className="flex items-center justify-center gap-6 flex-col pt-9">
@@ -29,7 +29,7 @@ export default function ReferralPage() {
           <CopyReferralWrapper />
           <HowExportWorks />
         </div>
-        <div className="flex items-center flex-col justify-center  pt-10">
+        <div className="flex items-center flex-col justify-center pt-8">
           <h4 className="text-xl font-medium tracking-tight ">
             Your Referral Rewards
           </h4>
