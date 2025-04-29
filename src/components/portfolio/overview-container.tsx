@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import OverviewTilesContainer from "./overview-tiles";
 import CopyContractAddress from "./copy-contract-address";
+import { BuyBuuButtonNoAppearance } from "./buy-buu-button";
 
 export default function OverviewContainer() {
   const { data } = useBuuPricingData();
@@ -77,18 +78,14 @@ export default function OverviewContainer() {
               >
                 <DexScreenerIcon />
               </Link>
-              <Link
-                target="_blank"
-                href={LINKS.BUY_BUU_JUPITER_AG}
-                className="w-4 h-4"
-              >
+              <BuyBuuButtonNoAppearance className="w-4 h-4">
                 <Image
                   src={JupiterAgIcon}
                   width={250}
                   height={250}
                   alt="jupiter ag swap icon"
                 />
-              </Link>
+              </BuyBuuButtonNoAppearance>
             </div>
           }
         />
