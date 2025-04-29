@@ -32,8 +32,14 @@ export default function CreateAPIForm() {
   const [checked, setIsChecked] = useState(false);
   const { register, handleSubmit, setValue, watch } = useForm<TCreateAPISchema>(
     {
+      defaultValues: {
+        expiresIn: {
+          units: "days",
+          value: 1,
+        },
+      },
       resolver: zodResolver(createAPISchema),
-    },
+    }
   );
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
@@ -44,7 +50,7 @@ export default function CreateAPIForm() {
         setApiKey({
           key: data.key,
           name: data.name,
-        }),
+        })
       );
       dispatch(isApiKeyRetrieved(true));
       queryClient.invalidateQueries({
@@ -57,7 +63,13 @@ export default function CreateAPIForm() {
   function onSubmit(formValues: TCreateAPISchema) {
     const data = formValues;
     if (!checked && data?.expiresIn) {
-      delete data.expiresIn;
+      try {
+        delete data.expiresIn;
+        data.expiresIn = undefined;
+      } catch (error) {
+        if (error) {
+        }
+      }
     }
 
     if (!accessToken) {

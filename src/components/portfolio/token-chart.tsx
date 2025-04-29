@@ -82,7 +82,7 @@ export default function TokenPriceChart() {
                 orientation="left"
                 dx={5} // Move Y-axis labels to the left a bit
                 padding={{ top: 0, bottom: 20 }} // Add padding to Y-axis
-                tickFormatter={(value) => value.toFixed(5)} // Format Y-axis ticks
+                tickFormatter={(value) => `$${value.toFixed(5)}`} // Format Y-axis ticks
               />
 
               <Tooltip content={<CustomTooltip />} />

@@ -10,7 +10,7 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "lint:fix": "next lint --fix",
-    "codegen": "graphql-codegen"
+    "codegen": "graphql-codegen && pnpm format:write"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.31.0",

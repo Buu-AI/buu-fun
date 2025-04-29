@@ -1,6 +1,5 @@
+import { CoinBuu } from "@/assets/icons";
 import Image from "next/image";
-import logo from "@/assets/icons/logo-no-gradient.png";
-import React from "react";
 
 export default function HeaderLogo() {
   return (
@@ -8,9 +7,9 @@ export default function HeaderLogo() {
       <div className="flex bg-[#1C2027] items-center justify-center max-w-max px-1 py-1    rounded-lg ">
         <Image
           className="aspect-square w-10 "
-          src={logo}
-          width={250}
-          height={250}
+          src={CoinBuu}
+          width={500}
+          height={500}
           alt="Bunn.fun logo"
         />
       </div>

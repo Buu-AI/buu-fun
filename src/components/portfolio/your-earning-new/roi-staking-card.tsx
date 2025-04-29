@@ -18,9 +18,14 @@ import {
 import { cn, formatNumberWithFractions } from "@/lib/utils";
 import { ArrowDown } from "lucide-react";
 import { useState } from "react";
-import { calculateROI } from "./roi-calculations";
+import {
+  calculateROI,
+  STAKED_UP_TO,
+  TStakedUptoValues,
+} from "./roi-calculations";
 import RoiDetailedLine from "./roi-detail-line";
 import RoiListInfo from "./roi-list-info";
+import StakedUpButton from "./StakedUpButton";
 
 export default function RoiStakingCard() {
   const { data } = useBuuPricingData();
@@ -40,7 +45,7 @@ export default function RoiStakingCard() {
 
   const [isUsd, setIsUsd] = useState<boolean>(true);
 
-  const [stakedUpto, setStakedTo] = useState<1 | 7 | 30 | 365>(1);
+  const [stakedUpto, setStakedTo] = useState<TStakedUptoValues>(90);
   const [isCompounding, setIsCompounding] = useState<boolean>(true);
   const [compoundDays, setCompoundDays] = useState<1 | 7 | 14 | 30>(1);
 
@@ -69,7 +74,7 @@ export default function RoiStakingCard() {
 
   function calculatePercentage(
     totalROI: number,
-    amount: number | null,
+    amount: number | null
   ): number {
     if (amount && !isNaN(Number(amount)) && Number(amount) > 0) {
       return (totalROI / Number(amount)) * 100;
@@ -227,54 +232,20 @@ export default function RoiStakingCard() {
             Staked up
           </p>
           <div className="flex items-center gap-4 justify-between bg-portfolio-statistics-button-background rounded-md px-2 py-2">
-            <Button
-              onClick={() => {
-                setStakedTo(1);
-              }}
-              variant={stakedUpto === 1 ? "default" : "ghost"}
-              className={cn("w-full", {
-                "hover:text-white text-sm text-muted-foreground/60 transition-all duration-300 ease-in-out hover:bg-buu-button-muted":
-                  stakedUpto !== 1,
-              })}
-            >
-              1D
-            </Button>
-            <Button
-              onClick={() => {
-                setStakedTo(7);
-              }}
-              variant={stakedUpto === 7 ? "default" : "ghost"}
-              className={cn("w-full", {
-                "hover:text-white text-sm text-muted-foreground/60 transition-all duration-300 ease-in-out hover:bg-buu-button-muted":
-                  stakedUpto !== 7,
-              })}
-            >
-              7D
-            </Button>
-            <Button
-              onClick={() => {
-                setStakedTo(30);
-              }}
-              variant={stakedUpto === 30 ? "default" : "ghost"}
-              className={cn("w-full", {
-                "hover:text-white text-sm text-muted-foreground/60 transition-all duration-300 ease-in-out hover:bg-buu-button-muted":
-                  stakedUpto !== 30,
-              })}
-            >
-              30D
-            </Button>
-            <Button
-              onClick={() => {
-                setStakedTo(365);
-              }}
-              variant={stakedUpto === 365 ? "default" : "ghost"}
-              className={cn("w-full", {
-                "hover:text-white text-sm text-muted-foreground/60 transition-all duration-300 ease-in-out hover:bg-buu-button-muted":
-                  stakedUpto !== 365,
-              })}
-            >
-              1Y
-            </Button>
+            {Object.entries(STAKED_UP_TO).map(([key, data]) => {
+              return (
+                <StakedUpButton
+                  key={`staked-up-button-${key}-${data.title.trim()}`}
+                  stakedUpTo={data.value}
+                  title={data.title}
+                  CurrStakedUpto={stakedUpto}
+                  onChange={(value) => {
+                    setStakedTo(value);
+                  }}
+                />
+              );
+            })}
+            
           </div>
         </div>
         <div className="mt-6">
@@ -378,7 +349,7 @@ export default function RoiStakingCard() {
             </div>
           </div>
           <p className="uppercase text-xs font-semibold text-muted-foreground/60">
-            ROI AT Current rates
+            YOUR EXPECTED RETURN (ROI)
           </p>
           <BorderBeam
             initialOffset={0}

@@ -67,11 +67,12 @@ import BackpackIcon from "@/assets/icons/wallets/backpack.png";
 import MagicEdenIcon from "@/assets/icons/wallets/magiceden.png";
 import SolflareIcon from "@/assets/icons/wallets/solflare.png";
 import JupiterAgIcon from "@/assets/icons/jup.ag.png";
-
+import CoinBuu from "@/assets/icons/coin_buu.png";
 export {
   PhantomIcon,
   BackpackIcon,
   MagicEdenIcon,
   SolflareIcon,
   JupiterAgIcon,
+  CoinBuu,
 };
