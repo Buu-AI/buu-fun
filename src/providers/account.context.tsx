@@ -95,7 +95,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
       const processedWallets: WalletInfo[] = [];
 
       // Add user's primary wallet if available
-      if (user?.wallet?.address) {
+      if (user?.wallet?.address && user.wallet.chainType === "solana") {
         processedWallets.push({
           address: user.wallet?.address,
           id: `primary-${user.wallet.address.slice(0, 8)}`,
