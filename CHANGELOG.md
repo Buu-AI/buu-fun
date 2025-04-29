@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.60](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.59...buu-fun-v0.1.60) (2025-04-29)
+
+
+### 🐛 Bugfixes
+
+* scroll on referrals tables scrolling ([dded18b](https://github.com/Buu-AI/buu-fun/commit/dded18b5a8bfff841122430bd65572604e0030a2))
+* scroll on referrals tables scrolling ([4eede0b](https://github.com/Buu-AI/buu-fun/commit/4eede0b01da7112e092e69bdf30bb1bd2365af8f))
+* scroll on referrals tables scrolling ([8cc1219](https://github.com/Buu-AI/buu-fun/commit/8cc12193fa62724e98f67747fdd9e80e75838b5b))
+
 ## [0.1.59](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.58...buu-fun-v0.1.59) (2025-04-29)
 
 
