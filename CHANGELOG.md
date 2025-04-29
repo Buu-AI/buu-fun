@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.61](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.60...buu-fun-v0.1.61) (2025-04-29)
+
+
+### 🐛 Bugfixes
+
+* added privy to be only on chaintype as solana ([e4a058c](https://github.com/Buu-AI/buu-fun/commit/e4a058c8438492c46d45ef49a7cb7d7b1a3a352e))
+* added privy to be only on chaintype as solana ([a5208af](https://github.com/Buu-AI/buu-fun/commit/a5208afdb33fd9964928e4acfaad5ae38a75013c))
+* added privy to be only on chaintype as solana ([d606503](https://github.com/Buu-AI/buu-fun/commit/d6065030b729ac4c378804d0b5c54decb5035219))
+* fixed eth wallet be choosen when creating a user ([0a1056d](https://github.com/Buu-AI/buu-fun/commit/0a1056df0973acab89bab6f1957fbfe0ff911813))
+
 ## [0.1.60](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.59...buu-fun-v0.1.60) (2025-04-29)
 
 
