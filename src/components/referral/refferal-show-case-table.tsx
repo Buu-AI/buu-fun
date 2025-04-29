@@ -34,13 +34,13 @@ export default function ReferralShowcaseTable() {
     }
   }
   return (
-    <Bounded className="max-w-screen-md">
+    <Bounded className="max-w-screen-md ">
       <div
         style={{
           overflow: "hidden",
         }}
         className={cn(
-          "w-full bg-api-key-table-radius overflow-x-auto mt-6 border  border-muted-foreground/10",
+          "w-full bg-api-key-table-radius overflow-x-auto my-4 border  border-muted-foreground/10",
         )}
       >
         <div className="">
