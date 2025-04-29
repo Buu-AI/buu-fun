@@ -15,11 +15,11 @@ export default function HomePagePricingContainer() {
         <div className="w-6 h-6">
           <PricingHeaderIcon />
         </div>
-        <p className="blue-text-clip text-xl">What Creators Are Saying</p>
+        <p className="blue-text-clip text-xl">Select a plan</p>
       </div>
       <div className="flex items-center justify-center flex-col mb-9">
         <h1 className="text-6xl font-medium grayish-text-gradient">Pricing</h1>
-        <p className="font-medium ">
+        <p className="font-medium max-md:text-center ">
           Get access to more generation hours and priority queue
         </p>
       </div>

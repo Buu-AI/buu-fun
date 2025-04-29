@@ -38,8 +38,12 @@ export default function ToolBarToolTips({
 }: TToolBarToolTips) {
   const dispatch = useAppDispatch();
   const { identityToken, login } = useAuthentication();
-  // const {}= usePrivy({})
+
   const queryClient = useQueryClient();
+  // const [acknowledgedRetry] = useLocalStorage({
+  //   key: RETRY_ALLOWED_VERIFIED_STORAGE_KEY,
+  //   defaultValue: false,
+  // });
 
   const { mutate: generateNewImage, isPending } = useMutation({
     mutationFn: mutateGenerateNewImage,
@@ -54,6 +58,7 @@ export default function ToolBarToolTips({
       console.log(error);
     },
   });
+
   const isChatPending = useAppSelector(isSubThreadGenerating);
 
   function handleEvent(events: TToolTipEvents) {
@@ -66,6 +71,7 @@ export default function ToolBarToolTips({
       case "TRY_AGAIN": {
         if (isRetryExceeded(totalGenerations)) {
           toast.error("You have exceeded total number of retries.");
+          return;
         }
         if (isPending) {
           return;
@@ -76,17 +82,18 @@ export default function ToolBarToolTips({
           );
           return;
         }
-        new Array(3).fill(0).map(() => {
-          return generateNewImage({
-            subthreadId: subThreadId,
-            accessToken,
-          });
+        // if (!acknowledgedRetry) {
+        //   dispatch(setRetryModalOpen(true));
+        //   dispatch(setRetrySubthreadId(subThreadId));
+        //   return;
+        // }
+        generateNewImage({
+          subthreadId: subThreadId,
+          accessToken,
         });
+        return;
         break;
       }
-      // case "MODIFY": {
-      //   break;
-      // }
       default: {
         console.log("NOT FOUND");
       }

@@ -24,11 +24,21 @@ const initialState: ChatState = {
     threadId: "",
     subThreads: [],
   },
+  retry: {
+    modalOpened: false,
+    subThreadId: null,
+  },
 };
 const ChatSlice = createSlice({
   name: "Chat",
   initialState,
   reducers: {
+    setRetryModalOpen(state, action: PayloadAction<boolean>) {
+      state.retry.modalOpened = action.payload;
+    },
+    setRetrySubthreadId(state, action: PayloadAction<string | null>) {
+      state.retry.subThreadId = action.payload;
+    },
     setInputFile(state, action: PayloadAction<ImageData | null>) {
       state.inputFile = action.payload;
     },
@@ -236,6 +246,8 @@ export const {
   setNewGenRequest,
   setInputFile,
   setInputImageUrl,
+  setRetryModalOpen,
+  setRetrySubthreadId,
 } = ChatSlice.actions;
 
 export default ChatSlice.reducer;

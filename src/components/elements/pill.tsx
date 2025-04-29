@@ -8,15 +8,20 @@ const pillVariant = cva(
     variants: {
       variant: {
         default: "bg-buu shadow-buu-pill border-buu",
+        destructive: "destructive-pill",
+        orange: "orange-pill",
+        white: "bg-white text-black",
         blue: "border-pill bg-pill-blue shadow-pill-blue",
+        golden: "golden-pill",
       },
       size: {
         default: "px-1.5 py-1",
+        sm: "px-3 py-0.5 text-xs",
       },
     },
   },
 );
-
+export type TPillVariant = VariantProps<typeof pillVariant>;
 export default function Pill({
   className,
   children,

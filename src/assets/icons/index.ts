@@ -12,8 +12,9 @@ import DownloadIcon from "./download";
 import FilterIcon from "./filter";
 import MaximizeIcon from "./maximize";
 import RetryIcon from "./retry";
-
+import ArrowLeft from "@/assets/icons/arrow-left.png";
 export {
+  ArrowLeft,
   AddImage,
   ArrowUp,
   BoneIcon,
@@ -65,5 +66,13 @@ import PhantomIcon from "@/assets/icons/wallets/phantom.png";
 import BackpackIcon from "@/assets/icons/wallets/backpack.png";
 import MagicEdenIcon from "@/assets/icons/wallets/magiceden.png";
 import SolflareIcon from "@/assets/icons/wallets/solflare.png";
-
-export { PhantomIcon, BackpackIcon, MagicEdenIcon, SolflareIcon };
+import JupiterAgIcon from "@/assets/icons/jup.ag.png";
+import CoinBuu from "@/assets/icons/coin_buu.png";
+export {
+  PhantomIcon,
+  BackpackIcon,
+  MagicEdenIcon,
+  SolflareIcon,
+  JupiterAgIcon,
+  CoinBuu,
+};

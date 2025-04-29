@@ -5,7 +5,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { SUBSCRIPTION_PLANS } from "@/constants/subscription/subscription-plans";
 import { useAppHomeDispatch, useAppHomeSelector } from "@/hooks/redux-home";
 import { setSubscriptionModelPlanType } from "@/lib/redux/features/subscription";
-import { capitalizeFirstLetter, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 export default function PricingWrapper() {
   const Plan = useAppHomeSelector(
@@ -47,7 +47,7 @@ export default function PricingWrapper() {
                 href="/app"
                 className={buttonVariants({ className: "w-full" })}
               >
-                Select {capitalizeFirstLetter(Plan)} Plan
+                Sign up now
               </Link>
             }
           />

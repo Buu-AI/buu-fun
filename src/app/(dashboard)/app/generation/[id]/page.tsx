@@ -1,4 +1,6 @@
 import BottomBarContainer from "@/components/chat-input/bottom-bar-container";
+import RetryConfirmationDialog from "@/components/generation/retry-confirmation-dialog";
+import ThreadsChatInitializer from "@/components/generation/threads-chat-initializer";
 import ThreadsWrapper from "@/components/generation/threads-wrapper";
 import { DndKitProvider } from "@/providers/dnd-kit-provider";
 
@@ -15,8 +17,8 @@ export default async function NewChatPage({ params }: TNewChatPage) {
         {/* Background blur effect that stays at bottom nearby chat */}
 
         {/* Centered main content with Help cards */}
+        <ThreadsChatInitializer threadId={threadId} />
         <ThreadsWrapper threadId={threadId} />
-
         {/* Bottom input section */}
         <div className="lg:mr-[0.15vw]">
           <BottomBarContainer
@@ -26,6 +28,7 @@ export default async function NewChatPage({ params }: TNewChatPage) {
           />
         </div>
       </main>
+      <RetryConfirmationDialog />
     </DndKitProvider>
   );
 }

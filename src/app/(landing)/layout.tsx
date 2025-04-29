@@ -1,11 +1,12 @@
 import "@/app/globals.css";
+import CratePopover from "@/components/(home)/CratePopover";
 import SmoothScrollWrapper from "@/components/(home)/scroll-smoother";
 import { constructMetadata } from "@/lib/construct-metadata";
 import HomeStoreProvider from "@/providers/home-redux";
 import { GoogleAnalytics } from "@next/third-parties/google";
-
 import type { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
+import Script from "next/script";
 const BricolageGrotesque = Bricolage_Grotesque({
   variable: "--font-bricolage-grotesque",
   subsets: ["latin"],
@@ -54,11 +55,18 @@ export default function RootLayout({
       {/* <head>
         <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
       </head> */}
+
+      <Script
+        id="cookieyes"
+        type="text/javascript"
+        src="https://cdn-cookieyes.com/client_data/ac51e3b0cec858c94943219d/script.js"
+      />
       {/* overflow-hidden */}
       <body className={`${BricolageGrotesque.className} antialiased dark   `}>
         <HomeStoreProvider>
           <SmoothScrollWrapper>{children}</SmoothScrollWrapper>
         </HomeStoreProvider>
+        <CratePopover />
       </body>
       <GoogleAnalytics gaId="G-DDL82EPESF" />
     </html>

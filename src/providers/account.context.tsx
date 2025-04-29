@@ -1,5 +1,6 @@
 "use client";
 import {
+  ConnectedSolanaWallet,
   LoginModalOptions,
   useIdentityToken,
   usePrivy,
@@ -24,7 +25,8 @@ interface WalletInfo {
   id: string;
   name: string;
   icon?: string;
-  chainType?: string;
+  chainType?: "ethereum" | "solana";
+  walletData?: ConnectedSolanaWallet | undefined;
 }
 
 interface AuthenticationContextType {
@@ -60,16 +62,19 @@ const getWalletIcon = (connector: string): string => {
 
 export const AuthenticationProvider = ({ children }: Props) => {
   const [activeWallet, setActiveWallet] = useState<WalletInfo | undefined>();
+
   const [allWallets, setAllWallets] = useState<WalletInfo[]>([]);
   const [isProcessingWallets, setIsProcessingWallets] = useState(false);
 
   const { ready, authenticated, user, login, logout, isModalOpen } = usePrivy();
+
   const { identityToken } = useIdentityToken();
   const {
     wallets: solanaWallets,
     ready: isSolanaReady,
     exportWallet,
   } = useSolanaWallets();
+
   const { wallets: evmWallets, ready: isEVMReady } = useWallets();
   const EvmWalletDep = evmWallets.length > 0 ? isEVMReady : null;
   const SolanaWalletsDep = solanaWallets.length > 0 ? isSolanaReady : null;
@@ -95,7 +100,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
       // Add user's primary wallet if available
       if (user?.wallet?.address) {
         processedWallets.push({
-          address: user.wallet.address,
+          address: user.wallet?.address,
           id: `primary-${user.wallet.address.slice(0, 8)}`,
           name: user.wallet.walletClientType ?? "Privy",
           chainType: user.wallet.chainType,
@@ -125,6 +130,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
         solanaWallets.forEach((wallet) => {
           if (wallet?.address) {
             processedWallets.push({
+              walletData: wallet,
               address: wallet.address,
               id: wallet.meta?.id || `solana-${wallet.address.slice(0, 8)}`,
               name: wallet.meta?.name || "Solana Wallet",

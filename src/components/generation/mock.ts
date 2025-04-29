@@ -238,3 +238,25 @@ export const MockData: { items: TSubthread[] } = {
   //     pages: 1,
   //   },
 };
+
+export const mockReferralReward: {
+  __typename?: "ReferralReward";
+  _id: string;
+  referral: string;
+  referee: string;
+  creditsPurchaseId?: string | null;
+  tokens?: string | null;
+  decimals?: number | null;
+  transactionHash?: string | null;
+  createdAt: string;
+} = {
+  __typename: "ReferralReward",
+  _id: "reward_abc123",
+  referral: "user_referral_001",
+  referee: "user_referee_002",
+  creditsPurchaseId: "purchase_xyz789",
+  tokens: "1500000000000000000", // 1.5 tokens if decimals = 18
+  decimals: 18,
+  transactionHash: "0xabcdef1234567890abcdef1234567890abcdef12",
+  createdAt: new Date().toISOString(), // or just `new Date()`
+};
