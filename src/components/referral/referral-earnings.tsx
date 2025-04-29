@@ -16,7 +16,7 @@ export default function ReferralEarnings() {
       }, 0)
     : 0;
   return (
-    <div className="flex items-center justify-center  max-w-sm w-full  mt-5    gap-5">
+    <div className="flex items-center justify-center  max-w-sm w-full  mt-4 gap-5">
       <div className="flex items-center justify-start w-full   flex-col">
         <h3 className=" font-medium text-buu-muted-text">Total Earnings</h3>
         <div className="text-2xl font-medium">
