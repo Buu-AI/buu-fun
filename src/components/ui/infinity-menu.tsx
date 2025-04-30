@@ -1,10 +1,10 @@
 import { ArrowLeft } from "@/assets/icons";
-import { LINKS } from "@/constants/social-links";
+import GoldOne from "@/assets/icons/medals/gold-1";
 import { cn } from "@/lib/utils";
 import { mat4, quat, vec2, vec3 } from "gl-matrix";
 import { default as NextImage } from "next/image";
-import Link from "next/link";
 import { FC, MutableRefObject, useEffect, useRef, useState } from "react";
+import Pill, { TPillVariant } from "../elements/pill";
 
 // -------- Shader Sources --------
 
@@ -61,7 +61,6 @@ void main() {
     vInstanceId = gl_InstanceID;
 }
 `;
-
 const discFragShaderSource = `#version 300 es
 precision highp float;
 
@@ -94,7 +93,7 @@ void main() {
                      containerAspect / imageAspect);
     
     // Rotate 180 degrees and adjust UVs for cover
-     vec2 st = vec2(vUvs.x, vUvs.y);
+    vec2 st = vec2(vUvs.x, 1.0 - vUvs.y);
     st = (st - 0.5) * scale + 0.5;
     
     // Clamp coordinates to prevent repeating
@@ -356,47 +355,28 @@ class IcosahedronGeometry extends Geometry {
 }
 
 class DiscGeometry extends Geometry {
-  constructor(width = 1.33, height = 1) {
+  constructor(steps = 4, radius = 1) {
     super();
-    // Create a 4:3 rectangle (width = 4/3, height = 1)
-    const halfWidth = width / 2;
-    const halfHeight = height / 2;
+    const safeSteps = Math.max(4, steps);
+    const alpha = (2 * Math.PI) / safeSteps;
 
-    // Add vertices (4 corners of rectangle)
-    this.addVertex(
-      -halfWidth,
-      -halfHeight,
-      0, // bottom-left
-      halfWidth,
-      -halfHeight,
-      0, // bottom-right
-      halfWidth,
-      halfHeight,
-      0, // top-right
-      -halfWidth,
-      halfHeight,
-      0, // top-left
-    );
+    // center vertex
+    this.addVertex(0, 0, 0);
+    this.lastVertex.uv[0] = 0.5;
+    this.lastVertex.uv[1] = 0.5;
 
-    // Set UV coordinates for each vertex
-    this.vertices[0].uv[0] = 0;
-    this.vertices[0].uv[1] = 1; // bottom-left
-    this.vertices[1].uv[0] = 1;
-    this.vertices[1].uv[1] = 1; // bottom-right
-    this.vertices[2].uv[0] = 1;
-    this.vertices[2].uv[1] = 0; // top-right
-    this.vertices[3].uv[0] = 0;
-    this.vertices[3].uv[1] = 0; // top-left
+    for (let i = 0; i < safeSteps; ++i) {
+      const x = Math.cos(alpha * i);
+      const y = Math.sin(alpha * i);
+      this.addVertex(radius * x, radius * y, 0);
+      this.lastVertex.uv[0] = x * 0.5 + 0.5;
+      this.lastVertex.uv[1] = y * 0.5 + 0.5;
 
-    // Add faces (2 triangles that form the rectangle)
-    this.addFace(
-      0,
-      2,
-      3, // second triangle
-      0,
-      1,
-      2, // first triangle
-    );
+      if (i > 0) {
+        this.addFace(0, i, i + 1);
+      }
+    }
+    this.addFace(0, safeSteps, 1);
   }
 }
 
@@ -737,7 +717,8 @@ class ArcballControl {
 
 // -------- InfiniteGridMenu --------
 
-interface MenuItem {
+export interface MenuItem {
+  winner: number;
   image: string;
   link: string;
   title: string;
@@ -821,7 +802,7 @@ class InfiniteGridMenu {
   public camera: Camera = {
     matrix: mat4.create(),
     near: 0.1,
-    far: 40,
+    far: 60,
     fov: Math.PI / 4,
     aspect: 1,
     position: vec3.fromValues(0, 0, 3),
@@ -930,7 +911,7 @@ class InfiniteGridMenu {
     };
 
     // Geometry
-    this.discGeo = new DiscGeometry(3 / 4, 1);
+    this.discGeo = new DiscGeometry(56, 1);
     this.discBuffers = this.discGeo.data;
     this.discVAO = makeVertexArray(
       gl,
@@ -1255,7 +1236,7 @@ class InfiniteGridMenu {
 
     this.camera.position[2] +=
       (cameraTargetZ - this.camera.position[2]) / damping;
-    this.updateCameraMatrix(-0.5);
+    this.updateCameraMatrix(0);
   }
 
   private findNearestVertexIndex(): number {
@@ -1292,6 +1273,7 @@ class InfiniteGridMenu {
 
 const defaultItems: MenuItem[] = [
   {
+    winner: 1,
     image: "https://picsum.photos/900/900?grayscale",
     link: "https://google.com/",
     title: "",
@@ -1311,7 +1293,7 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
   ) as MutableRefObject<HTMLCanvasElement | null>;
   const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
   const [isMoving, setIsMoving] = useState<boolean>(false);
-
+  console.log(activeItem);
   useEffect(() => {
     const canvas = canvasRef.current;
     let sketch: InfiniteGridMenu | null = null;
@@ -1347,64 +1329,215 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, [items]);
+  const handleButtonClick = () => {
+    if (!activeItem?.link) return;
+    if (activeItem.link.startsWith("http")) {
+      window.open(activeItem.link, "_blank");
+    } else {
+      // internal route logic here
+      console.log("Internal route:", activeItem.link);
+    }
+  };
 
   return (
     <div className="relative w-full h-full">
       <canvas
         id="infinite-grid-menu-canvas"
         ref={canvasRef}
-        className="cursor-grab w-full h-full  overflow-hidden relative outline-none active:cursor-grabbing"
+        className="cursor-grab w-full h-full overflow-hidden relative outline-none  active:cursor-grabbing"
       />
 
+      <div className="absolute md:hidden block  top-0 left-0 h-full w-full ">
+        <div className="relative h-full w-full  ">
+          <div className=" top-[15%] relative h-full w-full ">
+            <div className="mx-auto flex items-center justify-center w-full">
+              <Pill className="flex font-medium max-w-max px-3 text-xs items-center justify-center">
+                100% generated with Buu AI
+              </Pill>{" "}
+            </div>
+            <h2
+              className={cn(
+                "select-none  text-4xl md:text-7xl uppercase  text-center ",
+                " tracking-tighter leading-normal",
+              )}
+            >
+              <span className="grayish-text-gradient ">Monthly JAM</span>
+              <br />
+              <span className="leading-3 grayish-text-gradient tracking-normal font-medium text-6xl md:text-9xl">
+                Series
+              </span>{" "}
+            </h2>
+            <p className="text-center px-4 font-medium tracking-tight">
+              Best Creators Get Paid Every Month. Join Our Game Jams Program Now
+            </p>
+          </div>
+        </div>
+        <div className="absolute top-[80%]  w-full ">
+          <div className="flex items-center justify-center">
+            <button
+              onClick={handleButtonClick}
+              // href={LINKS.BUU_MONTHLY_JAM}
+              className="bg-white xl:self-center max-w-max py-2 px-2.5 rounded-xl flex"
+            >
+              <div className="flex gap-2 items-center  ">
+                <div className="flex items-center border border-blue-300/40 rounded-md overflow-hidden justify-center">
+                  <NextImage
+                    src={ArrowLeft}
+                    width={100}
+                    className="w-8 h-8"
+                    height={100}
+                    alt="Star Icon"
+                  />
+                </div>
+                <p className="text-black font- ">Read more</p>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
       {activeItem && (
         <>
-          {/* Title */}
+          {/* Winner bar */}
           <div
             className={cn(
-              "absolute left-[1%]   flex  flex-col xl:left-[10%] top-[40%]",
+              "absolute select-none top-[70%] md:top-[20%] left-[50%] transform -translate-x-1/2 ",
+              "transition-all ease-[cubic-bezier(0.25,0.1,0.25,1.0)]",
               {
-                "opacity-0 pointer-events-none duration-[100ms]": isMoving,
+                hidden: activeItem.winner > 3,
+                "opacity-0 pointer-events-none duration-[100ms] translate-x-[-60%] -translate-y-1/2":
+                  isMoving,
+                "opacity-100 pointer-events-auto duration-[500ms]  md:-translate-y-1/2":
+                  !isMoving,
               },
             )}
           >
+            <div className="flex select-none">
+              <Pill
+                variant={((): TPillVariant["variant"] => {
+                  if (activeItem.winner === 1) {
+                    return "golden";
+                  }
+                  if (activeItem.winner === 2) {
+                    return "blue";
+                  }
+                  if (activeItem.winner === 3) {
+                    return "orange";
+                  }
+
+                  return "golden";
+                })()}
+                className={cn({
+                  "!bg-[#C0C0C0]": activeItem.winner === 2,
+                })}
+              >
+                <div
+                  className={cn("w-10 relative  h-10  z-50", {
+                    "text-yellow-400": activeItem.winner === 1,
+                    "text-orange-500": activeItem.winner === 3,
+                  })}
+                >
+                  <GoldOne />
+                  <p
+                    className={cn(
+                      "absolute top-1.5 left-[42%]  leading-none text-white text-sm font-bold",
+                      {
+                        "text-[#C0C0C0]": activeItem.winner === 2,
+                        "left-[40%]": activeItem.winner === 2,
+                        "text-gray-600": activeItem.winner === 2,
+                      },
+                    )}
+                  >
+                    {activeItem.winner}
+                  </p>
+                </div>
+                <p
+                  className={cn("font-medium", {
+                    "text-gray-800 ": activeItem.winner === 2,
+                  })}
+                >
+                  {" "}
+                  Winner
+                </p>
+              </Pill>
+            </div>
+          </div>
+          {/* Title */}
+          <div className="absolute md:left-[1rem] max-md:hidden top-[10%] md:top-1/2 transform md:translate-x-[20%] transition-all  md:-translate-y-1/2">
+            <div
+              className={cn("mx-auto flex items-center justify-center", {
+                "opacity-0 pointer-events-none duration-[500ms] translate-x-[-60%] -translate-y-1/2":
+                  isMoving,
+              })}
+            >
+              <Pill className="flex font-medium max-w-max px-3 text-sm items-center justify-center">
+                100% generated with Buu AI
+              </Pill>
+            </div>
             <h2
               className={cn(
-                "select-none text-7xl opacity-100 pointer-events-auto duration-[500ms]  uppercase transform   transition-all ease-[cubic-bezier(0.25,0.1,0.25,1.0)] xl:text-center tracking-tighter leading-normal ",
+                "select-none  text-4xl md:text-7xl  max-md:w-full max-md:text-center ",
+                "xl:text-center tracking-tighter leading-normal",
+                "uppercase",
+                "ease-[cubic-bezier(0.25,0.1,0.25,1.0)]",
                 {
                   "opacity-0 pointer-events-none duration-[100ms]": isMoving,
+                  "opacity-100 pointer-events-auto duration-[500ms]": !isMoving,
                 },
               )}
             >
-              <span className="grayish-text-gradient">Monthly JAM</span>
-              <br />
-              <span className="leading-3 grayish-text-gradient tracking-normal font-medium text-9xl">
-                Series
+              <span className="grayish-text-gradient text-nowrap">
+                Monthly JAM
               </span>
+              <br />
+              <span className="leading-3 grayish-text-gradient tracking-normal font-medium text-6xl md:text-9xl">
+                Series
+              </span>{" "}
             </h2>
+          </div>
 
-            {/* Description */}
-            <p
-              className={`select-none   max-w-xl text-left xl:text-center text-balance text-[1.5rem] transition-all ease-[cubic-bezier(0.25,0.1,0.25,1.0)] `}
-            >
-              {/*  ${
-            isMoving
-              ? "opacity-0 pointer-events-none duration-[100ms] translate-x-[-60%] -translate-y-1/2"
-              : "opacity-100 pointer-events-auto duration-[500ms] translate-x-[-90%] -translate-y-1/2"
-          } */}
-              Best Creators Get Paid Every Month. Join Our Game Jams Program Now
-            </p>
+          {/* Description */}
+          <p
+            className={cn(
+              // Base classes
+              "select-none absolute max-md:w-full max-md:hidden md:max-w-[15ch]",
+              "max-md:text-lg max-md:text-center md:text-[1.5rem] md:top-1/2 max-md:mt-2 top-[23%] max-md:left-0 md:right-[1%]",
+              "transition-all ease-[cubic-bezier(0.25,0.1,0.25,1.0)]",
+              {
+                "opacity-0 pointer-events-none duration-[100ms] translate-x-[-60%] -translate-y-1/2":
+                  isMoving,
+                "opacity-100 pointer-events-auto duration-[500ms] md:translate-x-[-90%] md:-translate-y-1/2":
+                  !isMoving,
+              },
+            )}
+          >
+            Best Creators Get Paid Every Month. Join Our Game Jams Program Now
+          </p>
 
+          {/* Action Button */}
+          {/* <div
+            className={cn(
+              "absolute left-1/2 z-10 cursor-pointer transition-all",
+              "ease-[cubic-bezier(0.25,0.1,0.25,1.0)]",
+              " mt-4 max-w-max py-2 px-2.5 rounded-xl flex",
+              {
+                "bottom-[-80px] opacity-0 pointer-events-none duration-[100ms] scale-0 -translate-x-1/2":
+                  isMoving,
+                "bottom-[3.8em] opacity-100 pointer-events-auto duration-[500ms] scale-100 -translate-x-1/2":
+                  !isMoving,
+              },
+            )}
+          >
             <Link
               href={LINKS.BUU_MONTHLY_JAM}
               target="_blank"
               className="bg-white xl:self-center mt-4 max-w-max py-2 px-2.5 rounded-xl flex"
             >
               <div className="flex gap-2 items-center  ">
-                <div className="max-w-[28px] w-full flex items-center border border-blue-300/40 rounded-md overflow-hidden justify-center">
+                <div className="flex items-center border border-blue-300/40 rounded-md overflow-hidden justify-center">
                   <NextImage
                     src={ArrowLeft}
                     width={100}
-                    className="w-full"
+                    className="w-8 h-8"
                     height={100}
                     alt="Star Icon"
                   />
@@ -1412,9 +1545,31 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
                 <p className="text-black font- ">Read more</p>
               </div>
             </Link>
-          </div>
-
-          {/* Action Button */}
+          </div> */}
+          <button
+            onClick={handleButtonClick}
+            className={`absolute  select-none max-md:hidden left-1/2 z-10
+          w-[60px]
+          h-[60px]
+          grid
+          place-items-center
+          blue-plus-icon-gradient
+          rounded-full
+          cursor-pointer
+          transition-all
+          ease-[cubic-bezier(0.25,0.1,0.25,1.0)]
+          icon-blue-with-shadow
+          ${
+            isMoving
+              ? "bottom-[-80px] opacity-0 pointer-events-none duration-[100ms] scale-0 -translate-x-1/2"
+              : "top-[80%] opacity-100 pointer-events-auto duration-[500ms] scale-100 -translate-x-1/2"
+          }
+        `}
+          >
+            <p className="select-none relative text-gray-200  top-[2px] text-[26px]">
+              &#x2197;
+            </p>
+          </button>
         </>
       )}
     </div>

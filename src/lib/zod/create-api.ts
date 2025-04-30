@@ -17,7 +17,8 @@ export const createAPISchema = z.object({
       units: z.enum(ExpirationUnitEnums),
       value: z.number(),
     })
-    .optional(),
+    .optional()
+    .nullable(),
 });
 
 export type TCreateAPISchema = z.infer<typeof createAPISchema>;

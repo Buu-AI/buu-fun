@@ -21,6 +21,7 @@ export default {
       colors: {
         buu: {
           DEFAULT: "rgba(28, 32, 39, 0.36)",
+          blue: "#78D8FC",
           button: {
             DEFAULT: "#1a2129",
             muted: "rgba(26, 33, 41, 0.36);",

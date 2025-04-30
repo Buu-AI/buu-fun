@@ -110,7 +110,7 @@ export default function FeatureTextSlider({ index }: TFeatureTextSlider) {
   }, [index]);
   return (
     <div className="w-full  h-full   relative overflow-hidden">
-      <div className="w-[100%] max-md:px-2  aspect-square    -bottom-[64%] absolute mx-auto   rounded-full">
+      <div className="w-[100%] max-md:px-2  aspect-square    -bottom-[80%] absolute mx-auto   rounded-full">
         <div
           className=" rounded-full  aspect-square border-green-300"
           ref={containerRef}

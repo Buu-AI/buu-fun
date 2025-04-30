@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 226° 32% 8% */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -766,6 +765,11 @@ body {
   box-shadow: 0px 0px 10.5px 3px rgba(179, 187, 197, 0.2) inset;
 }
 
+.golden-pill {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 215, 0, 0.5); /* Gold color */
+  box-shadow: 0px 0px 10.5px 3px rgba(179, 187, 197, 0.2) inset;
+}
 .destructive-pill {
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 70, 70, 0.5);
@@ -887,4 +891,18 @@ body {
   background: rgba(28, 32, 39, 0.4);
   box-shadow: 0px 0px 46.6px 3px rgba(33, 42, 52, 0.8) inset;
   backdrop-filter: blur(10px);
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.bg-roi-accordion {
+  background: rgba(15, 17, 22, 0.5);
+}
+
+.bg-roi-shadow {
+  background: rgba(45, 50, 60, 0.70);
+  box-shadow: 0px 0px 30.2px 3px rgba(52, 59, 66, 0.8) inset;
+  backdrop-filter: blur(25px);
 }

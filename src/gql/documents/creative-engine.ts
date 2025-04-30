@@ -352,6 +352,7 @@ export const GetReferralRewardsQuery = gql`
         items {
           _id
           referral
+          referralName
           referee
           creditsPurchaseId
           tokens

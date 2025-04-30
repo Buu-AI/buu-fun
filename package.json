@@ -10,7 +10,7 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "lint:fix": "next lint --fix",
-    "codegen": "graphql-codegen"
+    "codegen": "graphql-codegen && pnpm format:write"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.31.0",
@@ -22,8 +22,8 @@
     "@mantine/hooks": "^7.17.0",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
-    "@next/mdx": "^15.2.3",
-    "@next/third-parties": "^15.2.2",
+    "@next/mdx": "15.3.1",
+    "@next/third-parties": "15.3.1",
     "@nextui-org/react": "^2.6.11",
     "@privy-io/react-auth": "^2.4.5",
     "@radix-ui/react-accordion": "^1.2.3",
@@ -53,6 +53,7 @@
     "@tanstack/react-query-devtools": "^5.66.7",
     "@types/mdx": "^2.0.13",
     "@types/three": "^0.173.0",
+    "@widgetbot/crate": "3",
     "bn.js": "^5.2.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -71,12 +72,12 @@
     "lucide-react": "^0.475.0",
     "luxon": "^3.6.1",
     "motion": "^12.4.5",
-    "next": "15.1.7",
+    "next": "15.3.1",
     "p-queue": "^8.1.0",
     "pretty-ms": "^9.2.0",
-    "react": "^19.0.0",
+    "react": "19.1.0",
     "react-compare-slider": "^3.1.0",
-    "react-dom": "^19.0.0",
+    "react-dom": "19.1.0",
     "react-dropzone": "^14.3.8",
     "react-hook-form": "^7.54.2",
     "react-hot-toast": "^2.5.2",
@@ -96,10 +97,10 @@
     "@types/bn.js": "^5.1.6",
     "@types/luxon": "^3.6.2",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "19.1.2",
+    "@types/react-dom": "19.1.2",
     "eslint": "^9",
-    "eslint-config-next": "15.1.7",
+    "eslint-config-next": "15.3.1",
     "postcss": "^8",
     "prettier": "3.5.1",
     "tailwindcss": "^3.4.1",
@@ -121,6 +122,10 @@
       "tiny-secp256k1",
       "usb",
       "utf-8-validate"
-    ]
+    ],
+    "overrides": {
+      "@types/react": "19.1.2",
+      "@types/react-dom": "19.1.2"
+    }
   }
 }

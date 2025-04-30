@@ -4,6 +4,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import ContentContainer from "./content-container";
 import MobileMockCard from "./mobile-mock-card";
+import { contentSections } from "@/constants/home/how-to-section";
+import { useMediaQuery } from "@mantine/hooks";
 
 export default function HowToContainer() {
   const howToRef = useRef<HTMLDivElement>(null);
@@ -11,43 +13,7 @@ export default function HowToContainer() {
   const [showModel, setShowModel] = useState(false);
   const isModelShown = useRef(false);
   const cleanup = useRef<() => void>(() => {});
-
-  // Memoized content to prevent unnecessary re-renders
-  const contentSections = [
-    {
-      title: "Describe",
-      index: "01",
-      subTitle: (
-        <>
-          Input <br />
-          Your Idea
-        </>
-      ),
-      subDescription: "",
-    },
-    {
-      title: "Customize",
-      index: "02",
-      subTitle: (
-        <>
-          Customize <br />
-          Your Model
-        </>
-      ),
-      subDescription: "",
-    },
-    {
-      title: "Integrate",
-      index: "03",
-      subTitle: (
-        <>
-          Export <br />
-          and Integrate
-        </>
-      ),
-      subDescription: "",
-    },
-  ];
+  const is650 = useMediaQuery("(min-width: 650px)");
 
   // Setup ScrollTrigger with proper cleanup
   const setupScrollTrigger = useCallback(() => {
@@ -85,6 +51,7 @@ export default function HowToContainer() {
           anticipatePin: 1,
           snap: {
             snapTo: (progress) => {
+              if (!is650) return progress;
               if (sections.length <= 1) return progress;
               const index = Math.round(progress * (sections.length - 1));
               return index / (sections.length - 1);
@@ -128,6 +95,7 @@ export default function HowToContainer() {
     cleanup.current = () => {
       ctx.revert();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Optimized resize handler with debounce
@@ -162,11 +130,10 @@ export default function HowToContainer() {
       cleanup.current();
     };
   }, [setupScrollTrigger]);
-
   return (
     <div className="h-screen trig overflow-hidden relative">
       {/* Horizontal Scroll Section */}
-      <div ref={howToRef} className="how-to-container flex w-max">
+      <div ref={howToRef} className="how-to-container relative z-50 flex w-max">
         {contentSections.map((section) => (
           <ContentContainer
             key={section.index}
@@ -179,10 +146,10 @@ export default function HowToContainer() {
       </div>
 
       {/* Mobile Image with Rotation */}
-      <div className="absolute w-full h-full -top-12 left-0 flex justify-center items-center">
+      <div className="absolute w-full h-full md:-top-12 top-[10%]  left-0 flex justify-center items-center">
         <div
           ref={mobileRef}
-          className="max-h-[584px] p-2 border-2 border-muted-foreground/20 rounded-[40px] flex h-full w-full max-w-[300px]"
+          className="max-h-[584px] max-md:pointer-events-none p-2 border-2 border-muted-foreground/20 rounded-[40px] flex max-md:max-h-max w-full max-w-[270px] md:max-w-[300px]"
         >
           <MobileMockCard showModel={showModel} />
         </div>

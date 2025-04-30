@@ -1,42 +1,28 @@
-import { LoaderImageMap } from "@/assets/Image";
-import InfiniteMenu from "@/components/ui/infinity-menu";
+import InfiniteMenu, { MenuItem } from "@/components/ui/infinity-menu";
+import { LostCivilization } from "@/constants/home/jam/lost-civilization";
 
-const items = LoaderImageMap.map((item,index) => {
-  return {
-    image: item,
-    link: "https://google.com/",
-    title: `Item ${index}`,
-    description: "Item image",
-  };
-});
-// [
-// {
-//   image: "https://picsum.photos/800/800",
-//   link: "https://google.com/",
-//   title: "Item 1",
-//   description: "This is pretty cool, right?",
-// },
-//   {
-//     image: "https://picsum.photos/900/800",
-//     link: "https://google.com/",
-//     title: "Item 2",
-//     description: "This is pretty cool, right?",
-//   },
-//   {
-//     image: "https://picsum.photos/700/800",
-//     link: "https://google.com/",
-//     title: "Item 3",
-//     description: "This is pretty cool, right?",
-//   },
-//   {
-//     image: "https://picsum.photos/800/700",
-//     link: "https://google.com/",
-//     title: "Item 4",
-//     description: "This is pretty cool, right?",
-//   },
-// ];
-
-import React from "react";
+const items: MenuItem[] = [
+  LostCivilization.submission_5,
+  LostCivilization.submission_2,
+  LostCivilization.winner_3,
+  LostCivilization.submission_1,
+  LostCivilization.winner_3,
+  LostCivilization.winner_2,
+  LostCivilization.submission_4,
+  LostCivilization.winner_3,
+  LostCivilization.winner_1,
+  LostCivilization.submission_2,
+  LostCivilization.submission_1,
+  LostCivilization.winner_2,
+  LostCivilization.submission_5,
+  LostCivilization.winner_2,
+  LostCivilization.winner_1,
+  LostCivilization.submission_4,
+  LostCivilization.submission_3,
+  LostCivilization.winner_3,
+  LostCivilization.submission_3,
+  LostCivilization.winner_1,
+];
 
 export default function JamCard() {
   return (

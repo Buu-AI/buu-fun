@@ -1,13 +1,12 @@
 import { Connection, PublicKey } from "@solana/web3.js";
 import { getClusterUrl } from "./staking";
-
 export async function getTokenBalance({ address }: { address: string }) {
   const publicKey = new PublicKey(address);
   const mint = new PublicKey(
     process?.env?.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL_MINT ?? "",
   );
 
-  const connection = new Connection(getClusterUrl(), "confirmed");
+  const connection = new Connection(getClusterUrl());
 
   const tokenAccount = await connection.getTokenAccountsByOwner(publicKey, {
     mint: mint,

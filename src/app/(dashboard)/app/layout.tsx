@@ -91,6 +91,7 @@ export default function RootLayout({
                     </div>
                   </div>
                 </div>
+                <div id="integrated-terminal" />
                 <SubscriptionDialog />
               </Providers>
             </NextUIProviders>
@@ -98,6 +99,7 @@ export default function RootLayout({
         </ReactQueryProvider>
       </body>
       <GoogleAnalytics gaId="G-DDL82EPESF" />
+      <Script src="https://terminal.jup.ag/main-v3.js" data-preload />
     </html>
   );
 }

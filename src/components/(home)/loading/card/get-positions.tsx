@@ -53,7 +53,7 @@ export const getPositionByIndex = (index: number) => {
       return {
         x: Math.random() * 100 * 0.1,
         y: Math.random() * 100 * 0.1,
-        z: Math.random() * 100 * 0.3,
+        z: Math.random() * 100 * 2,
       };
       break;
     }

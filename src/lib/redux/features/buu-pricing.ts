@@ -17,6 +17,7 @@ type BuuPricingState = {
   streamflowDialogOpen: boolean;
   buyBuuDialogOpen: boolean;
   unclaimedRewardsModalOpen: boolean;
+  roiStakingDialogOpen: boolean;
 };
 
 const initialState: BuuPricingState = {
@@ -25,12 +26,22 @@ const initialState: BuuPricingState = {
   streamflowDialogOpen: false,
   buyBuuDialogOpen: false,
   unclaimedRewardsModalOpen: false,
+  roiStakingDialogOpen: false,
 };
 
 const BuuPricingSlice = createSlice({
   name: "BuuPricing",
   initialState,
   reducers: {
+    setBooleanToggler(
+      state,
+      action: PayloadAction<{
+        key: BooleanKeys<BuuPricingState>;
+        value: boolean;
+      }>,
+    ) {
+      state[action.payload.key] = action.payload.value;
+    },
     setSelectedAmountToStake(state, action: PayloadAction<number>) {
       state.amountToStake = action.payload;
     },
@@ -61,6 +72,7 @@ export const {
   setBuyBuuDialogOpen,
   setStreamflowDialogOpen,
   setTogglers,
+  setBooleanToggler,
 } = BuuPricingSlice.actions;
 
 export default BuuPricingSlice.reducer;
