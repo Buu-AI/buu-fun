@@ -23,7 +23,7 @@ export default function YourEarnings() {
     data?.price ?? 0,
   );
   return (
-    <div className="bg-portfolio-statistics mt-5 rounded-lg">
+    <div className="bg-balance-card mt-5 rounded-lg">
       <div className="px-1  md:px-6 py-6">
         <div className="">
           <div className="flex items-center justify-between">
