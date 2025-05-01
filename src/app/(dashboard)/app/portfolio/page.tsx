@@ -3,6 +3,7 @@ import BuyBuuRedirectDialog from "@/components/portfolio/buy-buu-redirect-dialog
 import HeaderLogo from "@/components/portfolio/header-logo";
 import OverviewContainer from "@/components/portfolio/overview-container";
 import StreamFlowRedirectDialog from "@/components/portfolio/Streamflow-redirect-dialog";
+import TokenBalance from "@/components/portfolio/token-balance";
 import TokenStatistics from "@/components/portfolio/token-statistics";
 import RoiStakingDialog from "@/components/portfolio/your-earning-new/roi-staking-dialog";
 import YourEarnings from "@/components/portfolio/your-earning-new/your-earnings";
@@ -17,6 +18,7 @@ export default function PortfolioPage() {
         <div className="">
           <HeaderLogo />
           <TokenStatistics />
+          <TokenBalance />
           <YourEarnings />
 
           <div className="py-6">{/* <APICapacityCTA /> */}</div>
