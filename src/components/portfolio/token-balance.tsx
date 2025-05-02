@@ -1,16 +1,13 @@
 "use client";
 import {
-  cn,
-  formatNumber,
-  formatNumberWithFractions,
-  formatWithComma,
-} from "@/lib/utils";
-import React from "react";
-import { Button } from "../ui/button";
-import {
   useBuuPricingData,
   useTokenBalance,
 } from "@/hooks/use-pricing-history";
+import {
+  formatNumberWithFractions,
+  formatWithComma
+} from "@/lib/utils";
+import { Button } from "../ui/button";
 
 export default function TokenBalance() {
   const { data: tokenBalance } = useTokenBalance();

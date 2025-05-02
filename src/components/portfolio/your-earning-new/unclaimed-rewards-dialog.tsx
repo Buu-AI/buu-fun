@@ -5,12 +5,10 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle
 } from "@/components/ui/dialog";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { setTogglers } from "@/lib/redux/features/buu-pricing";
-import React from "react";
 import ClaimRewardButton from "./claim-rewards-button";
 import { TUserStakedCard } from "./user-staked-card";
 

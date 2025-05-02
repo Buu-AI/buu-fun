@@ -7,7 +7,6 @@ import {
 import { calcRewards } from "@/lib/streamflow/lib/rewards";
 import { PublicKey } from "@solana/web3.js";
 import BN from "bn.js";
-import { formatUnits } from "../utils";
 
 export async function getUserStakingData({
   publicKey,

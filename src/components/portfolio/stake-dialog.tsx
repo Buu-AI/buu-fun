@@ -7,31 +7,28 @@ import {
   setTogglers,
 } from "@/lib/redux/features/buu-pricing";
 import { executeStakingTransaction } from "@/lib/solana/executeStakingTransaction";
+import { getClusterUrl } from "@/lib/solana/staking";
 import { formatWithComma } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSolanaWallets } from "@privy-io/react-auth";
 import { Connection } from "@solana/web3.js";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
-import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import StakeConfirmButton from "./stake-confirm-button";
-import StakingRewardReview from "./staking-reward-review";
 import StakingSlider from "./staking-slider";
-import { getClusterUrl } from "@/lib/solana/staking";
-import { useSolanaWallets } from "@privy-io/react-auth";
-import { useQueryClient } from "@tanstack/react-query";
 
 export default function StakingDialog() {
   const { wallet, connectSolanaWallet, address } = useAuthentication();
