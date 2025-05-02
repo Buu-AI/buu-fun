@@ -15,18 +15,23 @@ export async function getClaimRewardsTransactions({
   const solanaStakingClient = new SolanaStakingClient({
     clusterUrl: getClusterUrl(),
   });
-  const { ixs: createRewardEntryInstructions } =
-    await solanaStakingClient.prepareCreateRewardEntryInstructions(
-      {
-        stakePool: staking.stakePool,
-        stakePoolMint: staking.stakePoolMint,
-        rewardPoolNonce: staking.rewardPoolNonce,
-        depositNonce: staking.depositNonce,
-        rewardMint: staking.rewardMint,
-        
-      },
-      publicKey
-    );
+  if (
+    !staking.rewardEntry ||
+    staking.rewardEntry.account.claimedAmount === "0"
+  ) {
+    const { ixs: createRewardEntryInstructions } =
+      await solanaStakingClient.prepareCreateRewardEntryInstructions(
+        {
+          stakePool: staking.stakePool,
+          stakePoolMint: staking.stakePoolMint,
+          rewardPoolNonce: staking.rewardPoolNonce,
+          depositNonce: staking.depositNonce,
+          rewardMint: staking.rewardMint,
+        },
+        publicKey
+      );
+    transaction.add(...createRewardEntryInstructions);
+  }
 
   const { ixs: claimInstructions } =
     await solanaStakingClient.prepareClaimRewardsInstructions(
@@ -39,6 +44,7 @@ export async function getClaimRewardsTransactions({
       },
       publicKey
     );
-  transaction.add(...createRewardEntryInstructions, ...claimInstructions);
+
+  transaction.add(...claimInstructions);
   return transaction;
 }

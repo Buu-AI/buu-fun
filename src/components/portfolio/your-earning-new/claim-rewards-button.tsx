@@ -9,15 +9,21 @@ import toast from "react-hot-toast";
 import { TUserStakedCard } from "./user-staked-card";
 import { GeneralClassName } from "@/types";
 import { cn } from "@/lib/utils";
+import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 export default function ClaimRewardButton({
   className,
   ...staking
 }: TUserStakedCard & GeneralClassName) {
+  const [isLoading, setIsLoading] = useState(false);
   const { address, connectSolanaWallet, wallet } = useAuthentication();
   const { wallets } = useSolanaWallets();
+  const query = useQueryClient();
   async function handleClaimRewards() {
     try {
+      setIsLoading(true);
       if (!wallets.length || !address || !wallet) {
         connectSolanaWallet();
         return;
@@ -46,7 +52,14 @@ export default function ClaimRewardButton({
             toast.error("Transaction failed on-chain");
             console.error("Transaction error:", confirmation.value.err);
           } else {
-            toast.success("Staking successful!");
+            await query.invalidateQueries({
+              queryKey: [
+                "get-global-staking-data",
+                "get-user-staking-data",
+                "get-token-balance",
+              ],
+            });
+            toast.success("Rewards claimed successfully!");
           }
         } catch (confirmError) {
           toast.error("Failed to confirm transaction");
@@ -62,21 +75,27 @@ export default function ClaimRewardButton({
           (error instanceof Error ? error.message : "Unknown error")
       );
       console.error("Transaction error:", error);
+    } finally {
+      setIsLoading(false);
     }
   }
   return (
     <Button
-      disabled={
-        Number(staking.rewards) <= 0 ||
-        staking.stakeUnlockedTs >= new Date(Date.now())
-      }
+      disabled={Number(staking.rewards) <= 0 || isLoading}
       onClick={async () => {
         await handleClaimRewards();
       }}
       size={"special"}
       className={cn(className)}
     >
-      <span className="p-3">Claim Rewards</span>
+      {isLoading ? (
+        <>
+          <Loader2 className="h-4 w-4 animate-spin" />
+          Claiming...
+        </>
+      ) : (
+        <span className="p-3">Claim Rewards</span>
+      )}
     </Button>
   );
 }

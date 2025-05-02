@@ -18,6 +18,7 @@ type BuuPricingState = {
   buyBuuDialogOpen: boolean;
   unclaimedRewardsModalOpen: boolean;
   roiStakingDialogOpen: boolean;
+  openStakingModal: boolean;
 };
 
 const initialState: BuuPricingState = {
@@ -27,6 +28,7 @@ const initialState: BuuPricingState = {
   buyBuuDialogOpen: false,
   unclaimedRewardsModalOpen: false,
   roiStakingDialogOpen: false,
+  openStakingModal: false,
 };
 
 const BuuPricingSlice = createSlice({
@@ -38,7 +40,7 @@ const BuuPricingSlice = createSlice({
       action: PayloadAction<{
         key: BooleanKeys<BuuPricingState>;
         value: boolean;
-      }>,
+      }>
     ) {
       state[action.payload.key] = action.payload.value;
     },

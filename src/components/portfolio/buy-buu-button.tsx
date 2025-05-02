@@ -19,7 +19,7 @@ const JupiterIcon = () => {
   );
 };
 
-const config: IInit = {
+export const config: IInit = {
   autoConnect: true,
   displayMode: "modal",
   endpoint: getClusterUrl(),

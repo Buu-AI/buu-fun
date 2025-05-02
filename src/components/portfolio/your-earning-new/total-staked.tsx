@@ -5,12 +5,16 @@ import { useUserStakingData } from "@/hooks/use-staking-data";
 import {
   formatNumber,
   formatUnits,
-  multiplyAndFormatPricing
+  multiplyAndFormatPricing,
 } from "@/lib/utils";
 import StakeBuuButton from "../stake-buu-button";
+import StakingDialog from "../stake-dialog";
+import { useAppDispatch } from "@/hooks/redux";
+import { setBooleanToggler } from "@/lib/redux/features/buu-pricing";
 
 export default function TotalStaked() {
   const { data } = useBuuPricingData();
+  const dispatch = useAppDispatch();
   const {
     userStaking: { data: userStakingData },
     globalStaking: { data: globalStakingData },
@@ -45,7 +49,13 @@ export default function TotalStaked() {
       </div>
       <div className="flex items-center justify-center flex-col gap-2  w-full">
         <StakeBuuButton className="w-full" />
+        <StakingDialog />
         <Button
+          onClick={() => {
+            dispatch(
+              setBooleanToggler({ key: "roiStakingDialogOpen", value: true })
+            );
+          }}
           variant={"special"}
           className="h-[40px]  w-full bg-apr-button border-none"
         >

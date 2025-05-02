@@ -9,16 +9,23 @@ import toast from "react-hot-toast";
 import { TUserStakedCard } from "./user-staked-card";
 import { useAppDispatch } from "@/hooks/redux";
 import { setTogglers } from "@/lib/redux/features/buu-pricing";
+import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function UnstakeButton({
   depositNonce,
   rewards,
+  stakeUnlockedTs,
 }: TUserStakedCard) {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { address, connectSolanaWallet, wallet } = useAuthentication();
   const { wallets } = useSolanaWallets();
+  const query = useQueryClient();
   const dispatch = useAppDispatch();
   async function handleUnstakeTransaction() {
     try {
+      setIsLoading(true);
       if (!wallets.length || !address || !wallet) {
         connectSolanaWallet();
         return;
@@ -53,7 +60,14 @@ export default function UnstakeButton({
             toast.error("Transaction failed on-chain");
             console.error("Transaction error:", confirmation.value.err);
           } else {
-            toast.success("Staking successful!");
+            await query.invalidateQueries({
+              queryKey: [
+                "get-global-staking-data",
+                "get-user-staking-data",
+                "get-token-balance",
+              ],
+            });
+            toast.success("Token has been Unstaked, will credit to your account shortly");
           }
         } catch (confirmError) {
           toast.error("Failed to confirm transaction");
@@ -69,14 +83,16 @@ export default function UnstakeButton({
           (error instanceof Error ? error.message : "Unknown error")
       );
       console.error("Transaction error:", error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   return (
     <Button
+      disabled={isLoading || new Date(stakeUnlockedTs) > new Date()}
       onClick={async () => {
         await handleUnstakeTransaction();
-        // dispatch(setStreamflowDialogOpen(true));
       }}
       variant={"special"}
       className="h-[40px]"

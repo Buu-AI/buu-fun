@@ -5,14 +5,13 @@ export default function UserStakedCards() {
   const {
     userStaking: { data: userStakingData },
   } = useUserStakingData();
-
   return (
     <div className="w-full space-y-3">
       {userStakingData?.userStakes.map((item, index) => {
         return (
           <UserStakedCard
             staking={item}
-            key={`user-staking-card${index}`}
+            key={`user-staking-card-${index}=${item.rewards}-${item.closedTs}-${item.rewardEntry}`}
             decimals={userStakingData.decimals}
           />
         );

@@ -7,6 +7,7 @@ import {
 import { calcRewards } from "@/lib/streamflow/lib/rewards";
 import { PublicKey } from "@solana/web3.js";
 import BN from "bn.js";
+import { formatUnits } from "../utils";
 
 export async function getUserStakingData({
   publicKey,
@@ -26,19 +27,22 @@ export async function getUserStakingData({
   stakePool?: PublicKey;
 }) {
   const rewardPool = rewardPools[0];
-  const userStakeEntries = stakeEntries.filter((stakeEntry) =>
-    new PublicKey(stakeEntry.account.payer).equals(new PublicKey(publicKey)),
-  );
+  const userStakeEntries = stakeEntries.filter((stakeEntry) => {
+    return new PublicKey(stakeEntry.account.payer).equals(
+      new PublicKey(publicKey)
+    );
+  });
+
   const rewardEntriesByStakeEntry = userStakeEntries.map((stakeEntry) => {
     return rewardEntries.filter(
-      (rewardEntry) => rewardEntry.account.stakeEntry === stakeEntry.publicKey,
+      (rewardEntry) => rewardEntry.account.stakeEntry === stakeEntry.publicKey
     );
   });
   const userRewardEntries = rewardEntriesByStakeEntry.reduce(
     (acc, innerRewardEntries) => {
       return acc.concat(innerRewardEntries);
     },
-    [],
+    []
   );
 
   let totalClaimableRewards = new BN(0);
@@ -46,7 +50,7 @@ export async function getUserStakingData({
     const rewardEntry = userRewardEntries.find(
       (rewardEntry) =>
         rewardEntry.account.stakeEntry === stakeEntry.publicKey &&
-        rewardEntry.account.rewardPool === rewardPool.publicKey,
+        rewardEntry.account.rewardPool === rewardPool.publicKey
     );
     const rewardEntryProgram = rewardEntry
       ? {
@@ -78,7 +82,7 @@ export async function getUserStakingData({
           closedTs: new BN(stakeEntry.account.closedTs),
           unstakeTs: new BN(stakeEntry.account.unstakeTs),
           priorTotalEffectiveStake: new BN(
-            stakeEntry.account.priorTotalEffectiveStake,
+            stakeEntry.account.priorTotalEffectiveStake
           ),
           effectiveAmount: new BN(stakeEntry.account.effectiveAmount),
           amount: new BN(stakeEntry.account.amount),
@@ -106,16 +110,17 @@ export async function getUserStakingData({
           rewardAmount: new BN(rewardPool.account.rewardAmount),
           rewardPeriod: new BN(rewardPool.account.rewardPeriod),
         },
-      },
+      }
     );
     totalClaimableRewards = totalClaimableRewards.add(rewards.amount);
 
     const stakeLockedTs = new Date(Number(stakeEntry.account.createdTs) * 1000);
     const stakeUnlockedTs = new Date(
-      stakeLockedTs.getTime() + Number(stakeEntry.account.duration) * 1000,
+      stakeLockedTs.getTime() + Number(stakeEntry.account.duration) * 1000
     );
-
+    const closedTs = stakeEntry.account.closedTs;
     return {
+      closedTs: closedTs,
       staked: stakeEntry.account.amount.toString(),
       duration: stakeEntry.account.duration.toString(),
       stakeLockedTs,
@@ -137,7 +142,7 @@ export async function getUserStakingData({
     (acc, entry) => {
       const { effectiveAmount, amount } = entry.account;
       acc.totalEffectiveAmount = acc.totalEffectiveAmount.add(
-        new BN(effectiveAmount),
+        new BN(effectiveAmount)
       );
       acc.totalAmount = acc.totalAmount.add(new BN(amount));
       return acc;
@@ -145,7 +150,7 @@ export async function getUserStakingData({
     {
       totalEffectiveAmount: new BN(0),
       totalAmount: new BN(0),
-    },
+    }
   );
   const share = new BN(totalUserEffectiveAmount)
     .mul(new BN(10000))
@@ -161,9 +166,9 @@ export async function getUserStakingData({
     },
     {
       totalClaimedAmount: new BN(0),
-    },
+    }
   );
-
+ 
   return {
     decimals: tokenMint.decimals,
     yourTotalStaked: totalUserAmount.toString(),
@@ -171,7 +176,7 @@ export async function getUserStakingData({
     available: totalClaimableRewards.toString(),
     share: share.toNumber() / 100,
     userStakeEntries,
-    userStakes,
+    userStakes: userStakes.filter((item) => item.closedTs === "0"),
   };
 }
 
