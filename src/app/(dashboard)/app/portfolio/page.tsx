@@ -6,7 +6,7 @@ import StreamFlowRedirectDialog from "@/components/portfolio/Streamflow-redirect
 import TokenBalance from "@/components/portfolio/token-balance";
 import TokenStatistics from "@/components/portfolio/token-statistics";
 import RoiStakingDialog from "@/components/portfolio/your-earning-new/roi-staking-dialog";
-import YourEarnings from "@/components/portfolio/your-earnings";
+import YourEarnings from "@/components/portfolio/your-earning-new/your-earnings";
 import Bounded from "@/components/ui/Bounded";
 
 export default function PortfolioPage() {
@@ -20,9 +20,7 @@ export default function PortfolioPage() {
           <TokenStatistics />
           <TokenBalance />
           <YourEarnings />
-          {/* <div className="mb-4">
-              <StakingDataDisplay />
-            </div> */}
+
           <div className="py-6">{/* <APICapacityCTA /> */}</div>
           {/* <div className="flex justify-center flex-wrap place-content-center place-items-center  md:grid md:grid-cols-2  gap-2"> */}
           <div className="w-full">

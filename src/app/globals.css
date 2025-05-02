@@ -885,6 +885,14 @@ body {
   }
 }
 
+
+.bg-total-staked {
+  border-radius: 12px;
+  background: rgba(28, 32, 39, 0.4);
+  box-shadow: 0px 0px 46.6px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(10px);
+}
+
 input[type="number"] {
   -moz-appearance: textfield;
 }

@@ -1,6 +1,5 @@
 import { Connection, PublicKey } from "@solana/web3.js";
 import { getClusterUrl } from "./staking";
-
 export async function getTokenBalance({ address }: { address: string }) {
   const publicKey = new PublicKey(address);
   const mint = new PublicKey(
