@@ -6,7 +6,6 @@ import {
   usePrivy,
   User,
   useSolanaWallets,
-  useWallets,
 } from "@privy-io/react-auth";
 import React, {
   createContext,
@@ -42,6 +41,7 @@ interface AuthenticationContextType {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   login: (options?: LoginModalOptions | React.MouseEvent<any, any>) => void;
   logout: () => Promise<void>;
+  connectSolanaWallet: () => void;
 }
 
 const AuthenticationContext = createContext<
@@ -66,7 +66,8 @@ export const AuthenticationProvider = ({ children }: Props) => {
   const [allWallets, setAllWallets] = useState<WalletInfo[]>([]);
   const [isProcessingWallets, setIsProcessingWallets] = useState(false);
 
-  const { ready, authenticated, user, login, logout, isModalOpen } = usePrivy();
+  const { ready, authenticated, user, login, logout, isModalOpen, linkWallet } =
+    usePrivy();
 
   const { identityToken } = useIdentityToken();
   const {
@@ -75,8 +76,6 @@ export const AuthenticationProvider = ({ children }: Props) => {
     exportWallet,
   } = useSolanaWallets();
 
-  const { wallets: evmWallets, ready: isEVMReady } = useWallets();
-  const EvmWalletDep = evmWallets.length > 0 ? isEVMReady : null;
   const SolanaWalletsDep = solanaWallets.length > 0 ? isSolanaReady : null;
 
   // Process wallets and set them in state
@@ -98,30 +97,13 @@ export const AuthenticationProvider = ({ children }: Props) => {
       const processedWallets: WalletInfo[] = [];
 
       // Add user's primary wallet if available
-      if (user?.wallet?.address) {
+      if (user?.wallet?.address && user.wallet.chainType === "solana") {
         processedWallets.push({
           address: user.wallet?.address,
           id: `primary-${user.wallet.address.slice(0, 8)}`,
           name: user.wallet.walletClientType ?? "Privy",
           chainType: user.wallet.chainType,
           icon: getWalletIcon(user.wallet.walletClientType || ""),
-        });
-      }
-
-      // Process EVM wallets if ready
-      if (isEVMReady && evmWallets.length > 0) {
-        evmWallets.forEach((wallet) => {
-          if (wallet?.address) {
-            processedWallets.push({
-              address: wallet.address,
-              id: wallet.meta?.id || `evm-${wallet.address.slice(0, 8)}`,
-              name: wallet.meta?.name || "EVM Wallet",
-              icon:
-                wallet.meta?.icon ||
-                getWalletIcon(wallet.meta?.name?.toLowerCase() || ""),
-              chainType: "ethereum",
-            });
-          }
         });
       }
 
@@ -146,8 +128,8 @@ export const AuthenticationProvider = ({ children }: Props) => {
       // Remove duplicates
       const uniqueWallets = Array.from(
         new Map(
-          processedWallets.map((wallet) => [wallet.address, wallet]),
-        ).values(),
+          processedWallets.map((wallet) => [wallet.address, wallet])
+        ).values()
       );
 
       setAllWallets(uniqueWallets);
@@ -156,7 +138,7 @@ export const AuthenticationProvider = ({ children }: Props) => {
       if (uniqueWallets.length > 0) {
         // Try to find the wallet that matches user's primary wallet
         const userPrimaryWallet = uniqueWallets.find(
-          (w) => w.address === user?.wallet?.address,
+          (w) => w.address === user?.wallet?.address
         );
 
         if (userPrimaryWallet) {
@@ -179,9 +161,6 @@ export const AuthenticationProvider = ({ children }: Props) => {
     user?.wallet?.address,
     // Only include isEVMReady, isSolanaReady if they have wallets to process
     SolanaWalletsDep,
-    EvmWalletDep,
-    // Include wallet lengths to detect changes
-    evmWallets.length,
     solanaWallets.length,
   ]);
 
@@ -190,6 +169,10 @@ export const AuthenticationProvider = ({ children }: Props) => {
 
   // Get the address from the active wallet
   const address = activeWallet?.address || user?.wallet?.address;
+
+  const connectSolanaWallet = () => {
+    linkWallet({ walletChainType: "solana-only" });
+  };
 
   const value = useMemo(
     () => ({
@@ -217,11 +200,11 @@ export const AuthenticationProvider = ({ children }: Props) => {
       allWallets,
       login,
       logout,
-    ],
+    ]
   );
 
   return (
-    <AuthenticationContext.Provider value={value}>
+    <AuthenticationContext.Provider value={{ ...value, connectSolanaWallet }}>
       {children}
     </AuthenticationContext.Provider>
   );
@@ -231,7 +214,7 @@ export function useAuthentication() {
   const context = useContext(AuthenticationContext);
   if (context === undefined) {
     throw new Error(
-      `useAuthentication must be used within a AuthenticationProvider`,
+      `useAuthentication must be used within a AuthenticationProvider`
     );
   }
   return context;

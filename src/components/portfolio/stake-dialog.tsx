@@ -1,50 +1,51 @@
+"use client";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useTokenBalance } from "@/hooks/use-pricing-history";
 import { useUserStakingData } from "@/hooks/use-staking-data";
-import { setSelectedAmountToStake } from "@/lib/redux/features/buu-pricing";
+import {
+  setSelectedAmountToStake,
+  setTogglers,
+} from "@/lib/redux/features/buu-pricing";
 import { executeStakingTransaction } from "@/lib/solana/executeStakingTransaction";
+import { getClusterUrl } from "@/lib/solana/staking";
 import { formatWithComma } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSolanaWallets } from "@privy-io/react-auth";
 import { Connection } from "@solana/web3.js";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
-import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import StakeConfirmButton from "./stake-confirm-button";
-import StakingRewardReview from "./staking-reward-review";
 import StakingSlider from "./staking-slider";
 
 export default function StakingDialog() {
-  const { wallet } = useAuthentication();
-  // const { data } = useBuuPricingData();
+  const { wallet, connectSolanaWallet, address } = useAuthentication();
+  const { wallets } = useSolanaWallets();
+  const openState = useAppSelector(
+    (state) => state.BuuPricing.openStakingModal
+  );
   const {
     userStaking: { data: userStakingData },
-    // globalStaking: { data: globalStakingData },
   } = useUserStakingData();
-
+  const query = useQueryClient();
   const { data: tokenData } = useTokenBalance();
   const earnings = tokenData?.value.uiAmount ?? 0;
-  // const earnings = formatUnits(
-  //   userStakingData?.yourEarnings ?? "0",
-  //   userStakingData?.decimals ?? 0
-  // );
 
   const toBeStaked = useAppSelector((state) => state.BuuPricing.amountToStake);
   const dispatch = useAppDispatch();
 
-  // Define the validation schema
   const stakeInputSchema = z.object({
     amount: z
       .number({
@@ -52,13 +53,19 @@ export default function StakingDialog() {
         invalid_type_error: "Amount must be a number",
       })
       .positive("Amount must be positive")
-      .max(
-        Number(tokenData?.value.uiAmount ?? 0),
-        `Maximum ${earnings} $BUU allowed`,
+
+      .refine(
+        (value) => {
+          return (
+            !tokenData?.value.uiAmount ||
+            tokenData?.value.uiAmount > value ||
+            tokenData?.value.uiAmount > 0
+          );
+        },
+        { message: "insufficient balance" }
       ),
   });
 
-  // Initialize form with react-hook-form
   const {
     register,
     setValue,
@@ -90,18 +97,18 @@ export default function StakingDialog() {
   }, [toBeStaked, setValue]);
 
   async function onSubmit(data: z.infer<typeof stakeInputSchema>) {
-    if (!wallet || !wallet.address) {
-      toast.error("Authentication is loading...");
+    if (!wallets.length || !address || !wallet || !wallet?.address) {
+      connectSolanaWallet();
       return;
     }
-
     if (wallet?.chainType !== "solana") {
+      connectSolanaWallet();
       toast.error("Please connect using Solana wallet");
       return;
     }
 
     try {
-      const connection = new Connection("https://api.devnet.solana.com");
+      const connection = new Connection(getClusterUrl());
 
       // Show loading state
       toast.loading(`Creating transaction for ${data.amount}...`);
@@ -119,14 +126,9 @@ export default function StakingDialog() {
       toast.dismiss();
       toast.loading("Please confirm the transaction in your wallet");
 
-      // Use the wallet's sendTransaction method
-      // const signature = await wallet.walletData?.sendTransaction(
-      //   transaction,
-      //   connection
-      // );
       const signature = await wallet.walletData?.sendTransaction(
         transaction,
-        connection,
+        connection
       );
       console.log(signature);
       toast.dismiss();
@@ -138,13 +140,20 @@ export default function StakingDialog() {
         try {
           const confirmation = await connection.confirmTransaction(
             signature,
-            "confirmed",
+            "confirmed"
           );
 
           if (confirmation.value.err) {
             toast.error("Transaction failed on-chain");
             console.error("Transaction error:", confirmation.value.err);
           } else {
+            await query.invalidateQueries({
+              queryKey: [
+                "get-global-staking-data",
+                "get-user-staking-data",
+                "get-token-balance",
+              ],
+            });
             toast.success("Staking successful!");
           }
         } catch (confirmError) {
@@ -158,16 +167,18 @@ export default function StakingDialog() {
       toast.dismiss();
       toast.error(
         "Transaction failed: " +
-          (error instanceof Error ? error.message : "Unknown error"),
+          (error instanceof Error ? error.message : "Unknown error")
       );
       console.error("Transaction error:", error);
     }
   }
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className="font-medium">Stake $BUU</Button>
-      </DialogTrigger>
+    <Dialog
+      open={openState}
+      onOpenChange={(value) => {
+        dispatch(setTogglers({ key: "openStakingModal", value: value }));
+      }}
+    >
       <DialogContent className="rounded-[20px]  lg:rounded-[20px]  bg-buu/80 backdrop-blur-lg border-buu ">
         <DialogHeader className="flex items-center justify-center ">
           <DialogTitle className="text-2xl">Stake</DialogTitle>
@@ -194,12 +205,12 @@ export default function StakingDialog() {
             />
             {/* Display error message if there's an error */}
             {errors.amount && (
-              <p className="text-xs ml-2 text-red-500">
+              <p className="text-xs font-medium ml-2 mt-1 text-red-500">
                 {errors.amount.message}
               </p>
             )}
             <StakingSlider />
-            <StakingRewardReview />
+            {/* <StakingRewardReview /> */}
             <div className="mt-6">
               <StakeConfirmButton />
             </div>
