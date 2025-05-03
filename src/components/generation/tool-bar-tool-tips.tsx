@@ -16,11 +16,13 @@ import { ToolTips, TToolTipEvents } from "./handle-tool-calls";
 import { isSubThreadGenerating } from "@/lib/redux/selectors/chat";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ToolTipDownload from "./tool-tip-download";
+import ToolTipGenerateNft from "./tool-tip-generate-nft";
 
 type TToolBarToolTips = {
   subThreadId: string;
   imageUrl: string | null;
   modelUrl?: string | null;
+  modelId?: string | null;
   totalGenerations: number;
 };
 export const buttonVariants = {
@@ -34,6 +36,7 @@ export default function ToolBarToolTips({
   subThreadId,
   // imageUrl,
   modelUrl,
+  modelId,
   totalGenerations,
 }: TToolBarToolTips) {
   const dispatch = useAppDispatch();
@@ -82,11 +85,6 @@ export default function ToolBarToolTips({
           );
           return;
         }
-        // if (!acknowledgedRetry) {
-        //   dispatch(setRetryModalOpen(true));
-        //   dispatch(setRetrySubthreadId(subThreadId));
-        //   return;
-        // }
         generateNewImage({
           subthreadId: subThreadId,
           accessToken,
@@ -128,6 +126,17 @@ export default function ToolBarToolTips({
               length={ToolTips.length}
               subThreadId={subThreadId}
               toolTipData={item}
+            />
+          );
+        }
+        if (item.type === "GENERATE_NFT") {
+          return (
+            <ToolTipGenerateNft
+              index={index}
+              length={ToolTips.length}
+              subThreadId={subThreadId}
+              toolTipData={item}
+              modelId={modelId}
             />
           );
         }

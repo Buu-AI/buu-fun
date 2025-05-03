@@ -25,6 +25,7 @@ type TGenerate3DCard = {
   subThreadId: string;
   isCurrent: boolean;
   totalGenerations: number;
+  modelId?: string;
 };
 
 export default function Generate3DCard({
@@ -36,6 +37,7 @@ export default function Generate3DCard({
   subThreadId,
   isCurrent,
   totalGenerations,
+  modelId,
 }: TGenerate3DCard) {
   const [shouldShow3D, setShouldShow3D] = useState(false);
   const timerRef = useRef<NodeJS.Timeout>(null);
@@ -143,6 +145,7 @@ export default function Generate3DCard({
           imageUrl={images.imageUrl}
           modelUrl={modelUrl}
           subThreadId={subThreadId}
+          modelId={modelId}
           totalGenerations={totalGenerations}
         />
       </div>

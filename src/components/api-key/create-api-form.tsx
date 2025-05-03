@@ -59,13 +59,10 @@ export default function CreateAPIForm() {
     if (!checked && data?.expiresIn) {
       delete data.expiresIn;
     }
-
     if (!accessToken) {
       login();
       return;
     }
-
-    console.log(data);
     createAPIKeyMutation({
       accessToken,
       input: data,
