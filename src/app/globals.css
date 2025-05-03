@@ -911,3 +911,10 @@ input[type="number"] {
   box-shadow: 0px 0px 46.6px 3px rgba(33, 42, 52, 0.8) inset;
   backdrop-filter: blur(40px);
 }
+
+.bg-nft-modal-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(45, 50, 60, 0.7);
+  box-shadow: 0px 0px 30.2px 3px rgba(52, 59, 66, 0.8) inset;
+  backdrop-filter: blur(25px);
+}

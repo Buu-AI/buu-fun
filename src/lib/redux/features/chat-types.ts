@@ -73,6 +73,8 @@ export type ChatState = {
   genNft: {
     isGenNftModalOpen: boolean;
     genId?: string | null;
+    modelUrl?: string | null;
+    imageUrl?: string | null;
   };
 };
 

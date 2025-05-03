@@ -35,7 +35,7 @@ export const buttonVariants = {
 
 export default function ToolBarToolTips({
   subThreadId,
-  // imageUrl,
+  imageUrl,
   modelUrl,
   modelId,
   totalGenerations,
@@ -140,6 +140,8 @@ export default function ToolBarToolTips({
               subThreadId={subThreadId}
               toolTipData={item}
               tokenized={tokenized}
+              imageUrl={imageUrl}
+              modelUrl={modelUrl}
               modelId={modelId}
             />
           );

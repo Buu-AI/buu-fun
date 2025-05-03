@@ -15,6 +15,8 @@ type TToolTipGenerateNFT = {
   open?: boolean;
   modelId?: string | null;
   tokenized?: boolean;
+  imageUrl?: string | null;
+  modelUrl?: string | null;
 };
 
 export default function ToolTipGenerateNft({
@@ -22,6 +24,8 @@ export default function ToolTipGenerateNft({
   index,
   modelId,
   tokenized,
+  imageUrl,
+  modelUrl,
 }: TToolTipGenerateNFT) {
   const dispatch = useAppDispatch();
   return (
@@ -39,7 +43,12 @@ export default function ToolTipGenerateNft({
                 return;
               }
               dispatch(
-                setGenerateNFT({ isGenNftOpen: true, genRequestId: modelId }),
+                setGenerateNFT({
+                  isGenNftOpen: true,
+                  genRequestId: modelId,
+                  imageUrl,
+                  modelUrl,
+                })
               );
             }}
             initial="initial"

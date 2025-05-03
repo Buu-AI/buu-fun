@@ -7,7 +7,8 @@ export const createNftSchema = z.object({
     .max(20, { message: "Please enter characters below 20" }),
   description: z
     .string()
-    .min(4, { message: "Please enter at least 2 characters" }),
+    .min(4, { message: "Please enter at least 2 characters" })
+    .max(500, { message: "Please enter characters below 500" }),
 });
 
 export type TCreateNftSchema = z.infer<typeof createNftSchema>;

@@ -1,4 +1,5 @@
 import { isError, isInProgress } from "@/lib/helpers/status-checker";
+import { isOverAllRequestLimitReached } from "@/lib/utils";
 import { RootState } from "@/types/reduxStore";
 import { createSelector } from "@reduxjs/toolkit";
 import { TGenerationalData } from "../features/chat-types";
@@ -8,14 +9,13 @@ import {
   isThreeDModel,
   mergeImageAndMedia,
 } from "../utils";
-import { isOverAllRequestLimitReached } from "@/lib/utils";
 const Threads = (state: RootState) => state.chat.threads.subThreads;
 export const getSubThreadsFromStore = createSelector(
   [Threads, (_, id: string) => id],
   (SubThread, id) => {
     const FoundedSubthread = SubThread.find((fv) => fv._id === id);
     return FoundedSubthread;
-  },
+  }
 );
 
 const SubThreads = (state: RootState) => state.chat.subThreads;
@@ -41,12 +41,12 @@ export const getSubThreadsMedia = createSelector(
       GeneratedRequestMedias = ThreeDGenerated.map((item) => {
         const isGenerating = isInProgress(item.status);
         const isErrored = isError(item.status);
-
+        const tokenized = item.tokenized ?? false;
         return {
           style,
           isGenerating,
           isErrored,
-          tokenized: item.tokenized ?? false,
+          tokenized,
           model: {
             modelId: item._id,
             modelStatus: item.status,
@@ -62,12 +62,12 @@ export const getSubThreadsMedia = createSelector(
     } else {
       GeneratedRequestMedias = ImageGenerated?.map((item) => {
         const FoundedModel = ThreeDGenerated.find(
-          (fv) => fv.metadata.imageRequestId === item?._id,
+          (fv) => fv.metadata.imageRequestId === item?._id
         );
 
         const imageStatus = item.status;
         const modelStatus = FoundedModel?.status ?? "InProgress";
-        const tokenized = FoundedModel?.tokenized;
+        const tokenized = (FoundedModel?.tokenized || item.tokenized) ?? false;
         const model = FoundedModel
           ? {
               modelId: FoundedModel?._id,
@@ -100,7 +100,7 @@ export const getSubThreadsMedia = createSelector(
       medias: GeneratedRequestMedias,
       totalGenerated: GeneratedRequestMedias.length,
     };
-  },
+  }
 );
 
 export const isSubThreadGenerating = createSelector(
@@ -120,7 +120,7 @@ export const isSubThreadGenerating = createSelector(
     const lastSubThreadGenRequest = Medias[lastThread._id] ?? [];
     // First request and its Generating
     const isJustStarted = isSubThreadInProgressForFirstTimeOrForTheLastObject(
-      lastSubThreadGenRequest,
+      lastSubThreadGenRequest
     );
 
     const totalRequests = Object.keys(Medias).reduce((acc, item) => {
@@ -135,7 +135,7 @@ export const isSubThreadGenerating = createSelector(
       totalRequest: totalRequests,
       isLimitReached: isOverAllRequestLimitReached(totalRequests),
     };
-  },
+  }
 );
 
 // {

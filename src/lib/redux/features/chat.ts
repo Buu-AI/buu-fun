@@ -23,6 +23,8 @@ const initialState: ChatState = {
   genNft: {
     isGenNftModalOpen: false,
     genId: "",
+    modelUrl: "",
+    imageUrl: "",
   },
   threads: {
     threadId: "",
@@ -42,10 +44,17 @@ const ChatSlice = createSlice({
     },
     setGenerateNFT(
       state,
-      action: PayloadAction<{ isGenNftOpen: boolean; genRequestId?: string }>,
+      action: PayloadAction<{
+        isGenNftOpen: boolean;
+        genRequestId?: string;
+        modelUrl?: string | null;
+        imageUrl?: string | null;
+      }>
     ) {
       state.genNft.isGenNftModalOpen = action?.payload?.isGenNftOpen;
       state.genNft.genId = action.payload.genRequestId;
+      state.genNft.modelUrl = action.payload.modelUrl;
+      state.genNft.imageUrl = action.payload.imageUrl;
     },
     setRetryModalOpen(state, action: PayloadAction<boolean>) {
       state.retry.modalOpened = action.payload;
@@ -77,7 +86,7 @@ const ChatSlice = createSlice({
         action: PayloadAction<{
           subThreadId: string;
           Media: TSubThreadsMedia[];
-        }>,
+        }>
       ) {
         state.genRequest[action.payload.subThreadId] = action.payload.Media;
       },
@@ -100,13 +109,13 @@ const ChatSlice = createSlice({
             return eachPage.items.map(
               (item): TSubthreadV1 => ({
                 ...item,
-              }),
+              })
             );
           })
           .sort(
             (a, b) =>
               new Date(a.createdAt as string).getTime() -
-              new Date(b.createdAt as string).getTime(),
+              new Date(b.createdAt as string).getTime()
           );
 
         return {
@@ -180,7 +189,7 @@ const ChatSlice = createSlice({
                 modelMesh: modRes.model_mesh,
                 status: modRes.status,
                 type: modRes.type,
-              }),
+              })
             ),
         }));
         return {
@@ -193,7 +202,7 @@ const ChatSlice = createSlice({
       reducer(state, action: PayloadAction<TSubThread>) {
         console.log("PAYLOAD", action.payload);
         const index = state.threads.subThreads.findIndex(
-          (fv) => fv._id === action.payload._id,
+          (fv) => fv._id === action.payload._id
         );
 
         if (index !== -1) {
