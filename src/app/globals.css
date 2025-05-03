@@ -294,7 +294,7 @@ body {
   grid-area: navigation;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
   .grid-container {
     display: grid;
     grid-template-columns: 0.2fr 1.8fr;
