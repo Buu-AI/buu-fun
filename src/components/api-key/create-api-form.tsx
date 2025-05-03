@@ -39,7 +39,7 @@ export default function CreateAPIForm() {
   const dispatch = useAppDispatch();
   const { mutate: createAPIKeyMutation, isPending } = useMutation({
     mutationFn: createApiKey,
-    onSuccess(data) {
+    async onSuccess(data) {
       dispatch(
         setApiKey({
           key: data.key,
@@ -47,7 +47,7 @@ export default function CreateAPIForm() {
         }),
       );
       dispatch(isApiKeyRetrieved(true));
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: ["retrieve-api-keys"],
       });
       toast.success("Successfully created API Key");

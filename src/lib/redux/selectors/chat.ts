@@ -41,10 +41,12 @@ export const getSubThreadsMedia = createSelector(
       GeneratedRequestMedias = ThreeDGenerated.map((item) => {
         const isGenerating = isInProgress(item.status);
         const isErrored = isError(item.status);
+
         return {
           style,
           isGenerating,
           isErrored,
+          tokenized: item.tokenized ?? false,
           model: {
             modelId: item._id,
             modelStatus: item.status,
@@ -65,7 +67,7 @@ export const getSubThreadsMedia = createSelector(
 
         const imageStatus = item.status;
         const modelStatus = FoundedModel?.status ?? "InProgress";
-
+        const tokenized = FoundedModel?.tokenized;
         const model = FoundedModel
           ? {
               modelId: FoundedModel?._id,
@@ -84,6 +86,7 @@ export const getSubThreadsMedia = createSelector(
           isGenerating,
           isErrored,
           model,
+          tokenized: item.tokenized ?? false,
           image: {
             imageId: item._id,
             imageStatus,

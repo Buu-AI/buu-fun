@@ -101,6 +101,7 @@ export type TGenerationalData = {
   style: TThreeDStyles | null | undefined;
   isGenerating: boolean;
   isErrored: boolean;
+  tokenized: boolean;
   model?: {
     modelId: string;
     modelUrl?: string;

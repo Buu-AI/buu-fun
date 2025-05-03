@@ -246,6 +246,7 @@ export const GetSubthreadGenRequestsQuery = gql`
           credits
           createdAt
           updatedAt
+          tokenized
         }
         metadata {
           limit

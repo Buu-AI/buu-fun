@@ -14,12 +14,14 @@ type TToolTipGenerateNFT = {
   length: number;
   open?: boolean;
   modelId?: string | null;
+  tokenized?: boolean;
 };
 
 export default function ToolTipGenerateNft({
   toolTipData,
   index,
   modelId,
+  tokenized,
 }: TToolTipGenerateNFT) {
   const dispatch = useAppDispatch();
   return (
@@ -28,6 +30,9 @@ export default function ToolTipGenerateNft({
         {
           <motion.button
             onClick={() => {
+              if (tokenized) {
+                toast.success(`NFT has already been generated `);
+              }
               if (!modelId) {
                 toast.loading("Model is being generated, Please wait");
                 return;

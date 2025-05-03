@@ -26,6 +26,7 @@ type TGenerate3DCard = {
   isCurrent: boolean;
   totalGenerations: number;
   modelId?: string;
+  tokenized?: boolean;
 };
 
 export default function Generate3DCard({
@@ -34,6 +35,7 @@ export default function Generate3DCard({
   showToolTip,
   modelUrl,
   index,
+  tokenized,
   subThreadId,
   isCurrent,
   totalGenerations,
@@ -146,6 +148,7 @@ export default function Generate3DCard({
           modelUrl={modelUrl}
           subThreadId={subThreadId}
           modelId={modelId}
+          tokenized={tokenized}
           totalGenerations={totalGenerations}
         />
       </div>

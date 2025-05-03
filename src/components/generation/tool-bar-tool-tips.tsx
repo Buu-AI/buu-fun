@@ -24,6 +24,7 @@ type TToolBarToolTips = {
   modelUrl?: string | null;
   modelId?: string | null;
   totalGenerations: number;
+  tokenized?: boolean;
 };
 export const buttonVariants = {
   initial: { y: 0, scale: 1 },
@@ -38,6 +39,7 @@ export default function ToolBarToolTips({
   modelUrl,
   modelId,
   totalGenerations,
+  tokenized,
 }: TToolBarToolTips) {
   const dispatch = useAppDispatch();
   const { identityToken, login } = useAuthentication();
@@ -50,10 +52,10 @@ export default function ToolBarToolTips({
 
   const { mutate: generateNewImage, isPending } = useMutation({
     mutationFn: mutateGenerateNewImage,
-    onSuccess(data) {
+    async onSuccess(data) {
       toast.loading("Generating new model...", { duration: 8000 });
       dispatch(setNewGenRequest(data));
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: [data.subthreadId, "get-all-sub-threads"],
       });
     },
@@ -137,6 +139,7 @@ export default function ToolBarToolTips({
               length={ToolTips.length}
               subThreadId={subThreadId}
               toolTipData={item}
+              tokenized={tokenized}
               modelId={modelId}
             />
           );

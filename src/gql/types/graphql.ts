@@ -218,6 +218,7 @@ export type GenRequest = {
   subthreadId: Scalars["String"]["output"];
   teamId: Scalars["String"]["output"];
   timings?: Maybe<Timings>;
+  tokenized?: Maybe<Scalars["Boolean"]["output"]>;
   type: Scalars["String"]["output"];
   updatedAt: Scalars["DateTimeISO"]["output"];
 };
@@ -1402,6 +1403,7 @@ export type GetSubthreadGenRequestsQuery = {
           credits: number;
           createdAt: any;
           updatedAt: any;
+          tokenized?: boolean | null;
           images?: Array<{
             __typename?: "Media";
             alt: string;
@@ -3761,6 +3763,10 @@ export const GetSubthreadGenRequestsDocument = {
                             {
                               kind: "Field",
                               name: { kind: "Name", value: "updatedAt" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "tokenized" },
                             },
                           ],
                         },

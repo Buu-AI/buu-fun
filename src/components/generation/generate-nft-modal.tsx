@@ -5,7 +5,7 @@ import { setGenerateNFT } from "@/lib/redux/features/chat";
 import { createNftSchema, TCreateNftSchema } from "@/lib/zod/create-nft";
 import { useAuthentication } from "@/providers/account.context";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
@@ -29,9 +29,13 @@ export default function GenerateNFTModal() {
   const { register, handleSubmit } = useForm<TCreateNftSchema>({
     resolver: zodResolver(createNftSchema),
   });
+  const query = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: generateNFT,
-    onSuccess() {
+    async onSuccess() {
+      await query.invalidateQueries({
+        queryKey: ["get-sub-thread-requests"],
+      });
       toast.success("NFT has been generated");
     },
     onError(error) {
