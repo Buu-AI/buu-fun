@@ -132,6 +132,7 @@ export default function ToolBarToolTips({
         if (item.type === "GENERATE_NFT") {
           return (
             <ToolTipGenerateNft
+              key={`tool-tip-contents-${item.content.trim()}-${index}`}
               index={index}
               length={ToolTips.length}
               subThreadId={subThreadId}

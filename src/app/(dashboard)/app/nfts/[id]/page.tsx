@@ -1,4 +1,3 @@
-import { CTAImages } from "@/assets/Image";
 import NFTModelViewer from "@/components/nfts/nft-model-viewer";
 import NFTOverViewContainer from "@/components/nfts/nft-over-view-container";
 import { getNftQuery } from "@/lib/react-query/nfts";
@@ -10,7 +9,7 @@ type TNFTPage = {
     id: string;
   }>;
 };
-export default async function NftPagePage({ params }: TNFTPage) {
+export default async function NftPage({ params }: TNFTPage) {
   const id = (await params).id;
   const cookie = await cookies();
 

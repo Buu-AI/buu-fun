@@ -17,7 +17,6 @@ export default function NFTOverViewContainer({
 }: Nft) {
   const name = metadata.name;
   const description = metadata.description;
-  const attributed = metadata.attributes;
 
   return (
     <div className="backdrop-blur-lg rounded-3xl">

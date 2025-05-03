@@ -1,7 +1,5 @@
-import Image from "next/image";
-import logo from "@/assets/icons/logo-no-gradient.png";
-import React from "react";
 import { CoinBuu } from "@/assets/icons";
+import Image from "next/image";
 
 export default function HeaderLogo() {
   return (

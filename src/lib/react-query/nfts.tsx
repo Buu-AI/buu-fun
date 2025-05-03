@@ -31,7 +31,7 @@ export async function getNftsQuery({
     },
     {
       Authorization: getAuthorization(accessToken),
-    }
+    },
   );
   if (!data) {
     throw new Error("Internal server error");
@@ -57,7 +57,7 @@ export async function getNftQuery({
     },
     {
       Authorization: getAuthorization(accessToken),
-    }
+    },
   );
   if (!data) {
     throw new Error("Internal server error");
@@ -92,7 +92,7 @@ export async function generateNFT({
     },
     {
       Authorization: getAuthorization(accessToken),
-    }
+    },
   );
 
   if (!data) {

@@ -1,9 +1,7 @@
 "use client";
 
-import { CTAImages } from "@/assets/Image";
-import Image from "next/image";
-import NFTCard from "./nft-card";
 import useUserNfts from "@/hooks/use-nft";
+import NFTCard from "./nft-card";
 
 // import { useRouter } from "navi";
 
@@ -14,6 +12,7 @@ export default function NFTCardsWrapper() {
       {data?.items.map((item) => {
         return (
           <NFTCard
+            key={`nft-card-${item._id}`}
             id={item._id}
             title={item.metadata.name}
             NftImageUrl={item.metadata.image ?? undefined}

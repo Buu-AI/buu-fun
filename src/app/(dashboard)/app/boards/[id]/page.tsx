@@ -42,6 +42,8 @@ export default async function BoardsPage({ params }: TBoardsPage) {
       </main>
     );
   } catch (error) {
+    if (error) {
+    }
     redirect("/");
   }
 }

@@ -1,12 +1,11 @@
+import { useAppDispatch } from "@/hooks/redux";
+import { setGenerateNFT } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { ToolTips, TToolTipsData } from "./handle-tool-calls";
 import { buttonVariants } from "./tool-bar-tool-tips";
-import { useMutation } from "@tanstack/react-query";
-import { useAppDispatch } from "@/hooks/redux";
-import { setGenerateNFT } from "@/lib/redux/features/chat";
-import toast from "react-hot-toast";
 
 type TToolTipGenerateNFT = {
   subThreadId?: string;
@@ -20,7 +19,6 @@ type TToolTipGenerateNFT = {
 export default function ToolTipGenerateNft({
   toolTipData,
   index,
-  length,
   modelId,
 }: TToolTipGenerateNFT) {
   const dispatch = useAppDispatch();

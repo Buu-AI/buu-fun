@@ -132,7 +132,7 @@ export default function MobileProfileNavigation() {
                       <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
                         <GenerateNft />
                       </div>
-                      <p className="text-xl">NFT's</p>{" "}
+                      <p className="text-xl">NFT&apos;s</p>{" "}
                     </DrawerClose>
                   </Link>
                 </div>

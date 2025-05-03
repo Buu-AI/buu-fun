@@ -22,7 +22,7 @@ import { Loader2 } from "lucide-react";
 import GenerateNft from "@/assets/icons/Generate-nft";
 
 export default function GenerateNFTModal() {
-  const { identityToken: accessToken, address, login } = useAuthentication();
+  const { identityToken: accessToken, login } = useAuthentication();
   const isOpen = useAppSelector((state) => state.chat.genNft.isGenNftModalOpen);
   const dispatch = useAppDispatch();
   const genRequestId = useAppSelector((state) => state.chat.genNft.genId);
@@ -63,7 +63,7 @@ export default function GenerateNFTModal() {
       onOpenChange={(value) => {
         if (!value) {
           dispatch(
-            setGenerateNFT({ isGenNftOpen: value, genRequestId: undefined })
+            setGenerateNFT({ isGenNftOpen: value, genRequestId: undefined }),
           );
           return;
         }

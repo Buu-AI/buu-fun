@@ -1,5 +1,4 @@
 "use client";
-import { useSharableBoards } from "@/hooks/use-boards";
 import useUserNfts from "@/hooks/use-nft";
 import { pluralize } from "@/lib/utils";
 
