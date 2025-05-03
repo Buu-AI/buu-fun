@@ -30,11 +30,11 @@ export default function RedeemVouchers() {
   });
   const { mutate: AddRedeemVoucher, isPending } = useMutation({
     mutationFn: addCreditsMutation,
-    onSuccess() {
+    async onSuccess() {
       SetIsOpen.close();
       toast.success("Added Credits your Account");
       reset();
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: ["get-user-credits"],
       });
     },

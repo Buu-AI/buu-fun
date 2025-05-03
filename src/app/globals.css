@@ -294,7 +294,7 @@ body {
   grid-area: navigation;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
   .grid-container {
     display: grid;
     grid-template-columns: 0.2fr 1.8fr;
@@ -902,6 +902,26 @@ input[type="number"] {
 }
 
 .bg-roi-shadow {
+  background: rgba(45, 50, 60, 0.7);
+  box-shadow: 0px 0px 30.2px 3px rgba(52, 59, 66, 0.8) inset;
+  backdrop-filter: blur(25px);
+}
+
+.bg-shadow-nft-cards {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(28, 32, 39, 0.36);
+  box-shadow: 0px 0px 46.6px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(40px);
+}
+
+.bg-shadow-nft-cards:hover {
+  background: rgba(120, 219, 255, 0.36);
+  box-shadow: 0px 0px 46.6px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(40px);
+}
+
+.bg-nft-modal-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(45, 50, 60, 0.7);
   box-shadow: 0px 0px 30.2px 3px rgba(52, 59, 66, 0.8) inset;
   backdrop-filter: blur(25px);

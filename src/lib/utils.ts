@@ -216,3 +216,11 @@ export function getStreamflowUrl() {
 export function getSolanaExplorerUrl(route: string) {
   return "https://explorer.solana.com" + route;
 }
+
+export function getSolScanUrl(route: string) {
+  let queryParam = "";
+  if (process.env?.NEXT_PUBLIC_STREAMFLOW_CLUSTER === "devnet") {
+    queryParam = `?cluster=devnet`;
+  }
+  return "https://solscan.io" + route + queryParam;
+}

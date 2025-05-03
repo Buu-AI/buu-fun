@@ -5,11 +5,12 @@ import Link from "next/link";
 import KnowMorePopover from "./know-more-pop-over";
 import { CoinStackIcon, SizePenIcon } from "@/assets/icons";
 import LocationKnownLink from "./location-known-link";
+import GenerateNft from "@/assets/icons/Generate-nft";
 export default function NavigationalBar() {
   return (
-    <nav className="px-3 py-4  w-full h-full lg:h-screen">
-      <div className="lg:bg-buu lg:py-4  flex flex-col items-center justify-between lg:rounded-[20px] overflow-hidden lg:h-full lg:w-[72px]">
-        <div className="flex items-center justify-center">
+    <nav className="px-3 py-4  w-full h-full md:h-screen">
+      <div className="md:bg-buu md:py-4  flex flex-col items-center justify-between md:rounded-[20px] overflow-hidden md:h-full md:w-[72px]">
+        <div className="flex flex-col  items-center justify-center">
           <Link
             href={"/app"}
             className="flex items-center justify-center h-10 w-10 lg:w-12 lg:h-12   rounded-lg "
@@ -22,9 +23,11 @@ export default function NavigationalBar() {
               alt="Bunn.fun logo"
             />
           </Link>
+          <Link href={"/app/nfts"} className="mt-4 w-6 h-6 hidden md:block">
+            <GenerateNft />
+          </Link>
         </div>
-
-        <div className="hidden lg:flex flex-col gap-4 items-center justify-center">
+        <div className="hidden md:flex flex-col gap-4 items-center justify-center">
           {/* <Link
             href={"/app/boards"}
             // group bg-buu-button  hover:bg-white hover:shadow-none  group shadow-buu-button min-w-[30px]  rounded-md flex items-center justify-center p-1.5
@@ -72,7 +75,7 @@ export default function NavigationalBar() {
             </div>
           </Link> */}
         </div>
-        <div className="hidden lg:flex">
+        <div className="hidden md:flex">
           <KnowMorePopover />
         </div>
       </div>
