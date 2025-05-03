@@ -26,19 +26,19 @@ export function isLocalMode() {
 export function pluralize(
   num: number,
   word: string,
-  plural: (value: string) => string = simplePlural,
+  plural: (value: string) => string = simplePlural
 ) {
   return isPlural(num) ? plural(word) : word;
 }
 
 export async function handleResponse(
-  response: Response,
+  response: Response
 ): Promise<TDataMuseWord[]> {
   if (!response.ok) {
     // add other generic messages later for api backends.
     throw new DataMuseError(
       `API request failed: ${response.statusText}`,
-      response.status,
+      response.status
     );
   }
   return response.json();
@@ -85,7 +85,7 @@ export function isImageUrl(value: string | null | undefined) {
 
 export async function blobUrlToFile(
   blobUrl: string,
-  fileName: string,
+  fileName: string
 ): Promise<File | null> {
   try {
     const response = await fetch(blobUrl);
@@ -106,7 +106,7 @@ export function getAllowedContentTypeMaps(key: string) {
 export function truncateString(
   value: string,
   startEnd: number = 4,
-  endStartAt: number = 4,
+  endStartAt: number = 4
 ): string {
   if (value.length <= startEnd + endStartAt) {
     return value;
@@ -215,4 +215,12 @@ export function getStreamflowUrl() {
 
 export function getSolanaExplorerUrl(route: string) {
   return "https://explorer.solana.com" + route;
+}
+
+export function getSolScanUrl(route: string) {
+  let queryParam = "";
+  if (process.env?.NEXT_PUBLIC_STREAMFLOW_CLUSTER === "devnet") {
+    queryParam = `?cluster=devnet`;
+  }
+  return "https://solscan.io" + route + queryParam;
 }
