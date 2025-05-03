@@ -285,8 +285,8 @@ function Band({ maxSpeed = 50, minSpeed = 0, cardGLB, lanyard }: BandProps) {
         </RigidBody>
       </group>
       <mesh ref={band}>
-        <meshLineGeometry />
-        <meshLineMaterial
+        <MeshLineGeometry />
+        <MeshLineMaterial
           color="white"
           depthTest={false}
           resolution={isSmall ? [1000, 2000] : [1000, 1000]}
