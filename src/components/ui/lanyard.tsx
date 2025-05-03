@@ -20,9 +20,6 @@ import {
 import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import * as THREE from "three";
 
-// import cardGLB from "./card.glb";
-// import lanyard from "./lanyard.png";
-
 extend({ MeshLineGeometry, MeshLineMaterial });
 
 interface LanyardProps {
@@ -53,7 +50,7 @@ export default function Lanyard({
       >
         <ambientLight intensity={Math.PI} />
         <Physics gravity={gravity} timeStep={1 / 60}>
-          <Band />
+          <Band cardGLB={cardGLB} lanyard={lanyard} />
         </Physics>
         <Environment blur={0.75}>
           <Lightformer
