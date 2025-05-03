@@ -34,7 +34,12 @@ export default function GenerateNFTModal() {
   const isOpen = useAppSelector((state) => state.chat.genNft.isGenNftModalOpen);
   const dispatch = useAppDispatch();
   const GenNft = useAppSelector((state) => state.chat.genNft);
-  const { register, handleSubmit, watch } = useForm<TCreateNftSchema>({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { isSubmitting },
+  } = useForm<TCreateNftSchema>({
     resolver: zodResolver(createNftSchema),
   });
   const query = useQueryClient();
@@ -78,7 +83,12 @@ export default function GenerateNFTModal() {
       onOpenChange={(value) => {
         if (!value) {
           dispatch(
-            setGenerateNFT({ isGenNftOpen: value, genRequestId: undefined }),
+            setGenerateNFT({
+              isGenNftOpen: value,
+              genRequestId: undefined,
+              imageUrl: undefined,
+              modelUrl: undefined,
+            })
           );
           return;
         }
@@ -138,7 +148,10 @@ export default function GenerateNFTModal() {
             </div>
           </div>
           <div className="mt-4">
-            <Button disabled={isPending} className="h-[40px] w-full">
+            <Button
+              disabled={isPending || isSubmitting}
+              className="h-[40px] w-full"
+            >
               {isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
