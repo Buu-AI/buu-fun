@@ -8,7 +8,7 @@ import NFTCard from "./nft-card";
 export default function NFTCardsWrapper() {
   const { data } = useUserNfts();
   return (
-    <div className="flex gap-3 items-center flex-wrap justify-center mt-6">
+    <div className="flex gap-3 items-center max-w-2xl flex-wrap justify-center mt-6">
       {data?.items.map((item) => {
         return (
           <NFTCard

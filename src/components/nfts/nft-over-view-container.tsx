@@ -13,11 +13,12 @@ export default function NFTOverViewContainer({
   creator,
   tokenAddress,
   tokenStandard,
+
   collectionRoyalties,
 }: Nft) {
   const name = metadata.name;
   const description = metadata.description;
-
+  const attribute = metadata.attributes ?? [];
   return (
     <div className="backdrop-blur-lg rounded-3xl">
       <div className="px-2 md:px-4 py-4 border-white/5 border rounded-t-3xl  bg-overview-portfolio">
@@ -26,6 +27,25 @@ export default function NFTOverViewContainer({
       <div className="p-2  md:p-6 bg-buu rounded-b-2xl">
         <p className="text-balance">{description}</p>
         <div>
+          <div
+            className={cn("grid grid-cols-2 gap-2", {
+              "grid-cols-1": attribute.length === 1,
+            })}
+          >
+            {attribute?.map((item) => {
+              return (
+                <div className="bg-tile-muted w-full mt-1 p-2 px-3 rounded-lg group">
+                  <div>
+                    <p className="text-xs font-medium tracking-tight text-muted-foreground/60">
+                      {item.trait_type}
+                    </p>
+                    <p className="text-white">{item.value}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
           <div
             className={cn("flex items-center justify-between gap-2 my-2", {
               hidden: true,

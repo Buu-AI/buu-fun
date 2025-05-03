@@ -39,7 +39,7 @@ export default function ToolTipGenerateNft({
                 return;
               }
               dispatch(
-                setGenerateNFT({ isGenNftOpen: true, genRequestId: modelId })
+                setGenerateNFT({ isGenNftOpen: true, genRequestId: modelId }),
               );
             }}
             initial="initial"
