@@ -16,7 +16,7 @@ export default function NFTCard({
 }: TNftCard) {
   return (
     <Link href={`/app/nfts/${id}`}>
-      <div className="w-48 h-64 bg-shadow-nft-cards rounded-3xl overflow-hidden">
+      <div className="w-48 h-[280px]  bg-shadow-nft-cards transition-colors duration-500 ease-in-out rounded-3xl overflow-hidden">
         <div className="w-full relative overflow-hidden">
           <Image
             src={NftImageUrl}
@@ -27,7 +27,7 @@ export default function NFTCard({
           />
         </div>
         {/* Text content */}
-        <div className="px-4 pt-2 pb-4 ">
+        <div className="px-4 pt-2 pb-2 ">
           <h3 className="text-xl font-medium line-clamp-1">{title}</h3>
           <p className="text-muted-foreground/90 font-medium line-clamp-2 text-sm">
             {collectionName}

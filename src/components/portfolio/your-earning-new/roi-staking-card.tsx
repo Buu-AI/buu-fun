@@ -74,7 +74,7 @@ export default function RoiStakingCard() {
 
   function calculatePercentage(
     totalROI: number,
-    amount: number | null
+    amount: number | null,
   ): number {
     if (amount && !isNaN(Number(amount)) && Number(amount) > 0) {
       return (totalROI / Number(amount)) * 100;
@@ -245,7 +245,6 @@ export default function RoiStakingCard() {
                 />
               );
             })}
-            
           </div>
         </div>
         <div className="mt-6">
