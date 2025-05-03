@@ -32,13 +32,14 @@ export default function ToolTipGenerateNft({
             onClick={() => {
               if (tokenized) {
                 toast.success(`NFT has already been generated `);
+                return;
               }
               if (!modelId) {
                 toast.loading("Model is being generated, Please wait");
                 return;
               }
               dispatch(
-                setGenerateNFT({ isGenNftOpen: true, genRequestId: modelId }),
+                setGenerateNFT({ isGenNftOpen: true, genRequestId: modelId })
               );
             }}
             initial="initial"
