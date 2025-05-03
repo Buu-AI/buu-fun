@@ -86,7 +86,7 @@ export const getSubThreadsMedia = createSelector(
           isGenerating,
           isErrored,
           model,
-          tokenized: item.tokenized ?? false,
+          tokenized: tokenized ?? false,
           image: {
             imageId: item._id,
             imageStatus,

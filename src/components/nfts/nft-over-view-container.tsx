@@ -34,7 +34,10 @@ export default function NFTOverViewContainer({
           >
             {attribute?.map((item) => {
               return (
-                <div className="bg-tile-muted w-full mt-1 p-2 px-3 rounded-lg group">
+                <div
+                  key={`attribute-${item.trait_type}-${item.value}`}
+                  className="bg-tile-muted w-full mt-1 p-2 px-3 rounded-lg group"
+                >
                   <div>
                     <p className="text-xs font-medium tracking-tight text-muted-foreground/60">
                       {item.trait_type}
