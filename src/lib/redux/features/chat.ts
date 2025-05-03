@@ -20,6 +20,10 @@ const initialState: ChatState = {
   currentSubThreadIndex: 0,
   subThreads: [],
   genRequest: {},
+  genNft: {
+    isGenNftModalOpen: false,
+    genId: "",
+  },
   threads: {
     threadId: "",
     subThreads: [],
@@ -33,6 +37,16 @@ const ChatSlice = createSlice({
   name: "Chat",
   initialState,
   reducers: {
+    setOpenGenerateNFTModal(state, action: PayloadAction<boolean>) {
+      state.genNft.isGenNftModalOpen = action.payload;
+    },
+    setGenerateNFT(
+      state,
+      action: PayloadAction<{ isGenNftOpen: boolean; genRequestId?: string }>,
+    ) {
+      state.genNft.isGenNftModalOpen = action?.payload?.isGenNftOpen;
+      state.genNft.genId = action.payload.genRequestId;
+    },
     setRetryModalOpen(state, action: PayloadAction<boolean>) {
       state.retry.modalOpened = action.payload;
     },
@@ -248,6 +262,8 @@ export const {
   setInputImageUrl,
   setRetryModalOpen,
   setRetrySubthreadId,
+  setGenerateNFT,
+  setOpenGenerateNFTModal,
 } = ChatSlice.actions;
 
 export default ChatSlice.reducer;

@@ -70,6 +70,10 @@ export type ChatState = {
     modalOpened: boolean;
     subThreadId: string | null;
   };
+  genNft: {
+    isGenNftModalOpen: boolean;
+    genId?: string | null;
+  };
 };
 
 export type TErrorTypeName = { __typename?: "HandledError" };
