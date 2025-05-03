@@ -10,7 +10,7 @@ export default function BoardsPage() {
       <div className="flex-1 flex items-center justify-center mr-[0.25vw] flex-col">
         <HeroHeader
           title="View your NFTs"
-          heroDescription={<NftButtonWrapper/>}
+          heroDescription={<NftButtonWrapper />}
         />
         {/* <HeaderQuickSelectCard /> */}
         <NFTCardsWrapper />

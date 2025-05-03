@@ -121,6 +121,7 @@ const CurvedEmblaCarousel = ({
                         imageUrl: item.image.imageUrl,
                       }}
                       modelUrl={item?.model?.modelUrl}
+                      modelId={item?.model?.modelId}
                     />
                   </CarouselItem>
                 );
