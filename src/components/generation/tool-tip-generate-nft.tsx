@@ -48,7 +48,7 @@ export default function ToolTipGenerateNft({
                   genRequestId: modelId,
                   imageUrl,
                   modelUrl,
-                })
+                }),
               );
             }}
             initial="initial"

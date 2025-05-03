@@ -78,7 +78,7 @@ export default function GenerateNFTModal() {
       onOpenChange={(value) => {
         if (!value) {
           dispatch(
-            setGenerateNFT({ isGenNftOpen: value, genRequestId: undefined })
+            setGenerateNFT({ isGenNftOpen: value, genRequestId: undefined }),
           );
           return;
         }
