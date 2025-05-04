@@ -1,4 +1,5 @@
 "use client";
+import { CoinStackIcon } from "@/assets/icons";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useTokenBalance } from "@/hooks/use-pricing-history";
 import { useUserStakingData } from "@/hooks/use-staking-data";
@@ -14,10 +15,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useSolanaWallets } from "@privy-io/react-auth";
 import { Connection } from "@solana/web3.js";
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,
@@ -27,55 +30,58 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import StakeConfirmButton from "./stake-confirm-button";
 import StakingSlider from "./staking-slider";
 
 export default function StakingDialog() {
+  const [isLoading, setIsLoading] = useState(false);
   const { wallet, connectSolanaWallet, address } = useAuthentication();
   const { wallets } = useSolanaWallets();
   const openState = useAppSelector(
-    (state) => state.BuuPricing.openStakingModal,
+    (state) => state.BuuPricing.openStakingModal
   );
   const {
     userStaking: { data: userStakingData },
   } = useUserStakingData();
   const query = useQueryClient();
   const { data: tokenData } = useTokenBalance();
-  const earnings = tokenData?.value.uiAmount ?? 0;
+  const balance = tokenData?.value.uiAmount ?? 0;
 
   const toBeStaked = useAppSelector((state) => state.BuuPricing.amountToStake);
   const dispatch = useAppDispatch();
 
   const stakeInputSchema = z.object({
     amount: z
-      .number({
+      .string({
         required_error: "Amount is required",
         invalid_type_error: "Amount must be a number",
       })
-      .positive("Amount must be positive")
-
       .refine(
         (value) => {
-          return (
-            !tokenData?.value.uiAmount ||
-            tokenData?.value.uiAmount > value ||
-            tokenData?.value.uiAmount > 0
-          );
+          if (Number(value) <= 0) return false;
+          return true;
         },
-        { message: "insufficient balance" },
+        { message: "Please enter a valid number" }
+      )
+      .refine(
+        (value) => {
+          console.log("all condition true");
+          if (!balance || balance <= 0) return false;
+          if (balance < Number(value)) return false;
+          return true;
+        },
+        { message: "insufficient balance" }
       ),
   });
 
   const {
-    register,
     setValue,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm({
     resolver: zodResolver(stakeInputSchema),
     defaultValues: {
-      amount: toBeStaked || 0,
+      amount: toBeStaked || "0",
     },
   });
 
@@ -85,7 +91,7 @@ export default function StakingDialog() {
   // Update Redux when form value changes
   useEffect(() => {
     if (amountValue !== undefined) {
-      dispatch(setSelectedAmountToStake(Number(amountValue)));
+      dispatch(setSelectedAmountToStake(amountValue));
     }
   }, [amountValue, dispatch]);
 
@@ -97,24 +103,26 @@ export default function StakingDialog() {
   }, [toBeStaked, setValue]);
 
   async function onSubmit(data: z.infer<typeof stakeInputSchema>) {
-    if (!wallets.length || !address || !wallet || !wallet?.address) {
-      connectSolanaWallet();
-      return;
-    }
-    if (wallet?.chainType !== "solana") {
-      connectSolanaWallet();
-      toast.error("Please connect using Solana wallet");
-      return;
-    }
-
     try {
+      setIsLoading(true);
+      if (!wallets.length || !address || !wallet || !wallet?.address) {
+        connectSolanaWallet();
+        return;
+      }
+      if (wallet?.chainType !== "solana") {
+        connectSolanaWallet();
+        toast.error("Please connect using Solana wallet");
+        return;
+      }
+
       const connection = new Connection(getClusterUrl());
 
       // Show loading state
       toast.loading(`Creating transaction for ${data.amount}...`);
       const transaction = await executeStakingTransaction({
         address: wallet.address,
-        amountToStake: data.amount * 10 ** (userStakingData?.decimals ?? 1),
+        amountToStake:
+          Number(data.amount) * 10 ** (userStakingData?.decimals ?? 1),
       });
 
       if (!transaction) {
@@ -128,7 +136,7 @@ export default function StakingDialog() {
 
       const signature = await wallet.walletData?.sendTransaction(
         transaction,
-        connection,
+        connection
       );
       console.log(signature);
       toast.dismiss();
@@ -140,7 +148,7 @@ export default function StakingDialog() {
         try {
           const confirmation = await connection.confirmTransaction(
             signature,
-            "confirmed",
+            "confirmed"
           );
 
           if (confirmation.value.err) {
@@ -155,6 +163,7 @@ export default function StakingDialog() {
               ],
             });
             toast.success("Staking successful!");
+            dispatch(setTogglers({ key: "openStakingModal", value: false }));
           }
         } catch (confirmError) {
           toast.error("Failed to confirm transaction");
@@ -167,11 +176,21 @@ export default function StakingDialog() {
       toast.dismiss();
       toast.error(
         "Transaction failed: " +
-          (error instanceof Error ? error.message : "Unknown error"),
+          (error instanceof Error ? error.message : "Unknown error")
       );
       console.error("Transaction error:", error);
+    } finally {
+      setIsLoading(false);
     }
   }
+
+  const handleAmountChange = (value: string) => {
+    const input = value;
+    // Allow only numbers, decimal point, and optional minus sign
+    if (/^-?\d*\.?\d*$/.test(input)) {
+      setValue("amount", input);
+    }
+  };
   return (
     <Dialog
       open={openState}
@@ -185,7 +204,7 @@ export default function StakingDialog() {
           <DialogDescription className="text-center font-medium max-w-md text-muted-foreground/60">
             If you in top 100 stakers, you&apos;ll start instantly earning
             rewards. Once you unstake, there&apos;s{" "}
-            <span className="text-white">16 yours cooldown</span> period.
+            <span className="text-white">16 days cooldown</span> period.
           </DialogDescription>
         </DialogHeader>{" "}
         <div>
@@ -195,13 +214,16 @@ export default function StakingDialog() {
                 amount to stake
               </Label>
               <Label className="uppercase text-xs font-medium text-muted-foreground/60 ">
-                balance: {formatWithComma(Number(earnings))}
+                balance: {formatWithComma(Number(balance))}
               </Label>
             </div>
             <Input
-              {...register("amount", { valueAsNumber: true })}
-              className="py-2.5 mt-1 appearance-none text-lg h-auto border-gray-700"
-              placeholder="30"
+              value={amountValue}
+              onChange={(e) => {
+                handleAmountChange(e.target.value);
+              }}
+              className="py-2.5 mt-1 appearance-none text-lg h-auto border-gray-700 placeholder:text-gray-600 placeholder:font-medium "
+              placeholder="3000"
             />
             {/* Display error message if there's an error */}
             {errors.amount && (
@@ -212,7 +234,19 @@ export default function StakingDialog() {
             <StakingSlider />
             {/* <StakingRewardReview /> */}
             <div className="mt-6">
-              <StakeConfirmButton />
+              <Button disabled={isSubmitting || isLoading} className="w-full">
+                {isLoading ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    loading...
+                  </>
+                ) : (
+                  <>
+                    <CoinStackIcon />
+                    Stake $BUU
+                  </>
+                )}
+              </Button>{" "}
             </div>
           </form>
         </div>

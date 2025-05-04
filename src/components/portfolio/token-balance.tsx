@@ -13,8 +13,8 @@ export default function TokenBalance() {
   const usd = balance * (data?.price ?? 0);
   return (
     <div className="bg-balance-card mt-5 rounded-lg">
-      <div className="px-1   md:px-6 py-5">
-        <div className=" grid grid-cols-2">
+      <div className="px-2  md:px-6 py-5">
+        <div className="grid md:grid-cols-2">
           <div className="">
             <div className="flex  items-center justify-between">
               <h3 className="font-medium   w-full lg:text-left ">
