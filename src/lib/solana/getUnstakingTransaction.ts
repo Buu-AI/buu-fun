@@ -13,10 +13,10 @@ export async function getUnStakingTransactions({
   const publicKey = new PublicKey(address);
 
   const stakePool = new PublicKey(
-    process.env.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL ?? ""
+    process.env.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL ?? "",
   );
   const stakePoolMint = new PublicKey(
-    process.env.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL_MINT ?? ""
+    process.env.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL_MINT ?? "",
   );
 
   const solanaStakingClient = new SolanaStakingClient({
@@ -31,7 +31,7 @@ export async function getUnStakingTransactions({
       stakePool,
       stakePoolMint,
     },
-    publicKey
+    publicKey,
   );
   console.log("[TRANSACTION:]", ixs);
   console.log("[PARAMETER:]", {

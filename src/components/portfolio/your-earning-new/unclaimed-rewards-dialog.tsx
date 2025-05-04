@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { setTogglers } from "@/lib/redux/features/buu-pricing";
@@ -15,7 +15,7 @@ import { TUserStakedCard } from "./user-staked-card";
 export default function UnClaimedRewardsDialog(staking: TUserStakedCard) {
   const dispatch = useAppDispatch();
   const isOpened = useAppSelector(
-    (state) => state.BuuPricing.unclaimedRewardsModalOpen
+    (state) => state.BuuPricing.unclaimedRewardsModalOpen,
   );
   return (
     <Dialog
@@ -25,7 +25,7 @@ export default function UnClaimedRewardsDialog(staking: TUserStakedCard) {
       }}
     >
       <DialogContent className="rounded-[20px]  lg:rounded-[20px]  bg-buu/80 backdrop-blur-lg border-buu ">
-      <DialogHeader className="flex items-center justify-center">
+        <DialogHeader className="flex items-center justify-center">
           <DialogTitle>You have unclaimed rewards</DialogTitle>
           <DialogDescription>
             You have unclaimed rewards pending to be claimed to your wallet

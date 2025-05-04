@@ -52,10 +52,8 @@ export function useUserStakingData() {
     },
   });
 
-  
   return {
     userStaking,
     globalStaking,
   };
 }
-
