@@ -35,7 +35,7 @@ export default function ClaimRewardButton({
       });
       const signature = await wallet?.walletData?.sendTransaction(
         transaction,
-        connection
+        connection,
       );
 
       if (signature) {
@@ -45,7 +45,7 @@ export default function ClaimRewardButton({
         try {
           const confirmation = await connection?.confirmTransaction(
             signature,
-            "confirmed"
+            "confirmed",
           );
 
           if (confirmation.value.err) {
@@ -72,7 +72,7 @@ export default function ClaimRewardButton({
       toast.dismiss();
       toast.error(
         "Transaction failed: " +
-          (error instanceof Error ? error.message : "Unknown error")
+          (error instanceof Error ? error.message : "Unknown error"),
       );
       console.error("Transaction error:", error);
     } finally {

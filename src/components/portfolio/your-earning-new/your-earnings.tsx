@@ -19,12 +19,12 @@ export default function YourEarnings() {
 
   const earnings = formatUnits(
     userStakingData?.yourEarnings ?? "0",
-    userStakingData?.decimals ?? 0
+    userStakingData?.decimals ?? 0,
   );
 
   const EarningPrice = multiplyAndFormatPricing(
     Number(earnings),
-    data?.price ?? 0
+    data?.price ?? 0,
   );
   return (
     <div className="bg-portfolio-statistics mt-5 rounded-lg">

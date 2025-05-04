@@ -68,7 +68,7 @@ export default function UserStakedCard({
             <p className="text-2xl font-medium leading-none">
               {format(
                 staking?.stakeLockedTs ?? Date.now(),
-                "MMM, d, yyyy, hh:MM aa"
+                "MMM, d, yyyy, hh:MM aa",
               )}
             </p>
           </div>
@@ -79,7 +79,7 @@ export default function UserStakedCard({
             <p className="text-2xl font-medium leading-none">
               {format(
                 staking?.stakeUnlockedTs ?? Date.now(),
-                "MMM, d, yyyy, hh:MM aa"
+                "MMM, d, yyyy, hh:MM aa",
               )}
             </p>
           </div>
@@ -92,7 +92,7 @@ export default function UserStakedCard({
             <p className="text-2xl font-medium leading-none">
               {format(
                 staking?.nextClaimAvailableOn ?? Date.now(),
-                "MMM, d, yyyy, hh:MM aa"
+                "MMM, d, yyyy, hh:MM aa",
               )}
             </p>
           </div>

@@ -40,7 +40,7 @@ const BuuPricingSlice = createSlice({
       action: PayloadAction<{
         key: BooleanKeys<BuuPricingState>;
         value: boolean;
-      }>
+      }>,
     ) {
       state[action.payload.key] = action.payload.value;
     },
@@ -61,7 +61,7 @@ const BuuPricingSlice = createSlice({
       action: PayloadAction<{
         value: boolean;
         key: BooleanKeys<BuuPricingState>;
-      }>
+      }>,
     ) {
       state[action.payload.key] = action.payload.value;
     },

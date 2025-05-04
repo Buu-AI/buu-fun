@@ -1,10 +1,15 @@
 import SolanaIconWithTitle from "@/assets/icons/chain/solana";
-import { MagicEden, OpenSea, TensorFlow } from "@/assets/Image";
+import { MagicEden } from "@/assets/Image";
 import { Nft } from "@/gql/types/graphql";
-import { cn, getSolScanUrl, truncateString } from "@/lib/utils";
+import {
+  cn,
+  getMagicEdenUrl,
+  getSolScanUrl,
+  truncateString,
+} from "@/lib/utils";
 import Image from "next/image";
-import OverviewTilesContainer from "../portfolio/overview-tiles";
 import Link from "next/link";
+import OverviewTilesContainer from "../portfolio/overview-tiles";
 
 export default function NFTOverViewContainer({
   metadata,
@@ -128,30 +133,34 @@ export default function NFTOverViewContainer({
               title="Buy/Sell"
               value={
                 <div className="flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-full overflow-hidden">
+                  {/* <div className="w-5 h-5 rounded-full overflow-hidden">
                     <Image
                       src={OpenSea}
                       width={250}
                       height={250}
                       alt="jupiter ag swap icon"
                     />
-                  </div>
-                  <div className="w-5 h-5 rounded-full overflow-hidden">
+                  </div> */}
+                  {/* <div className="w-5 h-5 rounded-full overflow-hidden">
                     <Image
                       src={TensorFlow}
                       width={250}
                       height={250}
                       alt="jupiter ag swap icon"
                     />
-                  </div>
-                  <div className="w-5 h-5 rounded-full overflow-hidden">
+                  </div> */}
+                  <Link
+                    target="_blank"
+                    href={getMagicEdenUrl(`/item-details/${mintAddress}`)}
+                    className="w-5 h-5 rounded-full overflow-hidden"
+                  >
                     <Image
                       src={MagicEden}
                       width={250}
                       height={250}
                       alt="jupiter ag swap icon"
                     />
-                  </div>
+                  </Link>
                 </div>
               }
             />

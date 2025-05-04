@@ -1,12 +1,9 @@
 "use client";
 import {
-    useBuuPricingData,
-    useTokenBalance,
+  useBuuPricingData,
+  useTokenBalance,
 } from "@/hooks/use-pricing-history";
-import {
-    formatNumberWithFractions,
-    formatWithComma
-} from "@/lib/utils";
+import { formatNumberWithFractions, formatWithComma } from "@/lib/utils";
 import { Button } from "../ui/button";
 
 export default function TokenBalance() {

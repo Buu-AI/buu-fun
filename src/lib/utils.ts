@@ -224,3 +224,12 @@ export function getSolScanUrl(route: string) {
   }
   return "https://solscan.io" + route + queryParam;
 }
+
+export function getMagicEdenUrl(route: string) {
+  // let queryParam = "";
+  // if (process.env?.NEXT_PUBLIC_STREAMFLOW_CLUSTER === "devnet") {
+  //   queryParam = `?cluster=devnet`;
+  // }
+  return "https://magiceden.io" + route;
+  // + queryParam;
+}

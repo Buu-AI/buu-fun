@@ -59,7 +59,7 @@ export default function ToolTipGenerateNft({
             className="group bg-buu-button pointer-events-auto hover:bg-white hover:shadow-none group shadow-buu-button min-w-[30px] rounded-md flex items-center justify-center p-1.5"
           >
             <motion.div
-              className="w-full h-full group-hover:text-black group-hover:fill-black"
+              className="w-full h-full group-hover:text-black group-hover:fill-black group-hover:stroke-black"
               transition={{ duration: 0.2 }}
             >
               {toolTipData.Icon}

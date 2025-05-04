@@ -28,7 +28,7 @@ export async function getClaimRewardsTransactions({
           depositNonce: staking.depositNonce,
           rewardMint: staking.rewardMint,
         },
-        publicKey
+        publicKey,
       );
     transaction.add(...createRewardEntryInstructions);
   }
@@ -42,7 +42,7 @@ export async function getClaimRewardsTransactions({
         stakePoolMint: staking.stakePoolMint,
         rewardMint: staking.rewardMint,
       },
-      publicKey
+      publicKey,
     );
 
   transaction.add(...claimInstructions);

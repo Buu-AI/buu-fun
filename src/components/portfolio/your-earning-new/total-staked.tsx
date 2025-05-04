@@ -22,12 +22,12 @@ export default function TotalStaked() {
 
   const totalStaked = formatUnits(
     userStakingData?.yourTotalStaked ?? "0",
-    userStakingData?.decimals ?? 0
+    userStakingData?.decimals ?? 0,
   );
 
   const totalStakedPrice = multiplyAndFormatPricing(
     Number(totalStaked),
-    data?.price ?? 0
+    data?.price ?? 0,
   );
   return (
     <div className="bg-total-staked py-6 px-5 mb-6 grid grid-cols-2 grid-flow-col">
@@ -53,7 +53,7 @@ export default function TotalStaked() {
         <Button
           onClick={() => {
             dispatch(
-              setBooleanToggler({ key: "roiStakingDialogOpen", value: true })
+              setBooleanToggler({ key: "roiStakingDialogOpen", value: true }),
             );
           }}
           variant={"special"}

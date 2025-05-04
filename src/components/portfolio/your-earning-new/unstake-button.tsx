@@ -32,7 +32,7 @@ export default function UnstakeButton({
       }
       if (Number(rewards) > 0) {
         dispatch(
-          setTogglers({ key: "unclaimedRewardsModalOpen", value: true })
+          setTogglers({ key: "unclaimedRewardsModalOpen", value: true }),
         );
         return;
       }
@@ -43,7 +43,7 @@ export default function UnstakeButton({
       });
       const signature = await wallet.walletData?.sendTransaction(
         transaction,
-        connection
+        connection,
       );
 
       if (signature) {
@@ -53,7 +53,7 @@ export default function UnstakeButton({
         try {
           const confirmation = await connection.confirmTransaction(
             signature,
-            "confirmed"
+            "confirmed",
           );
 
           if (confirmation.value.err) {
@@ -67,7 +67,9 @@ export default function UnstakeButton({
                 "get-token-balance",
               ],
             });
-            toast.success("Token has been Unstaked, will credit to your account shortly");
+            toast.success(
+              "Token has been Unstaked, will credit to your account shortly",
+            );
           }
         } catch (confirmError) {
           toast.error("Failed to confirm transaction");
@@ -80,7 +82,7 @@ export default function UnstakeButton({
       toast.dismiss();
       toast.error(
         "Transaction failed: " +
-          (error instanceof Error ? error.message : "Unknown error")
+          (error instanceof Error ? error.message : "Unknown error"),
       );
       console.error("Transaction error:", error);
     } finally {

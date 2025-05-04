@@ -6,7 +6,7 @@ import {
   // MaximizeIcon,
   RetryIcon,
 } from "@/assets/icons";
-import GenerateNft from "@/assets/icons/Generate-nft";
+import CreateNFTIcon from "@/assets/icons/create-nft-icon";
 import ShareIcon from "@/assets/icons/share-icon";
 import { Eye, Trash2 } from "lucide-react";
 
@@ -18,7 +18,7 @@ export const ToolTips = [
   },
   {
     type: "GENERATE_NFT" as const,
-    Icon: <GenerateNft />,
+    Icon: <CreateNFTIcon />,
     content: "Generate NFT",
   },
   // {
