@@ -28,6 +28,7 @@ import ExportSolanaWallet from "../referral/export-wallet";
 import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
 import WalletIcon2 from "@/assets/icons/wallet-icon-2";
 import GenerateNft from "@/assets/icons/Generate-nft";
+import NFTSideBarIcon from "@/assets/icons/nft-sidebar-icon";
 
 export default function MobileProfileNavigation() {
   const { address, isAuthenticated, logout } = useAuthentication();
@@ -130,7 +131,7 @@ export default function MobileProfileNavigation() {
                   <Link href={"/app/nfts"}>
                     <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
                       <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
-                        <GenerateNft />
+                        <NFTSideBarIcon />
                       </div>
                       <p className="text-xl">NFT&apos;s</p>{" "}
                     </DrawerClose>

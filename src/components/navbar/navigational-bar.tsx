@@ -6,6 +6,7 @@ import KnowMorePopover from "./know-more-pop-over";
 import { CoinStackIcon, SizePenIcon } from "@/assets/icons";
 import LocationKnownLink from "./location-known-link";
 import GenerateNft from "@/assets/icons/Generate-nft";
+import NFTSideBarIcon from "@/assets/icons/nft-sidebar-icon";
 export default function NavigationalBar() {
   return (
     <nav className="px-3 py-4  w-full h-full md:h-screen">
@@ -23,9 +24,9 @@ export default function NavigationalBar() {
               alt="Bunn.fun logo"
             />
           </Link>
-          <Link href={"/app/nfts"} className="mt-4 w-6 h-6 hidden md:block">
+          {/* <Link href={"/app/nfts"} className="mt-4 w-6 h-6 hidden md:block">
             <GenerateNft />
-          </Link>
+          </Link> */}
         </div>
         <div className="hidden md:flex flex-col gap-4 items-center justify-center">
           {/* <Link
@@ -59,7 +60,13 @@ export default function NavigationalBar() {
           >
             <CoinStackIcon />
           </LocationKnownLink>
-
+          <LocationKnownLink
+            LinkIn="nfts"
+            LinkTo="/app/nfts"
+            // children={}
+          >
+            <NFTSideBarIcon />
+          </LocationKnownLink>
           {/* <Link
             href={"/app"}
             className="w-10 flex  items-center group   justify-center    h-10 "
