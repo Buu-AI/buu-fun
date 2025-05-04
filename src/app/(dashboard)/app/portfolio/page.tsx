@@ -1,3 +1,4 @@
+import BitRefillDialog from "@/components/bit-refill-dialog";
 import BuuStakedSupply from "@/components/portfolio/buu-staked-supply";
 import BuyBuuRedirectDialog from "@/components/portfolio/buy-buu-redirect-dialog";
 import HeaderLogo from "@/components/portfolio/header-logo";
@@ -20,6 +21,7 @@ export default function PortfolioPage() {
           <TokenStatistics />
           <TokenBalance />
           <YourEarnings />
+          <BitRefillDialog />
 
           <div className="py-6">{/* <APICapacityCTA /> */}</div>
           {/* <div className="flex justify-center flex-wrap place-content-center place-items-center  md:grid md:grid-cols-2  gap-2"> */}
