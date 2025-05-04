@@ -24,6 +24,7 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
+import { useState } from "react";
 const ModelViewer = dynamic(() => import("../generation/model-viewer"), {
   ssr: false,
   loading: () => null, // Use null instead of undefined
@@ -31,6 +32,7 @@ const ModelViewer = dynamic(() => import("../generation/model-viewer"), {
 
 export default function GenerateNFTModal() {
   const { identityToken: accessToken, login } = useAuthentication();
+  const [checked, setChecked] = useState(false);
   const isOpen = useAppSelector((state) => state.chat.genNft.isGenNftModalOpen);
   const dispatch = useAppDispatch();
   const GenNft = useAppSelector((state) => state.chat.genNft);
@@ -38,7 +40,7 @@ export default function GenerateNFTModal() {
     register,
     handleSubmit,
     watch,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<TCreateNftSchema>({
     resolver: zodResolver(createNftSchema),
   });
@@ -67,12 +69,12 @@ export default function GenerateNFTModal() {
       toast.error("invalid generation request");
       return;
     }
-    mutate({
-      name,
-      description,
-      genRequestId,
-      accessToken,
-    });
+    // mutate({
+    //   name,
+    //   description,
+    //   genRequestId,
+    //   accessToken,
+    // });
   }
   const modelUrl = GenNft.modelUrl;
   const imageUrl = GenNft.imageUrl;
@@ -97,9 +99,9 @@ export default function GenerateNFTModal() {
     >
       <DialogContent className="rounded-[20px] pt-6 lg:rounded-[20px] bg-nft-modal-card overflow-y-scroll max-h-[90dvh] scrollbar-w-hidden">
         <DialogHeader className="flex items-center justify-center ">
-          <DialogTitle>Create a new Collectable</DialogTitle>
+          <DialogTitle>Create a new collectible</DialogTitle>
           <DialogDescription className="text-center text-pretty">
-            You could create a collectable unique
+            You could create a collectible unique
           </DialogDescription>
         </DialogHeader>
         <div className="flex w-full md:w-[50%] mx-auto aspect-square">
@@ -138,10 +140,20 @@ export default function GenerateNFTModal() {
           <div className="my-3">
             <div className="flex justify-start items-start gap-2 pl-1  ">
               <Checkbox
-                id="set-expiresIn"
+                checked={checked}
+                onCheckedChange={(value) => {
+                  if (typeof value === "undefined") return;
+                  if (typeof value === "boolean") {
+                    setChecked(value);
+                  }
+                }}
+                id="acknowledge-credits"
                 className="rounded-[4px] data-[state=checked]:bg-buu mt-0.5 data-[state=checked]:text-primary border border-gray-500"
               />
-              <Label htmlFor="set-expiresIn" className="text-xs font-medium">
+              <Label
+                htmlFor="acknowledge-credits"
+                className="text-sm font-medium"
+              >
                 This NFT will cost you 3 credits, would you like to
                 proceed?{" "}
               </Label>
@@ -149,7 +161,7 @@ export default function GenerateNFTModal() {
           </div>
           <div className="mt-4">
             <Button
-              disabled={isPending || isSubmitting}
+              disabled={isPending || isSubmitting || !checked}
               className="h-[40px] w-full"
             >
               {isPending ? (
