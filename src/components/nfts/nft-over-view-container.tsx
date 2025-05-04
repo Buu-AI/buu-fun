@@ -53,34 +53,19 @@ export default function NFTOverViewContainer({
               );
             })}
           </div>
-
-          <div
-            className={cn("flex items-center justify-between gap-2 my-2", {
-              hidden: true,
-            })}
-          >
-            <div className="bg-tile-muted w-full p-2 px-3 rounded-lg group">
-              <div>
-                <p className="text-xs font-medium tracking-tight">Style</p>
-                <p className="text-white">Cute</p>
-              </div>
-            </div>
-            <div className="bg-tile-muted w-full p-2 px-3 rounded-lg group">
-              <div>
-                <p className="text-xs font-medium tracking-tight">Style</p>
-                <p className="text-white">Cute</p>
-              </div>
-            </div>
-          </div>
           <div className="flex items-center mt-2  justify-center w-full gap-2 flex-col">
             <Link
               target="_blank"
               href={getSolScanUrl(`/token/${mintAddress}`)}
-              className="w-full h-full"
+              className="w-full h-full "
             >
               <OverviewTilesContainer
                 title="Mint Address"
-                value={truncateString(mintAddress ?? "")}
+                value={
+                  <span className="blue-text-clip">
+                    {truncateString(mintAddress ?? "")}
+                  </span>
+                }
               />
             </Link>
             <Link
@@ -90,7 +75,11 @@ export default function NFTOverViewContainer({
             >
               <OverviewTilesContainer
                 title="Collection Address"
-                value={truncateString(collectionAddress ?? "")}
+                value={
+                  <span className="blue-text-clip">
+                    {truncateString(collectionAddress ?? "")}
+                  </span>
+                }
               />
             </Link>
             <Link
@@ -100,7 +89,11 @@ export default function NFTOverViewContainer({
             >
               <OverviewTilesContainer
                 title="Owner"
-                value={truncateString(creator ?? "")}
+                value={
+                  <span className="blue-text-clip">
+                    {truncateString(creator ?? "")}
+                  </span>
+                }
               />
             </Link>{" "}
             <Link
@@ -110,7 +103,11 @@ export default function NFTOverViewContainer({
             >
               <OverviewTilesContainer
                 title="Token Address"
-                value={truncateString(tokenAddress ?? "")}
+                value={
+                  <span className="blue-text-clip">
+                    {truncateString(tokenAddress ?? "")}
+                  </span>
+                }
               />{" "}
             </Link>{" "}
             <OverviewTilesContainer

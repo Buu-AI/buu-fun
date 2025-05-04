@@ -37,7 +37,7 @@ export default function StakingDialog() {
   const { wallet, connectSolanaWallet, address } = useAuthentication();
   const { wallets } = useSolanaWallets();
   const openState = useAppSelector(
-    (state) => state.BuuPricing.openStakingModal
+    (state) => state.BuuPricing.openStakingModal,
   );
   const {
     userStaking: { data: userStakingData },
@@ -60,7 +60,7 @@ export default function StakingDialog() {
           if (Number(value) <= 0) return false;
           return true;
         },
-        { message: "Please enter a valid number" }
+        { message: "Please enter a valid number" },
       )
       .refine(
         (value) => {
@@ -69,7 +69,7 @@ export default function StakingDialog() {
           if (balance < Number(value)) return false;
           return true;
         },
-        { message: "insufficient balance" }
+        { message: "insufficient balance" },
       ),
   });
 
@@ -136,7 +136,7 @@ export default function StakingDialog() {
 
       const signature = await wallet.walletData?.sendTransaction(
         transaction,
-        connection
+        connection,
       );
       console.log(signature);
       toast.dismiss();
@@ -148,7 +148,7 @@ export default function StakingDialog() {
         try {
           const confirmation = await connection.confirmTransaction(
             signature,
-            "confirmed"
+            "confirmed",
           );
 
           if (confirmation.value.err) {
@@ -176,7 +176,7 @@ export default function StakingDialog() {
       toast.dismiss();
       toast.error(
         "Transaction failed: " +
-          (error instanceof Error ? error.message : "Unknown error")
+          (error instanceof Error ? error.message : "Unknown error"),
       );
       console.error("Transaction error:", error);
     } finally {
