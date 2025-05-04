@@ -233,3 +233,8 @@ export function getMagicEdenUrl(route: string) {
   return "https://magiceden.io" + route;
   // + queryParam;
 }
+
+export function getNumber(value: string) {
+  const num = parseFloat(value);
+  return isNaN(num) ? null : num;
+}
