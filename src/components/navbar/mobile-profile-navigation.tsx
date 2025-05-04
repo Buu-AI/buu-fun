@@ -1,6 +1,10 @@
 import { MagicPenIcon, SizePenIcon } from "@/assets/icons";
+import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
 import LogoutIcon from "@/assets/icons/log-out-Icon";
+import NFTSideBarIcon from "@/assets/icons/nft-sidebar-icon";
+import ReferralIcon from "@/assets/icons/referral-icon";
 import SettingsIcon from "@/assets/icons/settings-icon";
+import WalletIcon2 from "@/assets/icons/wallet-icon-2";
 import {
   Accordion,
   AccordionContent,
@@ -12,6 +16,7 @@ import { useAuthentication } from "@/providers/account.context";
 import { ArrowDown, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import ExportSolanaWallet from "../referral/export-wallet";
 import {
   Drawer,
   DrawerClose,
@@ -23,12 +28,6 @@ import {
 } from "../ui/drawer";
 import CopyAddress from "./copy-address";
 import KnowMoreContent from "./know-more-content";
-import ReferralIcon from "@/assets/icons/referral-icon";
-import ExportSolanaWallet from "../referral/export-wallet";
-import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
-import WalletIcon2 from "@/assets/icons/wallet-icon-2";
-import GenerateNft from "@/assets/icons/Generate-nft";
-import NFTSideBarIcon from "@/assets/icons/nft-sidebar-icon";
 
 export default function MobileProfileNavigation() {
   const { address, isAuthenticated, logout } = useAuthentication();

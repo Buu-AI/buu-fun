@@ -40,7 +40,7 @@ export default function GenerateNFTModal() {
     register,
     handleSubmit,
     watch,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
   } = useForm<TCreateNftSchema>({
     resolver: zodResolver(createNftSchema),
   });
@@ -61,6 +61,10 @@ export default function GenerateNFTModal() {
   });
   function handleCreateNFTForm({ description, name }: TCreateNftSchema) {
     const genRequestId = GenNft.genId;
+    if (!checked) {
+      toast.error("Please acknowledge the credits used to generate NFT");
+      return;
+    }
     if (!accessToken) {
       login();
       return;
@@ -69,12 +73,12 @@ export default function GenerateNFTModal() {
       toast.error("invalid generation request");
       return;
     }
-    // mutate({
-    //   name,
-    //   description,
-    //   genRequestId,
-    //   accessToken,
-    // });
+    mutate({
+      name,
+      description,
+      genRequestId,
+      accessToken,
+    });
   }
   const modelUrl = GenNft.modelUrl;
   const imageUrl = GenNft.imageUrl;
@@ -90,7 +94,7 @@ export default function GenerateNFTModal() {
               genRequestId: undefined,
               imageUrl: undefined,
               modelUrl: undefined,
-            }),
+            })
           );
           return;
         }

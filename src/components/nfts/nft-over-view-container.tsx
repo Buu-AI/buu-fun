@@ -1,5 +1,5 @@
 import SolanaIconWithTitle from "@/assets/icons/chain/solana";
-import { MagicEden, OpenSea, TensorFlow } from "@/assets/Image";
+import { MagicEden } from "@/assets/Image";
 import { Nft } from "@/gql/types/graphql";
 import {
   cn,
@@ -8,8 +8,8 @@ import {
   truncateString,
 } from "@/lib/utils";
 import Image from "next/image";
-import OverviewTilesContainer from "../portfolio/overview-tiles";
 import Link from "next/link";
+import OverviewTilesContainer from "../portfolio/overview-tiles";
 
 export default function NFTOverViewContainer({
   metadata,

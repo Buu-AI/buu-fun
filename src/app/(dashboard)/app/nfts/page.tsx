@@ -1,5 +1,4 @@
 import NFTSideBarHeader from "@/assets/icons/nft-sidebar-header";
-import NFTSideBarIcon from "@/assets/icons/nft-sidebar-icon";
 import HeroHeader from "@/components/headers/boards/hero-header";
 import NftButtonWrapper from "@/components/nfts/nft-button-wrapper";
 import NFTCardsWrapper from "@/components/nfts/nft-cards-wrapper";
