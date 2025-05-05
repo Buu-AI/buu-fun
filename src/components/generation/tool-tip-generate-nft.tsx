@@ -30,9 +30,10 @@ export default function ToolTipGenerateNft({
   const dispatch = useAppDispatch();
   return (
     <Tooltip>
-      <TooltipTrigger asChild>
+      <TooltipTrigger disabled={tokenized} asChild>
         {
           <motion.button
+            disabled={tokenized}
             onClick={() => {
               if (tokenized) {
                 toast.success(`NFT has already been generated `);
@@ -56,10 +57,18 @@ export default function ToolTipGenerateNft({
             whileTap="tap"
             variants={buttonVariants}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            className="group bg-buu-button pointer-events-auto hover:bg-white hover:shadow-none group shadow-buu-button min-w-[30px] rounded-md flex items-center justify-center p-1.5"
+            className={cn(
+              "group bg-buu-button pointer-events-auto  group shadow-buu-button min-w-[30px] rounded-md flex items-center justify-center p-1.5",
+              {
+                "hover:bg-white hover:shadow-none": !tokenized,
+              },
+            )}
           >
             <motion.div
-              className="w-full h-full group-hover:text-black group-hover:fill-black group-hover:stroke-black"
+              className={cn("w-full h-full", {
+                "group-hover:text-black group-hover:fill-black group-hover:stroke-black":
+                  !tokenized,
+              })}
               transition={{ duration: 0.2 }}
             >
               {toolTipData.Icon}
@@ -73,7 +82,7 @@ export default function ToolTipGenerateNft({
           "mr-2": index === ToolTips.length - 1,
         })}
       >
-        <p>{toolTipData.content}</p>
+        <p>{!tokenized ? toolTipData.content : "Collectibles Generated"}</p>
       </TooltipContent>
     </Tooltip>
   );

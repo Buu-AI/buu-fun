@@ -18,12 +18,15 @@ export default function NFTOverViewContainer({
   creator,
   tokenAddress,
   tokenStandard,
-
   collectionRoyalties,
+  // status,
 }: Nft) {
   const name = metadata.name;
   const description = metadata.description;
   const attribute = metadata.attributes ?? [];
+  // const isQueued =
+  //   status === NftStatus.InProgress || status === NftStatus.InQueue;
+
   return (
     <div className="backdrop-blur-lg rounded-3xl">
       <div className="px-2 md:px-4 py-4 border-white/5 border rounded-t-3xl  bg-overview-portfolio">
@@ -62,7 +65,13 @@ export default function NFTOverViewContainer({
               <OverviewTilesContainer
                 title="Mint Address"
                 value={
-                  <span className="blue-text-clip">
+                  <span
+                    className={cn({
+                      "w-24 bg-gray-800 rounded-md animate-pulse h-6 ":
+                        !mintAddress,
+                      "blue-text-clip": mintAddress,
+                    })}
+                  >
                     {truncateString(mintAddress ?? "")}
                   </span>
                 }
@@ -76,7 +85,13 @@ export default function NFTOverViewContainer({
               <OverviewTilesContainer
                 title="Collection Address"
                 value={
-                  <span className="blue-text-clip">
+                  <span
+                    className={cn({
+                      "w-24 bg-gray-800 rounded-md animate-pulse h-6 ":
+                        !collectionAddress,
+                      "blue-text-clip": collectionAddress,
+                    })}
+                  >
                     {truncateString(collectionAddress ?? "")}
                   </span>
                 }
@@ -88,9 +103,15 @@ export default function NFTOverViewContainer({
               className="w-full h-full"
             >
               <OverviewTilesContainer
-                title="Owner"
+                title="Creator"
                 value={
-                  <span className="blue-text-clip">
+                  <span
+                    className={cn({
+                      "w-24 bg-gray-800 rounded-md animate-pulse h-6 ":
+                        !creator,
+                      "blue-text-clip": creator,
+                    })}
+                  >
                     {truncateString(creator ?? "")}
                   </span>
                 }
@@ -104,7 +125,13 @@ export default function NFTOverViewContainer({
               <OverviewTilesContainer
                 title="Token Address"
                 value={
-                  <span className="blue-text-clip">
+                  <span
+                    className={cn({
+                      "w-24 bg-gray-800 rounded-md animate-pulse h-6 ":
+                        !tokenAddress,
+                      "blue-text-clip": tokenAddress,
+                    })}
+                  >
                     {truncateString(tokenAddress ?? "")}
                   </span>
                 }
@@ -116,7 +143,18 @@ export default function NFTOverViewContainer({
             />{" "}
             <OverviewTilesContainer
               title="Royalties"
-              value={`${(collectionRoyalties ?? 0) / 100}%`}
+              value={
+                <span
+                  className={cn({
+                    "w-12 bg-gray-800 rounded-md animate-pulse h-6":
+                      typeof collectionRoyalties === "undefined",
+                  })}
+                >
+                  {collectionRoyalties
+                    ? `${(collectionRoyalties ?? 0) / 100}%`
+                    : "0%"}
+                </span>
+              }
             />
             <OverviewTilesContainer
               title="Chain"
@@ -130,22 +168,6 @@ export default function NFTOverViewContainer({
               title="Buy/Sell"
               value={
                 <div className="flex items-center gap-2">
-                  {/* <div className="w-5 h-5 rounded-full overflow-hidden">
-                    <Image
-                      src={OpenSea}
-                      width={250}
-                      height={250}
-                      alt="jupiter ag swap icon"
-                    />
-                  </div> */}
-                  {/* <div className="w-5 h-5 rounded-full overflow-hidden">
-                    <Image
-                      src={TensorFlow}
-                      width={250}
-                      height={250}
-                      alt="jupiter ag swap icon"
-                    />
-                  </div> */}
                   <Link
                     target="_blank"
                     href={getMagicEdenUrl(`/item-details/${mintAddress}`)}
