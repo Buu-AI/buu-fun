@@ -9,7 +9,7 @@ import { getTokenBalance } from "@/lib/solana/getTokenBalance";
 
 export function usePricingHistoricalPricing() {
   const buuPricingHistoryTime = useAppSelector(
-    (state) => state.BuuPricing.buuPricingHistoryTime,
+    (state) => state.BuuPricing.buuPricingHistoryTime
   );
   return useQuery({
     queryKey: ["get-historical-pricing-result", buuPricingHistoryTime],
@@ -37,9 +37,8 @@ export function useTokenBalance() {
     useAuthentication();
 
   return useQuery({
-    queryKey: ["get-token-balance", identityToken],
+    queryKey: ["get-token-balance", "token-data", identityToken, address],
     enabled: !loading && isAuthenticated,
-    refetchInterval: 150_000,
     queryFn: async () => {
       if (!address) return;
       return await getTokenBalance({
