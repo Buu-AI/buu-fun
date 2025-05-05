@@ -176,7 +176,7 @@ export default function GenerateNFTModal() {
               ) : (
                 <>
                   <GenerateNft />
-                  Create NFT
+                  Create Collectible{" "}
                 </>
               )}
             </Button>

@@ -20,7 +20,63 @@ export default function ClaimRewardButton({
   const [isLoading, setIsLoading] = useState(false);
   const { address, connectSolanaWallet, wallet } = useAuthentication();
   const { wallets } = useSolanaWallets();
-  const query = useQueryClient();
+  const queryClient = useQueryClient();
+  const refreshStakingData = async () => {
+    await queryClient.invalidateQueries({
+      queryKey: ["get-token-balance"],
+      exact: false,
+      type: "all",
+    });
+    await queryClient.invalidateQueries({
+      queryKey: ["get-global-staking-data"],
+      exact: false,
+      type: "all",
+    });
+    await queryClient.invalidateQueries({
+      queryKey: ["token-data"],
+      exact: false,
+      type: "all",
+    });
+    await queryClient.invalidateQueries({
+      queryKey: ["get-user-staking-data"],
+      exact: false,
+      type: "all",
+    });
+
+    await Promise.all([
+      queryClient.refetchQueries({
+        queryKey: ["get-token-balance"],
+        exact: false,
+        type: "all",
+      }),
+      queryClient.refetchQueries({
+        queryKey: ["get-global-staking-data"],
+        exact: false,
+        type: "all",
+      }),
+      queryClient.refetchQueries({
+        queryKey: ["token-data"],
+        exact: false,
+        type: "all",
+      }),
+      // The user staking query depends on the global staking data,
+      // so we need to ensure it's re-fetched after global data is updated
+      queryClient.refetchQueries({
+        queryKey: ["get-user-staking-data"],
+        exact: false,
+        type: "all",
+      }),
+    ]);
+    toast.dismiss();
+    toast.success("Rewards claimed successfully!");
+  };
+
+  function revalidate() {
+    setTimeout(async () => {
+      await refreshStakingData();
+    }, 7000);
+  }
+
   async function handleClaimRewards() {
     try {
       setIsLoading(true);
@@ -39,27 +95,20 @@ export default function ClaimRewardButton({
       );
 
       if (signature) {
-        toast.success("Transaction sent! Waiting for confirmation...");
-
+        toast.loading("Transaction sent! Waiting for confirmation...");
         // Wait for confirmation
         try {
           const confirmation = await connection?.confirmTransaction(
             signature,
             "confirmed",
           );
-
+          toast.dismiss();
           if (confirmation.value.err) {
             toast.error("Transaction failed on-chain");
             console.error("Transaction error:", confirmation.value.err);
           } else {
-            await query.invalidateQueries({
-              queryKey: [
-                "get-global-staking-data",
-                "get-user-staking-data",
-                "get-token-balance",
-              ],
-            });
-            toast.success("Rewards claimed successfully!");
+            toast.loading("Transaction received!, processing claims...");
+            revalidate();
           }
         } catch (confirmError) {
           toast.error("Failed to confirm transaction");

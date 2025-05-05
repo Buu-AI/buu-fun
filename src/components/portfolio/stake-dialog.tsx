@@ -42,7 +42,7 @@ export default function StakingDialog() {
   const {
     userStaking: { data: userStakingData },
   } = useUserStakingData();
-  const query = useQueryClient();
+  const queryClient = useQueryClient();
   const { data: tokenData } = useTokenBalance();
   const balance = tokenData?.value.uiAmount ?? 0;
 
@@ -88,20 +88,74 @@ export default function StakingDialog() {
   // Watch the amount field to update Redux when it changes
   const amountValue = watch("amount");
 
-  // Update Redux when form value changes
   useEffect(() => {
     if (amountValue !== undefined) {
       dispatch(setSelectedAmountToStake(amountValue));
     }
   }, [amountValue, dispatch]);
 
-  // Update form when Redux state changes (from slider or elsewhere)
   useEffect(() => {
     if (toBeStaked !== undefined) {
       setValue("amount", toBeStaked);
     }
   }, [toBeStaked, setValue]);
 
+  const refreshStakingData = async () => {
+    await queryClient.invalidateQueries({
+      queryKey: ["get-token-balance"],
+      exact: false,
+      type: "all",
+    });
+    await queryClient.invalidateQueries({
+      queryKey: ["get-global-staking-data"],
+      exact: false,
+      type: "all",
+    });
+    await queryClient.invalidateQueries({
+      queryKey: ["token-data"],
+      exact: false,
+      type: "all",
+    });
+    await queryClient.invalidateQueries({
+      queryKey: ["get-user-staking-data"],
+      exact: false,
+      type: "all",
+    });
+
+    await Promise.all([
+      queryClient.refetchQueries({
+        queryKey: ["get-token-balance"],
+        exact: false,
+        type: "all",
+      }),
+      queryClient.refetchQueries({
+        queryKey: ["get-global-staking-data"],
+        exact: false,
+        type: "all",
+      }),
+      queryClient.refetchQueries({
+        queryKey: ["token-data"],
+        exact: false,
+        type: "all",
+      }),
+      // The user staking query depends on the global staking data,
+      // so we need to ensure it's re-fetched after global data is updated
+      queryClient.refetchQueries({
+        queryKey: ["get-user-staking-data"],
+        exact: false,
+        type: "all",
+      }),
+    ]);
+    toast.dismiss();
+    toast.success("Staking successful!");
+    dispatch(setTogglers({ key: "openStakingModal", value: false }));
+  };
+
+  function revalidate() {
+    setTimeout(async () => {
+      await refreshStakingData();
+    }, 7000);
+  }
   async function onSubmit(data: z.infer<typeof stakeInputSchema>) {
     try {
       setIsLoading(true);
@@ -138,11 +192,9 @@ export default function StakingDialog() {
         transaction,
         connection,
       );
-      console.log(signature);
       toast.dismiss();
-
       if (signature) {
-        toast.success("Transaction sent! Waiting for confirmation...");
+        toast.loading("Transaction sent! Waiting for confirmation...");
 
         // Wait for confirmation
         try {
@@ -150,26 +202,22 @@ export default function StakingDialog() {
             signature,
             "confirmed",
           );
-
+          toast.dismiss();
           if (confirmation.value.err) {
+            toast.dismiss();
             toast.error("Transaction failed on-chain");
             console.error("Transaction error:", confirmation.value.err);
           } else {
-            await query.invalidateQueries({
-              queryKey: [
-                "get-global-staking-data",
-                "get-user-staking-data",
-                "get-token-balance",
-              ],
-            });
-            toast.success("Staking successful!");
-            dispatch(setTogglers({ key: "openStakingModal", value: false }));
+            toast.loading("Transaction received! processing transaction...");
+            revalidate();
           }
         } catch (confirmError) {
+          toast.dismiss();
           toast.error("Failed to confirm transaction");
           console.error("Confirmation error:", confirmError);
         }
       } else {
+        toast.dismiss();
         toast.error("Transaction was not sent");
       }
     } catch (error) {
@@ -238,7 +286,7 @@ export default function StakingDialog() {
                 {isLoading ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    loading...
+                    Loading{" "}
                   </>
                 ) : (
                   <>
