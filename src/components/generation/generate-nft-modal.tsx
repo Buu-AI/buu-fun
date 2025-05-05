@@ -94,7 +94,7 @@ export default function GenerateNFTModal() {
               genRequestId: undefined,
               imageUrl: undefined,
               modelUrl: undefined,
-            }),
+            })
           );
           return;
         }
@@ -176,7 +176,7 @@ export default function GenerateNFTModal() {
               ) : (
                 <>
                   <GenerateNft />
-                  Create NFT
+                  Create Collectible{" "}
                 </>
               )}
             </Button>
