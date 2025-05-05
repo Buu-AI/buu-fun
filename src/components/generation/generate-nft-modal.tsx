@@ -25,6 +25,7 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
+import { useRouter } from "next/navigation";
 const ModelViewer = dynamic(() => import("../generation/model-viewer"), {
   ssr: false,
   loading: () => null, // Use null instead of undefined
@@ -44,14 +45,16 @@ export default function GenerateNFTModal() {
   } = useForm<TCreateNftSchema>({
     resolver: zodResolver(createNftSchema),
   });
+  const router = useRouter();
   const query = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: generateNFT,
-    async onSuccess() {
+    async onSuccess(data) {
       await query.invalidateQueries({
         queryKey: ["get-sub-thread-requests"],
       });
       toast.success("NFT has been generated");
+      router.push(`/app/nfts/${data._id}`);
     },
     onError(error) {
       if (error.message) {
