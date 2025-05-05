@@ -94,7 +94,7 @@ export default function GenerateNFTModal() {
               genRequestId: undefined,
               imageUrl: undefined,
               modelUrl: undefined,
-            })
+            }),
           );
           return;
         }
