@@ -100,7 +100,7 @@ export default function RedeemVouchers() {
             ) : (
               <>
                 <Loader2 className="animate-spin" />
-                Loading...
+                Loading
               </>
             )}
           </Button>

@@ -146,60 +146,60 @@ export const calcRewards = (
 ) => {
   const rewardEntry: RewardEntry =
     rewardEntryAccount?.account ??
-    createDefaultRewardEntry(stakeEntryAccount, rewardPoolAccount)
-  const stakeEntry = stakeEntryAccount.account
-  const rewardPool = rewardPoolAccount.account
+    createDefaultRewardEntry(stakeEntryAccount, rewardPoolAccount);
+  const stakeEntry = stakeEntryAccount.account;
+  const rewardPool = rewardPoolAccount.account;
 
-  const rewardEntryAccumulator = RewardEntryAccumulator.fromEntry(rewardEntry)
+  const rewardEntryAccumulator = RewardEntryAccumulator.fromEntry(rewardEntry);
   if (rewardEntryAccumulator.createdTs.lt(stakeEntry.createdTs)) {
-    throw new Error('InvalidRewardEntry')
+    throw new Error("InvalidRewardEntry");
   }
 
-  const currTs = Math.floor(Date.now() / 1000)
+  const currTs = Math.floor(Date.now() / 1000);
 
   const stakedTs = rewardPool.createdTs
     ? BN.max(stakeEntry.createdTs, rewardPool.createdTs)
-    : stakeEntry.createdTs
+    : stakeEntry.createdTs;
   const claimableTs = stakeEntry.closedTs.gtn(0)
     ? stakeEntry.closedTs
-    : new BN(currTs)
+    : new BN(currTs);
 
   const amountUpdated =
     !rewardPool.rewardAmount.eq(rewardPool.lastRewardAmount) &&
     rewardPool.lastAmountUpdateTs.gt(stakeEntry.createdTs) &&
-    rewardPool.lastAmountUpdateTs.gt(stakeEntry.closedTs)
+    rewardPool.lastAmountUpdateTs.gt(stakeEntry.closedTs);
   const periodUpdated =
     !rewardPool.rewardPeriod.eq(rewardPool.lastRewardPeriod) &&
     rewardPool.lastPeriodUpdateTs.gt(stakeEntry.createdTs) &&
-    rewardPool.lastPeriodUpdateTs.gt(stakeEntry.closedTs)
+    rewardPool.lastPeriodUpdateTs.gt(stakeEntry.closedTs);
 
   if (amountUpdated || periodUpdated) {
     let firstUpdateTs: BN,
       secondUpdateTs: BN,
       rewardAmount: BN,
-      rewardPeriod: BN
+      rewardPeriod: BN;
     if (amountUpdated && periodUpdated) {
       if (rewardPool.lastAmountUpdateTs.lt(rewardPool.lastPeriodUpdateTs)) {
-        firstUpdateTs = rewardPool.lastAmountUpdateTs
-        secondUpdateTs = rewardPool.lastPeriodUpdateTs
-        rewardAmount = rewardPool.rewardAmount
-        rewardPeriod = rewardEntryAccumulator.lastRewardPeriod
+        firstUpdateTs = rewardPool.lastAmountUpdateTs;
+        secondUpdateTs = rewardPool.lastPeriodUpdateTs;
+        rewardAmount = rewardPool.rewardAmount;
+        rewardPeriod = rewardEntryAccumulator.lastRewardPeriod;
       } else {
-        firstUpdateTs = rewardPool.lastPeriodUpdateTs
-        secondUpdateTs = rewardPool.lastAmountUpdateTs
-        rewardAmount = rewardEntryAccumulator.lastRewardAmount
-        rewardPeriod = rewardPool.rewardPeriod
+        firstUpdateTs = rewardPool.lastPeriodUpdateTs;
+        secondUpdateTs = rewardPool.lastAmountUpdateTs;
+        rewardAmount = rewardEntryAccumulator.lastRewardAmount;
+        rewardPeriod = rewardPool.rewardPeriod;
       }
     } else if (amountUpdated) {
-      firstUpdateTs = new BN(0)
-      secondUpdateTs = rewardPool.lastAmountUpdateTs
-      rewardAmount = rewardEntryAccumulator.lastRewardAmount
-      rewardPeriod = rewardEntryAccumulator.lastRewardPeriod
+      firstUpdateTs = new BN(0);
+      secondUpdateTs = rewardPool.lastAmountUpdateTs;
+      rewardAmount = rewardEntryAccumulator.lastRewardAmount;
+      rewardPeriod = rewardEntryAccumulator.lastRewardPeriod;
     } else {
-      firstUpdateTs = new BN(0)
-      secondUpdateTs = rewardPool.lastPeriodUpdateTs
-      rewardAmount = rewardEntryAccumulator.lastRewardAmount
-      rewardPeriod = rewardEntryAccumulator.lastRewardPeriod
+      firstUpdateTs = new BN(0);
+      secondUpdateTs = rewardPool.lastPeriodUpdateTs;
+      rewardAmount = rewardEntryAccumulator.lastRewardAmount;
+      rewardPeriod = rewardEntryAccumulator.lastRewardPeriod;
     }
 
     if (firstUpdateTs.gtn(0)) {
@@ -210,14 +210,14 @@ export const calcRewards = (
           stakeEntry.effectiveAmount,
           rewardEntryAccumulator.lastRewardAmount,
           rewardEntryAccumulator.lastRewardPeriod,
-        )
-      rewardEntryAccumulator.addAccountedAmount(firstAccountableAmount)
+        );
+      rewardEntryAccumulator.addAccountedAmount(firstAccountableAmount);
       rewardEntryAccumulator.lastAccountedTs =
         rewardEntryAccumulator.getLastAccountedTs(
           stakedTs,
           firstUpdateTs,
           rewardPool.lastRewardPeriod,
-        )
+        );
     }
     const secondAccountableAmount = rewardEntryAccumulator.getAccountableAmount(
       stakedTs,
@@ -225,14 +225,14 @@ export const calcRewards = (
       stakeEntry.effectiveAmount,
       rewardAmount,
       rewardPeriod,
-    )
-    rewardEntryAccumulator.addAccountedAmount(secondAccountableAmount)
+    );
+    rewardEntryAccumulator.addAccountedAmount(secondAccountableAmount);
     rewardEntryAccumulator.lastAccountedTs =
       rewardEntryAccumulator.getLastAccountedTs(
         stakedTs,
         secondUpdateTs,
         rewardPeriod,
-      )
+      );
   }
 
   const accountableAmount = rewardEntryAccumulator.getAccountableAmount(

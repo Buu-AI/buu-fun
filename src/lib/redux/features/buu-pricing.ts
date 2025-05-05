@@ -12,7 +12,7 @@ export const BuuPricingTime = [
 export type TBuuPricingTime = (typeof BuuPricingTime)[number];
 
 type BuuPricingState = {
-  amountToStake: number;
+  amountToStake: string;
   buuPricingHistoryTime: TBuuPricingTime;
   streamflowDialogOpen: boolean;
   buyBuuDialogOpen: boolean;
@@ -23,7 +23,7 @@ type BuuPricingState = {
 
 const initialState: BuuPricingState = {
   buuPricingHistoryTime: "LAST_MONTH",
-  amountToStake: 0,
+  amountToStake: "0",
   streamflowDialogOpen: false,
   buyBuuDialogOpen: false,
   unclaimedRewardsModalOpen: false,
@@ -40,11 +40,11 @@ const BuuPricingSlice = createSlice({
       action: PayloadAction<{
         key: BooleanKeys<BuuPricingState>;
         value: boolean;
-      }>
+      }>,
     ) {
       state[action.payload.key] = action.payload.value;
     },
-    setSelectedAmountToStake(state, action: PayloadAction<number>) {
+    setSelectedAmountToStake(state, action: PayloadAction<string>) {
       state.amountToStake = action.payload;
     },
     setBuuPricingHour(state, action: PayloadAction<TBuuPricingTime>) {
@@ -61,7 +61,7 @@ const BuuPricingSlice = createSlice({
       action: PayloadAction<{
         value: boolean;
         key: BooleanKeys<BuuPricingState>;
-      }>
+      }>,
     ) {
       state[action.payload.key] = action.payload.value;
     },

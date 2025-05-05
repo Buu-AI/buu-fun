@@ -19,16 +19,16 @@ export default function YourEarnings() {
 
   const earnings = formatUnits(
     userStakingData?.yourEarnings ?? "0",
-    userStakingData?.decimals ?? 0
+    userStakingData?.decimals ?? 0,
   );
 
   const EarningPrice = multiplyAndFormatPricing(
     Number(earnings),
-    data?.price ?? 0
+    data?.price ?? 0,
   );
   return (
     <div className="bg-portfolio-statistics mt-5 rounded-lg">
-      <div className="px-1  md:px-6 py-5">
+      <div className="px-2  md:px-6 py-5">
         <div className="">
           <div className="flex items-center justify-between">
             <h3 className="font-medium   w-full lg:text-left ">
