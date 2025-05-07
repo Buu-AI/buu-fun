@@ -1,11 +1,7 @@
-import {
-  clusterApiUrl,
-  Connection,
-  PublicKey,
-  Transaction,
-} from "@solana/web3.js";
+import { Connection, PublicKey, Transaction } from "@solana/web3.js";
 import { BN } from "bn.js";
 import { SolanaStakingClient } from "../streamflow/client";
+import { getClusterUrl } from "./staking";
 
 export async function executeStakingTransaction({
   address,
@@ -25,7 +21,7 @@ export async function executeStakingTransaction({
   );
 
   const solanaStakingClient = new SolanaStakingClient({
-    clusterUrl: "https://api.devnet.solana.com",
+    clusterUrl: getClusterUrl(),
   });
 
   const nonce = Date.now() % 100000;
@@ -49,7 +45,7 @@ export async function executeStakingTransaction({
 
   console.log("Transaction:", transaction);
 
-  const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+  const connection = new Connection(getClusterUrl(), "confirmed");
 
   const { blockhash } = await connection.getLatestBlockhash();
 

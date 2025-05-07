@@ -216,3 +216,25 @@ export function getStreamflowUrl() {
 export function getSolanaExplorerUrl(route: string) {
   return "https://explorer.solana.com" + route;
 }
+
+export function getSolScanUrl(route: string) {
+  let queryParam = "";
+  if (process.env?.NEXT_PUBLIC_STREAMFLOW_CLUSTER === "devnet") {
+    queryParam = `?cluster=devnet`;
+  }
+  return "https://solscan.io" + route + queryParam;
+}
+
+export function getMagicEdenUrl(route: string) {
+  // let queryParam = "";
+  // if (process.env?.NEXT_PUBLIC_STREAMFLOW_CLUSTER === "devnet") {
+  //   queryParam = `?cluster=devnet`;
+  // }
+  return "https://magiceden.io" + route;
+  // + queryParam;
+}
+
+export function getNumber(value: string) {
+  const num = parseFloat(value);
+  return isNaN(num) ? null : num;
+}

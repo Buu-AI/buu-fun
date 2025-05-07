@@ -1,4 +1,5 @@
 import { isError, isInProgress } from "@/lib/helpers/status-checker";
+import { isOverAllRequestLimitReached } from "@/lib/utils";
 import { RootState } from "@/types/reduxStore";
 import { createSelector } from "@reduxjs/toolkit";
 import { TGenerationalData } from "../features/chat-types";
@@ -8,7 +9,6 @@ import {
   isThreeDModel,
   mergeImageAndMedia,
 } from "../utils";
-import { isOverAllRequestLimitReached } from "@/lib/utils";
 const Threads = (state: RootState) => state.chat.threads.subThreads;
 export const getSubThreadsFromStore = createSelector(
   [Threads, (_, id: string) => id],
@@ -41,10 +41,12 @@ export const getSubThreadsMedia = createSelector(
       GeneratedRequestMedias = ThreeDGenerated.map((item) => {
         const isGenerating = isInProgress(item.status);
         const isErrored = isError(item.status);
+        const tokenized = item.tokenized ?? false;
         return {
           style,
           isGenerating,
           isErrored,
+          tokenized,
           model: {
             modelId: item._id,
             modelStatus: item.status,
@@ -65,7 +67,7 @@ export const getSubThreadsMedia = createSelector(
 
         const imageStatus = item.status;
         const modelStatus = FoundedModel?.status ?? "InProgress";
-
+        const tokenized = (FoundedModel?.tokenized || item.tokenized) ?? false;
         const model = FoundedModel
           ? {
               modelId: FoundedModel?._id,
@@ -84,6 +86,7 @@ export const getSubThreadsMedia = createSelector(
           isGenerating,
           isErrored,
           model,
+          tokenized: tokenized ?? false,
           image: {
             imageId: item._id,
             imageStatus,

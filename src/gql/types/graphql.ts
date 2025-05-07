@@ -218,6 +218,7 @@ export type GenRequest = {
   subthreadId: Scalars["String"]["output"];
   teamId: Scalars["String"]["output"];
   timings?: Maybe<Timings>;
+  tokenized?: Maybe<Scalars["Boolean"]["output"]>;
   type: Scalars["String"]["output"];
   updatedAt: Scalars["DateTimeISO"]["output"];
 };
@@ -350,6 +351,7 @@ export type Mutation = {
   enableTeam: TeamResult;
   generateImage: GenRequestResult;
   generateModel: GenRequestResult;
+  generateNft: NftResult;
   generatePresignedPost: GeneratePresignedPostResult;
   generatePresignedUrl: GeneratePresignedUrlResult;
   generateSubthread: SubthreadResult;
@@ -395,6 +397,13 @@ export type MutationGenerateModelArgs = {
   imageRequestId?: InputMaybe<Scalars["String"]["input"]>;
   imageUrl: Scalars["String"]["input"];
   subthreadId: Scalars["String"]["input"];
+};
+
+export type MutationGenerateNftArgs = {
+  description: Scalars["String"]["input"];
+  genRequestId: Scalars["String"]["input"];
+  name: Scalars["String"]["input"];
+  symbol?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type MutationGeneratePresignedPostArgs = {
@@ -445,6 +454,128 @@ export type MutationUpdateTeamMemberRoleArgs = {
   newRole: TeamRole;
 };
 
+export type Nft = {
+  __typename?: "Nft";
+  _id: Scalars["String"]["output"];
+  chain: Scalars["String"]["output"];
+  collectionAddress?: Maybe<Scalars["String"]["output"]>;
+  collectionRoyalties?: Maybe<Scalars["Float"]["output"]>;
+  createdAt: Scalars["DateTimeISO"]["output"];
+  creator?: Maybe<Scalars["String"]["output"]>;
+  genRequestId: Scalars["String"]["output"];
+  metadata: NftMetadata;
+  mintAddress?: Maybe<Scalars["String"]["output"]>;
+  status: NftStatus;
+  tokenAddress?: Maybe<Scalars["String"]["output"]>;
+  tokenStandard?: Maybe<TokenStandard>;
+  updatedAt: Scalars["DateTimeISO"]["output"];
+};
+
+export type NftAttribute = {
+  __typename?: "NftAttribute";
+  trait_type: Scalars["String"]["output"];
+  value: Scalars["String"]["output"];
+};
+
+export type NftFile = {
+  __typename?: "NftFile";
+  cdn?: Maybe<Scalars["Boolean"]["output"]>;
+  type: Scalars["String"]["output"];
+  uri: Scalars["String"]["output"];
+};
+
+export type NftFilter = {
+  _id_eq?: InputMaybe<Scalars["String"]["input"]>;
+  _id_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  _id_ne?: InputMaybe<Scalars["String"]["input"]>;
+  _id_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  chain_eq?: InputMaybe<Scalars["String"]["input"]>;
+  chain_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  chain_ne?: InputMaybe<Scalars["String"]["input"]>;
+  chain_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  collectionAddress_eq?: InputMaybe<Scalars["String"]["input"]>;
+  collectionAddress_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  collectionAddress_ne?: InputMaybe<Scalars["String"]["input"]>;
+  collectionAddress_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  collectionRoyalties_eq?: InputMaybe<Scalars["Float"]["input"]>;
+  collectionRoyalties_gt?: InputMaybe<Scalars["Float"]["input"]>;
+  collectionRoyalties_gte?: InputMaybe<Scalars["Float"]["input"]>;
+  collectionRoyalties_lt?: InputMaybe<Scalars["Float"]["input"]>;
+  collectionRoyalties_lte?: InputMaybe<Scalars["Float"]["input"]>;
+  collectionRoyalties_ne?: InputMaybe<Scalars["Float"]["input"]>;
+  createdAt_eq?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  createdAt_gt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  createdAt_gte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  createdAt_lt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  createdAt_lte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  createdAt_ne?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  creator_eq?: InputMaybe<Scalars["String"]["input"]>;
+  creator_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  creator_ne?: InputMaybe<Scalars["String"]["input"]>;
+  creator_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  genRequestId_eq?: InputMaybe<Scalars["String"]["input"]>;
+  genRequestId_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  genRequestId_ne?: InputMaybe<Scalars["String"]["input"]>;
+  genRequestId_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  mintAddress_eq?: InputMaybe<Scalars["String"]["input"]>;
+  mintAddress_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  mintAddress_ne?: InputMaybe<Scalars["String"]["input"]>;
+  mintAddress_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  status_eq?: InputMaybe<NftStatus>;
+  status_in?: InputMaybe<Array<NftStatus>>;
+  status_ne?: InputMaybe<NftStatus>;
+  status_nin?: InputMaybe<Array<NftStatus>>;
+  tokenAddress_eq?: InputMaybe<Scalars["String"]["input"]>;
+  tokenAddress_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  tokenAddress_ne?: InputMaybe<Scalars["String"]["input"]>;
+  tokenAddress_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  tokenStandard_eq?: InputMaybe<TokenStandard>;
+  tokenStandard_in?: InputMaybe<Array<TokenStandard>>;
+  tokenStandard_ne?: InputMaybe<TokenStandard>;
+  tokenStandard_nin?: InputMaybe<Array<TokenStandard>>;
+  updatedAt_eq?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  updatedAt_gt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  updatedAt_gte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  updatedAt_lt?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  updatedAt_lte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  updatedAt_ne?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+};
+
+export type NftMetadata = {
+  __typename?: "NftMetadata";
+  animation_url?: Maybe<Scalars["String"]["output"]>;
+  attributes?: Maybe<Array<NftAttribute>>;
+  description?: Maybe<Scalars["String"]["output"]>;
+  external_url?: Maybe<Scalars["String"]["output"]>;
+  image?: Maybe<Scalars["String"]["output"]>;
+  name: Scalars["String"]["output"];
+  properties?: Maybe<NftProperties>;
+  symbol?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type NftPage = {
+  __typename?: "NftPage";
+  items: Array<Nft>;
+  metadata: Metadata;
+};
+
+export type NftPageResult = HandledError | NftPage;
+
+export type NftProperties = {
+  __typename?: "NftProperties";
+  category: Scalars["String"]["output"];
+  files: Array<NftFile>;
+};
+
+export type NftResult = HandledError | Nft;
+
+export enum NftStatus {
+  Completed = "COMPLETED",
+  Failed = "FAILED",
+  InProgress = "IN_PROGRESS",
+  InQueue = "IN_QUEUE",
+}
+
 /** Order direction */
 export enum OrderDirection {
   Asc = "asc",
@@ -464,6 +595,14 @@ export type PresignedPost = {
   url: Scalars["String"]["output"];
 };
 
+export type Prices = {
+  __typename?: "Prices";
+  buu: Scalars["Float"]["output"];
+  sol: Scalars["Float"]["output"];
+};
+
+export type PricesResult = HandledError | Prices;
+
 export type Query = {
   __typename?: "Query";
   generateCreditsPackagePaymentLink: UrlResult;
@@ -471,6 +610,9 @@ export type Query = {
   generateSubscriptionPaymentLink: GenerateSubscriptionPaymentLinkResult;
   getCreditsPurchases: CreditsPurchasePageResult;
   getMyCredits: CreditResult;
+  getNft: NftResult;
+  getNfts: NftPageResult;
+  getPrices: PricesResult;
   getReferralAccount: ReferralAccountResult;
   getReferralRewards: ReferralRewardPageResult;
   getShareableBoard: ShareableBoardResult;
@@ -498,6 +640,15 @@ export type QueryGenerateSubscriptionPaymentLinkArgs = {
 
 export type QueryGetCreditsPurchasesArgs = {
   filters?: InputMaybe<CreditsPurchaseFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type QueryGetNftArgs = {
+  nftId: Scalars["String"]["input"];
+};
+
+export type QueryGetNftsArgs = {
+  filters?: InputMaybe<NftFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -941,6 +1092,15 @@ export type TokenMint = {
   supply: Scalars["String"]["output"];
 };
 
+export enum TokenStandard {
+  Fungible = "Fungible",
+  FungibleAsset = "FungibleAsset",
+  NonFungible = "NonFungible",
+  NonFungibleEdition = "NonFungibleEdition",
+  ProgrammableNonFungible = "ProgrammableNonFungible",
+  ProgrammableNonFungibleEdition = "ProgrammableNonFungibleEdition",
+}
+
 export type Url = {
   __typename?: "Url";
   url: Scalars["String"]["output"];
@@ -1243,6 +1403,7 @@ export type GetSubthreadGenRequestsQuery = {
           credits: number;
           createdAt: any;
           updatedAt: any;
+          tokenized?: boolean | null;
           images?: Array<{
             __typename?: "Media";
             alt: string;
@@ -1923,6 +2084,141 @@ export type GetStakingGlobalDataQuery = {
         }>;
       }
     | { __typename?: "HandledError"; code: string; message: string };
+};
+
+export type GetNftsQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filters?: InputMaybe<NftFilter>;
+}>;
+
+export type GetNftsQuery = {
+  __typename?: "Query";
+  getNfts:
+    | { __typename?: "HandledError"; code: string; message: string }
+    | {
+        __typename?: "NftPage";
+        items: Array<{
+          __typename?: "Nft";
+          _id: string;
+          genRequestId: string;
+          status: NftStatus;
+          mintAddress?: string | null;
+          collectionAddress?: string | null;
+          creator?: string | null;
+          tokenAddress?: string | null;
+          tokenStandard?: TokenStandard | null;
+          collectionRoyalties?: number | null;
+          chain: string;
+          updatedAt: any;
+          createdAt: any;
+          metadata: {
+            __typename?: "NftMetadata";
+            name: string;
+            symbol?: string | null;
+            description?: string | null;
+            image?: string | null;
+            external_url?: string | null;
+            animation_url?: string | null;
+            attributes?: Array<{
+              __typename?: "NftAttribute";
+              trait_type: string;
+              value: string;
+            }> | null;
+            properties?: {
+              __typename?: "NftProperties";
+              category: string;
+              files: Array<{
+                __typename?: "NftFile";
+                uri: string;
+                type: string;
+                cdn?: boolean | null;
+              }>;
+            } | null;
+          };
+        }>;
+        metadata: {
+          __typename?: "Metadata";
+          limit?: number | null;
+          offset?: number | null;
+          orderBy?: string | null;
+          orderDirection?: OrderDirection | null;
+          numElements?: number | null;
+          total?: number | null;
+          page?: number | null;
+          pages?: number | null;
+        };
+      };
+};
+
+export type GenerateNftMutationVariables = Exact<{
+  description: Scalars["String"]["input"];
+  name: Scalars["String"]["input"];
+  genRequestId: Scalars["String"]["input"];
+  symbol?: InputMaybe<Scalars["String"]["input"]>;
+}>;
+
+export type GenerateNftMutation = {
+  __typename?: "Mutation";
+  generateNft:
+    | { __typename?: "HandledError"; code: string; message: string }
+    | {
+        __typename?: "Nft";
+        _id: string;
+        status: NftStatus;
+        chain: string;
+        updatedAt: any;
+        creator?: string | null;
+        createdAt: any;
+      };
+};
+
+export type GetNftQueryVariables = Exact<{
+  nftId: Scalars["String"]["input"];
+}>;
+
+export type GetNftQuery = {
+  __typename?: "Query";
+  getNft:
+    | { __typename?: "HandledError"; code: string; message: string }
+    | {
+        __typename?: "Nft";
+        _id: string;
+        genRequestId: string;
+        status: NftStatus;
+        mintAddress?: string | null;
+        collectionAddress?: string | null;
+        creator?: string | null;
+        tokenAddress?: string | null;
+        tokenStandard?: TokenStandard | null;
+        collectionRoyalties?: number | null;
+        chain: string;
+        updatedAt: any;
+        createdAt: any;
+        metadata: {
+          __typename?: "NftMetadata";
+          name: string;
+          symbol?: string | null;
+          description?: string | null;
+          image?: string | null;
+          external_url?: string | null;
+          animation_url?: string | null;
+          attributes?: Array<{
+            __typename?: "NftAttribute";
+            trait_type: string;
+            value: string;
+          }> | null;
+          properties?: {
+            __typename?: "NftProperties";
+            category: string;
+            files: Array<{
+              __typename?: "NftFile";
+              uri: string;
+              type: string;
+              cdn?: boolean | null;
+            }>;
+          } | null;
+        };
+      };
 };
 
 export const MeDocument = {
@@ -3467,6 +3763,10 @@ export const GetSubthreadGenRequestsDocument = {
                             {
                               kind: "Field",
                               name: { kind: "Name", value: "updatedAt" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "tokenized" },
                             },
                           ],
                         },
@@ -6687,3 +6987,675 @@ export const GetStakingGlobalDataDocument = {
   GetStakingGlobalDataQuery,
   GetStakingGlobalDataQueryVariables
 >;
+export const GetNftsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "GetNfts" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "pagination" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "Pagination" },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "filters" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "NftFilter" },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "getNfts" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "pagination" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "pagination" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "filters" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "filters" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "NftPage" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "items" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "_id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "genRequestId" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "status" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "metadata" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "name" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "symbol" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "description",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "image" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "external_url",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: {
+                                      kind: "Name",
+                                      value: "animation_url",
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "attributes" },
+                                    selectionSet: {
+                                      kind: "SelectionSet",
+                                      selections: [
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "trait_type",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "value",
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "properties" },
+                                    selectionSet: {
+                                      kind: "SelectionSet",
+                                      selections: [
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "files",
+                                          },
+                                          selectionSet: {
+                                            kind: "SelectionSet",
+                                            selections: [
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "uri",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "type",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "cdn",
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "category",
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "mintAddress" },
+                            },
+                            {
+                              kind: "Field",
+                              name: {
+                                kind: "Name",
+                                value: "collectionAddress",
+                              },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "creator" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "tokenAddress" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "tokenStandard" },
+                            },
+                            {
+                              kind: "Field",
+                              name: {
+                                kind: "Name",
+                                value: "collectionRoyalties",
+                              },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "chain" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "updatedAt" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "createdAt" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "metadata" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "limit" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "offset" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "orderBy" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "orderDirection" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "numElements" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "total" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "page" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "pages" },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "HandledError" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "message" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetNftsQuery, GetNftsQueryVariables>;
+export const GenerateNftDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "GenerateNft" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "description" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "name" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "genRequestId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "symbol" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "generateNft" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "description" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "description" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "name" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "name" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "genRequestId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "genRequestId" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "symbol" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "symbol" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "Nft" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "_id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "status" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "chain" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "updatedAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "creator" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "createdAt" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "HandledError" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "message" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GenerateNftMutation, GenerateNftMutationVariables>;
+export const GetNftDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "GetNft" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "nftId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "getNft" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "nftId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "nftId" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "Nft" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "_id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "genRequestId" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "status" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "metadata" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "name" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "symbol" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "description" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "image" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "external_url" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "animation_url" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "attributes" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "trait_type" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "value" },
+                                  },
+                                ],
+                              },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "properties" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "files" },
+                                    selectionSet: {
+                                      kind: "SelectionSet",
+                                      selections: [
+                                        {
+                                          kind: "Field",
+                                          name: { kind: "Name", value: "uri" },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: { kind: "Name", value: "type" },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: { kind: "Name", value: "cdn" },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "category" },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "mintAddress" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "collectionAddress" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "creator" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "tokenAddress" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "tokenStandard" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "collectionRoyalties" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "chain" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "updatedAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "createdAt" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "HandledError" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "message" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetNftQuery, GetNftQueryVariables>;

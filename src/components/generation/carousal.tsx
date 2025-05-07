@@ -114,6 +114,7 @@ const CurvedEmblaCarousel = ({
                       isCurrent={isCurrent}
                       subThreadId={subThreadId}
                       index={index}
+                      tokenized={item.tokenized}
                       status={item.isGenerating ? "inProgress" : "Success"}
                       showToolTip={isCurrent}
                       isGenerating={item.isGenerating}
@@ -121,6 +122,7 @@ const CurvedEmblaCarousel = ({
                         imageUrl: item.image.imageUrl,
                       }}
                       modelUrl={item?.model?.modelUrl}
+                      modelId={item?.model?.modelId}
                     />
                   </CarouselItem>
                 );
@@ -142,6 +144,7 @@ const CurvedEmblaCarousel = ({
           totalGenerations={totalGenerations}
           subThreadId=""
           index={0}
+          tokenized={false}
           status={"inProgress"}
           showToolTip={true}
           isGenerating={true}

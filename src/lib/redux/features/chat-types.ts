@@ -70,6 +70,12 @@ export type ChatState = {
     modalOpened: boolean;
     subThreadId: string | null;
   };
+  genNft: {
+    isGenNftModalOpen: boolean;
+    genId?: string | null;
+    modelUrl?: string | null;
+    imageUrl?: string | null;
+  };
 };
 
 export type TErrorTypeName = { __typename?: "HandledError" };
@@ -97,6 +103,7 @@ export type TGenerationalData = {
   style: TThreeDStyles | null | undefined;
   isGenerating: boolean;
   isErrored: boolean;
+  tokenized: boolean;
   model?: {
     modelId: string;
     modelUrl?: string;

@@ -56,8 +56,8 @@ export default function ShareableBoardsButton() {
         duration: 3000,
       });
     },
-    onSuccess() {
-      queryClient.invalidateQueries({
+    async onSuccess() {
+      await queryClient.invalidateQueries({
         queryKey: ["user-shareable-boards", threadId],
       });
     },
@@ -92,8 +92,8 @@ export default function ShareableBoardsButton() {
     onMutate() {
       toast.loading("Adding to boards...");
     },
-    onSuccess(data) {
-      queryClient.invalidateQueries({
+    async onSuccess(data) {
+      await queryClient.invalidateQueries({
         queryKey: ["user-shareable-boards", threadId],
       });
       const link = getSharableUrl(data._id);

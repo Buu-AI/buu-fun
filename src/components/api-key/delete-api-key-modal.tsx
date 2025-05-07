@@ -39,9 +39,9 @@ export default function DeleteApiKeyModal() {
   } = useMutation({
     mutationKey: ["delete-api-key", keyToDeleteData?.id],
     mutationFn: deleteAPIKey,
-    onSuccess(data) {
+    async onSuccess(data) {
       console.log("SUCCESS DATA:", data);
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: ["retrieve-api-keys"],
       });
       toast.success("API key deleted successfully");

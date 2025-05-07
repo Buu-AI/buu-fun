@@ -71,11 +71,11 @@ export default function ChatForm({ action }: TBottomBarContainer) {
   const { mutate: createExistingChat, isPending: isExistingChatPending } =
     useMutation({
       mutationFn: generateSubThreads,
-      onSuccess(data) {
+      async onSuccess(data) {
         toast.loading("Generating your model...", { duration: 8000 });
         dispatch(pushNewSubThreads(data));
         dispatch(clearInput());
-        queryClient.invalidateQueries({
+        await queryClient.invalidateQueries({
           queryKey: [data.threadId, "get-sub-threads"],
         });
       },
