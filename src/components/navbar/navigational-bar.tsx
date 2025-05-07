@@ -8,8 +8,8 @@ import KnowMorePopover from "./know-more-pop-over";
 import LocationKnownLink from "./location-known-link";
 export default function NavigationalBar() {
   return (
-    <nav className="px-3 py-4  w-full h-full md:h-screen">
-      <div className="md:bg-buu md:py-4  flex flex-col items-center justify-between md:rounded-[20px] overflow-hidden md:h-full md:w-[72px]">
+    <nav className="px-3 py-4  w-full h-full md:h-screen z-50 relative">
+      <div className="md:bg-buu md:py-4   flex flex-col items-center justify-between md:rounded-[20px] overflow-hidden md:h-full md:w-[72px]">
         <div className="flex flex-col  items-center justify-center">
           <Link
             href={"/app"}
