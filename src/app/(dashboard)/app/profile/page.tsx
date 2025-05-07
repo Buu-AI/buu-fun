@@ -7,6 +7,7 @@ import LanyardBadge from "@/components/profile/lanyard-badge";
 import ProfileSkeleton from "@/components/profile/profile-skeleton";
 import RedeemVouchers from "@/components/profile/redeem-vouchers";
 import ManageUserSubscriptionButton from "@/components/subscriptions/manage-subscription-button";
+import NewSubscriptionConfetti from "@/components/subscriptions/new-subscription-confetti";
 import ProtectedWrapper from "@/components/wrapper/protected-wrapper";
 import useUserCredits, { useUserSubscription } from "@/hooks/use-credits";
 import { profilePicture } from "@/lib/dice-bear";
@@ -29,6 +30,7 @@ export default function ProfilePage() {
     <ProtectedWrapper Fallback={<ProfileSkeleton />} fallbackUrl="/app">
       <main className="flex items-center flex-col justify-center w-full ">
         <LanyardBadge />
+        <NewSubscriptionConfetti/>
         <div className="flex w-16 h-16">
           <Image
             loading="lazy"
