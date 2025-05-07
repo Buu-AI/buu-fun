@@ -83,7 +83,7 @@ export default function RootLayout({
                       <div className="w-[176px] h-[334px] violet-gradient left-[45%]  rounded-full  absolute top-[5%] -z-10   md:block hidden  rotate-[-10deg]" />
                       {children}
                     </div>
-                    <div className="top-bar">
+                    <div className="top-bar ">
                       <Topbar />
                     </div>
                     <div className="navigation ">

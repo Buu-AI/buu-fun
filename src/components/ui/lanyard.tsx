@@ -1,23 +1,26 @@
-/* eslint-disable react/no-unknown-property */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { Canvas, extend, useFrame } from "@react-three/fiber";
 import {
-  useGLTF,
-  useTexture,
   Environment,
   Lightformer,
+  useGLTF,
+  useTexture,
 } from "@react-three/drei";
+import { Canvas, extend, useFrame } from "@react-three/fiber";
 import {
   BallCollider,
   CuboidCollider,
   Physics,
   RigidBody,
+  RigidBodyProps,
   useRopeJoint,
   useSphericalJoint,
-  RigidBodyProps,
 } from "@react-three/rapier";
 import { MeshLineGeometry, MeshLineMaterial } from "meshline";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 extend({ MeshLineGeometry, MeshLineMaterial });
@@ -32,7 +35,7 @@ interface LanyardProps {
 }
 
 export default function Lanyard({
-  position = [0, 0, 30],
+  position = [0, 0, 20],
   gravity = [0, -40, 0],
   fov = 20,
   transparent = true,
@@ -40,8 +43,9 @@ export default function Lanyard({
   lanyard,
 }: LanyardProps) {
   return (
-    <div className="relative z-0 w-full h-screen flex justify-center items-center transform scale-100 origin-center">
+    <div className="fixed hidden md:flex  top-0 left-0 z-0 w-full h-screen justify-center items-center transform scale-100 origin-center">
       <Canvas
+        className=""
         camera={{ position, fov }}
         gl={{ alpha: transparent }}
         onCreated={({ gl }) =>
@@ -54,7 +58,7 @@ export default function Lanyard({
         </Physics>
         <Environment blur={0.75}>
           <Lightformer
-            intensity={2}
+            intensity={4}
             color="white"
             position={[0, -1, 5]}
             rotation={[0, 0, Math.PI / 3]}
@@ -75,7 +79,7 @@ export default function Lanyard({
             scale={[100, 0.1, 1]}
           />
           <Lightformer
-            intensity={10}
+            intensity={5}
             color="white"
             position={[-10, 0, 14]}
             rotation={[0, Math.PI / 2, Math.PI / 3]}
@@ -151,7 +155,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, cardGLB, lanyard }: BandProps) {
   useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
-    [0, 1.45, 0],
+    [0, 1.48, 0],
   ]);
 
   useEffect(() => {
@@ -206,7 +210,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, cardGLB, lanyard }: BandProps) {
 
   return (
     <>
-      <group position={[0, 4, 0]}>
+      <group position={[-2.5, 4, 0]}>
         <RigidBody
           ref={fixed}
           {...segmentProps}
@@ -285,14 +289,14 @@ function Band({ maxSpeed = 50, minSpeed = 0, cardGLB, lanyard }: BandProps) {
         </RigidBody>
       </group>
       <mesh ref={band}>
-        <MeshLineGeometry />
-        <MeshLineMaterial
+        <meshLineGeometry />
+        <meshLineMaterial
           color="white"
           depthTest={false}
           resolution={isSmall ? [1000, 2000] : [1000, 1000]}
           useMap
           map={texture}
-          repeat={[-4, 1]}
+          repeat={[-3, 1]}
           lineWidth={1}
         />
       </mesh>

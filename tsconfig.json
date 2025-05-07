@@ -30,7 +30,6 @@
     "src/**/*.d.ts",
     "src/types/react.d.ts",
     "src/types/global.d.ts"
-
   ],
   "exclude": ["node_modules"]
 }
