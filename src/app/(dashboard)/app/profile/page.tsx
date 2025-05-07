@@ -7,7 +7,6 @@ import LanyardBadge from "@/components/profile/lanyard-badge";
 import ProfileSkeleton from "@/components/profile/profile-skeleton";
 import RedeemVouchers from "@/components/profile/redeem-vouchers";
 import ManageUserSubscriptionButton from "@/components/subscriptions/manage-subscription-button";
-import Lanyard from "@/components/ui/lanyard";
 import ProtectedWrapper from "@/components/wrapper/protected-wrapper";
 import useUserCredits, { useUserSubscription } from "@/hooks/use-credits";
 import { profilePicture } from "@/lib/dice-bear";
