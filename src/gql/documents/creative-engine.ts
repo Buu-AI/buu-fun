@@ -1031,3 +1031,18 @@ export const GetNftQuery = gql`
     }
   }
 `;
+
+export const GetPrices = gql`
+  query GetPrices {
+    getPrices {
+      ... on Prices {
+        buu
+        sol
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;

@@ -466,6 +466,7 @@ export type Nft = {
   metadata: NftMetadata;
   mintAddress?: Maybe<Scalars["String"]["output"]>;
   status: NftStatus;
+  teamId: Scalars["String"]["output"];
   tokenAddress?: Maybe<Scalars["String"]["output"]>;
   tokenStandard?: Maybe<TokenStandard>;
   updatedAt: Scalars["DateTimeISO"]["output"];
@@ -525,6 +526,10 @@ export type NftFilter = {
   status_in?: InputMaybe<Array<NftStatus>>;
   status_ne?: InputMaybe<NftStatus>;
   status_nin?: InputMaybe<Array<NftStatus>>;
+  teamId_eq?: InputMaybe<Scalars["String"]["input"]>;
+  teamId_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  teamId_ne?: InputMaybe<Scalars["String"]["input"]>;
+  teamId_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
   tokenAddress_eq?: InputMaybe<Scalars["String"]["input"]>;
   tokenAddress_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
   tokenAddress_ne?: InputMaybe<Scalars["String"]["input"]>;
@@ -2219,6 +2224,15 @@ export type GetNftQuery = {
           } | null;
         };
       };
+};
+
+export type GetPricesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetPricesQuery = {
+  __typename?: "Query";
+  getPrices:
+    | { __typename?: "HandledError"; code: string; message: string }
+    | { __typename?: "Prices"; buu: number; sol: number };
 };
 
 export const MeDocument = {
@@ -7659,3 +7673,58 @@ export const GetNftDocument = {
     },
   ],
 } as unknown as DocumentNode<GetNftQuery, GetNftQueryVariables>;
+export const GetPricesDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "GetPrices" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "getPrices" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "Prices" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "buu" } },
+                      { kind: "Field", name: { kind: "Name", value: "sol" } },
+                    ],
+                  },
+                },
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "HandledError" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "message" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetPricesQuery, GetPricesQueryVariables>;
