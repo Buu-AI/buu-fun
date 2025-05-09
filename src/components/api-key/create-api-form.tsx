@@ -39,7 +39,7 @@ export default function CreateAPIForm() {
         },
       },
       resolver: zodResolver(createAPISchema),
-    }
+    },
   );
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
@@ -50,7 +50,7 @@ export default function CreateAPIForm() {
         setApiKey({
           key: data.key,
           name: data.name,
-        })
+        }),
       );
       dispatch(isApiKeyRetrieved(true));
       await queryClient.invalidateQueries({

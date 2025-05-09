@@ -34,11 +34,12 @@ export type UseStakingDataProps = {
 export function useUserStakingData() {
   const { address } = useAuthentication();
   const globalStaking = useGlobalStakingData();
-  const { data, isFetched } = globalStaking;
-
+  const { data, isFetched, isLoading } = globalStaking;
+  const rewardEntries = `reward-entries-${data?.rewardEntries?.length}-staked-entries-${data?.stakeEntries?.length}-reward-pools-${data?.rewardPools.length}`;
+  const encode = btoa(JSON.stringify(rewardEntries));
   const userStaking = useQuery({
-    queryKey: ["get-user-staking-data", isFetched, address],
-    enabled: isFetched,
+    queryKey: ["get-user-staking-data", isFetched, encode, address],
+    enabled: !isLoading,
     queryFn: async () => {
       if (!data) return null;
       return await getUserStakingData({
@@ -52,10 +53,8 @@ export function useUserStakingData() {
     },
   });
 
-  
   return {
     userStaking,
     globalStaking,
   };
 }
-

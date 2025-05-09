@@ -110,7 +110,7 @@ export default function ReferralCode() {
                 ) : (
                   <>
                     <Loader2 className="animate-spin" />
-                    Loading...
+                    Loading
                   </>
                 )}
               </Button>

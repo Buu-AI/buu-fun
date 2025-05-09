@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
@@ -24,6 +25,7 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
+import { useRouter } from "next/navigation";
 const ModelViewer = dynamic(() => import("../generation/model-viewer"), {
   ssr: false,
   loading: () => null, // Use null instead of undefined
@@ -31,6 +33,7 @@ const ModelViewer = dynamic(() => import("../generation/model-viewer"), {
 
 export default function GenerateNFTModal() {
   const { identityToken: accessToken, login } = useAuthentication();
+  const [checked, setChecked] = useState(false);
   const isOpen = useAppSelector((state) => state.chat.genNft.isGenNftModalOpen);
   const dispatch = useAppDispatch();
   const GenNft = useAppSelector((state) => state.chat.genNft);
@@ -42,14 +45,16 @@ export default function GenerateNFTModal() {
   } = useForm<TCreateNftSchema>({
     resolver: zodResolver(createNftSchema),
   });
+  const router = useRouter();
   const query = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: generateNFT,
-    async onSuccess() {
+    async onSuccess(data) {
       await query.invalidateQueries({
         queryKey: ["get-sub-thread-requests"],
       });
       toast.success("NFT has been generated");
+      router.push(`/app/nfts/${data._id}`);
     },
     onError(error) {
       if (error.message) {
@@ -59,6 +64,10 @@ export default function GenerateNFTModal() {
   });
   function handleCreateNFTForm({ description, name }: TCreateNftSchema) {
     const genRequestId = GenNft.genId;
+    if (!checked) {
+      toast.error("Please acknowledge the credits used to generate NFT");
+      return;
+    }
     if (!accessToken) {
       login();
       return;
@@ -88,7 +97,7 @@ export default function GenerateNFTModal() {
               genRequestId: undefined,
               imageUrl: undefined,
               modelUrl: undefined,
-            })
+            }),
           );
           return;
         }
@@ -97,9 +106,9 @@ export default function GenerateNFTModal() {
     >
       <DialogContent className="rounded-[20px] pt-6 lg:rounded-[20px] bg-nft-modal-card overflow-y-scroll max-h-[90dvh] scrollbar-w-hidden">
         <DialogHeader className="flex items-center justify-center ">
-          <DialogTitle>Create a new Collectable</DialogTitle>
+          <DialogTitle>Create a new collectible</DialogTitle>
           <DialogDescription className="text-center text-pretty">
-            You could create a collectable unique
+            You could create a collectible unique
           </DialogDescription>
         </DialogHeader>
         <div className="flex w-full md:w-[50%] mx-auto aspect-square">
@@ -138,10 +147,20 @@ export default function GenerateNFTModal() {
           <div className="my-3">
             <div className="flex justify-start items-start gap-2 pl-1  ">
               <Checkbox
-                id="set-expiresIn"
+                checked={checked}
+                onCheckedChange={(value) => {
+                  if (typeof value === "undefined") return;
+                  if (typeof value === "boolean") {
+                    setChecked(value);
+                  }
+                }}
+                id="acknowledge-credits"
                 className="rounded-[4px] data-[state=checked]:bg-buu mt-0.5 data-[state=checked]:text-primary border border-gray-500"
               />
-              <Label htmlFor="set-expiresIn" className="text-xs font-medium">
+              <Label
+                htmlFor="acknowledge-credits"
+                className="text-sm font-medium"
+              >
                 This NFT will cost you 3 credits, would you like to
                 proceed?{" "}
               </Label>
@@ -149,7 +168,7 @@ export default function GenerateNFTModal() {
           </div>
           <div className="mt-4">
             <Button
-              disabled={isPending || isSubmitting}
+              disabled={isPending || isSubmitting || !checked}
               className="h-[40px] w-full"
             >
               {isPending ? (
@@ -160,7 +179,7 @@ export default function GenerateNFTModal() {
               ) : (
                 <>
                   <GenerateNft />
-                  Create NFT
+                  Create Collectible{" "}
                 </>
               )}
             </Button>

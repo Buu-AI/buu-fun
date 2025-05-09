@@ -1,15 +1,15 @@
+import { CoinStackIcon, SizePenIcon } from "@/assets/icons";
 import logo from "@/assets/icons/logo-no-gradient.png";
 import MagicPenIcon from "@/assets/icons/magicpen";
+import NFTSideBarIcon from "@/assets/icons/nft-sidebar-icon";
 import Image from "next/image";
 import Link from "next/link";
 import KnowMorePopover from "./know-more-pop-over";
-import { CoinStackIcon, SizePenIcon } from "@/assets/icons";
 import LocationKnownLink from "./location-known-link";
-import GenerateNft from "@/assets/icons/Generate-nft";
 export default function NavigationalBar() {
   return (
-    <nav className="px-3 py-4  w-full h-full md:h-screen">
-      <div className="md:bg-buu md:py-4  flex flex-col items-center justify-between md:rounded-[20px] overflow-hidden md:h-full md:w-[72px]">
+    <nav className="px-3 py-4  w-full h-full md:h-screen z-50 relative">
+      <div className="md:bg-buu md:py-4   flex flex-col items-center justify-between md:rounded-[20px] overflow-hidden md:h-full md:w-[72px]">
         <div className="flex flex-col  items-center justify-center">
           <Link
             href={"/app"}
@@ -23,9 +23,9 @@ export default function NavigationalBar() {
               alt="Bunn.fun logo"
             />
           </Link>
-          <Link href={"/app/nfts"} className="mt-4 w-6 h-6 hidden md:block">
+          {/* <Link href={"/app/nfts"} className="mt-4 w-6 h-6 hidden md:block">
             <GenerateNft />
-          </Link>
+          </Link> */}
         </div>
         <div className="hidden md:flex flex-col gap-4 items-center justify-center">
           {/* <Link
@@ -59,7 +59,13 @@ export default function NavigationalBar() {
           >
             <CoinStackIcon />
           </LocationKnownLink>
-
+          <LocationKnownLink
+            LinkIn="nfts"
+            LinkTo="/app/nfts"
+            // children={}
+          >
+            <NFTSideBarIcon />
+          </LocationKnownLink>
           {/* <Link
             href={"/app"}
             className="w-10 flex  items-center group   justify-center    h-10 "
