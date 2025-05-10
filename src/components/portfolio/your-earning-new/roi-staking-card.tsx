@@ -14,7 +14,7 @@ import { useGlobalStakingData } from "@/hooks/use-global-staking";
 import {
   useBuuPricingData,
   useTokenBalance,
-} from "@/hooks/use-pricing-history";
+} from "@/hooks/use-pricing";
 import { cn, formatNumberWithFractions } from "@/lib/utils";
 import { ArrowDown } from "lucide-react";
 import { useState } from "react";

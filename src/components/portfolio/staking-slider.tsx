@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { useTokenBalance } from "@/hooks/use-pricing-history";
+import { useTokenBalance } from "@/hooks/use-pricing";
 import { setSelectedAmountToStake } from "@/lib/redux/features/buu-pricing";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";

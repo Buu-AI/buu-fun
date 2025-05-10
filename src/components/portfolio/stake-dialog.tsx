@@ -1,7 +1,7 @@
 "use client";
 import { CoinStackIcon } from "@/assets/icons";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { useTokenBalance } from "@/hooks/use-pricing-history";
+import { useTokenBalance } from "@/hooks/use-pricing";
 import { useUserStakingData } from "@/hooks/use-staking-data";
 import {
   setSelectedAmountToStake,

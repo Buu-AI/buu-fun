@@ -1,15 +1,16 @@
 import {
   getBuuTokenOverview,
   getHistoricalPricingResult,
+  getPricing,
 } from "@/lib/react-query/pricing-history";
 import { useAuthentication } from "@/providers/account.context";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "./redux";
-import { getTokenBalance } from "@/lib/solana/getTokenBalance";
+import { getTokenBalance, TToken } from "@/lib/solana/getTokenBalance";
 
 export function usePricingHistoricalPricing() {
   const buuPricingHistoryTime = useAppSelector(
-    (state) => state.BuuPricing.buuPricingHistoryTime,
+    (state) => state.BuuPricing.buuPricingHistoryTime
   );
   return useQuery({
     queryKey: ["get-historical-pricing-result", buuPricingHistoryTime],
@@ -32,18 +33,35 @@ export function useBuuPricingData() {
   });
 }
 
-export function useTokenBalance() {
+export function useTokenBalance(token: TToken = "BUU") {
   const { identityToken, isAuthenticated, loading, address } =
     useAuthentication();
 
   return useQuery({
-    queryKey: ["get-token-balance", "token-data", identityToken, address],
+    queryKey: [
+      "get-token-balance",
+      "token-data",
+      identityToken,
+      address,
+      token,
+      `${token}-${address}`,
+    ],
     enabled: !loading && isAuthenticated,
     queryFn: async () => {
       if (!address) return;
       return await getTokenBalance({
         address,
+        token,
       });
+    },
+  });
+}
+
+export function usePricing() {
+  return useQuery({
+    queryKey: ["get-pricing", "solana-buu-pricing"],
+    queryFn: async () => {
+      return await getPricing();
     },
   });
 }
