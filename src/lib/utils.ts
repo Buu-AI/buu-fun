@@ -10,6 +10,7 @@ import { DataMuseError } from "./class/data-muse-error";
 import { TDataMuseWord } from "./fetcher/query/query-suggestion-api";
 import { Plans } from "@/constants/subscription/subscription-plans";
 import { StripeSubscriptionPlanKeys } from "@/gql/types/graphql";
+import { TryCatch } from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -26,19 +27,19 @@ export function isLocalMode() {
 export function pluralize(
   num: number,
   word: string,
-  plural: (value: string) => string = simplePlural,
+  plural: (value: string) => string = simplePlural
 ) {
   return isPlural(num) ? plural(word) : word;
 }
 
 export async function handleResponse(
-  response: Response,
+  response: Response
 ): Promise<TDataMuseWord[]> {
   if (!response.ok) {
     // add other generic messages later for api backends.
     throw new DataMuseError(
       `API request failed: ${response.statusText}`,
-      response.status,
+      response.status
     );
   }
   return response.json();
@@ -85,7 +86,7 @@ export function isImageUrl(value: string | null | undefined) {
 
 export async function blobUrlToFile(
   blobUrl: string,
-  fileName: string,
+  fileName: string
 ): Promise<File | null> {
   try {
     const response = await fetch(blobUrl);
@@ -106,7 +107,7 @@ export function getAllowedContentTypeMaps(key: string) {
 export function truncateString(
   value: string,
   startEnd: number = 4,
-  endStartAt: number = 4,
+  endStartAt: number = 4
 ): string {
   if (value.length <= startEnd + endStartAt) {
     return value;
@@ -233,8 +234,25 @@ export function getMagicEdenUrl(route: string) {
   return "https://magiceden.io" + route;
   // + queryParam;
 }
+export function getJupiterUltraAPI(route: string, version = "/v1") {
+  return "https://lite-api.jup.ag/ultra" + version + route;
+}
 
 export function getNumber(value: string) {
   const num = parseFloat(value);
   return isNaN(num) ? null : num;
+}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function parseJson<T>(
+  data: any,
+  messageKey = "ERROR-PARSE-JSON",
+  errorMsg = "Failed to retrieve data"
+): TryCatch<T> {
+  try {
+    const parsedData = JSON.parse(data);
+    return { data: parsedData, error: null };
+  } catch (error) {
+    console.error(messageKey, error);
+    return { data: null, error: errorMsg };
+  }
 }
