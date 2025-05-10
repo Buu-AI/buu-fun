@@ -1,12 +1,14 @@
 import {
   GetTokenHistoricalPriceResultQuery as TGetTokenHistoricalPriceResultQuery,
   GetTokenOverviewQuery as TGetTokenOverviewQuery,
+  GetPricesQuery as TGetPricesQuery,
 } from "@/gql/types/graphql";
 
 import { serverRequest } from "@/gql/client";
 import {
   GetTokenHistoricalPriceQuery,
   GetTokenOverviewQuery,
+  GetPrices,
 } from "@/gql/documents/creative-engine";
 import { TBuuPricingTime } from "../redux/features/buu-pricing";
 
@@ -19,7 +21,7 @@ export async function getHistoricalPricingResult({
     GetTokenHistoricalPriceQuery,
     {
       time,
-    },
+    }
     // {
     //   Authorization: getAuthorization(accessToken),
     // },
@@ -40,10 +42,7 @@ export async function getHistoricalPricingResult({
 export async function getBuuTokenOverview() {
   const data = await serverRequest<TGetTokenOverviewQuery>(
     GetTokenOverviewQuery,
-    {},
-    // {
-    //   Authorization: getAuthorization(accessToken),
-    // },
+    {}
   );
 
   if (!data) {
@@ -57,4 +56,20 @@ export async function getBuuTokenOverview() {
   }
 
   return data.getTokenOverview;
+}
+
+export async function getPricing() {
+  const data = await serverRequest<TGetPricesQuery>(GetPrices, {});
+
+  if (!data) {
+    throw new Error("Internal server error");
+  }
+
+  if ("code" in data.getPrices) {
+    throw new Error(data.getPrices.message, {
+      cause: "INVALID_DATA",
+    });
+  }
+
+  return data.getPrices;
 }
