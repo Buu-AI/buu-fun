@@ -1,5 +1,5 @@
 import { Connection, PublicKey, Transaction } from "@solana/web3.js";
-import { BN } from "bn.js";
+import BN from "bn.js";
 import { SolanaStakingClient } from "../streamflow/client";
 import { getClusterUrl } from "./staking";
 
@@ -8,9 +8,8 @@ export async function executeStakingTransaction({
   amountToStake,
 }: {
   address: string;
-  amountToStake: number;
+  amountToStake: BN;
 }) {
-  //   const wallet = Keypair.fromSecretKey(Uint8Array.from(bs58.decode(address)));
   const publicKey = new PublicKey(address);
 
   const stakePool = new PublicKey(
