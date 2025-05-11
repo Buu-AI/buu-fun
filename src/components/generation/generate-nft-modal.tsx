@@ -55,6 +55,14 @@ export default function GenerateNFTModal() {
       });
       toast.success("NFT has been generated");
       router.push(`/app/nfts/${data._id}`);
+      dispatch(
+        setGenerateNFT({
+          isGenNftOpen: false,
+          genRequestId: undefined,
+          imageUrl: undefined,
+          modelUrl: undefined,
+        })
+      );
     },
     onError(error) {
       if (error.message) {
@@ -97,7 +105,7 @@ export default function GenerateNFTModal() {
               genRequestId: undefined,
               imageUrl: undefined,
               modelUrl: undefined,
-            }),
+            })
           );
           return;
         }
