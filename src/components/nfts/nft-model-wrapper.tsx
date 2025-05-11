@@ -14,7 +14,7 @@ export default function NFTModelWrapper({
   accessToken?: string;
 }) {
   const { data: nftData } = useQuery({
-    queryKey: ["get-nft-query"],
+    queryKey: ["get-nft-query", nft._id],
     queryFn: async () => {
       return await getNftQuery({
         id: nft._id ?? "",

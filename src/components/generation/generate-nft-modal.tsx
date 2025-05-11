@@ -26,6 +26,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { useRouter } from "next/navigation";
+import { useConfetti } from "@/providers/confetti-provider";
 const ModelViewer = dynamic(() => import("../generation/model-viewer"), {
   ssr: false,
   loading: () => null, // Use null instead of undefined
@@ -47,6 +48,8 @@ export default function GenerateNFTModal() {
   });
   const router = useRouter();
   const query = useQueryClient();
+  const confetti = useConfetti();
+
   const { mutate, isPending } = useMutation({
     mutationFn: generateNFT,
     async onSuccess(data) {
@@ -54,6 +57,9 @@ export default function GenerateNFTModal() {
         queryKey: ["get-sub-thread-requests"],
       });
       toast.success("NFT has been generated");
+      setTimeout(() => {
+        confetti.runConfetti({ duration: 5000 });
+      }, 1000);
       router.push(`/app/nfts/${data._id}`);
       dispatch(
         setGenerateNFT({
@@ -61,7 +67,7 @@ export default function GenerateNFTModal() {
           genRequestId: undefined,
           imageUrl: undefined,
           modelUrl: undefined,
-        }),
+        })
       );
     },
     onError(error) {
@@ -105,7 +111,7 @@ export default function GenerateNFTModal() {
               genRequestId: undefined,
               imageUrl: undefined,
               modelUrl: undefined,
-            }),
+            })
           );
           return;
         }
