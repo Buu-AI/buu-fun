@@ -3,6 +3,7 @@ import { CoinStackIcon } from "@/assets/icons";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useTokenBalance } from "@/hooks/use-pricing-history";
 import { useUserStakingData } from "@/hooks/use-staking-data";
+import { ethers } from "ethers";
 import {
   setSelectedAmountToStake,
   setTogglers,
@@ -39,7 +40,7 @@ export default function StakingDialog() {
 
   const { wallets } = useSolanaWallets();
   const openState = useAppSelector(
-    (state) => state.BuuPricing.openStakingModal,
+    (state) => state.BuuPricing.openStakingModal
   );
   const {
     userStaking: { data: userStakingData },
@@ -47,7 +48,7 @@ export default function StakingDialog() {
   const queryClient = useQueryClient();
   const { data: tokenData } = useTokenBalance();
   const balance = tokenData?.value.uiAmount ?? 0;
-
+  const decimals = userStakingData?.decimals ?? 6;
   const toBeStaked = useAppSelector((state) => state.BuuPricing.amountToStake);
   const dispatch = useAppDispatch();
 
@@ -59,19 +60,33 @@ export default function StakingDialog() {
       })
       .refine(
         (value) => {
-          if (new BN(value).isZero()) return false;
-          return true;
+          try {
+            if (Number(value) <= 0) return false;
+            return true;
+          } catch (error) {
+            return false;
+          }
         },
-        { message: "Please enter a valid number" },
+        { message: "Please enter a valid number" }
       )
       .refine(
         (value) => {
-          console.log("all condition true");
           if (!balance || balance <= 0) return false;
-          if (new BN(balance).lt(new BN(value))) return false;
-          return true;
+
+          try {
+            // Convert the input value to BigNumber
+            // Convert balance to BigNumber (if it's not already)
+            const balanceInDecimals = ethers.parseUnits(
+              balance.toString(),
+              decimals
+            );
+            return balanceInDecimals >= parseFloat(value);
+          } catch (error) {
+            console.error("Error comparing values:", error);
+            return false;
+          }
         },
-        { message: "insufficient balance" },
+        { message: "insufficient balance" }
       ),
   });
 
@@ -176,13 +191,12 @@ export default function StakingDialog() {
       // Show loading state
       toast.loading(`Creating transaction for ${data.amount}...`);
       const isFirstTimeStaking = !userStakingData?.userStakes.length;
-      const amountToStake = new BN(data.amount);
 
-      const decimals = userStakingData?.decimals ?? 1;
-
-      const multiplier = new BN(10).pow(new BN(decimals));
-
-      const scaledAmount = amountToStake.mul(multiplier);
+      const scaledAmount = new BN(
+        ethers
+          .parseUnits(data.amount, userStakingData?.decimals ?? 6)
+          .toString()
+      );
 
       const transaction = await executeStakingTransaction({
         address: wallet.address,
@@ -201,7 +215,7 @@ export default function StakingDialog() {
 
       const signature = await wallet.walletData?.sendTransaction(
         transaction,
-        connection,
+        connection
       );
       toast.dismiss();
       if (signature) {
@@ -211,7 +225,7 @@ export default function StakingDialog() {
         try {
           const confirmation = await connection.confirmTransaction(
             signature,
-            "confirmed",
+            "confirmed"
           );
           toast.dismiss();
           if (confirmation.value.err) {
@@ -235,7 +249,7 @@ export default function StakingDialog() {
       toast.dismiss();
       toast.error(
         "Transaction failed: " +
-          (error instanceof Error ? error.message : "Unknown error"),
+          (error instanceof Error ? error.message : "Unknown error")
       );
       console.error("Transaction error:", error);
     } finally {
