@@ -885,7 +885,6 @@ body {
   }
 }
 
-
 .bg-total-staked {
   border-radius: 12px;
   background: rgba(28, 32, 39, 0.4);
@@ -944,4 +943,9 @@ input[type="number"] {
     ),
     rgba(45, 50, 60, 0.2);
   backdrop-filter: blur(25px);
+}
+
+.nft-style-card {
+  background: rgba(120, 219, 255, 0.36);
+  box-shadow: 0px 0px 19.1px 0px rgba(31, 39, 49, 0.8) inset;
 }
