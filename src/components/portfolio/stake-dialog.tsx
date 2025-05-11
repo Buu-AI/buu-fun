@@ -31,10 +31,12 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import StakingSlider from "./staking-slider";
+import BN from "bn.js";
 
 export default function StakingDialog() {
   const [isLoading, setIsLoading] = useState(false);
   const { wallet, connectSolanaWallet, address } = useAuthentication();
+
   const { wallets } = useSolanaWallets();
   const openState = useAppSelector(
     (state) => state.BuuPricing.openStakingModal,
@@ -57,7 +59,7 @@ export default function StakingDialog() {
       })
       .refine(
         (value) => {
-          if (Number(value) <= 0) return false;
+          if (new BN(value).isZero()) return false;
           return true;
         },
         { message: "Please enter a valid number" },
@@ -66,7 +68,7 @@ export default function StakingDialog() {
         (value) => {
           console.log("all condition true");
           if (!balance || balance <= 0) return false;
-          if (balance < Number(value)) return false;
+          if (new BN(balance).lt(new BN(value))) return false;
           return true;
         },
         { message: "insufficient balance" },
@@ -173,10 +175,19 @@ export default function StakingDialog() {
 
       // Show loading state
       toast.loading(`Creating transaction for ${data.amount}...`);
+      const isFirstTimeStaking = !userStakingData?.userStakes.length;
+      const amountToStake = new BN(data.amount);
+
+      const decimals = userStakingData?.decimals ?? 1;
+
+      const multiplier = new BN(10).pow(new BN(decimals));
+
+      const scaledAmount = amountToStake.mul(multiplier);
+
       const transaction = await executeStakingTransaction({
         address: wallet.address,
-        amountToStake:
-          Number(data.amount) * 10 ** (userStakingData?.decimals ?? 1),
+        amountToStake: scaledAmount,
+        isFirstTimeStaking,
       });
 
       if (!transaction) {

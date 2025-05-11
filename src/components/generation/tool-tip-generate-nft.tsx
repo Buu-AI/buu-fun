@@ -82,7 +82,7 @@ export default function ToolTipGenerateNft({
           "mr-2": index === ToolTips.length - 1,
         })}
       >
-        <p>{!tokenized ? toolTipData.content : "Collectibles Generated"}</p>
+        <p>{!tokenized ? toolTipData.content : "Collectible Generated"}</p>
       </TooltipContent>
     </Tooltip>
   );

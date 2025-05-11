@@ -19,7 +19,7 @@ export const ToolTips = [
   {
     type: "GENERATE_NFT" as const,
     Icon: <CreateNFTIcon />,
-    content: "Generate Collectibles",
+    content: "Generate Collectible",
   },
   // {
   //   type: "MODIFY" as const,

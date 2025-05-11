@@ -2,6 +2,7 @@ import SolanaIconWithTitle from "@/assets/icons/chain/solana";
 import { MagicEden } from "@/assets/Image";
 import { Nft } from "@/gql/types/graphql";
 import {
+  capitalizeFirstLetter,
   cn,
   getMagicEdenUrl,
   getSolScanUrl,
@@ -34,29 +35,48 @@ export default function NFTOverViewContainer({
       </div>
       <div className="p-2  md:p-6 bg-buu rounded-b-2xl">
         <p className="text-balance">{description}</p>
-        <div>
+        <div className="mt-4">
+          <p className="text-xs font-semibold">ATTRIBUTES</p>
           <div
-            className={cn("grid grid-cols-2 gap-2", {
-              "grid-cols-1": attribute.length === 1,
+            className={cn("grid grid-cols-2 gap-2 md:gap-4 mt-2", {
+              "grid-cols-1": attribute.length !== 1,
             })}
           >
             {attribute?.map((item) => {
               return (
-                <div
-                  key={`attribute-${item.trait_type}-${item.value}`}
-                  className="bg-tile-muted w-full mt-1 p-2 px-3 rounded-lg group"
-                >
-                  <div>
-                    <p className="text-xs font-medium tracking-tight text-muted-foreground/60">
-                      {item.trait_type}
-                    </p>
-                    <p className="text-white">{item.value}</p>
+                <>
+                  <div
+                    key={`attribute-${item.trait_type}-${item.value}`}
+                    className="bg-tile-muted nft-style-card w-full mt-1 p-2 md:p-3 px-3 rounded-lg group"
+                  >
+                    <div className="">
+                      <p className="text-xs font-medium text-white">
+                        {capitalizeFirstLetter(item.trait_type)}
+                      </p>
+                      <p className="text-white text-lg font-medium ">
+                        {capitalizeFirstLetter(item.value)}
+                      </p>
+                    </div>
                   </div>
-                </div>
+                  <div
+                    key={`attribute-${item.trait_type}-${item.value}`}
+                    className="bg-tile-muted nft-style-card w-full mt-1 p-2 md:p-3 px-3 rounded-lg group"
+                  >
+                    <div className="">
+                      <p className="text-xs font-medium text-white">
+                        {capitalizeFirstLetter(item.trait_type)}
+                      </p>
+                      <p className="text-white text-lg font-medium ">
+                        {capitalizeFirstLetter(item.value)}
+                      </p>
+                    </div>
+                  </div>
+                </>
               );
             })}
           </div>
-          <div className="flex items-center mt-2  justify-center w-full gap-2 flex-col">
+          <p className="text-xs font-semibold mt-6">DETAILS</p>
+          <div className="flex items-center mt-3  justify-center w-full gap-2 flex-col">
             <Link
               target="_blank"
               href={getSolScanUrl(`/token/${mintAddress}`)}
