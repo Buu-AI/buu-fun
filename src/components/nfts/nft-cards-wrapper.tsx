@@ -5,7 +5,7 @@ import NFTCard from "./nft-card";
 import { Ghost } from "lucide-react";
 
 export default function NFTCardsWrapper() {
-  let { data } = useUserNfts();
+  const { data } = useUserNfts();
 
   return (
     <div className="flex gap-3 items-center max-w-2xl flex-wrap justify-center mt-6">

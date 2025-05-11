@@ -28,7 +28,7 @@ export default function NFTCard({
             "absolute top-0 flex items-center justify-center h-full left-0 w-full nft-failed-card z-10",
             {
               hidden: !isFailed,
-            }
+            },
           )}
         >
           <div className="flex flex-col items-center gap-2 justify-center">
