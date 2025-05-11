@@ -62,19 +62,22 @@ export default function NFTCard({
   );
 }
 
-
-
-export  function NFTSkeleton({ className }: GeneralClassName) {
+export function NFTSkeleton({ className }: GeneralClassName) {
   return (
-    <div className={cn("w-48 h-[280px] bg-shadow-nft-cards rounded-3xl overflow-hidden relative animate-pulse", className)}>
+    <div
+      className={cn(
+        "w-48 h-[280px] bg-shadow-nft-cards rounded-3xl overflow-hidden relative animate-pulse",
+        className,
+      )}
+    >
       {/* Image skeleton */}
       <div className="w-full h-48 bg-gray-200 dark:bg-gray-700" />
-      
+
       {/* Text content skeleton */}
       <div className="px-4 pt-2 pb-2">
         {/* Title skeleton */}
         <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-md mt-2" />
-        
+
         {/* Description skeleton */}
         <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-md mt-2 w-3/4" />
       </div>
