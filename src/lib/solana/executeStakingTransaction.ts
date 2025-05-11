@@ -1,8 +1,10 @@
 import { Connection, PublicKey, Transaction } from "@solana/web3.js";
 import BN from "bn.js";
 import { SolanaStakingClient } from "../streamflow/client";
-import { getClusterUrl } from "./staking";
+import { getClusterUrl, isDevnet } from "./staking";
 
+const DEVNET_STAKING_DURATION = 60 * 60 * 24 * 1; // 30 days
+const MAINNET_STAKING_DURATION = 7883982;
 export async function executeStakingTransaction({
   address,
   amountToStake,
@@ -28,7 +30,13 @@ export async function executeStakingTransaction({
   const nonce = Date.now() % 100000;
 
   const amount = new BN(amountToStake);
-  const duration = new BN(60 * 60 * 24 * 1); // 30 days
+
+  const isStakingDevnet = isDevnet();
+  const durationTime = isStakingDevnet
+    ? DEVNET_STAKING_DURATION
+    : MAINNET_STAKING_DURATION;
+
+  const duration = new BN(durationTime); // 30 days
 
   const { ixs } = await solanaStakingClient.prepareStakeInstructions(
     {
