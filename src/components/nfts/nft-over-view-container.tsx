@@ -31,9 +31,10 @@ export default function NFTOverViewContainer({
   return (
     <div className="backdrop-blur-lg rounded-3xl">
       <div className="px-2 md:px-4 py-4 border-white/5 border rounded-t-3xl  bg-overview-portfolio">
-        <p className="uppercase text-xs font-medium">{name}</p>
+        <p className="uppercase text-lg font-medium">{name}</p>
       </div>
       <div className="p-2  md:p-6 bg-buu rounded-b-2xl">
+        <p className="text-xs font-semibold uppercase mb-2">Description</p>
         <p className="text-balance">{description}</p>
         <div className="mt-4">
           <p className="text-xs font-semibold">ATTRIBUTES</p>
