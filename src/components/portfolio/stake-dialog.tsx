@@ -33,6 +33,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import StakingSlider from "./staking-slider";
 import BN from "bn.js";
+import { useConfetti } from "@/providers/confetti-provider";
 
 export default function StakingDialog() {
   const [isLoading, setIsLoading] = useState(false);
@@ -51,7 +52,7 @@ export default function StakingDialog() {
   const decimals = userStakingData?.decimals ?? 6;
   const toBeStaked = useAppSelector((state) => state.BuuPricing.amountToStake);
   const dispatch = useAppDispatch();
-
+  const confetti = useConfetti();
   const stakeInputSchema = z.object({
     amount: z
       .string({
@@ -235,7 +236,11 @@ export default function StakingDialog() {
             toast.error("Transaction failed on-chain");
             console.error("Transaction error:", confirmation.value.err);
           } else {
+            confetti.runConfetti({
+              duration: 3500,
+            });
             toast.loading("Transaction received! processing transaction...");
+            dispatch(setTogglers({ key: "openStakingModal", value: false }));
             revalidate();
           }
         } catch (confirmError) {

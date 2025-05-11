@@ -14,6 +14,7 @@ import { Toaster } from "react-hot-toast";
 import SubscriptionDialog from "@/components/subscriptions/subscription-dialog";
 import SplashCursorProvider from "./SplashCursorProvider";
 import Script from "next/script";
+import { ConfettiProvider } from "@/providers/confetti-provider";
 const BricolageGrotesque = Bricolage_Grotesque({
   variable: "--font-bricolage-grotesque",
   subsets: ["latin"],
@@ -70,29 +71,33 @@ export default function RootLayout({
 
       <body className={` ${BricolageGrotesque.className} antialiased dark `}>
         <Toaster />
+
         <ReactQueryProvider>
           <StoreProvider>
             <NextUIProviders>
               <Providers>
-                <div className="h-[100dvh] min-h-[100dvh] overflow-hidden relative max-h-[100dvh]   w-full">
-                  <SplashCursorProvider />
-                  <div className=" w-[200px] h-[100px] bg-overlay-secondary  bg-[#69CCD5]  rounded-full right-[20%] absolute bottom-[-140px] -z-10 blur-[100px]  rotate-[-10deg]" />
+                <ConfettiProvider>
+                  <div className="h-[100dvh] min-h-[100dvh] overflow-hidden relative max-h-[100dvh]   w-full">
+                    <SplashCursorProvider />
+                    <div className=" w-[200px] h-[100px] bg-overlay-secondary  bg-[#69CCD5]  rounded-full right-[20%] absolute bottom-[-140px] -z-10 blur-[100px]  rotate-[-10deg]" />
 
-                  <div className="grid-container w-full h-full">
-                    <div className="main-body relative">
-                      <div className="w-[176px] h-[334px] violet-gradient left-[45%]  rounded-full  absolute top-[5%] -z-10   md:block hidden  rotate-[-10deg]" />
-                      {children}
-                    </div>
-                    <div className="top-bar ">
-                      <Topbar />
-                    </div>
-                    <div className="navigation ">
-                      <NavigationalBar />
+                    <div className="grid-container w-full h-full">
+                      <div className="main-body relative">
+                        <div className="w-[176px] h-[334px] violet-gradient left-[45%]  rounded-full  absolute top-[5%] -z-10   md:block hidden  rotate-[-10deg]" />
+                        {children}
+                      </div>
+                      <div className="top-bar ">
+                        <Topbar />
+                      </div>
+                      <div className="navigation ">
+                        <NavigationalBar />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div id="integrated-terminal" />
-                <SubscriptionDialog />
+
+                  <div id="integrated-terminal" />
+                  <SubscriptionDialog />
+                </ConfettiProvider>
               </Providers>
             </NextUIProviders>
           </StoreProvider>
