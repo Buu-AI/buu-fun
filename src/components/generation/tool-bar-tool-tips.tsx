@@ -16,12 +16,15 @@ import { ToolTips, TToolTipEvents } from "./handle-tool-calls";
 import { isSubThreadGenerating } from "@/lib/redux/selectors/chat";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ToolTipDownload from "./tool-tip-download";
+import ToolTipGenerateNft from "./tool-tip-generate-nft";
 
 type TToolBarToolTips = {
   subThreadId: string;
   imageUrl: string | null;
   modelUrl?: string | null;
+  modelId?: string | null;
   totalGenerations: number;
+  tokenized?: boolean;
 };
 export const buttonVariants = {
   initial: { y: 0, scale: 1 },
@@ -32,9 +35,11 @@ export const buttonVariants = {
 
 export default function ToolBarToolTips({
   subThreadId,
-  // imageUrl,
+  imageUrl,
   modelUrl,
+  modelId,
   totalGenerations,
+  tokenized,
 }: TToolBarToolTips) {
   const dispatch = useAppDispatch();
   const { identityToken, login } = useAuthentication();
@@ -47,10 +52,10 @@ export default function ToolBarToolTips({
 
   const { mutate: generateNewImage, isPending } = useMutation({
     mutationFn: mutateGenerateNewImage,
-    onSuccess(data) {
+    async onSuccess(data) {
       toast.loading("Generating new model...", { duration: 8000 });
       dispatch(setNewGenRequest(data));
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: [data.subthreadId, "get-all-sub-threads"],
       });
     },
@@ -82,11 +87,6 @@ export default function ToolBarToolTips({
           );
           return;
         }
-        // if (!acknowledgedRetry) {
-        //   dispatch(setRetryModalOpen(true));
-        //   dispatch(setRetrySubthreadId(subThreadId));
-        //   return;
-        // }
         generateNewImage({
           subthreadId: subThreadId,
           accessToken,
@@ -128,6 +128,21 @@ export default function ToolBarToolTips({
               length={ToolTips.length}
               subThreadId={subThreadId}
               toolTipData={item}
+            />
+          );
+        }
+        if (item.type === "GENERATE_NFT") {
+          return (
+            <ToolTipGenerateNft
+              key={`tool-tip-contents-${item.content.trim()}-${index}`}
+              index={index}
+              length={ToolTips.length}
+              subThreadId={subThreadId}
+              toolTipData={item}
+              tokenized={tokenized}
+              imageUrl={imageUrl}
+              modelUrl={modelUrl}
+              modelId={modelId}
             />
           );
         }

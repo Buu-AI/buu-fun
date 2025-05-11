@@ -267,4 +267,9 @@ import PricingImage2 from "@/assets/Image/pricing/image_2.png";
 import PricingImage3 from "@/assets/Image/pricing/image_3.png";
 import PricingImage4 from "@/assets/Image/pricing/image_4.png";
 
+import TensorFlow from "@/assets/icons/chain/TENSOR.png";
+import OpenSea from "@/assets/icons/chain/OPEN_SEA.png";
+import MagicEden from "@/assets/icons/chain/MAGIC_EDEN.jpg";
 export { PricingImage1, PricingImage2, PricingImage3, PricingImage4 };
+
+export { TensorFlow, OpenSea, MagicEden };

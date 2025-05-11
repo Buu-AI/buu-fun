@@ -36,8 +36,8 @@ export default function BoardToolTipDelete({
     onMutate() {
       toast.loading("Adding to boards...");
     },
-    onSuccess() {
-      queryClient.invalidateQueries({
+    async onSuccess() {
+      await queryClient.invalidateQueries({
         queryKey: ["user-shareable-boards"],
       });
       dispatch(clearBoard());

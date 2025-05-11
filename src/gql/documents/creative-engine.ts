@@ -246,6 +246,7 @@ export const GetSubthreadGenRequestsQuery = gql`
           credits
           createdAt
           updatedAt
+          tokenized
         }
         metadata {
           limit
@@ -891,6 +892,137 @@ export const GetStakingGlobalDataQuery = gql`
             buffer
           }
         }
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const GetNftsQuery = gql`
+  query GetNfts($pagination: Pagination, $filters: NftFilter) {
+    getNfts(pagination: $pagination, filters: $filters) {
+      ... on NftPage {
+        items {
+          _id
+          genRequestId
+          status
+          metadata {
+            name
+            symbol
+            description
+            image
+            external_url
+            animation_url
+            attributes {
+              trait_type
+              value
+            }
+            properties {
+              files {
+                uri
+                type
+                cdn
+              }
+              category
+            }
+          }
+          mintAddress
+          collectionAddress
+          creator
+          tokenAddress
+          tokenStandard
+          collectionRoyalties
+          chain
+          updatedAt
+          createdAt
+        }
+        metadata {
+          limit
+          offset
+          orderBy
+          orderDirection
+          numElements
+          total
+          page
+          pages
+        }
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const GenerateNftMutation = gql`
+  mutation GenerateNft(
+    $description: String!
+    $name: String!
+    $genRequestId: String!
+    $symbol: String
+  ) {
+    generateNft(
+      description: $description
+      name: $name
+      genRequestId: $genRequestId
+      symbol: $symbol
+    ) {
+      ... on Nft {
+        _id
+        status
+        chain
+        updatedAt
+        creator
+        createdAt
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const GetNftQuery = gql`
+  query GetNft($nftId: String!) {
+    getNft(nftId: $nftId) {
+      ... on Nft {
+        _id
+        genRequestId
+        status
+        metadata {
+          name
+          symbol
+          description
+          image
+          external_url
+          animation_url
+          attributes {
+            trait_type
+            value
+          }
+          properties {
+            files {
+              uri
+              type
+              cdn
+            }
+            category
+          }
+        }
+        mintAddress
+        collectionAddress
+        creator
+        tokenAddress
+        tokenStandard
+        collectionRoyalties
+        chain
+        updatedAt
+        createdAt
       }
       ... on HandledError {
         code

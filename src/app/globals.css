@@ -294,7 +294,7 @@ body {
   grid-area: navigation;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
   .grid-container {
     display: grid;
     grid-template-columns: 0.2fr 1.8fr;
@@ -885,6 +885,13 @@ body {
   }
 }
 
+.bg-total-staked {
+  border-radius: 12px;
+  background: rgba(28, 32, 39, 0.4);
+  box-shadow: 0px 0px 46.6px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(10px);
+}
+
 input[type="number"] {
   -moz-appearance: textfield;
 }
@@ -894,6 +901,26 @@ input[type="number"] {
 }
 
 .bg-roi-shadow {
+  background: rgba(45, 50, 60, 0.7);
+  box-shadow: 0px 0px 30.2px 3px rgba(52, 59, 66, 0.8) inset;
+  backdrop-filter: blur(25px);
+}
+
+.bg-shadow-nft-cards {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(28, 32, 39, 0.36);
+  box-shadow: 0px 0px 46.6px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(40px);
+}
+
+.bg-shadow-nft-cards:hover {
+  background: rgba(120, 219, 255, 0.36);
+  box-shadow: 0px 0px 46.6px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(40px);
+}
+
+.bg-nft-modal-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(45, 50, 60, 0.7);
   box-shadow: 0px 0px 30.2px 3px rgba(52, 59, 66, 0.8) inset;
   backdrop-filter: blur(25px);
@@ -916,4 +943,21 @@ input[type="number"] {
     ),
     rgba(45, 50, 60, 0.2);
   backdrop-filter: blur(25px);
+}
+
+.nft-style-card {
+  background: rgba(120, 219, 255, 0.36);
+  box-shadow: 0px 0px 19.1px 0px rgba(31, 39, 49, 0.8) inset;
+}
+
+.nft-failed-card {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(238, 37, 95, 0.1) 0%,
+      rgba(238, 37, 95, .5) 100%
+    ),
+    rgba(28, 32, 39, 0.36);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
 }

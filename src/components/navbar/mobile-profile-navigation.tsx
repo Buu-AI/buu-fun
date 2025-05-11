@@ -1,6 +1,10 @@
 import { MagicPenIcon, SizePenIcon } from "@/assets/icons";
+import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
 import LogoutIcon from "@/assets/icons/log-out-Icon";
+import NFTSideBarIcon from "@/assets/icons/nft-sidebar-icon";
+import ReferralIcon from "@/assets/icons/referral-icon";
 import SettingsIcon from "@/assets/icons/settings-icon";
+import WalletIcon2 from "@/assets/icons/wallet-icon-2";
 import {
   Accordion,
   AccordionContent,
@@ -12,6 +16,7 @@ import { useAuthentication } from "@/providers/account.context";
 import { ArrowDown, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import ExportSolanaWallet from "../referral/export-wallet";
 import {
   Drawer,
   DrawerClose,
@@ -23,10 +28,6 @@ import {
 } from "../ui/drawer";
 import CopyAddress from "./copy-address";
 import KnowMoreContent from "./know-more-content";
-import ReferralIcon from "@/assets/icons/referral-icon";
-import ExportSolanaWallet from "../referral/export-wallet";
-import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
-import WalletIcon2 from "@/assets/icons/wallet-icon-2";
 
 export default function MobileProfileNavigation() {
   const { address, isAuthenticated, logout } = useAuthentication();
@@ -122,6 +123,16 @@ export default function MobileProfileNavigation() {
                         <WalletIcon2 />
                       </div>
                       <p className="text-xl">$BUU Token</p>{" "}
+                    </DrawerClose>
+                  </Link>
+                </div>
+                <div className="flex border-b w-full ">
+                  <Link href={"/app/nfts"}>
+                    <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
+                      <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
+                        <NFTSideBarIcon />
+                      </div>
+                      <p className="text-xl">NFT&apos;s</p>{" "}
                     </DrawerClose>
                   </Link>
                 </div>

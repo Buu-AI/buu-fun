@@ -36,10 +36,10 @@ export default function RetryConfirmationDialog() {
 
   const { mutateAsync: generateNewImage, isPending } = useMutation({
     mutationFn: mutateGenerateNewImage,
-    onSuccess(data) {
+    async onSuccess(data) {
       toast.loading("Generating new 3D models...", { duration: 8000 });
       dispatch(setNewGenRequest(data));
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: [data.subthreadId, "get-all-sub-threads"],
       });
     },

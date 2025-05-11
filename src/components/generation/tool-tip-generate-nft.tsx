@@ -1,0 +1,89 @@
+import { useAppDispatch } from "@/hooks/redux";
+import { setGenerateNFT } from "@/lib/redux/features/chat";
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import toast from "react-hot-toast";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { ToolTips, TToolTipsData } from "./handle-tool-calls";
+import { buttonVariants } from "./tool-bar-tool-tips";
+
+type TToolTipGenerateNFT = {
+  subThreadId?: string;
+  toolTipData: TToolTipsData[number];
+  index: number;
+  length: number;
+  open?: boolean;
+  modelId?: string | null;
+  tokenized?: boolean;
+  imageUrl?: string | null;
+  modelUrl?: string | null;
+};
+
+export default function ToolTipGenerateNft({
+  toolTipData,
+  index,
+  modelId,
+  tokenized,
+  imageUrl,
+  modelUrl,
+}: TToolTipGenerateNFT) {
+  const dispatch = useAppDispatch();
+  return (
+    <Tooltip>
+      <TooltipTrigger disabled={tokenized} asChild>
+        {
+          <motion.button
+            disabled={tokenized}
+            onClick={() => {
+              if (tokenized) {
+                toast.success(`NFT has already been generated `);
+                return;
+              }
+              if (!modelId) {
+                toast.loading("Model is being generated, Please wait");
+                return;
+              }
+              dispatch(
+                setGenerateNFT({
+                  isGenNftOpen: true,
+                  genRequestId: modelId,
+                  imageUrl,
+                  modelUrl,
+                }),
+              );
+            }}
+            initial="initial"
+            whileHover="hover"
+            whileTap="tap"
+            variants={buttonVariants}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            className={cn(
+              "group bg-buu-button pointer-events-auto  group shadow-buu-button min-w-[30px] rounded-md flex items-center justify-center p-1.5",
+              {
+                "hover:bg-white hover:shadow-none": !tokenized,
+              },
+            )}
+          >
+            <motion.div
+              className={cn("w-full h-full", {
+                "group-hover:text-black group-hover:fill-black group-hover:stroke-black":
+                  !tokenized,
+              })}
+              transition={{ duration: 0.2 }}
+            >
+              {toolTipData.Icon}
+            </motion.div>
+          </motion.button>
+        }
+      </TooltipTrigger>
+      <TooltipContent
+        className={cn("bg-buu-button text-primary", {
+          "ml-2": index === 0,
+          "mr-2": index === ToolTips.length - 1,
+        })}
+      >
+        <p>{!tokenized ? toolTipData.content : "Collectible Generated"}</p>
+      </TooltipContent>
+    </Tooltip>
+  );
+}
