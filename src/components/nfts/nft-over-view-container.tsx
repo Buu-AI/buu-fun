@@ -37,41 +37,22 @@ export default function NFTOverViewContainer({
         <p className="text-balance">{description}</p>
         <div className="mt-4">
           <p className="text-xs font-semibold">ATTRIBUTES</p>
-          <div
-            className={cn("grid grid-cols-2 gap-2 md:gap-4 mt-2", {
-              "grid-cols-1": attribute.length !== 1,
-            })}
-          >
+          <div className={cn("grid grid-cols-2 gap-2 md:gap-4 mt-2")}>
             {attribute?.map((item) => {
               return (
-                <>
-                  <div
-                    key={`attribute-${item.trait_type}-${item.value}`}
-                    className="bg-tile-muted nft-style-card w-full mt-1 p-2 md:p-3 px-3 rounded-lg group"
-                  >
-                    <div className="">
-                      <p className="text-xs font-medium text-white">
-                        {capitalizeFirstLetter(item.trait_type)}
-                      </p>
-                      <p className="text-white text-lg font-medium ">
-                        {capitalizeFirstLetter(item.value)}
-                      </p>
-                    </div>
+                <div
+                  key={`attribute-${item.trait_type}-${item.value}`}
+                  className="bg-tile-muted nft-style-card w-full mt-1 p-2 md:p-3 px-3 rounded-lg group"
+                >
+                  <div className="">
+                    <p className="text-xs font-medium text-white">
+                      {capitalizeFirstLetter(item.trait_type)}
+                    </p>
+                    <p className="text-white text-lg font-medium ">
+                      {capitalizeFirstLetter(item.value)}
+                    </p>
                   </div>
-                  <div
-                    key={`attribute-${item.trait_type}-${item.value}`}
-                    className="bg-tile-muted nft-style-card w-full mt-1 p-2 md:p-3 px-3 rounded-lg group"
-                  >
-                    <div className="">
-                      <p className="text-xs font-medium text-white">
-                        {capitalizeFirstLetter(item.trait_type)}
-                      </p>
-                      <p className="text-white text-lg font-medium ">
-                        {capitalizeFirstLetter(item.value)}
-                      </p>
-                    </div>
-                  </div>
-                </>
+                </div>
               );
             })}
           </div>
