@@ -182,5 +182,7 @@ export async function getUserStakingData({
 export function getClusterUrl() {
   return `${process.env.NEXT_PUBLIC_CLUSTER_URL}/?api-key=${process.env.NEXT_PUBLIC_CLUSTER_API_KEY}`;
 }
-
+export function isDevnet() {
+  return process.env.NEXT_PUBLIC_STREAMFLOW_CLUSTER === "devnet";
+}
 export function getSolanaClusterUrl() {}
