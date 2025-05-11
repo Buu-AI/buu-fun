@@ -16,6 +16,7 @@ export default function NFTCardsWrapper() {
               key={`nft-card-${item._id}`}
               id={item._id}
               title={item.metadata.name}
+              nftStatus={item.status}
               NftImageUrl={item.metadata.image ?? undefined}
               collectionName={item.metadata.description ?? ""}
             />
