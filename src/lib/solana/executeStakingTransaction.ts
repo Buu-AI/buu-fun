@@ -6,9 +6,11 @@ import { getClusterUrl } from "./staking";
 export async function executeStakingTransaction({
   address,
   amountToStake,
+  isFirstTimeStaking,
 }: {
   address: string;
   amountToStake: BN;
+  isFirstTimeStaking: boolean;
 }) {
   const publicKey = new PublicKey(address);
 
@@ -37,6 +39,7 @@ export async function executeStakingTransaction({
       stakePoolMint,
     },
     publicKey,
+    isFirstTimeStaking,
   );
 
   const transaction = new Transaction();

@@ -116,7 +116,7 @@ const CurvedEmblaCarousel = ({
                       index={index}
                       tokenized={item.tokenized}
                       status={item.isGenerating ? "inProgress" : "Success"}
-                      showToolTip={isCurrent && !item.isGenerating }
+                      showToolTip={isCurrent && !item.isGenerating}
                       isGenerating={item.isGenerating}
                       images={{
                         imageUrl: item.image.imageUrl,

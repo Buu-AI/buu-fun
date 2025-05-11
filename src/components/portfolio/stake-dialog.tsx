@@ -36,9 +36,10 @@ import BN from "bn.js";
 export default function StakingDialog() {
   const [isLoading, setIsLoading] = useState(false);
   const { wallet, connectSolanaWallet, address } = useAuthentication();
+
   const { wallets } = useSolanaWallets();
   const openState = useAppSelector(
-    (state) => state.BuuPricing.openStakingModal
+    (state) => state.BuuPricing.openStakingModal,
   );
   const {
     userStaking: { data: userStakingData },
@@ -61,7 +62,7 @@ export default function StakingDialog() {
           if (new BN(value).isZero()) return false;
           return true;
         },
-        { message: "Please enter a valid number" }
+        { message: "Please enter a valid number" },
       )
       .refine(
         (value) => {
@@ -70,7 +71,7 @@ export default function StakingDialog() {
           if (new BN(balance).lt(new BN(value))) return false;
           return true;
         },
-        { message: "insufficient balance" }
+        { message: "insufficient balance" },
       ),
   });
 
@@ -174,6 +175,7 @@ export default function StakingDialog() {
 
       // Show loading state
       toast.loading(`Creating transaction for ${data.amount}...`);
+      const isFirstTimeStaking = !userStakingData?.userStakes.length;
       const amountToStake = new BN(data.amount);
 
       const decimals = userStakingData?.decimals ?? 1;
@@ -185,6 +187,7 @@ export default function StakingDialog() {
       const transaction = await executeStakingTransaction({
         address: wallet.address,
         amountToStake: scaledAmount,
+        isFirstTimeStaking,
       });
 
       if (!transaction) {
@@ -198,7 +201,7 @@ export default function StakingDialog() {
 
       const signature = await wallet.walletData?.sendTransaction(
         transaction,
-        connection
+        connection,
       );
       toast.dismiss();
       if (signature) {
@@ -208,7 +211,7 @@ export default function StakingDialog() {
         try {
           const confirmation = await connection.confirmTransaction(
             signature,
-            "confirmed"
+            "confirmed",
           );
           toast.dismiss();
           if (confirmation.value.err) {
@@ -232,7 +235,7 @@ export default function StakingDialog() {
       toast.dismiss();
       toast.error(
         "Transaction failed: " +
-          (error instanceof Error ? error.message : "Unknown error")
+          (error instanceof Error ? error.message : "Unknown error"),
       );
       console.error("Transaction error:", error);
     } finally {

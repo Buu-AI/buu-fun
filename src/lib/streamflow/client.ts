@@ -10,7 +10,9 @@ import {
   translateError,
 } from "@coral-xyz/anchor";
 import {
+  ASSOCIATED_TOKEN_PROGRAM_ID,
   TOKEN_PROGRAM_ID,
+  createAssociatedTokenAccountInstruction,
   getAssociatedTokenAddressSync,
 } from "@solana/spl-token";
 import {
@@ -294,9 +296,12 @@ export class SolanaStakingClient {
       tokenProgramId = TOKEN_PROGRAM_ID,
     }: StakeArgs,
     publicKey: PublicKey,
+    isFirst: boolean = false,
   ): Promise<{
     ixs: TransactionInstruction[];
   }> {
+    const ixs = [];
+
     const { stakePoolProgram } = this.programs;
     const staker = publicKey;
     invariant(staker, "Undefined invoker publicKey");
@@ -325,7 +330,21 @@ export class SolanaStakingClient {
       })
       .instruction();
 
-    return { ixs: [instruction] };
+    if (isFirst) {
+      const initIx = createAssociatedTokenAccountInstruction(
+        staker, // payer
+        stakeMintAccountKey, // associated token account address
+        staker, // owner of the ATA
+        mint, // token mint
+        TOKEN_PROGRAM_ID,
+        ASSOCIATED_TOKEN_PROGRAM_ID,
+      );
+      ixs.push(initIx);
+    }
+
+    ixs.push(instruction);
+
+    return { ixs };
   }
 
   async prepareUnstakeInstructions(
