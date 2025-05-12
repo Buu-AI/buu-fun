@@ -1,5 +1,6 @@
 "use client";
 import { BitRefillImages } from "@/assets/Image";
+import Image from "next/image";
 import MyBitrefillWidget from "./bit-refill";
 import { Button } from "./ui/button";
 import {
@@ -10,8 +11,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
-import Image from "next/image";
-import { ThreeDMarquee } from "./ui/3d-marquee";
 
 export default function BitRefillSheet() {
   return (
