@@ -1,14 +1,12 @@
 "use client";
+import { useGlobalStakingData } from "@/hooks/use-global-staking";
 import { usePricing } from "@/hooks/use-pricing";
 import { formatUnits, parseJson } from "@/lib/utils";
+import { useAuthentication } from "@/providers/account.context";
 import { BitRefillEvents } from "@/types/bit-refill";
 import { useEffect } from "react";
-import { bitRefillFunctions } from "./bit-refill-function";
 import toast from "react-hot-toast";
-import { MIN_AMOUNT_TO_PURCHASE_USD } from "@/constants/bitrefill";
-import { useAuthentication } from "@/providers/account.context";
-import { useSolanaWallets } from "@privy-io/react-auth";
-import { useGlobalStakingData } from "@/hooks/use-global-staking";
+import { bitRefillFunctions } from "./bit-refill-function";
 function MyBitrefillWidget({
   url = "https://embed.bitrefill.com?ref=DniWoOsh",
 }) {
@@ -16,7 +14,8 @@ function MyBitrefillWidget({
   const { data: globalStakingData } = useGlobalStakingData();
   const buuDecimals = globalStakingData?.tokenMint.decimals ?? 8;
 
-  const { address, wallet, login, connectSolanaWallet } = useAuthentication();
+  const { address, wallet, connectSolanaWallet } = useAuthentication();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const config: any = {
     utm_source: "Buu AI",
     showPaymentInfo: true,
@@ -28,7 +27,7 @@ function MyBitrefillWidget({
       if (e.origin !== "https://embed.bitrefill.com") {
         return;
       }
-      console.log(e.data)
+      console.log(e.data);
       const { data } = parseJson<BitRefillEvents>(e.data);
       const event = data?.event;
 
@@ -39,7 +38,7 @@ function MyBitrefillWidget({
           return;
         }
         const invoicePrice = parseFloat(
-          formatUnits(params.paymentAmount.toString(), 9)
+          formatUnits(params.paymentAmount.toString(), 9),
         );
 
         const buuPrice = TokensPrice?.buu ?? 0;

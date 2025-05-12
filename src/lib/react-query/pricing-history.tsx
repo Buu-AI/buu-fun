@@ -21,7 +21,7 @@ export async function getHistoricalPricingResult({
     GetTokenHistoricalPriceQuery,
     {
       time,
-    }
+    },
     // {
     //   Authorization: getAuthorization(accessToken),
     // },
@@ -42,7 +42,7 @@ export async function getHistoricalPricingResult({
 export async function getBuuTokenOverview() {
   const data = await serverRequest<TGetTokenOverviewQuery>(
     GetTokenOverviewQuery,
-    {}
+    {},
   );
 
   if (!data) {

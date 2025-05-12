@@ -1,5 +1,4 @@
 import BitRefillSheet from "@/components/bit-refill-dialog";
-import BitRefillDialog from "@/components/bit-refill-dialog";
 import BuuStakedSupply from "@/components/portfolio/buu-staked-supply";
 import BuyBuuRedirectDialog from "@/components/portfolio/buy-buu-redirect-dialog";
 import HeaderLogo from "@/components/portfolio/header-logo";
@@ -30,7 +29,7 @@ export default function PortfolioPage() {
           </div>
           {/* <BuuNetworkUtilization /> */}
           {/* </div> */}
-          <BitRefillSheet/>
+          <BitRefillSheet />
         </div>
         <div className="2xl:px-8 py-8 2xl:py-0">
           <div className="sticky top-[0px] w-full ">

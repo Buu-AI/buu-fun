@@ -186,5 +186,5 @@ export function isDevnet() {
   return process.env.NEXT_PUBLIC_STREAMFLOW_CLUSTER === "devnet";
 }
 export function getSolanaClusterUrl() {
-  return clusterApiUrl("mainnet-beta")
+  return clusterApiUrl("mainnet-beta");
 }

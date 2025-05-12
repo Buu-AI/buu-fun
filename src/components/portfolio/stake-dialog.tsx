@@ -41,7 +41,7 @@ export default function StakingDialog() {
 
   const { wallets } = useSolanaWallets();
   const openState = useAppSelector(
-    (state) => state.BuuPricing.openStakingModal
+    (state) => state.BuuPricing.openStakingModal,
   );
   const {
     userStaking: { data: userStakingData },
@@ -70,7 +70,7 @@ export default function StakingDialog() {
             return false;
           }
         },
-        { message: "Please enter a valid number" }
+        { message: "Please enter a valid number" },
       )
       .refine(
         (value) => {
@@ -81,7 +81,7 @@ export default function StakingDialog() {
             // Convert balance to BigNumber (if it's not already)
             const balanceInDecimals = ethers.parseUnits(
               balance.toString(),
-              decimals
+              decimals,
             );
             return balanceInDecimals >= parseFloat(value);
           } catch (error) {
@@ -89,7 +89,7 @@ export default function StakingDialog() {
             return false;
           }
         },
-        { message: "insufficient balance" }
+        { message: "insufficient balance" },
       ),
   });
 
@@ -198,7 +198,7 @@ export default function StakingDialog() {
       const scaledAmount = new BN(
         ethers
           .parseUnits(data.amount, userStakingData?.decimals ?? 6)
-          .toString()
+          .toString(),
       );
 
       const transaction = await executeStakingTransaction({
@@ -218,7 +218,7 @@ export default function StakingDialog() {
 
       const signature = await wallet.walletData?.sendTransaction(
         transaction,
-        connection
+        connection,
       );
       toast.dismiss();
       if (signature) {
@@ -228,7 +228,7 @@ export default function StakingDialog() {
         try {
           const confirmation = await connection.confirmTransaction(
             signature,
-            "confirmed"
+            "confirmed",
           );
           toast.dismiss();
           if (confirmation.value.err) {
@@ -256,7 +256,7 @@ export default function StakingDialog() {
       toast.dismiss();
       toast.error(
         "Transaction failed: " +
-          (error instanceof Error ? error.message : "Unknown error")
+          (error instanceof Error ? error.message : "Unknown error"),
       );
       console.error("Transaction error:", error);
     } finally {

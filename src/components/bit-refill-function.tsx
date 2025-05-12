@@ -12,7 +12,6 @@ import {
   SystemProgram,
   Transaction,
   VersionedTransaction,
-  Commitment,
 } from "@solana/web3.js";
 import toast from "react-hot-toast";
 
@@ -57,7 +56,7 @@ export const bitRefillFunctions = {
     buuDecimals,
   }: InvoiceCreatingParams) => {
     // For tracking transaction progress
-    let toastId = toast.loading("Processing your transaction...");
+    const toastId = toast.loading("Processing your transaction...");
 
     try {
       // Validate required environment variables
@@ -74,7 +73,7 @@ export const bitRefillFunctions = {
       const paymentAmountInUSD = invoicePrice * solPricing;
       if (paymentAmountInUSD < MIN_AMOUNT_TO_PURCHASE_USD) {
         throw new Error(
-          `Invoice amount should be greater than $${MIN_AMOUNT_TO_PURCHASE_USD}`
+          `Invoice amount should be greater than $${MIN_AMOUNT_TO_PURCHASE_USD}`,
         );
       }
 
@@ -92,12 +91,12 @@ export const bitRefillFunctions = {
       }
 
       // Calculate BUU amount including referral fee
-      let amountInBuu = (paymentAmount * solPricing) / buuPrice;
+      const amountInBuu = (paymentAmount * solPricing) / buuPrice;
       console.log("[AMOUNT_IN_BUU]", amountInBuu);
       // 1000 / (1 - 20 / 100)
       const finalAmount = amountInBuu / (1 - WITHDRAW_REFERRAL_FEE / 100);
       const finalAmountFormatted = Math.floor(
-        finalAmount * 10 ** buuDecimals
+        finalAmount * 10 ** buuDecimals,
       ).toString();
 
       // Prepare Jupiter order parameters
@@ -133,29 +132,28 @@ export const bitRefillFunctions = {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       if (jupiterOrderResponse.status !== 200) {
         throw new Error(
-          `Failed to book order for swapping Buu Tokens, Please try again`
+          `Failed to book order for swapping Buu Tokens, Please try again`,
         );
       }
 
       const jupiterOrder = await jupiterOrderResponse.json();
       if (!jupiterOrder || jupiterOrder.error || !jupiterOrder?.transaction) {
         throw new Error(
-          `Failed to get order from Jupiter: ${jupiterOrder?.error || "Unknown error"}`
+          `Failed to get order from Jupiter: ${jupiterOrder?.error || "Unknown error"}`,
         );
       }
 
       // Deserialize the transaction
       const transactionBase64 = jupiterOrder.transaction;
       const transaction = VersionedTransaction.deserialize(
-        Buffer.from(transactionBase64, "base64")
+        Buffer.from(transactionBase64, "base64"),
       );
 
-      // Request user to sign the transaction
       toast.loading("Please sign the transaction in your wallet...", {
         id: toastId,
       });
@@ -164,6 +162,7 @@ export const bitRefillFunctions = {
         throw new Error("Wallet does not support transaction signing");
       }
 
+      // Request user to sign the transaction using privy-solana
       const signature = await wallet.walletData.signTransaction(transaction);
 
       if (typeof signature === "undefined") {
@@ -172,7 +171,7 @@ export const bitRefillFunctions = {
 
       // Serialize the signed transaction to base64 string
       const signedTransaction = Buffer.from(signature.serialize()).toString(
-        "base64"
+        "base64",
       );
 
       // Execute the Jupiter swap
@@ -188,7 +187,7 @@ export const bitRefillFunctions = {
             signedTransaction: signedTransaction,
             requestId: jupiterOrder.requestId,
           }),
-        }
+        },
       );
 
       const swap = await executeJupiterTransaction.json();
@@ -208,7 +207,7 @@ export const bitRefillFunctions = {
           fromPubkey: new PublicKey(wallet.address),
           toPubkey: new PublicKey(paymentAddress),
           lamports: invoicePriceLamports, // Use the actual invoice amount
-        })
+        }),
       );
 
       // Sign and send the transfer transaction
@@ -218,7 +217,7 @@ export const bitRefillFunctions = {
 
       const txSignature = await wallet.walletData.sendTransaction(
         transferringTransaction,
-        connection
+        connection,
       );
 
       // Wait for transaction confirmation
@@ -231,7 +230,7 @@ export const bitRefillFunctions = {
           lastValidBlockHeight:
             transferringTransaction.lastValidBlockHeight ?? 0,
         },
-        "confirmed"
+        "confirmed",
       );
 
       if (confirmation.value.err) {
@@ -246,6 +245,7 @@ export const bitRefillFunctions = {
         swapTx: swap.txid,
         paymentTx: txSignature,
       };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error("[TRANSACTION_ERROR]:", error);
       if ("message" in error) {

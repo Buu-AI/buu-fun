@@ -10,7 +10,7 @@ import { getTokenBalance, TToken } from "@/lib/solana/getTokenBalance";
 
 export function usePricingHistoricalPricing() {
   const buuPricingHistoryTime = useAppSelector(
-    (state) => state.BuuPricing.buuPricingHistoryTime
+    (state) => state.BuuPricing.buuPricingHistoryTime,
   );
   return useQuery({
     queryKey: ["get-historical-pricing-result", buuPricingHistoryTime],

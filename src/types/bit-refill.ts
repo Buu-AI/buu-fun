@@ -18,4 +18,4 @@ export type InvoiceIntentEvent = {
   paymentAddress: string;
 };
 
-export type BitRefillEvents = InvoiceCreatedEvent | InvoiceIntentEvent
+export type BitRefillEvents = InvoiceCreatedEvent | InvoiceIntentEvent;

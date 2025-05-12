@@ -988,10 +988,11 @@ export const GenerateNftMutation = gql`
 `;
 
 export const GetNftQuery = gql`
-  query GetNft($nftId: String!) {
+  query Nft($nftId: String!) {
     getNft(nftId: $nftId) {
       ... on Nft {
         _id
+        teamId
         genRequestId
         status
         metadata {

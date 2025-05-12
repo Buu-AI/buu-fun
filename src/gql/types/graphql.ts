@@ -124,6 +124,7 @@ export type BirdeyeHistoricalPriceResult =
 export type BirdeyeTokenOverviewResponse = {
   __typename?: "BirdeyeTokenOverviewResponse";
   address: Scalars["String"]["output"];
+  decimals: Scalars["Int"]["output"];
   description: Scalars["String"]["output"];
   fullyDilutedValue: Scalars["Float"]["output"];
   marketCap: Scalars["Float"]["output"];
@@ -2177,17 +2178,18 @@ export type GenerateNftMutation = {
       };
 };
 
-export type GetNftQueryVariables = Exact<{
+export type NftQueryVariables = Exact<{
   nftId: Scalars["String"]["input"];
 }>;
 
-export type GetNftQuery = {
+export type NftQuery = {
   __typename?: "Query";
   getNft:
     | { __typename?: "HandledError"; code: string; message: string }
     | {
         __typename?: "Nft";
         _id: string;
+        teamId: string;
         genRequestId: string;
         status: NftStatus;
         mintAddress?: string | null;
@@ -7468,13 +7470,13 @@ export const GenerateNftDocument = {
     },
   ],
 } as unknown as DocumentNode<GenerateNftMutation, GenerateNftMutationVariables>;
-export const GetNftDocument = {
+export const NftDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
       operation: "query",
-      name: { kind: "Name", value: "GetNft" },
+      name: { kind: "Name", value: "Nft" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
@@ -7520,6 +7522,10 @@ export const GetNftDocument = {
                     kind: "SelectionSet",
                     selections: [
                       { kind: "Field", name: { kind: "Name", value: "_id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "teamId" },
+                      },
                       {
                         kind: "Field",
                         name: { kind: "Name", value: "genRequestId" },
@@ -7672,7 +7678,7 @@ export const GetNftDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<GetNftQuery, GetNftQueryVariables>;
+} as unknown as DocumentNode<NftQuery, NftQueryVariables>;
 export const GetPricesDocument = {
   kind: "Document",
   definitions: [

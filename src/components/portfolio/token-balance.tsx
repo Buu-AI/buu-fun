@@ -1,8 +1,5 @@
 "use client";
-import {
-  useBuuPricingData,
-  useTokenBalance,
-} from "@/hooks/use-pricing";
+import { useBuuPricingData, useTokenBalance } from "@/hooks/use-pricing";
 import { formatNumberWithFractions, formatWithComma } from "@/lib/utils";
 import { Button } from "../ui/button";
 
