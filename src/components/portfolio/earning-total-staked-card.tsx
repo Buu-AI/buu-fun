@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "../ui/button";
 import APRCalculatorIcon from "@/assets/icons/apr-calculator-icon";
-import { useBuuPricingData } from "@/hooks/use-pricing-history";
+import { useBuuPricingData } from "@/hooks/use-pricing";
 import { useUserStakingData } from "@/hooks/use-staking-data";
 import {
   formatNumber,

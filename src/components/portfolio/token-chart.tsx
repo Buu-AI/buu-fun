@@ -1,5 +1,5 @@
 "use client";
-import { usePricingHistoricalPricing } from "@/hooks/use-pricing-history";
+import { usePricingHistoricalPricing } from "@/hooks/use-pricing";
 import { formatUnixTimestamp } from "@/lib/utils";
 import React from "react";
 import {

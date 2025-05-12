@@ -1,6 +1,6 @@
 "use client";
 import { useAppDispatch } from "@/hooks/redux";
-import { useTokenBalance } from "@/hooks/use-pricing-history";
+import { useTokenBalance } from "@/hooks/use-pricing";
 import { setTogglers } from "@/lib/redux/features/buu-pricing";
 import { cn } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";

@@ -1,6 +1,6 @@
 import APRCalculatorIcon from "@/assets/icons/apr-calculator-icon";
 import { Button } from "@/components/ui/button";
-import { useBuuPricingData } from "@/hooks/use-pricing-history";
+import { useBuuPricingData } from "@/hooks/use-pricing";
 import { useUserStakingData } from "@/hooks/use-staking-data";
 import {
   formatNumber,

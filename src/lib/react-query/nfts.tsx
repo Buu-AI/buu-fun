@@ -10,8 +10,8 @@ import {
   GetNftsQueryVariables,
   GenerateNftMutation as TGenerateNftMutation,
   GenerateNftMutationVariables,
-  GetNftQuery as TGetNftQuery,
-  GetNftQueryVariables,
+  NftQuery as TGetNftQuery,
+  NftQueryVariables as GetNftQueryVariables,
 } from "@/gql/types/graphql";
 import { getAuthorization } from "../utils";
 
