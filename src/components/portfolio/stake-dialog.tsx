@@ -3,6 +3,7 @@ import { CoinStackIcon } from "@/assets/icons";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useTokenBalance } from "@/hooks/use-pricing";
 import { useUserStakingData } from "@/hooks/use-staking-data";
+import { ethers } from "ethers";
 import {
   setSelectedAmountToStake,
   setTogglers,
@@ -31,13 +32,16 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import StakingSlider from "./staking-slider";
+import BN from "bn.js";
+import { useConfetti } from "@/providers/confetti-provider";
 
 export default function StakingDialog() {
   const [isLoading, setIsLoading] = useState(false);
   const { wallet, connectSolanaWallet, address } = useAuthentication();
+
   const { wallets } = useSolanaWallets();
   const openState = useAppSelector(
-    (state) => state.BuuPricing.openStakingModal,
+    (state) => state.BuuPricing.openStakingModal
   );
   const {
     userStaking: { data: userStakingData },
@@ -45,10 +49,10 @@ export default function StakingDialog() {
   const queryClient = useQueryClient();
   const { data: tokenData } = useTokenBalance();
   const balance = tokenData?.value.uiAmount ?? 0;
-
+  const decimals = userStakingData?.decimals ?? 6;
   const toBeStaked = useAppSelector((state) => state.BuuPricing.amountToStake);
   const dispatch = useAppDispatch();
-
+  const confetti = useConfetti();
   const stakeInputSchema = z.object({
     amount: z
       .string({
@@ -57,19 +61,35 @@ export default function StakingDialog() {
       })
       .refine(
         (value) => {
-          if (Number(value) <= 0) return false;
-          return true;
+          try {
+            if (Number(value) <= 0) return false;
+            return true;
+          } catch (error) {
+            if (error) {
+            }
+            return false;
+          }
         },
-        { message: "Please enter a valid number" },
+        { message: "Please enter a valid number" }
       )
       .refine(
         (value) => {
-          console.log("all condition true");
           if (!balance || balance <= 0) return false;
-          if (balance < Number(value)) return false;
-          return true;
+
+          try {
+            // Convert the input value to BigNumber
+            // Convert balance to BigNumber (if it's not already)
+            const balanceInDecimals = ethers.parseUnits(
+              balance.toString(),
+              decimals
+            );
+            return balanceInDecimals >= parseFloat(value);
+          } catch (error) {
+            console.error("Error comparing values:", error);
+            return false;
+          }
         },
-        { message: "insufficient balance" },
+        { message: "insufficient balance" }
       ),
   });
 
@@ -173,10 +193,18 @@ export default function StakingDialog() {
 
       // Show loading state
       toast.loading(`Creating transaction for ${data.amount}...`);
+      const isFirstTimeStaking = !userStakingData?.userStakes.length;
+
+      const scaledAmount = new BN(
+        ethers
+          .parseUnits(data.amount, userStakingData?.decimals ?? 6)
+          .toString()
+      );
+
       const transaction = await executeStakingTransaction({
         address: wallet.address,
-        amountToStake:
-          Number(data.amount) * 10 ** (userStakingData?.decimals ?? 1),
+        amountToStake: scaledAmount,
+        isFirstTimeStaking,
       });
 
       if (!transaction) {
@@ -190,7 +218,7 @@ export default function StakingDialog() {
 
       const signature = await wallet.walletData?.sendTransaction(
         transaction,
-        connection,
+        connection
       );
       toast.dismiss();
       if (signature) {
@@ -200,7 +228,7 @@ export default function StakingDialog() {
         try {
           const confirmation = await connection.confirmTransaction(
             signature,
-            "confirmed",
+            "confirmed"
           );
           toast.dismiss();
           if (confirmation.value.err) {
@@ -208,7 +236,11 @@ export default function StakingDialog() {
             toast.error("Transaction failed on-chain");
             console.error("Transaction error:", confirmation.value.err);
           } else {
+            confetti.runConfetti({
+              duration: 3500,
+            });
             toast.loading("Transaction received! processing transaction...");
+            dispatch(setTogglers({ key: "openStakingModal", value: false }));
             revalidate();
           }
         } catch (confirmError) {
@@ -224,7 +256,7 @@ export default function StakingDialog() {
       toast.dismiss();
       toast.error(
         "Transaction failed: " +
-          (error instanceof Error ? error.message : "Unknown error"),
+          (error instanceof Error ? error.message : "Unknown error")
       );
       console.error("Transaction error:", error);
     } finally {

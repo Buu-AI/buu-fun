@@ -1,16 +1,19 @@
 import { Connection, PublicKey, Transaction } from "@solana/web3.js";
-import { BN } from "bn.js";
+import BN from "bn.js";
 import { SolanaStakingClient } from "../streamflow/client";
-import { getClusterUrl } from "./staking";
+import { getClusterUrl, isDevnet } from "./staking";
 
+const DEVNET_STAKING_DURATION = 60 * 60 * 24 * 1; // 30 days
+const MAINNET_STAKING_DURATION = 7883982;
 export async function executeStakingTransaction({
   address,
   amountToStake,
+  isFirstTimeStaking,
 }: {
   address: string;
-  amountToStake: number;
+  amountToStake: BN;
+  isFirstTimeStaking: boolean;
 }) {
-  //   const wallet = Keypair.fromSecretKey(Uint8Array.from(bs58.decode(address)));
   const publicKey = new PublicKey(address);
 
   const stakePool = new PublicKey(
@@ -27,7 +30,13 @@ export async function executeStakingTransaction({
   const nonce = Date.now() % 100000;
 
   const amount = new BN(amountToStake);
-  const duration = new BN(60 * 60 * 24 * 1); // 30 days
+
+  const isStakingDevnet = isDevnet();
+  const durationTime = isStakingDevnet
+    ? DEVNET_STAKING_DURATION
+    : MAINNET_STAKING_DURATION;
+
+  const duration = new BN(durationTime); // 30 days
 
   const { ixs } = await solanaStakingClient.prepareStakeInstructions(
     {
@@ -38,6 +47,7 @@ export async function executeStakingTransaction({
       stakePoolMint,
     },
     publicKey,
+    isFirstTimeStaking,
   );
 
   const transaction = new Transaction();
