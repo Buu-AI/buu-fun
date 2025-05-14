@@ -7,7 +7,7 @@ import {
 import { InfiniteData } from "@tanstack/react-query";
 
 export function prepareMessagePayload(
-  params: InfiniteData<TMessageQueryData>,
+  params: InfiniteData<TMessageQueryData>
 ): TChatMessage[] {
   return [
     ...new Map(
@@ -15,7 +15,7 @@ export function prepareMessagePayload(
         .flatMap((page) => {
           return page.items.map((item) => {
             const { data: payload } = parseJson<PromptPayload>(
-              item.toolRequest?.payload ?? "",
+              item.toolRequest?.payload ?? ""
             );
             return {
               messageId: item._id,
@@ -23,6 +23,7 @@ export function prepareMessagePayload(
               createdAt: item.createdAt,
               imageUrl: item.content?.model?.image.url,
               modelUrl: item.content?.model?.url,
+              nftId: item.nftId,
               prompt: item.content?.text,
               role: item.role,
               status: item.status,
@@ -31,11 +32,11 @@ export function prepareMessagePayload(
             };
           });
         })
-        .map((item) => [item.messageId, item]), // Use messageId as the key
+        .map((item) => [item.messageId, item]) // Use messageId as the key
     ).values(),
   ].sort(
     (a, b) =>
       new Date(a.createdAt as string).getTime() -
-      new Date(b.createdAt as string).getTime(),
+      new Date(b.createdAt as string).getTime()
   );
 }

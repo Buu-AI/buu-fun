@@ -10,6 +10,8 @@ type TAssistantMessage = {
   payload: PromptPayload;
   modelUrl: MaybeString;
   imageUrl: MaybeString;
+  nftId: MaybeString;
+  tokenized: boolean;
 };
 export default function AssistantToolMessage({
   status,
@@ -18,6 +20,8 @@ export default function AssistantToolMessage({
   imageUrl,
   modelUrl,
   messageId,
+  nftId,
+  tokenized,
 }: TAssistantMessage) {
   return (
     <div className="">
@@ -30,6 +34,8 @@ export default function AssistantToolMessage({
       <GeneratedModelCard
         messageId={messageId}
         imageUrl={imageUrl}
+        nftId={nftId}
+        tokenized={tokenized}
         modelUrl={modelUrl}
         status={status}
       />

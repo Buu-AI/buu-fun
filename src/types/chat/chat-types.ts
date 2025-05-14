@@ -26,6 +26,7 @@ export type TChatMessage = {
   modelUrl: MaybeString;
   imageUrl: MaybeString;
   role: TMessageRole;
+  nftId: MaybeString;
   payload: PromptPayload;
   createdAt?: string;
 };

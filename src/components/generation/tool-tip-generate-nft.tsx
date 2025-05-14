@@ -7,6 +7,8 @@ import { TChatToolTips } from "../chat/toolbar/tool-bar-content";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { ToolTips } from "./handle-tool-calls";
 import { buttonVariants } from "./tool-bar-tool-tips";
+import { MaybeString } from "@/types";
+import { useRouter } from "next/navigation";
 
 type TToolTipGenerateNFT = {
   subThreadId?: string;
@@ -15,20 +17,23 @@ type TToolTipGenerateNFT = {
   length: number;
   open?: boolean;
   messageId: string;
-  tokenized?: boolean;
-  imageUrl?: string | null;
-  modelUrl?: string | null;
+  imageUrl: MaybeString;
+  modelUrl: MaybeString;
+  nftId: MaybeString;
+  tokenized: boolean;
 };
 
 export default function ToolTipGenerateNft({
   toolTipData,
   index,
   messageId,
-  tokenized,
   imageUrl,
   modelUrl,
+  nftId,
+  tokenized,
 }: TToolTipGenerateNFT) {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   return (
     <Tooltip>
       <TooltipTrigger disabled={tokenized} asChild>
@@ -38,6 +43,7 @@ export default function ToolTipGenerateNft({
             onClick={() => {
               if (tokenized) {
                 toast.success(`NFT has already been generated `);
+                if (nftId) router.push(`/nfts/${nftId}`);
                 return;
               }
               if (!messageId) {
@@ -52,7 +58,7 @@ export default function ToolTipGenerateNft({
                   messageId,
                   imageUrl,
                   modelUrl,
-                }),
+                })
               );
             }}
             initial="initial"
@@ -64,7 +70,7 @@ export default function ToolTipGenerateNft({
               "group bg-svg-button pointer-events-auto  group  min-w-[24px] rounded-[4px] border-buu  flex items-center justify-center",
               {
                 "hover:bg-white hover:shadow-none": !tokenized,
-              },
+              }
             )}
           >
             <motion.div

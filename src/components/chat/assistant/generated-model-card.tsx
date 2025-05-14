@@ -15,6 +15,8 @@ type TGeneratedModelCard = {
   modelUrl: MaybeString;
   status: TMessageStatus;
   messageId: string;
+  nftId: MaybeString;
+  tokenized: boolean;
 };
 
 export default function GeneratedModelCard({
@@ -22,6 +24,8 @@ export default function GeneratedModelCard({
   modelUrl,
   status,
   messageId,
+  nftId,
+  tokenized,
 }: TGeneratedModelCard) {
   const isPending = isToolCallPending(status);
   const isGenerating = isToolCallPendingOrInProgress(status);
@@ -52,6 +56,8 @@ export default function GeneratedModelCard({
         <ToolBarWrapper
           imageUrl={imageUrl}
           messageId={messageId}
+          nftId={nftId}
+          tokenized={tokenized}
           modelUrl={modelUrl}
         />
       </div>

@@ -1,7 +1,6 @@
 import { TMessageStatus } from "@/types/chat/chat-types";
 import Pill, { TPillVariant } from "../elements/pill";
 
-
 type TStatusPillDetails = {
   text: string;
   variant: TPillVariant["variant"];
@@ -10,7 +9,6 @@ type TChatStatus = {
   status: TMessageStatus;
 };
 export default function ChatStatus({ status }: TChatStatus) {
-  if (status === "CANCELLED") return null;
   const details = getPillDetails(status);
   return (
     <Pill
@@ -46,6 +44,12 @@ function getPillDetails(status: TMessageStatus): TStatusPillDetails {
       return {
         text: "Completed",
         variant: "green",
+      };
+    }
+    case "CANCELLED": {
+      return {
+        text: "Cancelled",
+        variant: "gray",
       };
     }
     default: {

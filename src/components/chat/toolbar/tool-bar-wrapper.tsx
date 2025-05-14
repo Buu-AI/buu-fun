@@ -8,11 +8,15 @@ type TToolBarWrapper = {
   modelUrl: MaybeString;
   messageId: string;
   imageUrl: MaybeString;
+  nftId: MaybeString;
+  tokenized: boolean;
 };
 
 export default function ToolBarWrapper({
   modelUrl,
   messageId,
+  nftId,
+  tokenized,
   imageUrl,
 }: TToolBarWrapper) {
   return (
@@ -35,6 +39,8 @@ export default function ToolBarWrapper({
               toolTipData={item}
               length={ChatToolTips.length}
               modelUrl={modelUrl}
+              nftId={nftId}
+              tokenized={tokenized}
               imageUrl={imageUrl}
               index={index}
               key={`tool-tip-contents-${item.content.trim()}-${index}`}
