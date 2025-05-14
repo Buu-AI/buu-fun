@@ -3,11 +3,12 @@ import { ArrowUp, ImageIcon } from "@/assets/icons";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { getPresignedUrl } from "@/lib/react-query/image-upload";
 import { queryClient } from "@/lib/react-query/query-client";
-import { generateSubThreads } from "@/lib/react-query/threads";
+// import { generateSubThreads } from "@/lib/react-query/threads";
 import {
   clearInput,
   pushNewSubThreads,
   setInputFile,
+  setNewSession,
   setNewThreadId,
 } from "@/lib/redux/features/chat";
 import { isSubThreadGenerating } from "@/lib/redux/selectors/chat";
@@ -18,7 +19,11 @@ import {
   isOverAllRequestLimitReached,
 } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
-import { useMutation } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -28,6 +33,10 @@ import ChatTextArea from "./chat-text-area";
 import DragImageCard, { ImageData } from "./drag-image-card";
 import { TypedAppError } from "@/class/error";
 import { setSubscriptionModel } from "@/lib/redux/features/subscription";
+import {
+  sendChatMessage,
+  TGetMessagesReturn,
+} from "@/lib/react-query/threads.v3";
 
 export default function ChatForm({ action }: TBottomBarContainer) {
   const { identityToken, login } = useAuthentication();
@@ -37,17 +46,19 @@ export default function ChatForm({ action }: TBottomBarContainer) {
   const style = useAppSelector((state) => state.settings.ThreeDStyle);
   const inputFile = useAppSelector((state) => state.chat.inputFile);
 
-  const isChatPending = useAppSelector(isSubThreadGenerating);
+  // const isChatPending = useAppSelector(isSubThreadGenerating);
   // Mutation for creating a new chat
   const { mutate: createNewChat, isPending: isCreatePending } = useMutation({
     onMutate() {
       toast.dismiss();
-      toast.loading("Generating model...", { duration: 2000 });
+      toast.loading("new::Generating model...", { duration: 2000 });
     },
-    mutationFn: generateSubThreads,
+    mutationFn: sendChatMessage,
     onSuccess(data) {
-      dispatch(setNewThreadId(data?.threadId));
-      router.push(`/app/generation/${data?.threadId}`);
+      const sessionId = data?.items[0].sessionId;
+      toast.success(`SESSIONID: ${sessionId}`);
+      dispatch(setNewSession(sessionId));
+      router.push(`/app/chat/${sessionId}`);
     },
     onError(error) {
       if (error instanceof TypedAppError) {
@@ -66,17 +77,43 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       toast.error("Something went wrong, Please try again.");
     },
   });
-
+  const queryClient = useQueryClient();
   // mutation for existing chat
   const { mutate: createExistingChat, isPending: isExistingChatPending } =
     useMutation({
-      mutationFn: generateSubThreads,
+      mutationFn: sendChatMessage,
       async onSuccess(data) {
-        toast.loading("Generating your model...", { duration: 8000 });
-        dispatch(pushNewSubThreads(data));
+        const sessionId = data.items[0].sessionId;
+        queryClient.setQueryData<InfiniteData<TGetMessagesReturn>>(
+          ["get-messages", sessionId, identityToken],
+          (old) => {
+            if (!old) return old;
+
+            // Create a deep copy to avoid mutating the original
+            return {
+              ...old,
+              pages: old.pages.map((page) => ({
+                ...page,
+                __typename: page.__typename,
+                items: [...page.items, ...data.items],
+              })),
+            };
+          }
+        );
+
+        // const chatWindow = document.getElementById("chat-window");
+        // if (chatWindow) {
+        //   const scrollHeight = chatWindow?.scrollHeight;
+        //   chatWindow?.scroll({
+        //     top: scrollHeight,
+        //   });
+        // }
+        toast.loading("Existing::Generating your model...", { duration: 8000 });
+        // dispatch(pushNewSubThreads(data));
+        toast.success(`SESSIONID: ${sessionId}`);
         dispatch(clearInput());
         await queryClient.invalidateQueries({
-          queryKey: [data.threadId, "get-sub-threads"],
+          queryKey: ["get-messages", sessionId, identityToken],
         });
       },
       onError(error) {
@@ -97,11 +134,9 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       },
     });
 
-  const isChatLoading =
-    isCreatePending ||
-    isExistingChatPending ||
-    (action !== "new_chat" && isChatPending.isJustStarted) ||
-    isOverAllRequestLimitReached(isChatPending.totalRequest);
+  const isChatLoading = isCreatePending || isExistingChatPending;
+  // (action !== "new_chat" && isChatPending.isJustStarted)
+  // isOverAllRequestLimitReached(isChatPending.totalRequest);
 
   const { mutateAsync: getImagePresignedUrl } = useMutation({
     mutationFn: getPresignedUrl,
@@ -115,7 +150,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
 
   const handleImageUploadUrl = async (
     ImageData: ImageData,
-    accessToken: string,
+    accessToken: string
   ) => {
     try {
       toast.loading("Preparing image for uploading....");
@@ -178,11 +213,11 @@ export default function ChatForm({ action }: TBottomBarContainer) {
     }
 
     if (isChatLoading) {
-      if (isOverAllRequestLimitReached(isChatPending.totalRequest)) {
-        return toast.error(
-          "Whoa, you're on fire 🔥. You've hit the limit of 4 creations.",
-        );
-      }
+      // if (isOverAllRequestLimitReached(isChatPending.totalRequest)) {
+      //   return toast.error(
+      //     "Whoa, you're on fire 🔥. You've hit the limit of 4 creations."
+      //   );
+      // }
       return toast.error("Hold on!, Still generating your model...");
     }
     if (!identityToken) {
@@ -211,7 +246,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         accessToken: identityToken ?? "",
         prompt,
         style,
-        threadId: action.threadId,
+        sessionId: action.sessionId,
         imageUrl,
       });
     }
@@ -224,16 +259,16 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         "relative flex-col gap-1 flex items-start w-full p-4  mb-2  rounded-[20px]  shadow-buu-inner bg-buu",
         {
           // "p-0": !inputFile?.url.length
-        },
+        }
       )}
     >
       <button
-        disabled={isChatLoading}
+        // disabled={isChatLoading}
         className={cn(
           "bg-buu-button     shadow-buu-button rounded-xl left-0 absolute w-full h-full top-0",
           {
             hidden: !inputFile?.url.length,
-          },
+          }
         )}
       >
         <div className="flex   gap-2 items-center justify-center">

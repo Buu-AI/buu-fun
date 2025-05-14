@@ -2,7 +2,7 @@ import SettingsBar from "../settings/settings-bar";
 import ChatForm from "./chat-form";
 import ImageDragAndDrop from "./image-drag-n-dropper";
 export type TBottomBarContainer = {
-  action: "new_chat" | { threadId: string };
+  action: "new_chat" | { sessionId: string };
 };
 export default function BottomBarContainer({ action }: TBottomBarContainer) {
   return (
