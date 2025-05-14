@@ -28,6 +28,7 @@ import toast from "react-hot-toast";
 import { TBottomBarContainer } from "./bottom-bar-container";
 import ChatTextArea from "./chat-text-area";
 import DragImageCard, { ImageData } from "./drag-image-card";
+import { isChatGenerating } from "@/lib/redux/selectors/chatMessages";
 
 export default function ChatForm({ action }: TBottomBarContainer) {
   const { identityToken, login } = useAuthentication();
@@ -37,7 +38,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
   const style = useAppSelector((state) => state.settings.ThreeDStyle);
   const inputFile = useAppSelector((state) => state.chat.inputFile);
 
-  // const isChatPending = useAppSelector(isSubThreadGenerating);
+  const isChatPending = useAppSelector(isChatGenerating);
   // Mutation for creating a new chat
   const { mutate: createNewChat, isPending: isCreatePending } = useMutation({
     onMutate() {
@@ -46,6 +47,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
     },
     mutationFn: sendChatMessage,
     onSuccess(data) {
+      dispatch(clearInput());
       const sessionId = data?.items[0].sessionId;
       dispatch(setNewSession(sessionId));
       router.push(`/app/chat/${sessionId}`);
@@ -73,13 +75,12 @@ export default function ChatForm({ action }: TBottomBarContainer) {
     useMutation({
       mutationFn: sendChatMessage,
       async onSuccess(data) {
+        dispatch(clearInput());
         const sessionId = data.items[0].sessionId;
         queryClient.setQueryData<InfiniteData<TGetMessagesReturn>>(
           ["get-messages", sessionId, identityToken],
           (old) => {
             if (!old) return old;
-
-            // Create a deep copy to avoid mutating the original
             return {
               ...old,
               pages: old.pages.map((page) => ({
@@ -90,7 +91,6 @@ export default function ChatForm({ action }: TBottomBarContainer) {
             };
           }
         );
-        dispatch(clearInput());
         await queryClient.invalidateQueries({
           queryKey: ["get-messages", sessionId, identityToken],
         });
@@ -113,8 +113,12 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       },
     });
 
-  const isChatLoading = isCreatePending || isExistingChatPending;
-  // (action !== "new_chat" && isChatPending.isJustStarted)
+  const isChatLoading =
+    isCreatePending ||
+    isExistingChatPending ||
+    (action !== "new_chat" && isChatPending) ||
+    isChatPending;
+
   // isOverAllRequestLimitReached(isChatPending.totalRequest);
 
   const { mutateAsync: getImagePresignedUrl } = useMutation({
@@ -242,7 +246,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       )}
     >
       <button
-        // disabled={isChatLoading}
+        disabled={isChatLoading}
         className={cn(
           "bg-buu-button     shadow-buu-button rounded-xl left-0 absolute w-full h-full top-0",
           {
@@ -261,7 +265,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       </button>
       {/* Other components */}
       <DragImageCard className={""} onImageSelected={() => {}} />
-      <ChatTextArea />
+      <ChatTextArea isChatLoading={isChatLoading} />
       <div className="w-full  flex justify-between">
         <label htmlFor="file-input" className="cursor-pointer">
           <input
