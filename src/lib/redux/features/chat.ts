@@ -11,6 +11,12 @@ import {
   TSubThreadsResponse,
   TSubthreadV1,
 } from "./chat-types";
+import {
+  TChatMessage,
+  TMessageItems,
+  TMessageQueryData,
+} from "@/types/chat/chat-types";
+import { prepareMessagePayload } from "../prepare/message";
 
 const initialState: ChatState = {
   inputQuery: "",
@@ -34,6 +40,12 @@ const initialState: ChatState = {
     modalOpened: false,
     subThreadId: null,
   },
+  sessionId: "",
+  messages: [],
+  chatMessages: {
+    pageParams: [],
+    pages: [],
+  },
 };
 const ChatSlice = createSlice({
   name: "Chat",
@@ -49,7 +61,7 @@ const ChatSlice = createSlice({
         genRequestId?: string;
         modelUrl?: string | null;
         imageUrl?: string | null;
-      }>,
+      }>
     ) {
       state.genNft.isGenNftModalOpen = action?.payload?.isGenNftOpen;
       state.genNft.genId = action.payload.genRequestId;
@@ -86,7 +98,7 @@ const ChatSlice = createSlice({
         action: PayloadAction<{
           subThreadId: string;
           Media: TSubThreadsMedia[];
-        }>,
+        }>
       ) {
         state.genRequest[action.payload.subThreadId] = action.payload.Media;
       },
@@ -109,13 +121,13 @@ const ChatSlice = createSlice({
             return eachPage.items.map(
               (item): TSubthreadV1 => ({
                 ...item,
-              }),
+              })
             );
           })
           .sort(
             (a, b) =>
               new Date(a.createdAt as string).getTime() -
-              new Date(b.createdAt as string).getTime(),
+              new Date(b.createdAt as string).getTime()
           );
 
         return {
@@ -189,7 +201,7 @@ const ChatSlice = createSlice({
                 modelMesh: modRes.model_mesh,
                 status: modRes.status,
                 type: modRes.type,
-              }),
+              })
             ),
         }));
         return {
@@ -202,7 +214,7 @@ const ChatSlice = createSlice({
       reducer(state, action: PayloadAction<TSubThread>) {
         console.log("PAYLOAD", action.payload);
         const index = state.threads.subThreads.findIndex(
-          (fv) => fv._id === action.payload._id,
+          (fv) => fv._id === action.payload._id
         );
 
         if (index !== -1) {
@@ -249,6 +261,26 @@ const ChatSlice = createSlice({
         };
       },
     },
+    setNewSession(state, payload: PayloadAction<string>) {
+      state.sessionId = payload.payload;
+    },
+    setNewMessage(
+      state,
+      action: PayloadAction<InfiniteData<TMessageQueryData>>
+    ) {
+      state.chatMessages = action.payload;
+    },
+    setMessages: {
+      reducer: (state, action: PayloadAction<TChatMessage[]>) => {
+        state.messages = action.payload;
+      },
+      prepare: (data: InfiniteData<TMessageQueryData>) => {
+        const message = prepareMessagePayload(data);
+        return {
+          payload: message,
+        };
+      },
+    },
   },
 });
 
@@ -273,6 +305,9 @@ export const {
   setRetrySubthreadId,
   setGenerateNFT,
   setOpenGenerateNFTModal,
+  setMessages,
+  setNewSession,
+  setNewMessage
 } = ChatSlice.actions;
 
 export default ChatSlice.reducer;
