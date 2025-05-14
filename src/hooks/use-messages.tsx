@@ -5,7 +5,7 @@ import { useAuthentication } from "@/providers/account.context";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useRef } from "react";
 
-const GRACE_PERIOD_MS = 3000;
+const GRACE_PERIOD_MS = 9500;
 export function useChatMessage({
   sessionId,
   limit = SUB_THREAD_QUERY_LIMIT,
@@ -74,7 +74,7 @@ export function useChatMessage({
         currentTime - lastJobActiveTimestamp.current < GRACE_PERIOD_MS
       ) {
         console.log("refetching period 1sec - grace period");
-        return 1000; // Stay at 5 second intervals during grace period
+        return 3000; // Stay at 5 second intervals during grace period
       }
 
       // If we're outside the grace period, revert to slower interval
