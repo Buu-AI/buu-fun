@@ -2241,7 +2241,9 @@ export type GetNftsQuery = {
         items: Array<{
           __typename?: "Nft";
           _id: string;
+          teamId: string;
           genRequestId: string;
+          messageId: string;
           status: ToolRequestStatus;
           mintAddress?: string | null;
           collectionAddress?: string | null;
@@ -2344,11 +2346,11 @@ export type GenerateNftMutation = {
       };
 };
 
-export type NftQueryVariables = Exact<{
+export type GetNftQueryVariables = Exact<{
   nftId: Scalars["String"]["input"];
 }>;
 
-export type NftQuery = {
+export type GetNftQuery = {
   __typename?: "Query";
   getNft:
     | { __typename?: "HandledError"; code: string; message: string }
@@ -2357,6 +2359,7 @@ export type NftQuery = {
         _id: string;
         teamId: string;
         genRequestId: string;
+        messageId: string;
         status: ToolRequestStatus;
         mintAddress?: string | null;
         collectionAddress?: string | null;
@@ -7270,7 +7273,15 @@ export const GetNftsDocument = {
                             },
                             {
                               kind: "Field",
+                              name: { kind: "Name", value: "teamId" },
+                            },
+                            {
+                              kind: "Field",
                               name: { kind: "Name", value: "genRequestId" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "messageId" },
                             },
                             {
                               kind: "Field",
@@ -7758,13 +7769,13 @@ export const GenerateNftDocument = {
     },
   ],
 } as unknown as DocumentNode<GenerateNftMutation, GenerateNftMutationVariables>;
-export const NftDocument = {
+export const GetNftDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
       operation: "query",
-      name: { kind: "Name", value: "Nft" },
+      name: { kind: "Name", value: "GetNft" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
@@ -7817,6 +7828,10 @@ export const NftDocument = {
                       {
                         kind: "Field",
                         name: { kind: "Name", value: "genRequestId" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "messageId" },
                       },
                       {
                         kind: "Field",
@@ -7966,7 +7981,7 @@ export const NftDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<NftQuery, NftQueryVariables>;
+} as unknown as DocumentNode<GetNftQuery, GetNftQueryVariables>;
 export const GetPricesDocument = {
   kind: "Document",
   definitions: [
