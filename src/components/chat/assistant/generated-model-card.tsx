@@ -2,7 +2,7 @@ import ToolBarWrapper from "@/components/chat/toolbar/tool-bar-wrapper";
 import { BorderBeam } from "@/components/ui/border-beam";
 import {
   isToolCallGenerating,
-  isToolCallPendingOrCanceled
+  isToolCallPendingCanceledOrFailed
 } from "@/lib/helpers/status-checker";
 import { cn } from "@/lib/utils";
 import { MaybeString } from "@/types";
@@ -27,9 +27,9 @@ export default function GeneratedModelCard({
   nftId,
   tokenized,
 }: TGeneratedModelCard) {
-  const isPendingOrCanceled = isToolCallPendingOrCanceled(status);
+  const isPendingOrCanceledOrFailed = isToolCallPendingCanceledOrFailed(status);
   const isGenerating = isToolCallGenerating(status);
-  if (isPendingOrCanceled) {
+  if (isPendingOrCanceledOrFailed) {
     return null;
   }
   return (

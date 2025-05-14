@@ -19,9 +19,7 @@ export function isFreePlan(plan?: string): boolean {
   return false;
 }
 
-export function isToolCallPendingOrCanceled(status: TMessageStatus) {
-  return isToolCallPending(status) || isToolCallCanceled(status);
-}
+
 export function isToolCallPending(status: TMessageStatus) {
   return status === "PENDING";
 }
@@ -33,19 +31,37 @@ export function isToolCallCompleted(status: TMessageStatus) {
   return status === "COMPLETED";
 }
 
+export function isToolCallInQueue(status: TMessageStatus) {
+  return status === "IN_QUEUE";
+}
+
 export function isToolCallInProgress(status: TMessageStatus) {
   return status === "IN_PROGRESS";
 }
 
-export function isToolCallPendingOrInProgress(status: TMessageStatus) {
-  return status === "IN_PROGRESS" || status === "PENDING";
-}
-export function isToolCallGenerating(status: TMessageStatus) {
-  return status === "IN_PROGRESS" || status === "IN_QUEUE";
+export function isToolCallFailed(status: TMessageStatus) {
+  return status === "FAILED";
 }
 
+export function isToolCallPendingOrCanceled(status: TMessageStatus) {
+  return isToolCallPending(status) || isToolCallCanceled(status);
+}
+
+export function isToolCallPendingCanceledOrFailed(status:TMessageStatus){
+  return isToolCallPendingOrCanceled(status) || isToolCallFailed(status)
+}
+
+export function isToolCallPendingOrInProgress(status: TMessageStatus) {
+  return isToolCallInProgress(status) || isToolCallPending(status);
+}
+export function isToolCallGenerating(status: TMessageStatus) {
+  return isToolCallInProgress(status) || isToolCallInQueue(status);
+}
+export function isToolCallGeneratingOrPending(status: TMessageStatus) {
+  return isToolCallInProgress(status) || isToolCallInQueue(status) || isToolCallPending(status);
+}
 export function isToolCallInProgressOrCompleted(status: TMessageStatus) {
-  return status === "IN_PROGRESS" || status === "COMPLETED";
+  return isToolCallInProgress(status) || isToolCallCompleted(status);
 }
 
 export function isRoleAssistant(role: string) {

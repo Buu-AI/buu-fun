@@ -3,7 +3,11 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { setInputQuery } from "@/lib/redux/features/chat";
 import { useEffect, useRef } from "react";
 
-export default function ChatTextArea() {
+export default function ChatTextArea({
+  isChatLoading,
+}: {
+  isChatLoading: boolean;
+}) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const value = useAppSelector((state) => state.chat.inputQuery);
@@ -77,7 +81,7 @@ export default function ChatTextArea() {
     <textarea
       rows={2}
       ref={textareaRef}
-      disabled={isImage?.length ? true : false}
+      disabled={isImage?.length || isChatLoading ? true : false}
       onKeyDown={handleKeyDown}
       value={value}
       onChange={(e) => {
