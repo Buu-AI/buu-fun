@@ -2,8 +2,7 @@ import ToolBarWrapper from "@/components/chat/toolbar/tool-bar-wrapper";
 import { BorderBeam } from "@/components/ui/border-beam";
 import {
   isToolCallGenerating,
-  isToolCallPendingCanceledOrFailed,
-  isToolCallPendingOrCanceled
+  isToolCallPendingCanceledOrFailed
 } from "@/lib/helpers/status-checker";
 import { cn } from "@/lib/utils";
 import { MaybeString } from "@/types";
