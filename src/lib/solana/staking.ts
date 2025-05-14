@@ -5,7 +5,7 @@ import {
   TokenMint,
 } from "@/gql/types/graphql";
 import { calcRewards } from "@/lib/streamflow/lib/rewards";
-import { PublicKey } from "@solana/web3.js";
+import { clusterApiUrl, PublicKey } from "@solana/web3.js";
 import BN from "bn.js";
 
 export async function getUserStakingData({
@@ -185,4 +185,6 @@ export function getClusterUrl() {
 export function isDevnet() {
   return process.env.NEXT_PUBLIC_STREAMFLOW_CLUSTER === "devnet";
 }
-export function getSolanaClusterUrl() {}
+export function getSolanaClusterUrl() {
+  return clusterApiUrl("mainnet-beta");
+}

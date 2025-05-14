@@ -19,7 +19,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-interface WalletInfo {
+export interface WalletInfo {
   address?: string;
   id: string;
   name: string;
