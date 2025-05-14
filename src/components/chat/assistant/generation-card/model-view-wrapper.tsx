@@ -18,7 +18,7 @@ export default function ModelViewWrapper({
   if (!modelUrl) return null;
   return (
     <div className="w-full h-full border overflow-hidden rounded-3xl">
-      <ModelViewer poster={imageUrl} src={modelUrl} />
+      <ModelViewer key={modelUrl} poster={imageUrl} src={modelUrl} />
     </div>
   );
 }

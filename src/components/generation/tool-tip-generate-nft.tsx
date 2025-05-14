@@ -3,17 +3,18 @@ import { setGenerateNFT } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import { TChatToolTips } from "../chat/toolbar/tool-bar-content";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { ToolTips, TToolTipsData } from "./handle-tool-calls";
+import { ToolTips } from "./handle-tool-calls";
 import { buttonVariants } from "./tool-bar-tool-tips";
 
 type TToolTipGenerateNFT = {
   subThreadId?: string;
-  toolTipData: TToolTipsData[number];
+  toolTipData: TChatToolTips
   index: number;
   length: number;
   open?: boolean;
-  modelId?: string | null;
+  messageId: string;
   tokenized?: boolean;
   imageUrl?: string | null;
   modelUrl?: string | null;
@@ -22,7 +23,7 @@ type TToolTipGenerateNFT = {
 export default function ToolTipGenerateNft({
   toolTipData,
   index,
-  modelId,
+  messageId,
   tokenized,
   imageUrl,
   modelUrl,
@@ -39,17 +40,19 @@ export default function ToolTipGenerateNft({
                 toast.success(`NFT has already been generated `);
                 return;
               }
-              if (!modelId) {
-                toast.loading("Model is being generated, Please wait");
+              if (!messageId) {
+                toast.loading("Model is being generated, Please wait", {
+                  duration: 5000,
+                });
                 return;
               }
               dispatch(
                 setGenerateNFT({
                   isGenNftOpen: true,
-                  genRequestId: modelId,
+                  messageId,
                   imageUrl,
                   modelUrl,
-                }),
+                })
               );
             }}
             initial="initial"
@@ -58,10 +61,10 @@ export default function ToolTipGenerateNft({
             variants={buttonVariants}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
             className={cn(
-              "group bg-buu-button pointer-events-auto  group shadow-buu-button min-w-[30px] rounded-md flex items-center justify-center p-1.5",
+              "group bg-svg-button pointer-events-auto  group  min-w-[24px] rounded-[4px] border-buu  flex items-center justify-center",
               {
                 "hover:bg-white hover:shadow-none": !tokenized,
-              },
+              }
             )}
           >
             <motion.div
