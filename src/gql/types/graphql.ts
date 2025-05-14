@@ -332,6 +332,7 @@ export type Message = {
   content?: Maybe<MessageContent>;
   createdAt: Scalars["DateTimeISO"]["output"];
   credits?: Maybe<Scalars["Float"]["output"]>;
+  nftId?: Maybe<Scalars["String"]["output"]>;
   role: MessageRole;
   sessionId: Scalars["String"]["output"];
   status: ToolRequestStatus;
@@ -423,6 +424,7 @@ export type Model = {
 export type Mutation = {
   __typename?: "Mutation";
   addTeamMember: TeamResult;
+  cancelToolMessage: MessageResult;
   confirmToolMessage: MessageResult;
   createApiKey: ApiKeyResult;
   createShareableBoard: ShareableBoardResult;
@@ -450,6 +452,10 @@ export type Mutation = {
 
 export type MutationAddTeamMemberArgs = {
   member: Scalars["String"]["input"];
+};
+
+export type MutationCancelToolMessageArgs = {
+  messageId: Scalars["String"]["input"];
 };
 
 export type MutationConfirmToolMessageArgs = {
@@ -520,6 +526,7 @@ export type MutationRotateApiKeyArgs = {
 
 export type MutationSendMessageArgs = {
   content: Scalars["String"]["input"];
+  imageUrls?: InputMaybe<Array<Scalars["String"]["input"]>>;
   sessionId?: InputMaybe<Scalars["String"]["input"]>;
 };
 
@@ -1255,7 +1262,7 @@ export enum ToolRequestPriority {
 
 /** The status of the tool request */
 export enum ToolRequestStatus {
-  Canceled = "CANCELED",
+  Cancelled = "CANCELLED",
   Completed = "COMPLETED",
   Failed = "FAILED",
   InProgress = "IN_PROGRESS",
@@ -2427,6 +2434,7 @@ export type GetMessagesQuery = {
           sessionId: string;
           role: MessageRole;
           status: ToolRequestStatus;
+          nftId?: string | null;
           credits?: number | null;
           content?: {
             __typename?: "MessageContent";
@@ -8308,6 +8316,10 @@ export const GetMessagesDocument = {
                                   },
                                 ],
                               },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "nftId" },
                             },
                             {
                               kind: "Field",

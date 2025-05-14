@@ -1086,6 +1086,7 @@ export const GetMessages = gql`
             priority
             payload
           }
+          nftId
           credits
         }
         metadata {
