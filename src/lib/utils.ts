@@ -246,6 +246,7 @@ export function getNumber(value: string) {
 export function parseJson<T>(
   //eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any,
+  showLogs = false,
   messageKey = "ERROR-PARSE-JSON",
   errorMsg = "Failed to retrieve data",
 ): TryCatch<T> {
@@ -253,7 +254,9 @@ export function parseJson<T>(
     const parsedData = JSON.parse(data);
     return { data: parsedData, error: null };
   } catch (error) {
-    console.error(messageKey, error);
+    if (showLogs) {
+      console.error(messageKey, error);
+    }
     return { data: null, error: errorMsg };
   }
 }

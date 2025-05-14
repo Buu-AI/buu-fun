@@ -9,13 +9,18 @@ const pillVariant = cva(
       variant: {
         default: "bg-buu shadow-buu-pill border-buu",
         destructive: "destructive-pill",
+        accent_destructive: "accent-destructive-pill",
         orange: "orange-pill",
         white: "bg-white text-black",
         blue: "border-pill bg-pill-blue shadow-pill-blue",
         golden: "golden-pill",
+        darkYellow: "dark-yellow",
+        green: "green-pill",
+        gray: "gray-pill",
       },
       size: {
         default: "px-1.5 py-1",
+        md: "px-3 py-1 text-sm",
         sm: "px-3 py-0.5 text-xs",
       },
     },

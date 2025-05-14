@@ -3,6 +3,8 @@ import {
   GetSubthreadsQuery,
 } from "@/gql/types/graphql";
 import { TThreeDStyles } from "./settings";
+import { TChatMessage, TMessageQueryData } from "@/types/chat/chat-types";
+import { InfiniteData } from "@tanstack/react-query";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type TMediaData = {
@@ -17,7 +19,6 @@ export type TMediaRequest = {
   _id: string;
   // status of the image
   status: string;
-
   //Could be more specific based on actual data
   metadata: any;
   //type of image
@@ -72,26 +73,29 @@ export type ChatState = {
   };
   genNft: {
     isGenNftModalOpen: boolean;
-    genId?: string | null;
+    messageId?: string | null;
     modelUrl?: string | null;
     imageUrl?: string | null;
   };
+  sessionId: string;
+  messages: TChatMessage[];
+  chatMessages: InfiniteData<TMessageQueryData>;
 };
 
 export type TErrorTypeName = { __typename?: "HandledError" };
-
-export type TAllSubThreads = TAllSubThreadsResponse["items"];
 
 export type TAllSubThreadsResponse = Exclude<
   GetSubthreadsQuery["getSubthreads"],
   TErrorTypeName
 >;
+export type TAllSubThreads = TAllSubThreadsResponse["items"];
 
 export type TSubThreadsResponse = Exclude<
   GetSubthreadGenRequestsQuery["getSubthreadGenRequests"],
   TErrorTypeName
 >;
 export type TGenResponseStatus = "InProgress" | "Success" | "Error";
+
 export type TSubThreadsMedia = Omit<
   TSubThreadsResponse["items"][number],
   "status"
@@ -106,12 +110,12 @@ export type TGenerationalData = {
   tokenized: boolean;
   model?: {
     modelId: string;
-    modelUrl?: string;
+    modelUrl?: string | null;
     modelStatus: TGenResponseStatus;
   };
   image: {
     imageId: string;
     imageStatus: TGenResponseStatus;
-    imageUrl: string | null;
+    imageUrl?: string | null;
   };
 };

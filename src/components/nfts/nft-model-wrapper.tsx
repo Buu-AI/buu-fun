@@ -1,16 +1,15 @@
 "use client";
-import React from "react";
-import NFTModelViewer from "./nft-model-viewer";
-import { Nft, NftStatus } from "@/gql/types/graphql";
+import { ToolRequestStatus } from "@/gql/types/graphql";
+import { getNftQuery, TGetNftQueryData } from "@/lib/react-query/nfts";
 import { useQuery } from "@tanstack/react-query";
-import { getNftQuery } from "@/lib/react-query/nfts";
+import NFTModelViewer from "./nft-model-viewer";
 import NFTOverViewContainer from "./nft-over-view-container";
 
 export default function NFTModelWrapper({
   nft,
   accessToken,
 }: {
-  nft: Nft;
+  nft: TGetNftQueryData;
   accessToken?: string;
 }) {
   const { data: nftData } = useQuery({
@@ -24,8 +23,8 @@ export default function NFTModelWrapper({
     initialData: nft,
     refetchInterval: (state) => {
       if (
-        state.state.data?.status === NftStatus.Completed ||
-        state.state.data?.status === NftStatus.Failed
+        state.state.data?.status === ToolRequestStatus.Completed ||
+        state.state.data?.status === ToolRequestStatus.Failed
       ) {
         return 0;
       }
@@ -35,6 +34,7 @@ export default function NFTModelWrapper({
   return (
     <div className="flex lg:flex-row flex-col gap-x-5 overflow-hidden h-full relative px-1 lg:px-12 lg:mt-9 pb-12">
       <NFTModelViewer
+        key={nftData.metadata.animation_url}
         imageUrl={nftData.metadata.image}
         description={nftData.metadata.description}
         modelUrl={nftData.metadata.animation_url}

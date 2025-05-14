@@ -32,7 +32,7 @@ export default function BoardsCardMapper({
       if (!images) return [];
       const imageUrls = images
         .map((item) => item?.map((item) => item.url))
-        .filter((item) => typeof item !== "undefined")
+        .filter((item) => typeof item === "string")
         .flatMap((item) => item);
 
       return imageUrls;
