@@ -1,7 +1,7 @@
 import { PlanKeyMapper } from "@/constants/subscription/subscription-plans";
 import { TGenResponseStatus } from "../redux/features/chat-types";
-import { ToolRequestStatus } from "@/components/chat/types.temp";
 import { MessageRole } from "@/gql/types/graphql";
+import { TMessageStatus } from "@/types/chat/chat-types";
 
 export function isInProgress(status: TGenResponseStatus) {
   return status === "InProgress";
@@ -19,27 +19,27 @@ export function isFreePlan(plan?: string): boolean {
   return false;
 }
 
-export function isToolCallPending(status: ToolRequestStatus) {
+export function isToolCallPending(status: TMessageStatus) {
   return status === "PENDING";
 }
 
-export function isToolCallCompleted(status: ToolRequestStatus) {
+export function isToolCallCompleted(status: TMessageStatus) {
   return status === "COMPLETED";
 }
 
-export function isToolCallInProgress(status: ToolRequestStatus) {
+export function isToolCallInProgress(status: TMessageStatus) {
   return status === "IN_PROGRESS";
 }
 
-export function isToolCallPendingOrInProgress(status: ToolRequestStatus) {
+export function isToolCallPendingOrInProgress(status: TMessageStatus) {
   return status === "IN_PROGRESS" || status === "PENDING";
 }
-export function isToolCallGenerating(status: ToolRequestStatus) {
+export function isToolCallGenerating(status: TMessageStatus) {
   return (
     status === "IN_PROGRESS" || status === "IN_QUEUE" || status === "PENDING"
   );
 }
-export function isToolCallInProgressOrCompleted(status: ToolRequestStatus) {
+export function isToolCallInProgressOrCompleted(status: TMessageStatus) {
   return status === "IN_PROGRESS" || status === "COMPLETED";
 }
 

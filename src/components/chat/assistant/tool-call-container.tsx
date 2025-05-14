@@ -1,13 +1,14 @@
 import { isToolCallPending } from "@/lib/helpers/status-checker";
+import { TMessageStatus } from "@/types/chat/chat-types";
 import ChatStatus from "../chat-status";
-import { PromptPayload, ToolRequestStatus } from "../types.temp";
+import { PromptPayload } from "../types.temp";
 import AssistantToolCall from "./tool-call";
 import ToolCallHeaderMessage from "./tool-call-header-message";
 
 type TAssistantToolCallContainer = {
   prompt?: string | null;
   messageId: string;
-  status: ToolRequestStatus;
+  status: TMessageStatus;
   payload: PromptPayload;
 };
 

@@ -1,10 +1,11 @@
 import { MaybeString } from "@/types";
-import { PromptPayload, ToolRequestStatus } from "../types.temp";
+import { PromptPayload } from "../types.temp";
 import GeneratedModelCard from "./generated-model-card";
 import AssistantToolCallContainer from "./tool-call-container";
+import { TMessageStatus } from "@/types/chat/chat-types";
 type TAssistantMessage = {
   messageId: string;
-  status: ToolRequestStatus;
+  status: TMessageStatus;
   prompt: MaybeString;
   payload: PromptPayload;
   modelUrl: MaybeString;

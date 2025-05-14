@@ -1,15 +1,16 @@
+import { TMessageStatus } from "@/types/chat/chat-types";
 import Pill, { TPillVariant } from "../elements/pill";
-import { ToolRequestStatus } from "./types.temp";
+
 
 type TStatusPillDetails = {
   text: string;
   variant: TPillVariant["variant"];
 };
 type TChatStatus = {
-  status: ToolRequestStatus;
+  status: TMessageStatus;
 };
 export default function ChatStatus({ status }: TChatStatus) {
-  if (status === "CANCELED") return null;
+  if (status === "CANCELLED") return null;
   const details = getPillDetails(status);
   return (
     <Pill
@@ -21,7 +22,7 @@ export default function ChatStatus({ status }: TChatStatus) {
     </Pill>
   );
 }
-function getPillDetails(status: ToolRequestStatus): TStatusPillDetails {
+function getPillDetails(status: TMessageStatus): TStatusPillDetails {
   switch (status) {
     case "FAILED": {
       return {

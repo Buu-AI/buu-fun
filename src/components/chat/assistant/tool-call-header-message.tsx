@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
-import { ToolRequestStatus } from "../types.temp";
+import { TMessageStatus } from "@/types/chat/chat-types";
 
 type TToolCallHeaderMessage = {
-  status: ToolRequestStatus;
+  status: TMessageStatus;
   prompt?: string | null;
 };
 
@@ -31,7 +31,7 @@ type TGetToolMessage = {
   isCanceled?: boolean;
   isSuccess?: boolean;
 };
-function getToolMessage(status: ToolRequestStatus): TGetToolMessage {
+function getToolMessage(status: TMessageStatus): TGetToolMessage {
   switch (status) {
     case "IN_QUEUE": {
       return {
@@ -61,7 +61,7 @@ function getToolMessage(status: ToolRequestStatus): TGetToolMessage {
         isSuccess: true,
       };
     }
-    case "CANCELED": {
+    case "CANCELLED": {
       return {
         text: "User has canceled the request",
         isCanceled: true,
