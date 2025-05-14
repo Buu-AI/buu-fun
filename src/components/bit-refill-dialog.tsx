@@ -53,8 +53,9 @@ export default function BitRefillSheet() {
             <Button>More Info</Button>
           </SheetTrigger>
           <SheetContent
-          overlayClassName="bg-black/40"
-          className="bg-balance-card  p-0 w-full  sm:max-w-xl">
+            overlayClassName="bg-black/40"
+            className="bg-balance-card  p-0 w-full  sm:max-w-xl"
+          >
             <SheetHeader>
               <SheetTitle className="sr-only">Bitrefill widget</SheetTitle>
               <SheetDescription className="sr-only">

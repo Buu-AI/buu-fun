@@ -21,7 +21,7 @@ function MyBitrefillWidget({
     utm_source: "Buu AI",
     showPaymentInfo: true,
     theme: "dark",
-    paymentMethods: ["solana"].join(","), 
+    paymentMethods: ["solana"].join(","),
   };
   if (user?.email) {
     config.email = user?.email;
@@ -42,7 +42,7 @@ function MyBitrefillWidget({
           return;
         }
         const invoicePrice = parseFloat(
-          formatUnits(params.paymentAmount.toString(), 9)
+          formatUnits(params.paymentAmount.toString(), 9),
         );
 
         const buuPrice = TokensPrice?.buu ?? 0;

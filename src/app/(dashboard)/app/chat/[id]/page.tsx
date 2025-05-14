@@ -1,35 +1,29 @@
 import BottomBarContainer from "@/components/chat-input/bottom-bar-container";
+import ChatContainer from "@/components/chat/chat-container";
 import GenerateNFTModal from "@/components/generation/generate-nft-modal";
 import RetryConfirmationDialog from "@/components/generation/retry-confirmation-dialog";
-import ThreadsChatInitializer from "@/components/generation/threads-chat-initializer";
-import ThreadsWrapper from "@/components/generation/threads-wrapper";
 import { DndKitProvider } from "@/providers/dnd-kit-provider";
+import React from "react";
 
-export type TNewChatPage = {
+export type TChatPage = {
   params: Promise<{ id: string }>;
 };
 
-export default async function NewChatPage({ params }: TNewChatPage) {
+export default async function ChatPage({ params }: TChatPage) {
   const param = await params;
-  const threadId = param.id;
+  const sessionId = param.id;
+
   return (
     <DndKitProvider>
       <main className="flex flex-col relative h-full w-full   max-h-[calc(100vh-100px)]  overflow-hidden">
-        {/* Background blur effect that stays at bottom nearby chat */}
-
-        {/* Centered main content with Help cards */}
-        <ThreadsChatInitializer threadId={threadId} />
-        <ThreadsWrapper threadId={threadId} />
+        {/* <ThreadsChatInitializer threadId={threadId} /> */}
+        <ChatContainer sessionId={sessionId} />
         {/* Bottom input section */}
         <div className="lg:mr-[0.15vw]">
-          {/* <BottomBarContainer
-            action={{
-              threadId: threadId,
-            }}
-          /> */}
+          <BottomBarContainer action={{ sessionId }} />
         </div>
       </main>
-      <RetryConfirmationDialog />
+      {/* <RetryConfirmationDialog /> */}
       <GenerateNFTModal />
     </DndKitProvider>
   );
