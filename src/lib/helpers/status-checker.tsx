@@ -19,10 +19,16 @@ export function isFreePlan(plan?: string): boolean {
   return false;
 }
 
+export function isToolCallPendingOrCanceled(status: TMessageStatus) {
+  return isToolCallPending(status) || isToolCallCanceled(status);
+}
 export function isToolCallPending(status: TMessageStatus) {
   return status === "PENDING";
 }
 
+export function isToolCallCanceled(status: TMessageStatus) {
+  return status === "CANCELLED";
+}
 export function isToolCallCompleted(status: TMessageStatus) {
   return status === "COMPLETED";
 }
@@ -35,10 +41,9 @@ export function isToolCallPendingOrInProgress(status: TMessageStatus) {
   return status === "IN_PROGRESS" || status === "PENDING";
 }
 export function isToolCallGenerating(status: TMessageStatus) {
-  return (
-    status === "IN_PROGRESS" || status === "IN_QUEUE" || status === "PENDING"
-  );
+  return status === "IN_PROGRESS" || status === "IN_QUEUE";
 }
+
 export function isToolCallInProgressOrCompleted(status: TMessageStatus) {
   return status === "IN_PROGRESS" || status === "COMPLETED";
 }

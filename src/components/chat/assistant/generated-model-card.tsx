@@ -1,7 +1,8 @@
+import ToolBarWrapper from "@/components/chat/toolbar/tool-bar-wrapper";
 import { BorderBeam } from "@/components/ui/border-beam";
 import {
-  isToolCallPending,
-  isToolCallPendingOrInProgress,
+  isToolCallGenerating,
+  isToolCallPendingOrCanceled
 } from "@/lib/helpers/status-checker";
 import { cn } from "@/lib/utils";
 import { MaybeString } from "@/types";
@@ -9,7 +10,6 @@ import { TMessageStatus } from "@/types/chat/chat-types";
 import GenerationLoader from "./generation-card/generation-loader";
 import ImageViewLoader from "./generation-card/image-view-loader";
 import ModelViewWrapper from "./generation-card/model-view-wrapper";
-import ToolBarWrapper from "@/components/chat/toolbar/tool-bar-wrapper";
 type TGeneratedModelCard = {
   imageUrl: MaybeString;
   modelUrl: MaybeString;
@@ -27,9 +27,9 @@ export default function GeneratedModelCard({
   nftId,
   tokenized,
 }: TGeneratedModelCard) {
-  const isPending = isToolCallPending(status);
-  const isGenerating = isToolCallPendingOrInProgress(status);
-  if (isPending) {
+  const isPendingOrCanceled = isToolCallPendingOrCanceled(status);
+  const isGenerating = isToolCallGenerating(status);
+  if (isPendingOrCanceled) {
     return null;
   }
   return (

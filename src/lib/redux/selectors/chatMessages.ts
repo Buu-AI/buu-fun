@@ -16,7 +16,9 @@ export const getMessagesFromStore = createSelector(
               const { data: payload } = parseJson<PromptPayload>(
                 item.toolRequest?.payload ?? "",
               );
+
               return {
+                nftId: item.nftId,
                 messageId: item._id,
                 sessionId: item.sessionId,
                 createdAt: item.createdAt,

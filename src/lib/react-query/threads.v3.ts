@@ -5,6 +5,7 @@ import {
   GetMessages,
   GetSessions,
   SendChatMessage,
+  CancelToolMessage,
 } from "@/gql/documents/creative-engine";
 import {
   ConfirmToolMessageMutationVariables,
@@ -18,6 +19,8 @@ import {
   ConfirmToolMessageMutation as TConfirmToolMessageMutation,
   GetMessagesQuery as TGetMessagesQuery,
   GetSessionsQuery as TGetSessionsQuery,
+  CancelToolMessageMutation,
+  CancelToolMessageMutationVariables,
 } from "@/gql/types/graphql";
 import { QueryFunction } from "@tanstack/react-query";
 import { TThreeDStyles } from "../redux/features/settings";
@@ -67,7 +70,7 @@ export async function getMessages({
       sessionId,
       pagination,
     },
-    { Authorization: getAuthorization(accessToken) },
+    { Authorization: getAuthorization(accessToken) }
   );
   if (!data) {
     throw new Error("Internal server error");
@@ -96,7 +99,7 @@ export async function getSessions({ accessToken }: { accessToken: string }) {
         orderDirection: OrderDirection.Desc,
       },
     },
-    { Authorization: getAuthorization(accessToken) },
+    { Authorization: getAuthorization(accessToken) }
   );
   if (!data) {
     throw new Error("Internal server error");
@@ -138,7 +141,7 @@ export async function sendChatMessage({
       },
       {
         Authorization: getAuthorization(accessToken),
-      },
+      }
     );
     if (!data) {
       TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
@@ -147,7 +150,7 @@ export async function sendChatMessage({
     if ("code" in data.sendMessage) {
       TypedAppError.throw(
         data.sendMessage.message,
-        TypedAppError.mapErrorCode(data.sendMessage.code),
+        TypedAppError.mapErrorCode(data.sendMessage.code)
       );
     }
 
@@ -159,20 +162,17 @@ export async function sendChatMessage({
     // Otherwise, convert to our custom error
     throw TypedAppError.fromExternalError(
       "An unexpected error occurred",
-      error,
+      error
     );
   }
 }
 
-type TApproveToolParams = {
+type TToolParams = {
   messageId: string;
 } & AccessToken;
-export async function approveTool({
-  messageId,
-  accessToken,
-}: TApproveToolParams) {
+
+export async function approveTool({ messageId, accessToken }: TToolParams) {
   try {
-    console.log("APPROVED CALLED");
     const data = await serverRequest<
       TConfirmToolMessageMutation,
       ConfirmToolMessageMutationVariables
@@ -183,9 +183,8 @@ export async function approveTool({
       },
       {
         Authorization: getAuthorization(accessToken),
-      },
+      }
     );
-    console.log("DATA:", data);
     if (!data) {
       TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
     }
@@ -193,7 +192,7 @@ export async function approveTool({
     if ("code" in data.confirmToolMessage) {
       TypedAppError.throw(
         data.confirmToolMessage.message,
-        TypedAppError.mapErrorCode(data.confirmToolMessage.code),
+        TypedAppError.mapErrorCode(data.confirmToolMessage.code)
       );
     }
 
@@ -205,7 +204,45 @@ export async function approveTool({
     // Otherwise, convert to our custom error
     throw TypedAppError.fromExternalError(
       "An unexpected error occurred",
-      error,
+      error
+    );
+  }
+}
+
+export async function cancelToolCall({ messageId, accessToken }: TToolParams) {
+  try {
+    const data = await serverRequest<
+      CancelToolMessageMutation,
+      CancelToolMessageMutationVariables
+    >(
+      CancelToolMessage,
+      {
+        messageId,
+      },
+      {
+        Authorization: getAuthorization(accessToken),
+      }
+    );
+    if (!data) {
+      TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
+    }
+
+    if ("code" in data.cancelToolMessage) {
+      TypedAppError.throw(
+        data.cancelToolMessage.message,
+        TypedAppError.mapErrorCode(data.cancelToolMessage.code)
+      );
+    }
+
+    return data.cancelToolMessage;
+  } catch (error) {
+    if (error instanceof TypedAppError) {
+      throw error;
+    }
+    // Otherwise, convert to our custom error
+    throw TypedAppError.fromExternalError(
+      "An unexpected error occurred",
+      error
     );
   }
 }
