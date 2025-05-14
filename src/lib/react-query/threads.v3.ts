@@ -42,7 +42,9 @@ export type TGetMessagesQueryVariables = Omit<
 > & {
   pagination: TPagination;
 };
-export type TqueryFun = Awaited<ReturnType<Awaited<ReturnType<QueryFunction<typeof getMessages>>>>>
+export type TqueryFun = Awaited<
+  ReturnType<Awaited<ReturnType<QueryFunction<typeof getMessages>>>>
+>;
 export async function getMessages({
   sessionId,
   accessToken,
@@ -66,7 +68,7 @@ export async function getMessages({
       sessionId,
       pagination,
     },
-    { Authorization: getAuthorization(accessToken) }
+    { Authorization: getAuthorization(accessToken) },
   );
   if (!data) {
     throw new Error("Internal server error");
@@ -79,7 +81,7 @@ export async function getMessages({
   return data.getMessages;
 }
 
-export type TGetMessagesReturn = Awaited<ReturnType<typeof getMessages>>
+export type TGetMessagesReturn = Awaited<ReturnType<typeof getMessages>>;
 
 export async function getSessions({ accessToken }: { accessToken: string }) {
   const data = await serverRequest<
@@ -95,7 +97,7 @@ export async function getSessions({ accessToken }: { accessToken: string }) {
         orderDirection: OrderDirection.Desc,
       },
     },
-    { Authorization: getAuthorization(accessToken) }
+    { Authorization: getAuthorization(accessToken) },
   );
   if (!data) {
     throw new Error("Internal server error");
@@ -137,7 +139,7 @@ export async function sendChatMessage({
       },
       {
         Authorization: getAuthorization(accessToken),
-      }
+      },
     );
     if (!data) {
       TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
@@ -146,7 +148,7 @@ export async function sendChatMessage({
     if ("code" in data.sendMessage) {
       TypedAppError.throw(
         data.sendMessage.message,
-        TypedAppError.mapErrorCode(data.sendMessage.code)
+        TypedAppError.mapErrorCode(data.sendMessage.code),
       );
     }
 
@@ -158,7 +160,7 @@ export async function sendChatMessage({
     // Otherwise, convert to our custom error
     throw TypedAppError.fromExternalError(
       "An unexpected error occurred",
-      error
+      error,
     );
   }
 }
@@ -182,7 +184,7 @@ export async function approveTool({
       },
       {
         Authorization: getAuthorization(accessToken),
-      }
+      },
     );
     console.log("DATA:", data);
     if (!data) {
@@ -192,7 +194,7 @@ export async function approveTool({
     if ("code" in data.confirmToolMessage) {
       TypedAppError.throw(
         data.confirmToolMessage.message,
-        TypedAppError.mapErrorCode(data.confirmToolMessage.code)
+        TypedAppError.mapErrorCode(data.confirmToolMessage.code),
       );
     }
 
@@ -204,7 +206,7 @@ export async function approveTool({
     // Otherwise, convert to our custom error
     throw TypedAppError.fromExternalError(
       "An unexpected error occurred",
-      error
+      error,
     );
   }
 }

@@ -98,7 +98,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
                 items: [...page.items, ...data.items],
               })),
             };
-          }
+          },
         );
 
         // const chatWindow = document.getElementById("chat-window");
@@ -150,7 +150,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
 
   const handleImageUploadUrl = async (
     ImageData: ImageData,
-    accessToken: string
+    accessToken: string,
   ) => {
     try {
       toast.loading("Preparing image for uploading....");
@@ -259,7 +259,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         "relative flex-col gap-1 flex items-start w-full p-4  mb-2  rounded-[20px]  shadow-buu-inner bg-buu",
         {
           // "p-0": !inputFile?.url.length
-        }
+        },
       )}
     >
       <button
@@ -268,7 +268,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
           "bg-buu-button     shadow-buu-button rounded-xl left-0 absolute w-full h-full top-0",
           {
             hidden: !inputFile?.url.length,
-          }
+          },
         )}
       >
         <div className="flex   gap-2 items-center justify-center">

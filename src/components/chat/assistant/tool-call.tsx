@@ -14,7 +14,7 @@ export default function AssistantToolCall({
   payload,
 }: TAssistantToolCall) {
   const shouldDisplayDetails = payload && typeof payload === "object";
-  console.log(payload)
+  console.log(payload);
   return (
     <div>
       {shouldDisplayDetails ? (

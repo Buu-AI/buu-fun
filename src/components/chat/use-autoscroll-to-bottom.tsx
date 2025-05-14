@@ -4,7 +4,7 @@ import { RefObject, useEffect, useRef } from "react";
 export function useAutoScrollToBottom(
   containerRef: RefObject<HTMLDivElement | null>,
   messages: TChatMessage[],
-  threshold = 300
+  threshold = 300,
 ) {
   const prevMessagesLength = useRef(0);
   const prevHeight = useRef(0);

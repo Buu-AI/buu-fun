@@ -14,7 +14,7 @@ export const getMessagesFromStore = createSelector(
           .flatMap((page) => {
             return page.items.map((item) => {
               const { data: payload } = parseJson<PromptPayload>(
-                item.toolRequest?.payload ?? ""
+                item.toolRequest?.payload ?? "",
               );
               return {
                 messageId: item._id,
@@ -30,12 +30,12 @@ export const getMessagesFromStore = createSelector(
               };
             });
           })
-          .map((item) => [item.messageId, item]) // Use messageId as the key
+          .map((item) => [item.messageId, item]), // Use messageId as the key
       ).values(),
     ].sort(
       (a, b) =>
         new Date(a.createdAt as string).getTime() -
-        new Date(b.createdAt as string).getTime()
+        new Date(b.createdAt as string).getTime(),
     );
-  }
+  },
 );

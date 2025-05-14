@@ -10,7 +10,7 @@ export default function UserChatMessage({
     <div className={cn("flex flex-col items-end w-full first-of-type:pt-[0%]")}>
       <p
         className={cn(
-          " max-w-max p-2  px-3 max-md:text-sm bg-user-chat-message text-white font-medium  md:w-1/2 rounded-lg"
+          " max-w-max p-2  px-3 max-md:text-sm bg-user-chat-message text-white font-medium  md:w-1/2 rounded-lg",
         )}
       >
         {text}

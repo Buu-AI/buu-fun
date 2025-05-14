@@ -78,7 +78,7 @@ export default function AssistantMessageShowDetailToolCall({
     setIsOpen(!isOpen);
   };
   const payloadKeys = typeof payload === "object" ? Object.keys(payload) : [];
-  
+
   return (
     <div className="">
       {/* button */}

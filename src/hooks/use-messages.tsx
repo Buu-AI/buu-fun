@@ -1,7 +1,5 @@
 import { SUB_THREAD_QUERY_LIMIT } from "@/constants/infinity.config";
-import {
-  isToolCallGenerating
-} from "@/lib/helpers/status-checker";
+import { isToolCallGenerating } from "@/lib/helpers/status-checker";
 import { getMessages } from "@/lib/react-query/threads.v3";
 import { useAuthentication } from "@/providers/account.context";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -60,7 +58,7 @@ export function useChatMessage({
 
       // Check if we have any active jobs
       const hasActiveJob = state.data?.pages.some((page) =>
-        page.items.some((item) => isToolCallGenerating(item.status))
+        page.items.some((item) => isToolCallGenerating(item.status)),
       );
 
       if (hasActiveJob) {

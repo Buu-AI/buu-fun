@@ -35,7 +35,9 @@ export function isToolCallPendingOrInProgress(status: ToolRequestStatus) {
   return status === "IN_PROGRESS" || status === "PENDING";
 }
 export function isToolCallGenerating(status: ToolRequestStatus) {
-  return status === "IN_PROGRESS" || status === "IN_QUEUE" || status === "PENDING";
+  return (
+    status === "IN_PROGRESS" || status === "IN_QUEUE" || status === "PENDING"
+  );
 }
 export function isToolCallInProgressOrCompleted(status: ToolRequestStatus) {
   return status === "IN_PROGRESS" || status === "COMPLETED";
