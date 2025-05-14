@@ -51,4 +51,5 @@ export type TempMessage = {
   role: MessageRole;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type PromptPayload = any;

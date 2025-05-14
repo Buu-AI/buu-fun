@@ -119,7 +119,7 @@ const CurvedEmblaCarousel = ({
                       showToolTip={isCurrent && !item.isGenerating}
                       isGenerating={item.isGenerating}
                       images={{
-                        imageUrl: item.image.imageUrl,
+                        imageUrl: item.image.imageUrl ?? null,
                       }}
                       modelUrl={item?.model?.modelUrl}
                       modelId={item?.model?.modelId}

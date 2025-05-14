@@ -67,7 +67,7 @@ export default function GenerateNFTModal() {
           messageId: undefined,
           imageUrl: undefined,
           modelUrl: undefined,
-        })
+        }),
       );
     },
     onError(error) {
@@ -111,7 +111,7 @@ export default function GenerateNFTModal() {
               messageId: undefined,
               imageUrl: undefined,
               modelUrl: undefined,
-            })
+            }),
           );
           return;
         }

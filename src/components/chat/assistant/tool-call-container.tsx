@@ -1,7 +1,4 @@
-import {
-  isToolCallCompleted,
-  isToolCallPending,
-} from "@/lib/helpers/status-checker";
+import { isToolCallPending } from "@/lib/helpers/status-checker";
 import ChatStatus from "../chat-status";
 import { PromptPayload, ToolRequestStatus } from "../types.temp";
 import AssistantToolCall from "./tool-call";

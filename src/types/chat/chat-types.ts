@@ -6,7 +6,7 @@ import {
 import { TErrorTypeName } from "@/lib/redux/features/chat-types";
 import { MaybeString } from "..";
 
-// eslint-disable-next-line @typescript/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type PromptPayload = any;
 export type TMessageRole = `${MessageRole}`;
 export type TMessageStatus = `${ToolRequestStatus}`;

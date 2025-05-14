@@ -137,30 +137,3 @@ export const isSubThreadGenerating = createSelector(
     };
   },
 );
-
-// {
-//   "_id": "a097af62-c9a4-4880-8296-77434045295a",
-//   "subthreadId": "11811fe7-c621-4bf6-a480-33b152b42c0b",
-//   "address": "F6BHzc3ufdjynKwJ6qGkLGx8DtUUya4zYWLzaJ91k8FM",
-//   "status": "Success",
-//   "metadata": {
-//       "imageUrl": "https://cdn.buu.fun/production/users/F6BHzc3ufdjynKwJ6qGkLGx8DtUUya4zYWLzaJ91k8FM/uploads/aab0f9c0-51c7-43b9-a5b3-ca621fc6e1b7.png",
-//       "webhookUrl": "",
-//       "imageRequestId": null
-//   },
-//   "type": "fal-ai/trellis",
-//   "images": [],
-//   "model_mesh": {
-//       "alt": "ea383a94-8b29-4041-a8ea-ccb4b19f5a49.glb",
-//       "keyS3": "production/users/F6BHzc3ufdjynKwJ6qGkLGx8DtUUya4zYWLzaJ91k8FM/genRequests/a097af62-c9a4-4880-8296-77434045295a/model_mesh/ea383a94-8b29-4041-a8ea-ccb4b19f5a49.glb",
-//       "size": 3327668,
-//       "type": "application/octet-stream",
-//       "url": "https://cdn.buu.fun/production/users/F6BHzc3ufdjynKwJ6qGkLGx8DtUUya4zYWLzaJ91k8FM/genRequests/a097af62-c9a4-4880-8296-77434045295a/model_mesh/ea383a94-8b29-4041-a8ea-ccb4b19f5a49.glb"
-//   },
-//   "timings": {
-//       "inference": null
-//   },
-//   "credits": 0.04,
-//   "createdAt": "2025-03-07T07:25:54.432Z",
-//   "updatedAt": "2025-03-07T07:25:54.432Z"
-// }

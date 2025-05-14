@@ -1,8 +1,8 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion, MotionStyle, Transition } from "motion/react";
-import { useState, useEffect } from "react";
+import { motion } from "motion/react";
+import { useState } from "react";
 
 interface SmoothBorderGlowProps {
   /**

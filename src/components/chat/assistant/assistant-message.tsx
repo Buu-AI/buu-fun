@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import ReactMarkdown, { Components } from "react-markdown";
+import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 type TAssistantMessage = {
@@ -12,7 +12,7 @@ export default function AssistantMessage({ prompt }: TAssistantMessage) {
       <ReactMarkdown
         unwrapDisallowed={true}
         disallowedElements={["pre", "code"]}
-        className={cn("prose prose-base prose-blue text-white")}
+        className={cn("prose prose-base all-white  text-white")}
         remarkPlugins={[remarkGfm]}
       >
         {prompt ?? ""}

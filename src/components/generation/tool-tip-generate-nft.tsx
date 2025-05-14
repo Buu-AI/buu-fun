@@ -10,7 +10,7 @@ import { buttonVariants } from "./tool-bar-tool-tips";
 
 type TToolTipGenerateNFT = {
   subThreadId?: string;
-  toolTipData: TChatToolTips
+  toolTipData: TChatToolTips;
   index: number;
   length: number;
   open?: boolean;
@@ -52,7 +52,7 @@ export default function ToolTipGenerateNft({
                   messageId,
                   imageUrl,
                   modelUrl,
-                })
+                }),
               );
             }}
             initial="initial"
@@ -64,7 +64,7 @@ export default function ToolTipGenerateNft({
               "group bg-svg-button pointer-events-auto  group  min-w-[24px] rounded-[4px] border-buu  flex items-center justify-center",
               {
                 "hover:bg-white hover:shadow-none": !tokenized,
-              }
+              },
             )}
           >
             <motion.div

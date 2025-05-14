@@ -13,9 +13,9 @@ import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import AssistantMessage from "./assistant/assistant-message";
 import AssistantToolMessage from "./assistant/tool-message";
-import UserChatMessage from "./user/user-message";
 import { useAutoScrollToBottom } from "./use-autoscroll-to-bottom";
 import { useChatScroll } from "./use-chat-scroll";
+import UserChatMessage from "./user/user-message";
 
 export default function ChatContainer({ sessionId }: { sessionId: string }) {
   const {
@@ -29,8 +29,6 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
   });
   const dispatch = useAppDispatch();
   const chatContainerRef = useRef<HTMLDivElement>(null);
-  const prevMessagesLength = useRef(0);
-  const isInitialLoad = useRef(true);
   const oldScrollHeight = useRef(0);
 
   // Observe the top of the chat for infinite scrolling up

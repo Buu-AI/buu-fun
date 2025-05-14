@@ -53,7 +53,7 @@ export function useChatMessage({
       return nextOffset;
     },
     initialPageParam: 0,
-    refetchInterval({ state, observers }) {
+    refetchInterval({ state }) {
       const currentTime = Date.now();
 
       // Check if we have any active jobs

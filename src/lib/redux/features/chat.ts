@@ -1,6 +1,8 @@
 import { TSubthread as TResponseThread } from "@/lib/react-query/threads-types";
+import { TChatMessage, TMessageQueryData } from "@/types/chat/chat-types";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { InfiniteData } from "@tanstack/react-query";
+import { prepareMessagePayload } from "../prepare/message";
 import {
   ChatState,
   ImageData,
@@ -11,12 +13,6 @@ import {
   TSubThreadsResponse,
   TSubthreadV1,
 } from "./chat-types";
-import {
-  TChatMessage,
-  TMessageItems,
-  TMessageQueryData,
-} from "@/types/chat/chat-types";
-import { prepareMessagePayload } from "../prepare/message";
 
 const initialState: ChatState = {
   inputQuery: "",
@@ -28,7 +24,7 @@ const initialState: ChatState = {
   genRequest: {},
   genNft: {
     isGenNftModalOpen: false,
-    genId: "",
+    messageId: "",
     modelUrl: "",
     imageUrl: "",
   },
@@ -58,13 +54,13 @@ const ChatSlice = createSlice({
       state,
       action: PayloadAction<{
         isGenNftOpen: boolean;
-        genRequestId?: string;
+        messageId?: string;
         modelUrl?: string | null;
         imageUrl?: string | null;
       }>,
     ) {
       state.genNft.isGenNftModalOpen = action?.payload?.isGenNftOpen;
-      state.genNft.genId = action.payload.genRequestId;
+      state.genNft.messageId = action.payload.messageId;
       state.genNft.modelUrl = action.payload.modelUrl;
       state.genNft.imageUrl = action.payload.imageUrl;
     },

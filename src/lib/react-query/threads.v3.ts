@@ -1,3 +1,4 @@
+import { TypedAppError } from "@/class/error";
 import { serverRequest } from "@/gql/client";
 import {
   ConfirmToolMessage,
@@ -6,23 +7,22 @@ import {
   SendChatMessage,
 } from "@/gql/documents/creative-engine";
 import {
-  GetMessagesQuery as TGetMessagesQuery,
+  ConfirmToolMessageMutationVariables,
   GetMessagesQueryVariables,
-  GetSessionsQuery as TGetSessionsQuery,
   GetSessionsQueryVariables,
-  OrderDirection,
   MessageFilter,
+  OrderDirection,
   Pagination,
   SendMessageMutation,
   SendMessageMutationVariables,
   ConfirmToolMessageMutation as TConfirmToolMessageMutation,
-  ConfirmToolMessageMutationVariables,
+  GetMessagesQuery as TGetMessagesQuery,
+  GetSessionsQuery as TGetSessionsQuery,
 } from "@/gql/types/graphql";
-import { getAuthorization } from "../utils";
-import { TThreeDStyles } from "../redux/features/settings";
-import { TypedAppError } from "@/class/error";
-import { AccessToken } from "./user";
 import { QueryFunction } from "@tanstack/react-query";
+import { TThreeDStyles } from "../redux/features/settings";
+import { getAuthorization } from "../utils";
+import { AccessToken } from "./user";
 
 export type TGetMessages = {
   sessionId: string;
@@ -48,7 +48,6 @@ export type TqueryFun = Awaited<
 export async function getMessages({
   sessionId,
   accessToken,
-  filters,
   pagination = {
     limit: 100,
     offset: 0,

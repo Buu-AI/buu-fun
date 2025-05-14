@@ -1,9 +1,7 @@
 import BottomBarContainer from "@/components/chat-input/bottom-bar-container";
 import ChatContainer from "@/components/chat/chat-container";
 import GenerateNFTModal from "@/components/generation/generate-nft-modal";
-import RetryConfirmationDialog from "@/components/generation/retry-confirmation-dialog";
 import { DndKitProvider } from "@/providers/dnd-kit-provider";
-import React from "react";
 
 export type TChatPage = {
   params: Promise<{ id: string }>;

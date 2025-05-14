@@ -3,8 +3,9 @@ import ChevronArrow from "@/assets/icons/chevron-arrow";
 import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { capitalizeFirstLetter, cn } from "@/lib/utils";
+import { PromptPayload } from "@/types/chat/chat-types";
 type TAssistantMessageShowDetailToolCall = {
-  payload: any;
+  payload: PromptPayload;
 };
 export default function AssistantMessageShowDetailToolCall({
   payload,

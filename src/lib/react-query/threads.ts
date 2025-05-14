@@ -6,22 +6,19 @@ import {
   GetThreadsQuery,
 } from "@/gql/documents/creative-engine";
 import {
-  SubthreadStyle,
   GenerateImageMutation as TGenerateImageMutation,
   GetThreadsQuery as TGetThreadsQuery,
 } from "@/gql/types/graphql";
-import { TThreeDStyles } from "../redux/features/settings";
 import { getAuthorization } from "../utils";
 import { TGetSubThreadResponse, TGetSubThreadsResponse } from "./threads-types";
-import { TypedAppError } from "@/class/error";
 
-type TGenerateSubThreads = {
-  prompt: string;
-  style?: TThreeDStyles;
-  threadId?: string;
-  accessToken: string;
-  imageUrl?: string | null;
-};
+// type TGenerateSubThreads = {
+//   prompt: string;
+//   style?: TThreeDStyles;
+//   threadId?: string;
+//   accessToken: string;
+//   imageUrl?: string | null;
+// };
 
 // export async function generateSubThreads({
 //   prompt,

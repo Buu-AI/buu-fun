@@ -2,22 +2,19 @@
 import { ArrowUp, ImageIcon } from "@/assets/icons";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { getPresignedUrl } from "@/lib/react-query/image-upload";
-import { queryClient } from "@/lib/react-query/query-client";
 // import { generateSubThreads } from "@/lib/react-query/threads";
+import { TypedAppError } from "@/class/error";
+import {
+  sendChatMessage,
+  TGetMessagesReturn,
+} from "@/lib/react-query/threads.v3";
 import {
   clearInput,
-  pushNewSubThreads,
   setInputFile,
   setNewSession,
-  setNewThreadId,
 } from "@/lib/redux/features/chat";
-import { isSubThreadGenerating } from "@/lib/redux/selectors/chat";
-import {
-  blobUrlToFile,
-  cn,
-  getAllowedContentTypeMaps,
-  isOverAllRequestLimitReached,
-} from "@/lib/utils";
+import { setSubscriptionModel } from "@/lib/redux/features/subscription";
+import { blobUrlToFile, cn, getAllowedContentTypeMaps } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
 import {
   InfiniteData,
@@ -31,12 +28,6 @@ import toast from "react-hot-toast";
 import { TBottomBarContainer } from "./bottom-bar-container";
 import ChatTextArea from "./chat-text-area";
 import DragImageCard, { ImageData } from "./drag-image-card";
-import { TypedAppError } from "@/class/error";
-import { setSubscriptionModel } from "@/lib/redux/features/subscription";
-import {
-  sendChatMessage,
-  TGetMessagesReturn,
-} from "@/lib/react-query/threads.v3";
 
 export default function ChatForm({ action }: TBottomBarContainer) {
   const { identityToken, login } = useAuthentication();

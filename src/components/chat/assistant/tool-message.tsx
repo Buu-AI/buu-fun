@@ -1,8 +1,7 @@
-import { isToolCallInProgressOrCompleted } from "@/lib/helpers/status-checker";
-import { PromptPayload, ToolRequestStatus } from "../types.temp";
-import AssistantToolCallContainer from "./tool-call-container";
-import GeneratedModelCard from "./generated-model-card";
 import { MaybeString } from "@/types";
+import { PromptPayload, ToolRequestStatus } from "../types.temp";
+import GeneratedModelCard from "./generated-model-card";
+import AssistantToolCallContainer from "./tool-call-container";
 type TAssistantMessage = {
   messageId: string;
   status: ToolRequestStatus;
@@ -19,8 +18,6 @@ export default function AssistantToolMessage({
   modelUrl,
   messageId,
 }: TAssistantMessage) {
-  const isInProgressOrCompleted = isToolCallInProgressOrCompleted(status);
-
   return (
     <div className="">
       <AssistantToolCallContainer
@@ -30,6 +27,7 @@ export default function AssistantToolMessage({
         status={status}
       />
       <GeneratedModelCard
+        messageId={messageId}
         imageUrl={imageUrl}
         modelUrl={modelUrl}
         status={status}

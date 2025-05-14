@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import { ToolRequestStatus } from "../types.temp";
-import { GeneralClassName } from "@/types";
 
 type TToolCallHeaderMessage = {
   status: ToolRequestStatus;
