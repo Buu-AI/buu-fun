@@ -1,16 +1,13 @@
 import { serverRequest } from "@/gql/client";
 import {
   GenerateImageMutation,
-  GenerateSubthreadMutation,
   GetSubthreadQuery,
   GetSubthreadsQuery,
   GetThreadsQuery,
 } from "@/gql/documents/creative-engine";
 import {
-  GenerateSubthreadMutationVariables,
   SubthreadStyle,
   GenerateImageMutation as TGenerateImageMutation,
-  GenerateSubthreadMutation as TGenerateSubthreadMutation,
   GetThreadsQuery as TGetThreadsQuery,
 } from "@/gql/types/graphql";
 import { TThreeDStyles } from "../redux/features/settings";
@@ -26,52 +23,52 @@ type TGenerateSubThreads = {
   imageUrl?: string | null;
 };
 
-export async function generateSubThreads({
-  prompt,
-  style,
-  threadId,
-  accessToken,
-  imageUrl,
-}: TGenerateSubThreads) {
-  try {
-    const data = await serverRequest<
-      TGenerateSubthreadMutation,
-      GenerateSubthreadMutationVariables
-    >(
-      GenerateSubthreadMutation,
-      {
-        prompt: prompt,
-        style: (style as SubthreadStyle) ?? null,
-        imageUrl: imageUrl ?? null,
-        threadId,
-      },
-      {
-        Authorization: getAuthorization(accessToken),
-      },
-    );
-    if (!data) {
-      TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
-    }
+// export async function generateSubThreads({
+//   prompt,
+//   style,
+//   threadId,
+//   accessToken,
+//   imageUrl,
+// }: TGenerateSubThreads) {
+//   try {
+//     const data = await serverRequest<
+//       TGenerateSubthreadMutation,
+//       GenerateSubthreadMutationVariables
+//     >(
+//       GenerateSubthreadMutation,
+//       {
+//         prompt: prompt,
+//         style: (style as SubthreadStyle) ?? null,
+//         imageUrl: imageUrl ?? null,
+//         threadId,
+//       },
+//       {
+//         Authorization: getAuthorization(accessToken),
+//       },
+//     );
+//     if (!data) {
+//       TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
+//     }
 
-    if ("code" in data.generateSubthread) {
-      TypedAppError.throw(
-        data.generateSubthread.message,
-        TypedAppError.mapErrorCode(data.generateSubthread.code),
-      );
-    }
+//     if ("code" in data.generateSubthread) {
+//       TypedAppError.throw(
+//         data.generateSubthread.message,
+//         TypedAppError.mapErrorCode(data.generateSubthread.code),
+//       );
+//     }
 
-    return data.generateSubthread;
-  } catch (error) {
-    if (error instanceof TypedAppError) {
-      throw error;
-    }
-    // Otherwise, convert to our custom error
-    throw TypedAppError.fromExternalError(
-      "An unexpected error occurred",
-      error,
-    );
-  }
-}
+//     return data.generateSubthread;
+//   } catch (error) {
+//     if (error instanceof TypedAppError) {
+//       throw error;
+//     }
+//     // Otherwise, convert to our custom error
+//     throw TypedAppError.fromExternalError(
+//       "An unexpected error occurred",
+//       error,
+//     );
+//   }
+// }
 
 export async function getSubThreads(threadId: string, accessToken: string) {
   const data = await serverRequest<TGetSubThreadsResponse>(
