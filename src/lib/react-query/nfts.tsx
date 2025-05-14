@@ -10,10 +10,11 @@ import {
   GetNftsQueryVariables,
   GenerateNftMutation as TGenerateNftMutation,
   GenerateNftMutationVariables,
-  NftQuery as TGetNftQuery,
-  NftQueryVariables as GetNftQueryVariables,
+  GetNftQuery as TGetNftQuery,
+  GetNftQueryVariables,
 } from "@/gql/types/graphql";
 import { getAuthorization } from "../utils";
+import { TErrorTypeName } from "../redux/features/chat-types";
 
 export async function getNftsQuery({
   address,
@@ -31,7 +32,7 @@ export async function getNftsQuery({
     },
     {
       Authorization: getAuthorization(accessToken),
-    },
+    }
   );
   if (!data) {
     throw new Error("Internal server error");
@@ -42,7 +43,7 @@ export async function getNftsQuery({
   }
   return data.getNfts;
 }
-
+export type TGetNftQueryData = Exclude<TGetNftQuery["getNft"], TErrorTypeName>;
 export async function getNftQuery({
   id,
   accessToken,
@@ -57,7 +58,7 @@ export async function getNftQuery({
     },
     {
       Authorization: getAuthorization(accessToken),
-    },
+    }
   );
   if (!data) {
     throw new Error("Internal server error");
@@ -70,14 +71,14 @@ export async function getNftQuery({
 }
 
 export async function generateNFT({
-  genRequestId,
+  messageId,
   accessToken,
   description,
   name,
 }: {
   name: string;
   description: string;
-  genRequestId: string;
+  messageId: string;
   accessToken: string;
 }) {
   const data = await serverRequest<
@@ -88,11 +89,11 @@ export async function generateNFT({
     {
       name,
       description,
-      genRequestId,
+      messageId,
     },
     {
       Authorization: getAuthorization(accessToken),
-    },
+    }
   );
 
   if (!data) {

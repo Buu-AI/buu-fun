@@ -73,7 +73,7 @@ export type ChatState = {
   };
   genNft: {
     isGenNftModalOpen: boolean;
-    genId?: string | null;
+    messageId?: string | null;
     modelUrl?: string | null;
     imageUrl?: string | null;
   };
@@ -110,12 +110,12 @@ export type TGenerationalData = {
   tokenized: boolean;
   model?: {
     modelId: string;
-    modelUrl?: string;
+    modelUrl?: string | null;
     modelStatus: TGenResponseStatus;
   };
   image: {
     imageId: string;
     imageStatus: TGenResponseStatus;
-    imageUrl: string | null;
+    imageUrl?: string | null;
   };
 };

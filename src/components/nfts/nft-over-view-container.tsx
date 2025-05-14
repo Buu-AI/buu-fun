@@ -1,6 +1,6 @@
 import SolanaIconWithTitle from "@/assets/icons/chain/solana";
 import { MagicEden } from "@/assets/Image";
-import { Nft } from "@/gql/types/graphql";
+import { TGetNftQueryData } from "@/lib/react-query/nfts";
 import {
   capitalizeFirstLetter,
   cn,
@@ -21,7 +21,7 @@ export default function NFTOverViewContainer({
   tokenStandard,
   collectionRoyalties,
   // status,
-}: Nft) {
+}: TGetNftQueryData) {
   const name = metadata.name;
   const description = metadata.description;
   const attribute = metadata.attributes ?? [];
