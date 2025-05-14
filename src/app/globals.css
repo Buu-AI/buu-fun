@@ -991,3 +991,20 @@ input[type="number"] {
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(28, 32, 39, 0.38);
 }
+.all-white * {
+  color: white !important;
+}
+.bg-svg-button {
+  background: rgba(255, 255, 255, 0.08);
+}
+.svg-download-button {
+  fill: rgba(255, 255, 255, 0.08);
+  stroke-width: 1.131px;
+  stroke: rgba(255, 255, 255, 0.08);
+}
+
+.svg-download-button:hover {
+  fill: rgba(255, 255, 255, 1);
+  stroke-width: 1.131px;
+  stroke: rgba(255, 255, 255, 0.08);
+}
