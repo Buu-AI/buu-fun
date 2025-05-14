@@ -1241,3 +1241,55 @@ export const ConfirmToolMessage = gql`
     }
   }
 `;
+
+export const CancelToolMessage = gql`
+  mutation CancelToolMessage($messageId: String!) {
+    cancelToolMessage(messageId: $messageId) {
+      ... on Message {
+        _id
+        createdAt
+        updatedAt
+        teamId
+        sessionId
+        role
+        status
+        content {
+          text
+          model {
+            alt
+            keyS3
+            size
+            type
+            url
+            image {
+              alt
+              keyS3
+              size
+              type
+              url
+            }
+          }
+          images {
+            alt
+            keyS3
+            size
+            type
+            url
+          }
+        }
+        toolRequest {
+          id
+          type
+          priority
+          payload
+        }
+        nftId
+        credits
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;

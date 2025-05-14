@@ -2635,6 +2635,63 @@ export type ConfirmToolMessageMutation = {
       };
 };
 
+export type CancelToolMessageMutationVariables = Exact<{
+  messageId: Scalars["String"]["input"];
+}>;
+
+export type CancelToolMessageMutation = {
+  __typename?: "Mutation";
+  cancelToolMessage:
+    | { __typename?: "HandledError"; code: string; message: string }
+    | {
+        __typename?: "Message";
+        _id: string;
+        createdAt: any;
+        updatedAt: any;
+        teamId: string;
+        sessionId: string;
+        role: MessageRole;
+        status: ToolRequestStatus;
+        nftId?: string | null;
+        credits?: number | null;
+        content?: {
+          __typename?: "MessageContent";
+          text?: string | null;
+          model?: {
+            __typename?: "Model";
+            alt?: string | null;
+            keyS3?: string | null;
+            size?: number | null;
+            type?: string | null;
+            url?: string | null;
+            image: {
+              __typename?: "Media";
+              alt?: string | null;
+              keyS3?: string | null;
+              size?: number | null;
+              type?: string | null;
+              url?: string | null;
+            };
+          } | null;
+          images?: Array<{
+            __typename?: "Media";
+            alt?: string | null;
+            keyS3?: string | null;
+            size?: number | null;
+            type?: string | null;
+            url?: string | null;
+          }> | null;
+        } | null;
+        toolRequest?: {
+          __typename?: "ToolRequest";
+          id: string;
+          type: ToolRequestType;
+          priority: ToolRequestPriority;
+          payload: string;
+        } | null;
+      };
+};
+
 export const MeDocument = {
   kind: "Document",
   definitions: [
@@ -9082,4 +9139,241 @@ export const ConfirmToolMessageDocument = {
 } as unknown as DocumentNode<
   ConfirmToolMessageMutation,
   ConfirmToolMessageMutationVariables
+>;
+export const CancelToolMessageDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "CancelToolMessage" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "messageId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "cancelToolMessage" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "messageId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "messageId" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "Message" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "_id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "createdAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "updatedAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "teamId" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "sessionId" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "role" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "status" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "content" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "text" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "model" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "alt" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "keyS3" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "size" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "type" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "url" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "image" },
+                                    selectionSet: {
+                                      kind: "SelectionSet",
+                                      selections: [
+                                        {
+                                          kind: "Field",
+                                          name: { kind: "Name", value: "alt" },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "keyS3",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: { kind: "Name", value: "size" },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: { kind: "Name", value: "type" },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: { kind: "Name", value: "url" },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "images" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "alt" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "keyS3" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "size" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "type" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "url" },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "toolRequest" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "type" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "priority" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "payload" },
+                            },
+                          ],
+                        },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "nftId" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "credits" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "HandledError" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "message" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CancelToolMessageMutation,
+  CancelToolMessageMutationVariables
 >;
