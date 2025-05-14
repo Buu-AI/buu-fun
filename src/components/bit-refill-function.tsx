@@ -191,7 +191,7 @@ export const bitRefillFunctions = {
       );
 
       const swap = await executeJupiterTransaction.json();
-      if (swap.status !== "success") {
+      if (swap.status !== "Success") {
         throw new Error(`Swap failed: ${swap.error || "Unknown error"}`);
       }
 
