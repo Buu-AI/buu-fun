@@ -9,6 +9,7 @@
     "lint": "next lint",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
+    "format:lint": "pnpm format:write && pnpm lint:fix",
     "lint:fix": "next lint --fix",
     "codegen": "graphql-codegen && pnpm format:write"
   },
