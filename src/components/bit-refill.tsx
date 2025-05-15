@@ -3,6 +3,7 @@ import { useGlobalStakingData } from "@/hooks/use-global-staking";
 import { usePricing } from "@/hooks/use-pricing";
 import { formatUnits, parseJson } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
+import { useConfetti } from "@/providers/confetti-provider";
 import { BitRefillEvents } from "@/types/bit-refill";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
@@ -21,11 +22,13 @@ function MyBitrefillWidget({
     utm_source: "Buu AI",
     showPaymentInfo: true,
     theme: "dark",
-    paymentMethods: ["solana"].join(","), 
+    paymentMethods: ["solana"].join(","),
   };
   if (user?.email) {
     config.email = user?.email;
   }
+
+  const { runConfetti } = useConfetti();
   useEffect(() => {
     window.onmessage = async function (e) {
       if (e.origin !== "https://embed.bitrefill.com") {
@@ -57,17 +60,20 @@ function MyBitrefillWidget({
           wallet,
           paymentAddress,
           buuDecimals,
+          onCompletedCallback() {
+            runConfetti({ duration: 5000 });
+          },
         });
       }
 
       switch (event) {
-        case "invoice_created": {
-          if (!data) {
-            return;
-          }
-          await eventCreate(data);
-          break;
-        }
+        // case "invoice_created": {
+        //   if (!data) {
+        //     return;
+        //   }
+        //   // await eventCreate(data);
+        //   break;
+        // }
         case "payment_intent": {
           if (!data) {
             return;

@@ -1,6 +1,6 @@
 import FailedCross from "@/assets/icons/failed-cross";
 import { imageOne } from "@/assets/Image";
-import { NftStatus } from "@/gql/types/graphql";
+import { ToolRequestStatus } from "@/gql/types/graphql";
 import { cn } from "@/lib/utils";
 import { GeneralClassName } from "@/types";
 import Image from "next/image";
@@ -11,7 +11,7 @@ type TNftCard = {
   NftImageUrl?: string;
   title?: string;
   collectionName?: string;
-  nftStatus: NftStatus;
+  nftStatus: ToolRequestStatus;
 };
 export default function NFTCard({
   NftImageUrl = imageOne.src,
@@ -20,7 +20,7 @@ export default function NFTCard({
   id = "1",
   nftStatus,
 }: TNftCard) {
-  const isFailed = nftStatus === NftStatus.Failed;
+  const isFailed = nftStatus === ToolRequestStatus.Failed;
   return (
     <Link href={`/app/nfts/${id}`}>
       <div className="w-48 h-[280px]   bg-shadow-nft-cards transition-colors duration-500 ease-in-out rounded-3xl overflow-hidden relative ">

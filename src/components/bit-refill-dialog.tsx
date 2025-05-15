@@ -1,5 +1,9 @@
 "use client";
-import { BitRefillImages } from "@/assets/Image";
+import {
+  BitRefillImagesOne,
+  BitRefillImagesTwo,
+  BitRefillImagesThree,
+} from "@/assets/Image";
 import Image from "next/image";
 import MyBitrefillWidget from "./bit-refill";
 import { Button } from "./ui/button";
@@ -11,33 +15,88 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
+import { Marquee } from "./(home)/CTA/marquee";
 
 export default function BitRefillSheet() {
   return (
     <div className="mt-6">
-      <div className="bg-portfolio-statistics overflow-hidden px-6 pt-6 pb-6 rounded-2xl relative border">
+      <div className="bg-portfolio-statistics overflow-hidden  px-6 pt-6 pb-6 rounded-2xl relative border">
         <div className="absolute -z-10  max-md:hidden top-0 left-0 w-full h-full">
           <div
             style={{
               position: "absolute",
-              width: "70%",
+              // width: "70%",
             }}
-            className="grid grid-cols-3 gap-2 rotate-[28deg]  lg:top-[20%] xl:top-[-27%]  right-[-20%]"
+            className="flex      max-w-max  h-[200%]  gap-2  rotate-[28deg]  -top-[15%] -right-[10%]"
           >
             {/* <ThreeDMarquee images={BitRefillImages.map((item) => item.src)} /> */}
-            {BitRefillImages.map((item, index) => {
-              return (
-                <div key={`bit-refill-${item.src}-${index}`} className="">
-                  <Image
-                    src={item.src}
-                    alt="bit-refill coupon providers"
-                    className="rounded-lg  aspect-video object-cover"
-                    width={500}
-                    height={500}
-                  />
-                </div>
-              );
-            })}
+            <Marquee
+              reverse
+              className="overflow-visible   [gap:4px]   [--duration:60s] p-0"
+              childClass="gap-0 [gap:5px]"
+              vertical
+            >
+              {BitRefillImagesOne.map((item, index) => {
+                return (
+                  <div
+                    key={`bit-refill-${item.src}-${index}`}
+                    className="w-40 bit-refill-image-border rounded-md overflow-hidden"
+                  >
+                    <Image
+                      src={item.src}
+                      alt="bit-refill coupon providers"
+                      className="aspect-video object-cover"
+                      width={500}
+                      height={500}
+                    />
+                  </div>
+                );
+              })}
+            </Marquee>
+            <Marquee
+              childClass="gap-0 [gap:5px]"
+              className="overflow-visible  p-0 [gap:4px]"
+              vertical
+            >
+              {BitRefillImagesTwo.map((item, index) => {
+                return (
+                  <div
+                    key={`bit-refill-${item.src}-${index}`}
+                    className="w-40 bit-refill-image-border rounded-md overflow-hidden"
+                  >
+                    <Image
+                      src={item.src}
+                      alt="bit-refill coupon providers"
+                      className="   aspect-video object-cover"
+                      width={500}
+                      height={500}
+                    />
+                  </div>
+                );
+              })}
+            </Marquee>
+            <Marquee
+              childClass="gap-0 [gap:5px]"
+              className="overflow-visible  [gap:4px] p-0 [--duration:20s]"
+              vertical
+            >
+              {BitRefillImagesThree.map((item, index) => {
+                return (
+                  <div
+                    key={`bit-refill-${item.src}-${index}`}
+                    className="w-40 bit-refill-image-border rounded-md overflow-hidden"
+                  >
+                    <Image
+                      src={item.src}
+                      alt="bit-refill coupon providers"
+                      className="rounded-md   aspect-video object-cover"
+                      width={500}
+                      height={500}
+                    />
+                  </div>
+                );
+              })}
+            </Marquee>
           </div>
         </div>
         <div className="mb-3">
@@ -53,8 +112,9 @@ export default function BitRefillSheet() {
             <Button>More Info</Button>
           </SheetTrigger>
           <SheetContent
-          overlayClassName="bg-black/40"
-          className="bg-balance-card  p-0 w-full  sm:max-w-xl">
+            overlayClassName="bg-black/40"
+            className="bg-balance-card  p-0 w-full  sm:max-w-xl"
+          >
             <SheetHeader>
               <SheetTitle className="sr-only">Bitrefill widget</SheetTitle>
               <SheetDescription className="sr-only">

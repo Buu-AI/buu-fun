@@ -28,7 +28,7 @@ import CopyBoardLink from "./copy-board-link";
 export default function ShareableBoardsButton() {
   const path = usePathname();
   const { data: userSubScription } = useUserSubscription();
-  const threadId = useAppSelector((state) => state.chat.threads.threadId);
+  const sessionId = useAppSelector((state) => state.chat.sessionId);
 
   // const subThreads = useAppSelector((state) => state.chat.subThreads);
 
@@ -41,7 +41,7 @@ export default function ShareableBoardsButton() {
   const queryClient = useQueryClient();
 
   const { data: SharableBoard } = useSharableBoards({
-    threadId,
+    sessionId,
     count: 1,
   });
 
@@ -58,7 +58,7 @@ export default function ShareableBoardsButton() {
     },
     async onSuccess() {
       await queryClient.invalidateQueries({
-        queryKey: ["user-shareable-boards", threadId],
+        queryKey: ["user-shareable-boards", sessionId],
       });
     },
     onError(error) {
@@ -94,7 +94,7 @@ export default function ShareableBoardsButton() {
     },
     async onSuccess(data) {
       await queryClient.invalidateQueries({
-        queryKey: ["user-shareable-boards", threadId],
+        queryKey: ["user-shareable-boards", sessionId],
       });
       const link = getSharableUrl(data._id);
       window.navigator.clipboard.writeText(link);
@@ -123,7 +123,7 @@ export default function ShareableBoardsButton() {
     },
   });
 
-  const isGenerationPage = path.startsWith("/app/generation");
+  const isGenerationPage = path.startsWith("/app/chat");
 
   function handleConfirm() {
     if (!accessToken) {
@@ -136,7 +136,7 @@ export default function ShareableBoardsButton() {
     }
     createNewBoard({
       accessToken,
-      threadId,
+      sessionId,
     });
   }
 

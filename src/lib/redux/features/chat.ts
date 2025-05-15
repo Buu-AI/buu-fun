@@ -1,9 +1,11 @@
 import { TSubthread as TResponseThread } from "@/lib/react-query/threads-types";
+import { TChatMessage, TMessageQueryData } from "@/types/chat/chat-types";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { InfiniteData } from "@tanstack/react-query";
+import { prepareMessagePayload } from "../prepare/message";
 import {
   ChatState,
-  ImageData,
+  TImageData,
   TAllSubThreadsResponse,
   TMediaRequest,
   TSubThread,
@@ -15,14 +17,14 @@ import {
 const initialState: ChatState = {
   inputQuery: "",
   inputImageUrl: "",
-  inputFile: null,
+  inputFile: [],
   currentGenRequestIndex: 0,
   currentSubThreadIndex: 0,
   subThreads: [],
   genRequest: {},
   genNft: {
     isGenNftModalOpen: false,
-    genId: "",
+    messageId: "",
     modelUrl: "",
     imageUrl: "",
   },
@@ -33,6 +35,12 @@ const initialState: ChatState = {
   retry: {
     modalOpened: false,
     subThreadId: null,
+  },
+  sessionId: "",
+  messages: [],
+  chatMessages: {
+    pageParams: [],
+    pages: [],
   },
 };
 const ChatSlice = createSlice({
@@ -46,13 +54,13 @@ const ChatSlice = createSlice({
       state,
       action: PayloadAction<{
         isGenNftOpen: boolean;
-        genRequestId?: string;
+        messageId?: string;
         modelUrl?: string | null;
         imageUrl?: string | null;
       }>,
     ) {
       state.genNft.isGenNftModalOpen = action?.payload?.isGenNftOpen;
-      state.genNft.genId = action.payload.genRequestId;
+      state.genNft.messageId = action.payload.messageId;
       state.genNft.modelUrl = action.payload.modelUrl;
       state.genNft.imageUrl = action.payload.imageUrl;
     },
@@ -62,8 +70,16 @@ const ChatSlice = createSlice({
     setRetrySubthreadId(state, action: PayloadAction<string | null>) {
       state.retry.subThreadId = action.payload;
     },
-    setInputFile(state, action: PayloadAction<ImageData | null>) {
-      state.inputFile = action.payload;
+    setInputFile(state, action: PayloadAction<TImageData>) {
+      state.inputFile?.push(action.payload);
+    },
+    removeImage(state, action: PayloadAction<string>) {
+      state.inputFile = state.inputFile.filter(
+        (item) => item.id !== action.payload,
+      );
+    },
+    clearInputFile(state) {
+      state.inputFile = [];
     },
     setInputImageUrl(state, action: PayloadAction<string>) {
       state.inputImageUrl = action.payload;
@@ -249,6 +265,26 @@ const ChatSlice = createSlice({
         };
       },
     },
+    setNewSession(state, payload: PayloadAction<string>) {
+      state.sessionId = payload.payload;
+    },
+    setNewMessage(
+      state,
+      action: PayloadAction<InfiniteData<TMessageQueryData>>,
+    ) {
+      state.chatMessages = action.payload;
+    },
+    setMessages: {
+      reducer: (state, action: PayloadAction<TChatMessage[]>) => {
+        state.messages = action.payload;
+      },
+      prepare: (data: InfiniteData<TMessageQueryData>) => {
+        const message = prepareMessagePayload(data);
+        return {
+          payload: message,
+        };
+      },
+    },
   },
 });
 
@@ -268,11 +304,16 @@ export const {
   pushNewSubThreads,
   setNewGenRequest,
   setInputFile,
+  clearInputFile,
   setInputImageUrl,
   setRetryModalOpen,
   setRetrySubthreadId,
   setGenerateNFT,
   setOpenGenerateNFTModal,
+  setMessages,
+  setNewSession,
+  setNewMessage,
+  removeImage,
 } = ChatSlice.actions;
 
 export default ChatSlice.reducer;

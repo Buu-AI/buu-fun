@@ -285,18 +285,25 @@ import BitRefillImageEight from "@/assets/Image/bitrefill-card/image-7.png";
 import BitRefillImageNine from "@/assets/Image/bitrefill-card/image-8.png";
 import BitRefillImageTen from "@/assets/Image/bitrefill-card/image-9.png";
 
-export const BitRefillImages = [
+export const BitRefillImagesOne = [
   BitRefillImageOne,
   BitRefillImageTwo,
   BitRefillImageThree,
   BitRefillImageFour,
+  BitRefillImageEight,
+];
+
+export const BitRefillImagesTwo = [
   BitRefillImageFive,
   BitRefillImageSix,
   BitRefillImageSeven,
   BitRefillImageEight,
+];
+
+export const BitRefillImagesThree = [
   BitRefillImageNine,
   BitRefillImageTen,
   BitRefillImageOne,
-  BitRefillImageTwo,
+  BitRefillImageFour,
   BitRefillImageFive,
 ];

@@ -6,10 +6,12 @@ import { setGenerateNFT } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
 import { createNftSchema, TCreateNftSchema } from "@/lib/zod/create-nft";
 import { useAuthentication } from "@/providers/account.context";
+import { useConfetti } from "@/providers/confetti-provider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -25,8 +27,6 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
-import { useRouter } from "next/navigation";
-import { useConfetti } from "@/providers/confetti-provider";
 const ModelViewer = dynamic(() => import("../generation/model-viewer"), {
   ssr: false,
   loading: () => null, // Use null instead of undefined
@@ -64,7 +64,7 @@ export default function GenerateNFTModal() {
       dispatch(
         setGenerateNFT({
           isGenNftOpen: false,
-          genRequestId: undefined,
+          messageId: undefined,
           imageUrl: undefined,
           modelUrl: undefined,
         }),
@@ -77,7 +77,7 @@ export default function GenerateNFTModal() {
     },
   });
   function handleCreateNFTForm({ description, name }: TCreateNftSchema) {
-    const genRequestId = GenNft.genId;
+    const messageId = GenNft.messageId;
     if (!checked) {
       toast.error("Please acknowledge the credits used to generate NFT");
       return;
@@ -86,14 +86,14 @@ export default function GenerateNFTModal() {
       login();
       return;
     }
-    if (!genRequestId) {
+    if (!messageId) {
       toast.error("invalid generation request");
       return;
     }
     mutate({
       name,
       description,
-      genRequestId,
+      messageId,
       accessToken,
     });
   }
@@ -108,7 +108,7 @@ export default function GenerateNFTModal() {
           dispatch(
             setGenerateNFT({
               isGenNftOpen: value,
-              genRequestId: undefined,
+              messageId: undefined,
               imageUrl: undefined,
               modelUrl: undefined,
             }),

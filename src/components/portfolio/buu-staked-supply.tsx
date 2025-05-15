@@ -38,7 +38,7 @@ export default function BuuStakedSupply() {
   const userStakedPercentage = (Number(stakedByUsers) / totalSupply) * 100;
 
   // Staking percentage to display in the center
-  const stakingRatio = Math.round((totalStaked / circulatingSupply) * 100);
+  const stakingRatio = Math.round((totalStaked / circulatingSupply) * 100) ?? 0;
 
   // Data for the chart layers
   const data = [
@@ -129,7 +129,7 @@ export default function BuuStakedSupply() {
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center">
               <p className="text-2xl tracking-tighter text-white">
-                {stakingRatio}%
+                {!isNaN(stakingRatio) ? stakingRatio : 0}%
               </p>
             </div>
           </div>

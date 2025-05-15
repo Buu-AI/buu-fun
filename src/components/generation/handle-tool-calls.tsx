@@ -1,10 +1,6 @@
 import {
   // BoneIcon,
   DownloadIcon,
-  // FilterIcon,
-  // MagicPenIcon,
-  // MaximizeIcon,
-  RetryIcon,
 } from "@/assets/icons";
 import CreateNFTIcon from "@/assets/icons/create-nft-icon";
 import ShareIcon from "@/assets/icons/share-icon";
@@ -12,39 +8,14 @@ import { Eye, Trash2 } from "lucide-react";
 
 export const ToolTips = [
   {
-    type: "TRY_AGAIN" as const,
-    Icon: <RetryIcon />,
-    content: "Try Again",
+    type: "DOWNLOAD" as const,
+    Icon: <DownloadIcon />,
+    content: "Download GLB",
   },
   {
     type: "GENERATE_NFT" as const,
     Icon: <CreateNFTIcon />,
     content: "Generate Collectible",
-  },
-  // {
-  //   type: "MODIFY" as const,
-  //   Icon: <FilterIcon />,
-  //   content: "Modify",
-  // },
-  // {
-  //   type: "ANIMATE" as const,
-  //   Icon: <MagicPenIcon />,
-  //   content: "Animate",
-  // },
-  // {
-  //   type: "AUTO_RIGGING" as const,
-  //   Icon: <BoneIcon />,
-  //   content: "Auto-rigging",
-  // },
-  // {
-  //   type: "MAXIMIZE" as const,
-  //   Icon: <MaximizeIcon />,
-  //   content: "Maximize",
-  // },
-  {
-    type: "DOWNLOAD" as const,
-    Icon: <DownloadIcon />,
-    content: "Download GLB",
   },
 ];
 

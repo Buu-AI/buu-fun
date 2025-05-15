@@ -3,31 +3,37 @@ import { setGenerateNFT } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import { TChatToolTips } from "../chat/toolbar/tool-bar-content";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { ToolTips, TToolTipsData } from "./handle-tool-calls";
+import { ToolTips } from "./handle-tool-calls";
 import { buttonVariants } from "./tool-bar-tool-tips";
+import { MaybeString } from "@/types";
+import { useRouter } from "next/navigation";
 
 type TToolTipGenerateNFT = {
   subThreadId?: string;
-  toolTipData: TToolTipsData[number];
+  toolTipData: TChatToolTips;
   index: number;
   length: number;
   open?: boolean;
-  modelId?: string | null;
-  tokenized?: boolean;
-  imageUrl?: string | null;
-  modelUrl?: string | null;
+  messageId: string;
+  imageUrl: MaybeString;
+  modelUrl: MaybeString;
+  nftId: MaybeString;
+  tokenized: boolean;
 };
 
 export default function ToolTipGenerateNft({
   toolTipData,
   index,
-  modelId,
-  tokenized,
+  messageId,
   imageUrl,
   modelUrl,
+  nftId,
+  tokenized,
 }: TToolTipGenerateNFT) {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   return (
     <Tooltip>
       <TooltipTrigger disabled={tokenized} asChild>
@@ -37,16 +43,19 @@ export default function ToolTipGenerateNft({
             onClick={() => {
               if (tokenized) {
                 toast.success(`NFT has already been generated `);
+                if (nftId) router.push(`/nfts/${nftId}`);
                 return;
               }
-              if (!modelId) {
-                toast.loading("Model is being generated, Please wait");
+              if (!messageId) {
+                toast.loading("Model is being generated, Please wait", {
+                  duration: 5000,
+                });
                 return;
               }
               dispatch(
                 setGenerateNFT({
                   isGenNftOpen: true,
-                  genRequestId: modelId,
+                  messageId,
                   imageUrl,
                   modelUrl,
                 }),
@@ -58,7 +67,7 @@ export default function ToolTipGenerateNft({
             variants={buttonVariants}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
             className={cn(
-              "group bg-buu-button pointer-events-auto  group shadow-buu-button min-w-[30px] rounded-md flex items-center justify-center p-1.5",
+              "group bg-svg-button pointer-events-auto  group  min-w-[24px] rounded-[4px] border-buu  flex items-center justify-center",
               {
                 "hover:bg-white hover:shadow-none": !tokenized,
               },
