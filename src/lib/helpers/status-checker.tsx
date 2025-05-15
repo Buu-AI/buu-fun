@@ -19,7 +19,6 @@ export function isFreePlan(plan?: string): boolean {
   return false;
 }
 
-
 export function isToolCallPending(status: TMessageStatus) {
   return status === "PENDING";
 }
@@ -47,8 +46,8 @@ export function isToolCallPendingOrCanceled(status: TMessageStatus) {
   return isToolCallPending(status) || isToolCallCanceled(status);
 }
 
-export function isToolCallPendingCanceledOrFailed(status:TMessageStatus){
-  return isToolCallPendingOrCanceled(status) || isToolCallFailed(status)
+export function isToolCallPendingCanceledOrFailed(status: TMessageStatus) {
+  return isToolCallPendingOrCanceled(status) || isToolCallFailed(status);
 }
 
 export function isToolCallPendingOrInProgress(status: TMessageStatus) {
@@ -58,7 +57,11 @@ export function isToolCallGenerating(status: TMessageStatus) {
   return isToolCallInProgress(status) || isToolCallInQueue(status);
 }
 export function isToolCallGeneratingOrPending(status: TMessageStatus) {
-  return isToolCallInProgress(status) || isToolCallInQueue(status) || isToolCallPending(status);
+  return (
+    isToolCallInProgress(status) ||
+    isToolCallInQueue(status) ||
+    isToolCallPending(status)
+  );
 }
 export function isToolCallInProgressOrCompleted(status: TMessageStatus) {
   return isToolCallInProgress(status) || isToolCallCompleted(status);
@@ -74,4 +77,8 @@ export function isRoleToolOrAssistant(role: string) {
 
 export function isRoleTool(role: string) {
   return role === MessageRole.Tool;
+}
+
+export function isRoleUser(role: string) {
+  return role === MessageRole.User
 }
