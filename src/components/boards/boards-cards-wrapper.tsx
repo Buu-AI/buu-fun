@@ -19,7 +19,7 @@ export default function BoardsCardWrapper() {
                   router.push(`/app/boards/${item._id}`);
                 }}
               >
-                <BoardsCardMapper ideas={item.ideas} title={item.title} />
+                <BoardsCardMapper ideas={item} title={item.title} />
               </button>
             );
           })

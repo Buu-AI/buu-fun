@@ -1,17 +1,16 @@
 import ShareIcon from "@/assets/icons/share-icon";
-import React from "react";
-import { Button } from "../ui/button";
-import { setShareableModalOpen } from "@/lib/redux/features/boards";
 import { useAppDispatch } from "@/hooks/redux";
 import { useUserSubscription } from "@/hooks/use-credits";
 import { isFreePlan } from "@/lib/helpers/status-checker";
+import { setShareableModalOpen } from "@/lib/redux/features/boards";
 import { setSubscriptionModel } from "@/lib/redux/features/subscription";
 import { usePathname } from "next/navigation";
+import { Button } from "../ui/button";
 
 export default function ShareButtonWrapper() {
   const path = usePathname();
 
-  const isGenerationPage = path.startsWith("/app/generation");
+  const isGenerationPage = path.startsWith("/app/chat");
 
   const dispatch = useAppDispatch();
   const { data: userSubScription } = useUserSubscription();
