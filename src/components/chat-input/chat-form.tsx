@@ -98,7 +98,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
                 items: [...page.items, ...data.items],
               })),
             };
-          },
+          }
         );
         await queryClient.invalidateQueries({
           queryKey: ["get-messages", sessionId, identityToken],
@@ -143,10 +143,9 @@ export default function ChatForm({ action }: TBottomBarContainer) {
 
   const handleImageUploadUrl = async (
     ImageData: TImageData,
-    accessToken: string,
+    accessToken: string
   ) => {
     try {
-      toast.loading("Preparing image for uploading....");
       const file = await blobUrlToFile(ImageData.url, ImageData.name);
       if (!file?.name) {
         toast.dismiss();
@@ -225,13 +224,15 @@ export default function ChatForm({ action }: TBottomBarContainer) {
 
       if (inputFile && inputFile?.length > 0) {
         const inputFileRequests = inputFile.map((item) =>
-          handleImageUploadUrl(item, identityToken),
+          handleImageUploadUrl(item, identityToken)
         );
-        const uploadedImages = await Promise.all(inputFileRequests);
+        toast.loading("Preparing image for uploading....", { duration: 1200 });
 
+        const uploadedImages = await Promise.all(inputFileRequests);
         imageUrls = uploadedImages
           .map((item) => item?.uploadUrl)
           .filter((fv) => typeof fv === "string");
+
         if (imageUrls.length !== inputFile.length) {
           throw new Error("Failed to upload Image, Please try again");
         }
@@ -288,7 +289,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         "relative flex-col gap-1 flex items-start w-full p-4  mb-2  rounded-[20px]  shadow-buu-inner bg-buu",
         {
           // "p-0": !inputFile?.url.length
-        },
+        }
       )}
     >
       <AnimatePresence mode="popLayout">

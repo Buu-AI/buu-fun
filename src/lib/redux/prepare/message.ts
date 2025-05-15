@@ -8,7 +8,7 @@ import {
 import { InfiniteData } from "@tanstack/react-query";
 
 export function prepareMessagePayload(
-  params: InfiniteData<TMessageQueryData>,
+  params: InfiniteData<TMessageQueryData>
 ): TChatMessage[] {
   const data = [
     ...new Map(
@@ -16,15 +16,17 @@ export function prepareMessagePayload(
         .flatMap((page) => {
           return page.items.map((item) => {
             const { data: payload } = parseJson<PromptPayload>(
-              item.toolRequest?.payload ?? "",
+              item.toolRequest?.payload ?? ""
             );
             const imageUrls =
               item.content?.images
-                ?.map((item) => item.url)
-                .filter((item) => typeof item === "string") ?? [];
+                ?.map((image) => image.url)
+                .filter((fv) => typeof fv === "string") ?? [];
+
             return {
               credits: item.credits,
               isAssistantLastMessage: false,
+              type: item.toolRequest?.type,
               messageId: item._id,
               sessionId: item.sessionId,
               createdAt: item.createdAt,
@@ -40,17 +42,17 @@ export function prepareMessagePayload(
             };
           });
         })
-        .map((item) => [item.messageId, item]), // Use messageId as the key
+        .map((item) => [item.messageId, item]) // Use messageId as the key
     ).values(),
   ].sort(
     (a, b) =>
       new Date(a.createdAt as string).getTime() -
-      new Date(b.createdAt as string).getTime(),
+      new Date(b.createdAt as string).getTime()
   );
 
   const reversedArray = [...data];
   const lastAssistantMessage = reversedArray.findIndex((item) =>
-    isRoleAssistant(item.role),
+    isRoleAssistant(item.role)
   );
   if (lastAssistantMessage !== -1) {
     const arrIndex = reversedArray.length - 1 - lastAssistantMessage;

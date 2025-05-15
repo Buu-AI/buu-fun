@@ -12,6 +12,8 @@ import {
   TSubThreadsMedia,
   TSubThreadsResponse,
   TSubthreadV1,
+  TEditImage,
+  TGenerateModal,
 } from "./chat-types";
 
 const initialState: ChatState = {
@@ -38,6 +40,14 @@ const initialState: ChatState = {
   },
   sessionId: "",
   messages: [],
+  chatMessageEditImage: {
+    isOpened: false,
+    imageUrl: null,
+  },
+  genModelFromImage: {
+    isOpened: false,
+    imageUrl: null,
+  },
   chatMessages: {
     pageParams: [],
     pages: [],
@@ -268,6 +278,15 @@ const ChatSlice = createSlice({
     setNewSession(state, payload: PayloadAction<string>) {
       state.sessionId = payload.payload;
     },
+    setEditImage(state, action: PayloadAction<TEditImage>) {
+      state.chatMessageEditImage.isOpened = action.payload.isOpened;
+      state.chatMessageEditImage.imageUrl = action.payload.imageUrl;
+    },
+    setGenerateModel(state, action: PayloadAction<TGenerateModal>) {
+      state.genModelFromImage.isOpened = action.payload.isOpened;
+      state.genModelFromImage.imageUrl = action.payload.imageUrl;
+      state.genModelFromImage.modelUrl = action.payload.modelUrl;
+    },
     setNewMessage(
       state,
       action: PayloadAction<InfiniteData<TMessageQueryData>>,
@@ -314,6 +333,8 @@ export const {
   setNewSession,
   setNewMessage,
   removeImage,
+  setEditImage,
+  setGenerateModel,
 } = ChatSlice.actions;
 
 export default ChatSlice.reducer;
