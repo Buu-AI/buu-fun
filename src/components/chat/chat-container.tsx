@@ -26,10 +26,12 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
     data: Messages,
     hasNextPage,
     isFetchingNextPage,
+    error,
   } = useChatMessage({
     sessionId,
     limit: MESSAGE_QUERY_LIMIT,
   });
+
   const dispatch = useAppDispatch();
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const oldScrollHeight = useRef(0);
@@ -70,13 +72,16 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
     messages,
   });
 
+  if (error?.message) {
+    return <>{error?.message}</>;
+  }
   return (
     <div className="flex-1 overflow-x-hidden max-w-4xl mx-auto w-full  md:px-8 relative h-full  lg:mt-4 scroll-smooth">
       <div
         id="chat-window"
         ref={chatContainerRef}
         className={cn(
-          "overflow-y-scroll  scrollbar-w-hidden overflow-x-hidden snap-y px-2 snap-mandatory w-full h-full relative",
+          "overflow-y-scroll  scrollbar-w-hidden overflow-x-hidden snap-y px-2 snap-mandatory w-full h-full relative"
         )}
       >
         <div ref={topObserverRef} className="absolute top-6 w-full h-3" />
@@ -102,6 +107,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
               const imageUrls = item.imageUrls;
               const modelUrl = item.modelUrl;
               const prompt = item.prompt;
+              const type = item.type;
               const tokenized = typeof item.nftId === "string";
               const nftId = item.nftId;
 
@@ -134,8 +140,10 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
                     <AssistantToolMessage
                       messageId={messageId}
                       prompt={prompt}
+                      imageUrls={imageUrls}
                       status={status}
                       nftId={nftId}
+                      type={type}
                       tokenized={tokenized}
                       imageUrl={imageUrl}
                       modelUrl={modelUrl}
@@ -153,6 +161,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
                   ) : null}
                   {isRoleUser(role) ? (
                     <UserChatMessage
+                      messageId={messageId}
                       imageUrls={imageUrls}
                       text={prompt ?? ""}
                     />

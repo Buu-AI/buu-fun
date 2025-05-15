@@ -2,21 +2,23 @@ import ToolBarWrapper from "@/components/chat/toolbar/tool-bar-wrapper";
 import { BorderBeam } from "@/components/ui/border-beam";
 import {
   isToolCallGenerating,
-  isToolCallPendingCanceledOrFailed,
+  isToolCallPendingCanceledOrFailed
 } from "@/lib/helpers/status-checker";
 import { cn } from "@/lib/utils";
 import { MaybeString } from "@/types";
-import { TMessageStatus } from "@/types/chat/chat-types";
+import { TMessageStatus, TToolType } from "@/types/chat/chat-types";
 import GenerationLoader from "./generation-card/generation-loader";
 import ImageViewLoader from "./generation-card/image-view-loader";
 import ModelViewWrapper from "./generation-card/model-view-wrapper";
 type TGeneratedModelCard = {
   imageUrl: MaybeString;
+  imageUrls?: string[];
   modelUrl: MaybeString;
   status: TMessageStatus;
   messageId: string;
   nftId: MaybeString;
   tokenized: boolean;
+  type?: TToolType
 };
 
 export default function GeneratedModelCard({
@@ -26,15 +28,16 @@ export default function GeneratedModelCard({
   messageId,
   nftId,
   tokenized,
+  type
 }: TGeneratedModelCard) {
   const isPendingOrCanceledOrFailed = isToolCallPendingCanceledOrFailed(status);
   const isGenerating = isToolCallGenerating(status);
-  if (isPendingOrCanceledOrFailed) {
+  if (isPendingOrCanceledOrFailed || !imageUrl) {
     return null;
   }
   return (
-    <div className="">
-      <div className="max-w-[clamp(250px,100%,320px)] overflow-hidden w-full aspect-square rounded-2xl relative justify-center">
+    <div className="mt-2">
+      <div className="max-w-[clamp(250px,100%,320px)] border-2 overflow-hidden w-full aspect-square rounded-2xl relative justify-center">
         <GenerationLoader isGenerating={isGenerating} />
         <ImageViewLoader imageUrl={imageUrl} isGenerating={isGenerating} />
         <ModelViewWrapper imageUrl={imageUrl} modelUrl={modelUrl} />
@@ -52,13 +55,14 @@ export default function GeneratedModelCard({
           className="border-2 rounded-2xl z-50 relative"
         />
       </div>
-      <div className={cn("flex mt-2 gap-2 pl-3", { hidden: isGenerating })}>
+      <div className={cn("flex mt-2 gap-2 pl-3", { hidden: isGenerating || !modelUrl })}>
         <ToolBarWrapper
+          type="model"
           imageUrl={imageUrl}
+          modelUrl={modelUrl}
           messageId={messageId}
           nftId={nftId}
           tokenized={tokenized}
-          modelUrl={modelUrl}
         />
       </div>
     </div>
