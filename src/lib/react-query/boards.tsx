@@ -180,7 +180,7 @@ export async function createNewBoardsMutation({
     >(
       CreateShareableBoardMutation,
       {
-        sessionId
+        sessionId,
       },
       {
         Authorization: getAuthorization(accessToken),

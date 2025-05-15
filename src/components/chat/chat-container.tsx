@@ -57,7 +57,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
   }, [Messages, dispatch]);
 
   const messages = useAppSelector((state) => state.chat.messages);
-  
+
   useEffect(() => {
     if (messages.length > 0) {
       isInitialLoad.current = false;
@@ -76,7 +76,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
         id="chat-window"
         ref={chatContainerRef}
         className={cn(
-          "overflow-y-scroll  scrollbar-w-hidden overflow-x-hidden snap-y px-2 snap-mandatory w-full h-full relative"
+          "overflow-y-scroll  scrollbar-w-hidden overflow-x-hidden snap-y px-2 snap-mandatory w-full h-full relative",
         )}
       >
         <div ref={topObserverRef} className="absolute top-6 w-full h-3" />

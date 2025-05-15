@@ -25,13 +25,14 @@ export default function BoardsCardMapper({
   ideas: TIdeas;
   title: string;
 }) {
+  const images = ideas.models
+    .map((item) => item?.image?.url)
+    .filter((fv) => typeof fv === "string");
 
-
-  const images = ideas.models.map(item => item?.image?.url).filter(fv => typeof fv === 'string')
-
-  
   const imageCmp = getImageComponent({ images });
-  return <BoardCards idea={ideas.models.length} images={imageCmp} title={title} />;
+  return (
+    <BoardCards idea={ideas.models.length} images={imageCmp} title={title} />
+  );
 }
 
 function getImageComponent({ images }: { images: string[] }) {

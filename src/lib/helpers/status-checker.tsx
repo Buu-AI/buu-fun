@@ -80,5 +80,5 @@ export function isRoleTool(role: string) {
 }
 
 export function isRoleUser(role: string) {
-  return role === MessageRole.User
+  return role === MessageRole.User;
 }

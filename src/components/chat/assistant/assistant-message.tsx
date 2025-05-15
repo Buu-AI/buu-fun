@@ -22,11 +22,11 @@ export default function AssistantMessage({
     // Create a SplitText instance for all text-containing elements
     const split = new SplitText(
       markdownRef.current.querySelectorAll(
-        "p, h1, h2, h3, h4, h5, h6, li, raw-text"
+        "p, h1, h2, h3, h4, h5, h6, li, raw-text",
       ),
       {
         type: "chars, words", // Split into characters and words
-      }
+      },
     );
 
     // Create a GSAP timeline for the animation
@@ -39,7 +39,7 @@ export default function AssistantMessage({
       ease: "power4.inOut",
       stagger: 0.01,
     });
-    
+
     // Cleanup: Revert SplitText and kill timeline on unmount or prop change
     return () => {
       split.revert();

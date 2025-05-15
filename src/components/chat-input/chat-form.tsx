@@ -98,7 +98,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
                 items: [...page.items, ...data.items],
               })),
             };
-          }
+          },
         );
         await queryClient.invalidateQueries({
           queryKey: ["get-messages", sessionId, identityToken],
@@ -143,7 +143,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
 
   const handleImageUploadUrl = async (
     ImageData: TImageData,
-    accessToken: string
+    accessToken: string,
   ) => {
     try {
       toast.loading("Preparing image for uploading....");
@@ -221,11 +221,11 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         return toast.error("Hold on!, Still generating your model...");
       }
 
-      let imageUrls: string[] | null = []
+      let imageUrls: string[] | null = [];
 
       if (inputFile && inputFile?.length > 0) {
         const inputFileRequests = inputFile.map((item) =>
-          handleImageUploadUrl(item, identityToken)
+          handleImageUploadUrl(item, identityToken),
         );
         const uploadedImages = await Promise.all(inputFileRequests);
 
@@ -268,7 +268,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       }
     } catch (error) {
       if (error) {
-        toast.error(`${error}`)
+        toast.error(`${error}`);
       }
       toast.error("Failed to send message, Please try again");
     } finally {
@@ -288,7 +288,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         "relative flex-col gap-1 flex items-start w-full p-4  mb-2  rounded-[20px]  shadow-buu-inner bg-buu",
         {
           // "p-0": !inputFile?.url.length
-        }
+        },
       )}
     >
       <AnimatePresence mode="popLayout">

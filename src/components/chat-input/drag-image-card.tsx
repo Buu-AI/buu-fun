@@ -57,7 +57,7 @@ export default function InteractiveDropzone({
         setRotation({ x: 0, y: 0 });
       }, 200);
     },
-    [dispatch, onImageSelected, setIsDraggingOver, setRotation]
+    [dispatch, onImageSelected, setIsDraggingOver, setRotation],
   );
 
   useEffect(() => {
@@ -85,7 +85,7 @@ export default function InteractiveDropzone({
       if (
         items &&
         Array.from(items).some(
-          (item) => item.kind === "file" && item.type.startsWith("image/")
+          (item) => item.kind === "file" && item.type.startsWith("image/"),
         )
       ) {
         setIsDraggingOver(true);
@@ -101,7 +101,7 @@ export default function InteractiveDropzone({
         const fileArray = Array.from(files);
         // Filter for images
         const imageFiles = fileArray.filter((file) =>
-          file.type.startsWith("image/")
+          file.type.startsWith("image/"),
         );
 
         if (imageFiles.length > 0) {
