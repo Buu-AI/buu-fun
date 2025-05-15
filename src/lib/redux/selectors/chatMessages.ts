@@ -25,6 +25,7 @@ export const getMessagesFromStore = createSelector(
               return {
                 isAssistantLastMessage: false,
                 nftId: item.nftId,
+                credits: item.credits,
                 messageId: item._id,
                 sessionId: item.sessionId,
                 createdAt: item.createdAt,

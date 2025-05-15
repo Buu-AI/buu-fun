@@ -32,6 +32,7 @@ type InvoiceCreatingParams = {
   wallet: WalletInfo; // User's wallet information
   paymentAddress: string;
   buuDecimals: number;
+  onCompletedCallback?: () => void;
 };
 type TJupiterOrderParams = {
   inputMint: string;
@@ -54,6 +55,7 @@ export const bitRefillFunctions = {
     invoicePrice,
     invoicePriceLamports,
     buuDecimals,
+    onCompletedCallback,
   }: InvoiceCreatingParams) => {
     // For tracking transaction progress
     const toastId = toast.loading("Processing your transaction...");
@@ -73,7 +75,7 @@ export const bitRefillFunctions = {
       const paymentAmountInUSD = invoicePrice * solPricing;
       if (paymentAmountInUSD < MIN_AMOUNT_TO_PURCHASE_USD) {
         throw new Error(
-          `Invoice amount should be greater than $${MIN_AMOUNT_TO_PURCHASE_USD}`,
+          `Invoice amount should be greater than $${MIN_AMOUNT_TO_PURCHASE_USD}`
         );
       }
 
@@ -96,7 +98,7 @@ export const bitRefillFunctions = {
       // 1000 / (1 - 20 / 100)
       const finalAmount = amountInBuu / (1 - WITHDRAW_REFERRAL_FEE / 100);
       const finalAmountFormatted = Math.floor(
-        finalAmount * 10 ** buuDecimals,
+        finalAmount * 10 ** buuDecimals
       ).toString();
 
       // Prepare Jupiter order parameters
@@ -132,26 +134,26 @@ export const bitRefillFunctions = {
           headers: {
             "Content-Type": "application/json",
           },
-        },
+        }
       );
 
       if (jupiterOrderResponse.status !== 200) {
         throw new Error(
-          `Failed to book order for swapping Buu Tokens, Please try again`,
+          `Failed to book order for swapping Buu Tokens, Please try again`
         );
       }
 
       const jupiterOrder = await jupiterOrderResponse.json();
       if (!jupiterOrder || jupiterOrder.error || !jupiterOrder?.transaction) {
         throw new Error(
-          `Failed to get order from Jupiter: ${jupiterOrder?.error || "Unknown error"}`,
+          `Failed to get order from Jupiter: ${jupiterOrder?.error || "Unknown error"}`
         );
       }
 
       // Deserialize the transaction
       const transactionBase64 = jupiterOrder.transaction;
       const transaction = VersionedTransaction.deserialize(
-        Buffer.from(transactionBase64, "base64"),
+        Buffer.from(transactionBase64, "base64")
       );
 
       toast.loading("Please sign the transaction in your wallet...", {
@@ -171,7 +173,7 @@ export const bitRefillFunctions = {
 
       // Serialize the signed transaction to base64 string
       const signedTransaction = Buffer.from(signature.serialize()).toString(
-        "base64",
+        "base64"
       );
 
       // Execute the Jupiter swap
@@ -187,7 +189,7 @@ export const bitRefillFunctions = {
             signedTransaction: signedTransaction,
             requestId: jupiterOrder.requestId,
           }),
-        },
+        }
       );
 
       const swap = await executeJupiterTransaction.json();
@@ -207,8 +209,12 @@ export const bitRefillFunctions = {
           fromPubkey: new PublicKey(wallet.address),
           toPubkey: new PublicKey(paymentAddress),
           lamports: invoicePriceLamports, // Use the actual invoice amount
-        }),
+        })
       );
+      const blockhash = (await connection.getLatestBlockhash("finalized"))
+        .blockhash;
+
+      transferringTransaction.recentBlockhash = blockhash;
 
       // Sign and send the transfer transaction
       if (!wallet.walletData.sendTransaction) {
@@ -217,7 +223,7 @@ export const bitRefillFunctions = {
 
       const txSignature = await wallet.walletData.sendTransaction(
         transferringTransaction,
-        connection,
+        connection
       );
 
       // Wait for transaction confirmation
@@ -230,16 +236,17 @@ export const bitRefillFunctions = {
           lastValidBlockHeight:
             transferringTransaction.lastValidBlockHeight ?? 0,
         },
-        "confirmed",
+        "confirmed"
       );
 
       if (confirmation.value.err) {
         throw new Error(`Transaction failed: ${confirmation.value.err}`);
       }
-
+      try {
+        onCompletedCallback?.();
+      } catch {}
       // Transaction successful
       toast.success("Payment completed successfully!", { id: toastId });
-
       return {
         success: true,
         swapTx: swap.txid,

@@ -1008,3 +1008,11 @@ input[type="number"] {
   stroke-width: 1.131px;
   stroke: rgba(255, 255, 255, 0.08);
 }
+
+.shadow-scroll-marquee-box {
+  box-shadow: 0px 0px 30px 0px rgba(116, 218, 255, 0.3);
+}
+
+.bit-refill-image-border {
+  border: 2px solid rgba(255, 255, 255, 0.349);
+}
