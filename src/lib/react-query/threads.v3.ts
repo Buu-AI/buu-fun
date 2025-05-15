@@ -112,12 +112,12 @@ export async function getSessions({ accessToken }: { accessToken: string }) {
   return data.getSessions;
 }
 
-type TGenerateSubThreads = {
+type TSendChatMessage = {
   prompt: string;
   style?: TThreeDStyles;
   sessionId?: string;
   accessToken: string;
-  imageUrl?: string | null;
+  imageUrls?: SendMessageMutationVariables["imageUrls"];
 };
 
 export async function sendChatMessage({
@@ -125,8 +125,8 @@ export async function sendChatMessage({
   // style,
   sessionId,
   accessToken,
-  // imageUrl,
-}: TGenerateSubThreads) {
+  imageUrls,
+}: TSendChatMessage) {
   try {
     const data = await serverRequest<
       SendMessageMutation,
@@ -136,8 +136,7 @@ export async function sendChatMessage({
       {
         sessionId,
         content: prompt,
-        // style: (style as SubthreadStyle) ?? null,
-        // imageUrl: imageUrl ?? null,
+        imageUrls,
       },
       {
         Authorization: getAuthorization(accessToken),

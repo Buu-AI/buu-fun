@@ -1,3 +1,4 @@
+import { isRoleAssistant } from "@/lib/helpers/status-checker";
 import { parseJson } from "@/lib/utils";
 import {
   PromptPayload,
@@ -7,21 +8,27 @@ import {
 import { InfiniteData } from "@tanstack/react-query";
 
 export function prepareMessagePayload(
-  params: InfiniteData<TMessageQueryData>,
+  params: InfiniteData<TMessageQueryData>
 ): TChatMessage[] {
-  return [
+  const data = [
     ...new Map(
       params.pages
         .flatMap((page) => {
           return page.items.map((item) => {
             const { data: payload } = parseJson<PromptPayload>(
-              item.toolRequest?.payload ?? "",
+              item.toolRequest?.payload ?? ""
             );
+            const imageUrls =
+              item.content?.images
+                ?.map((item) => item.url)
+                .filter((item) => typeof item === "string") ?? [];
             return {
+              isAssistantLastMessage: false,
               messageId: item._id,
               sessionId: item.sessionId,
               createdAt: item.createdAt,
               imageUrl: item.content?.model?.image.url,
+              imageUrls: imageUrls,
               modelUrl: item.content?.model?.url,
               nftId: item.nftId,
               prompt: item.content?.text,
@@ -32,11 +39,21 @@ export function prepareMessagePayload(
             };
           });
         })
-        .map((item) => [item.messageId, item]), // Use messageId as the key
+        .map((item) => [item.messageId, item]) // Use messageId as the key
     ).values(),
   ].sort(
     (a, b) =>
       new Date(a.createdAt as string).getTime() -
-      new Date(b.createdAt as string).getTime(),
+      new Date(b.createdAt as string).getTime()
   );
+
+  const reversedArray = [...data];
+  const lastAssistantMessage = reversedArray.findIndex((item) =>
+    isRoleAssistant(item.role)
+  );
+  if (lastAssistantMessage !== -1) {
+    const arrIndex = reversedArray.length - 1 - lastAssistantMessage;
+    data[arrIndex]["isAssistantLastMessage"] = true;
+  }
+  return data;
 }

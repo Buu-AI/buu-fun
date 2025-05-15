@@ -18,11 +18,17 @@ export const getMessagesFromStore = createSelector(
               const { data: payload } = parseJson<PromptPayload>(
                 item.toolRequest?.payload ?? ""
               );
+              const imageUrls =
+                item.content?.images
+                  ?.map((item) => item.url)
+                  .filter((item) => typeof item === "string") ?? [];
               return {
+                isAssistantLastMessage: false,
                 nftId: item.nftId,
                 messageId: item._id,
                 sessionId: item.sessionId,
                 createdAt: item.createdAt,
+                imageUrls,
                 imageUrl: item.content?.model?.image.url,
                 modelUrl: item.content?.model?.url,
                 prompt: item.content?.text,
@@ -44,5 +50,7 @@ export const getMessagesFromStore = createSelector(
 );
 
 export const isChatGenerating = createSelector([Messages], (messages) => {
-  return messages.some((message) => isToolCallGeneratingOrPending(message.status));
+  return messages.some((message) =>
+    isToolCallGeneratingOrPending(message.status)
+  );
 });
