@@ -3,7 +3,7 @@ import {
   WITHDRAW_REFERRAL_FEE,
 } from "@/constants/bitrefill";
 import { getTokenBalance } from "@/lib/solana/getTokenBalance";
-import { getSolanaClusterUrl } from "@/lib/solana/staking";
+import { getClusterUrl } from "@/lib/solana/staking";
 import { getJupiterUltraAPI } from "@/lib/utils";
 import { WalletInfo } from "@/providers/account.context";
 import {
@@ -199,7 +199,7 @@ export const bitRefillFunctions = {
 
       // Connect to Solana network
       // [TODO] Change this in production to helius
-      const connection = new Connection(getSolanaClusterUrl());
+      const connection = new Connection(getClusterUrl());
 
       // Create transfer transaction to payment recipient
       toast.loading("Creating payment transaction...", { id: toastId });
