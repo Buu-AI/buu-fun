@@ -3,11 +3,11 @@ import { useGlobalStakingData } from "@/hooks/use-global-staking";
 import { usePricing } from "@/hooks/use-pricing";
 import { formatUnits, parseJson } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
+import { useConfetti } from "@/providers/confetti-provider";
 import { BitRefillEvents } from "@/types/bit-refill";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { bitRefillFunctions } from "./bit-refill-function";
-import { useConfetti } from "@/providers/confetti-provider";
 function MyBitrefillWidget({
   url = "https://embed.bitrefill.com?ref=DniWoOsh",
 }) {

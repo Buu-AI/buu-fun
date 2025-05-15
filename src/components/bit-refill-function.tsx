@@ -242,8 +242,9 @@ export const bitRefillFunctions = {
       if (confirmation.value.err) {
         throw new Error(`Transaction failed: ${confirmation.value.err}`);
       }
-      onCompletedCallback?.();
-
+      try {
+        onCompletedCallback?.();
+      } catch {}
       // Transaction successful
       toast.success("Payment completed successfully!", { id: toastId });
       return {
