@@ -58,7 +58,9 @@ export default function ToolTipRetryImage({
             )}
           >
             <motion.div
-              className={cn("w-full h-full group-hover:fill-gray-800 group-hover:text-gray-800 ")}
+              className={cn(
+                "w-full h-full group-hover:fill-gray-800 group-hover:text-gray-800 ",
+              )}
               transition={{ duration: 0.2 }}
             >
               {toolTipData.Icon}

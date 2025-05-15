@@ -2,7 +2,7 @@ import ToolBarWrapper from "@/components/chat/toolbar/tool-bar-wrapper";
 import { BorderBeam } from "@/components/ui/border-beam";
 import {
   isToolCallGenerating,
-  isToolCallPendingCanceledOrFailed
+  isToolCallPendingCanceledOrFailed,
 } from "@/lib/helpers/status-checker";
 import { cn } from "@/lib/utils";
 import { MaybeString } from "@/types";
@@ -18,7 +18,7 @@ type TGeneratedModelCard = {
   messageId: string;
   nftId: MaybeString;
   tokenized: boolean;
-  type?: TToolType
+  type?: TToolType;
 };
 
 export default function GeneratedModelCard({
@@ -28,7 +28,7 @@ export default function GeneratedModelCard({
   messageId,
   nftId,
   tokenized,
-  type
+  type,
 }: TGeneratedModelCard) {
   const isPendingOrCanceledOrFailed = isToolCallPendingCanceledOrFailed(status);
   const isGenerating = isToolCallGenerating(status);
@@ -55,7 +55,11 @@ export default function GeneratedModelCard({
           className="border-2 rounded-2xl z-50 relative"
         />
       </div>
-      <div className={cn("flex mt-2 gap-2 pl-3", { hidden: isGenerating || !modelUrl })}>
+      <div
+        className={cn("flex mt-2 gap-2 pl-3", {
+          hidden: isGenerating || !modelUrl,
+        })}
+      >
         <ToolBarWrapper
           type="model"
           imageUrl={imageUrl}

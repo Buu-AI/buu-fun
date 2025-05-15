@@ -11,7 +11,7 @@ import { MaybeString } from "..";
 export type PromptPayload = any;
 export type TMessageRole = `${MessageRole}`;
 export type TMessageStatus = `${ToolRequestStatus}`;
-export type TToolType = `${ToolRequestType}`
+export type TToolType = `${ToolRequestType}`;
 export type TMessageQueryData = Exclude<
   GetMessagesQuery["getMessages"],
   TErrorTypeName
@@ -28,7 +28,7 @@ export type TChatMessage = {
   modelUrl: MaybeString;
   imageUrls: string[];
   imageUrl: MaybeString;
-  type?:TToolType;
+  type?: TToolType;
   role: TMessageRole;
   nftId: MaybeString;
   payload: PromptPayload;
@@ -36,5 +36,3 @@ export type TChatMessage = {
   createdAt?: string;
   credits: number | null | undefined;
 };
-
-

@@ -30,7 +30,7 @@ import { Textarea } from "../../ui/textarea";
 export default function RetryImageModal() {
   const { identityToken: accessToken, login } = useAuthentication();
   const chatRetryProps = useAppSelector(
-    (state) => state.chat.chatMessageEditImage
+    (state) => state.chat.chatMessageEditImage,
   );
 
   const { imageUrl, isOpened } = chatRetryProps;
@@ -96,7 +96,7 @@ export default function RetryImageModal() {
             setEditImage({
               isOpened: false,
               imageUrl: null,
-            })
+            }),
           );
           return;
         }
@@ -115,7 +115,7 @@ export default function RetryImageModal() {
             "flex overflow-hidden w-full md:w-[50%] mx-auto aspect-square",
             {
               hidden: !imageUrl,
-            }
+            },
           )}
         >
           {imageUrl ? (
