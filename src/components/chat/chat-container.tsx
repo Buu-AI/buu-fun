@@ -5,16 +5,19 @@ import {
 } from "@/constants/infinity.config";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useChatMessage } from "@/hooks/use-messages";
-import { isRoleAssistant, isRoleTool } from "@/lib/helpers/status-checker";
+import {
+  isRoleAssistant,
+  isRoleTool,
+  isRoleUser,
+} from "@/lib/helpers/status-checker";
 import { setMessages } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import AssistantMessage from "./assistant/assistant-message";
 import AssistantToolMessage from "./assistant/tool-message";
-import { useAutoScrollToBottom } from "./use-autoscroll-to-bottom";
-import { useChatScroll } from "./use-chat-scroll";
+import { useUnifiedChatScroll } from "./use-chat-scroll";
 import UserChatMessage from "./user/user-message";
 
 export default function ChatContainer({ sessionId }: { sessionId: string }) {
@@ -30,7 +33,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
   const dispatch = useAppDispatch();
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const oldScrollHeight = useRef(0);
-
+  const isInitialLoad = useRef(true);
   // Observe the top of the chat for infinite scrolling up
   const { ref: topObserverRef } = useInView({
     threshold: 0,
@@ -46,7 +49,6 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
       }
     },
   });
-
   // Update messages in redux when Messages change
   useEffect(() => {
     if (Messages) {
@@ -55,12 +57,17 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
   }, [Messages, dispatch]);
 
   const messages = useAppSelector((state) => state.chat.messages);
-  useAutoScrollToBottom(chatContainerRef, messages, 300);
-  useChatScroll({
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      isInitialLoad.current = false;
+    }
+  }, [messages]);
+  // useAutoScrollToBottom(chatContainerRef, messages, 300);
+  useUnifiedChatScroll({
     chatContainerRef,
     isFetchingNextPage,
     messages,
-    oldScrollHeight,
   });
 
   return (
@@ -82,49 +89,73 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
             <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-300 rounded-full animate-spin"></div>
           </motion.div>
         )}
-        <div className="flex gap-5 flex-col w-full mt-2 pb-12">
-          {messages.map((item) => {
-            const messageId = item.messageId;
-            const payload = item?.payload;
-            const role = item.role;
-            const sessionId = item.sessionId;
-            const status = item.status;
-            const imageUrl = item.imageUrl;
-            const modelUrl = item.modelUrl;
-            const prompt = item.prompt;
-            const tokenized = typeof item.nftId === "string";
-            const nftId = item.nftId;
-            if (isRoleTool(role)) {
+        <AnimatePresence>
+          <div className="flex gap-5 flex-col w-full mt-2 pb-12">
+            {messages.map((item) => {
+              const messageId = item.messageId;
+              const payload = item?.payload;
+              const role = item.role;
+              const sessionId = item.sessionId;
+              const status = item.status;
+              const imageUrl = item.imageUrl;
+              const modelUrl = item.modelUrl;
+              const prompt = item.prompt;
+              const tokenized = typeof item.nftId === "string";
+              const nftId = item.nftId;
+
+              if (role === "user") {
+                console.log("IMAGE_URLS", imageUrl);
+              }
+
               return (
-                <AssistantToolMessage
-                  key={`AssistantToolMessage-${messageId}-${sessionId}`}
-                  messageId={messageId}
-                  prompt={prompt}
-                  status={status}
-                  nftId={nftId}
-                  tokenized={tokenized}
-                  imageUrl={imageUrl}
-                  modelUrl={modelUrl}
-                  payload={payload}
-                />
+                <motion.div
+                  initial={{ scale: 1, opacity: 0, y: -100 }}
+                  animate={{
+                    y: 0,
+                    opacity: 1,
+                    transition: {
+                      type: "tween",
+                      duration: 0.5,
+                    },
+                  }}
+                  exit={{
+                    opacity: 0,
+                    transition: {
+                      duration: 0.3,
+                      ease: "easeInOut",
+                    },
+                  }}
+                  layout
+                  key={`message-${messageId}-${sessionId}`}
+                >
+                  {isRoleTool(role) ? (
+                    <AssistantToolMessage
+                      messageId={messageId}
+                      prompt={prompt}
+                      status={status}
+                      nftId={nftId}
+                      tokenized={tokenized}
+                      imageUrl={imageUrl}
+                      modelUrl={modelUrl}
+                      payload={payload}
+                    />
+                  ) : null}
+                  {isRoleAssistant(role) ? (
+                    <AssistantMessage
+                      isLastMessage={
+                        item.isAssistantLastMessage && !isInitialLoad.current
+                      }
+                      prompt={prompt}
+                    />
+                  ) : null}
+                  {isRoleUser(role) ? (
+                    <UserChatMessage text={prompt ?? ""} />
+                  ) : null}
+                </motion.div>
               );
-            }
-            if (isRoleAssistant(role)) {
-              return (
-                <AssistantMessage
-                  key={`AssistantMessage-${messageId}-${sessionId}`}
-                  prompt={prompt}
-                />
-              );
-            }
-            return (
-              <UserChatMessage
-                key={`UserChatMessage-${messageId}-${sessionId}`}
-                text={prompt ?? ""}
-              />
-            );
-          })}
-        </div>
+            })}
+          </div>
+        </AnimatePresence>
       </div>
     </div>
   );

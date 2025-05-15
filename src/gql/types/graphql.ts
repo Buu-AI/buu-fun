@@ -224,26 +224,7 @@ export type GenRequest = {
   updatedAt: Scalars["DateTimeISO"]["output"];
 };
 
-/** The application that generated the request */
-export enum GenRequestApp {
-  FluxDevImageToImage = "FluxDevImageToImage",
-  FluxLora = "FluxLora",
-  FluxLoraCanny = "FluxLoraCanny",
-  Hunyuan3dV2 = "Hunyuan3dV2",
-  Trellis = "Trellis",
-}
-
 export type GenRequestResult = GenRequest | HandledError;
-
-export type GenRequestSnapshot = {
-  __typename?: "GenRequestSnapshot";
-  createdAt: Scalars["DateTimeISO"]["output"];
-  genRequestId: Scalars["String"]["output"];
-  images?: Maybe<Array<Media>>;
-  metadata: Scalars["JSON"]["output"];
-  model_mesh?: Maybe<Media>;
-  type: GenRequestApp;
-};
 
 /** The status of a request */
 export enum GenRequestStatusEnum {
@@ -306,15 +287,6 @@ export type HandledError = {
   __typename?: "HandledError";
   code: Scalars["String"]["output"];
   message: Scalars["String"]["output"];
-};
-
-export type Idea = {
-  __typename?: "Idea";
-  createdAt: Scalars["DateTimeISO"]["output"];
-  genRequests: Array<GenRequestSnapshot>;
-  prompt?: Maybe<Scalars["String"]["output"]>;
-  style?: Maybe<SubthreadStyle>;
-  subthreadId: Scalars["String"]["output"];
 };
 
 export type Media = {
@@ -468,7 +440,7 @@ export type MutationCreateApiKeyArgs = {
 };
 
 export type MutationCreateShareableBoardArgs = {
-  threadId: Scalars["String"]["input"];
+  sessionId: Scalars["String"]["input"];
 };
 
 export type MutationCreateTeamArgs = {
@@ -956,11 +928,10 @@ export type ShareableBoard = {
   __typename?: "ShareableBoard";
   _id: Scalars["String"]["output"];
   createdAt: Scalars["DateTimeISO"]["output"];
-  creator?: Maybe<Scalars["String"]["output"]>;
-  ideas: Array<Idea>;
   isPublic: Scalars["Boolean"]["output"];
+  models: Array<Model>;
+  sessionId: Scalars["String"]["output"];
   teamId: Scalars["String"]["output"];
-  threadId: Scalars["String"]["output"];
   title: Scalars["String"]["output"];
 };
 
@@ -976,14 +947,14 @@ export type ShareableBoardFilter = {
   createdAt_lte?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   createdAt_ne?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   isPublic_eq?: InputMaybe<Scalars["Boolean"]["input"]>;
+  sessionId_eq?: InputMaybe<Scalars["String"]["input"]>;
+  sessionId_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  sessionId_ne?: InputMaybe<Scalars["String"]["input"]>;
+  sessionId_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
   teamId_eq?: InputMaybe<Scalars["String"]["input"]>;
   teamId_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
   teamId_ne?: InputMaybe<Scalars["String"]["input"]>;
   teamId_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
-  threadId_eq?: InputMaybe<Scalars["String"]["input"]>;
-  threadId_in?: InputMaybe<Array<Scalars["String"]["input"]>>;
-  threadId_ne?: InputMaybe<Scalars["String"]["input"]>;
-  threadId_nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
 };
 
 export type ShareableBoardPage = {
@@ -1760,40 +1731,26 @@ export type GetShareableBoardQuery = {
     | {
         __typename?: "ShareableBoard";
         _id: string;
-        threadId: string;
+        sessionId: string;
         title: string;
-        creator?: string | null;
+        teamId: string;
         isPublic: boolean;
         createdAt: any;
-        ideas: Array<{
-          __typename?: "Idea";
-          subthreadId: string;
-          prompt?: string | null;
-          style?: SubthreadStyle | null;
-          createdAt: any;
-          genRequests: Array<{
-            __typename?: "GenRequestSnapshot";
-            genRequestId: string;
-            type: GenRequestApp;
-            createdAt: any;
-            metadata: any;
-            images?: Array<{
-              __typename?: "Media";
-              alt?: string | null;
-              keyS3?: string | null;
-              size?: number | null;
-              type?: string | null;
-              url?: string | null;
-            }> | null;
-            model_mesh?: {
-              __typename?: "Media";
-              alt?: string | null;
-              keyS3?: string | null;
-              size?: number | null;
-              type?: string | null;
-              url?: string | null;
-            } | null;
-          }>;
+        models: Array<{
+          __typename?: "Model";
+          alt?: string | null;
+          keyS3?: string | null;
+          size?: number | null;
+          type?: string | null;
+          url?: string | null;
+          image: {
+            __typename?: "Media";
+            alt?: string | null;
+            keyS3?: string | null;
+            size?: number | null;
+            type?: string | null;
+            url?: string | null;
+          };
         }>;
       };
 };
@@ -1812,40 +1769,26 @@ export type GetUserShareableBoardQuery = {
         items: Array<{
           __typename?: "ShareableBoard";
           _id: string;
-          threadId: string;
+          sessionId: string;
           title: string;
-          creator?: string | null;
+          teamId: string;
           isPublic: boolean;
           createdAt: any;
-          ideas: Array<{
-            __typename?: "Idea";
-            subthreadId: string;
-            prompt?: string | null;
-            style?: SubthreadStyle | null;
-            createdAt: any;
-            genRequests: Array<{
-              __typename?: "GenRequestSnapshot";
-              genRequestId: string;
-              type: GenRequestApp;
-              createdAt: any;
-              metadata: any;
-              images?: Array<{
-                __typename?: "Media";
-                alt?: string | null;
-                keyS3?: string | null;
-                size?: number | null;
-                type?: string | null;
-                url?: string | null;
-              }> | null;
-              model_mesh?: {
-                __typename?: "Media";
-                alt?: string | null;
-                keyS3?: string | null;
-                size?: number | null;
-                type?: string | null;
-                url?: string | null;
-              } | null;
-            }>;
+          models: Array<{
+            __typename?: "Model";
+            alt?: string | null;
+            keyS3?: string | null;
+            size?: number | null;
+            type?: string | null;
+            url?: string | null;
+            image: {
+              __typename?: "Media";
+              alt?: string | null;
+              keyS3?: string | null;
+              size?: number | null;
+              type?: string | null;
+              url?: string | null;
+            };
           }>;
         }>;
         metadata: {
@@ -1863,7 +1806,7 @@ export type GetUserShareableBoardQuery = {
 };
 
 export type CreateShareableBoardMutationVariables = Exact<{
-  threadId: Scalars["String"]["input"];
+  sessionId: Scalars["String"]["input"];
 }>;
 
 export type CreateShareableBoardMutation = {
@@ -1873,40 +1816,26 @@ export type CreateShareableBoardMutation = {
     | {
         __typename?: "ShareableBoard";
         _id: string;
-        threadId: string;
+        sessionId: string;
         title: string;
-        creator?: string | null;
+        teamId: string;
         isPublic: boolean;
         createdAt: any;
-        ideas: Array<{
-          __typename?: "Idea";
-          subthreadId: string;
-          prompt?: string | null;
-          style?: SubthreadStyle | null;
-          createdAt: any;
-          genRequests: Array<{
-            __typename?: "GenRequestSnapshot";
-            genRequestId: string;
-            type: GenRequestApp;
-            createdAt: any;
-            metadata: any;
-            images?: Array<{
-              __typename?: "Media";
-              alt?: string | null;
-              keyS3?: string | null;
-              size?: number | null;
-              type?: string | null;
-              url?: string | null;
-            }> | null;
-            model_mesh?: {
-              __typename?: "Media";
-              alt?: string | null;
-              keyS3?: string | null;
-              size?: number | null;
-              type?: string | null;
-              url?: string | null;
-            } | null;
-          }>;
+        models: Array<{
+          __typename?: "Model";
+          alt?: string | null;
+          keyS3?: string | null;
+          size?: number | null;
+          type?: string | null;
+          url?: string | null;
+          image: {
+            __typename?: "Media";
+            alt?: string | null;
+            keyS3?: string | null;
+            size?: number | null;
+            type?: string | null;
+            url?: string | null;
+          };
         }>;
       };
 };
@@ -1923,40 +1852,26 @@ export type UpdateShareableBoardVisibilityMutation = {
     | {
         __typename?: "ShareableBoard";
         _id: string;
-        threadId: string;
+        sessionId: string;
         title: string;
-        creator?: string | null;
+        teamId: string;
         isPublic: boolean;
         createdAt: any;
-        ideas: Array<{
-          __typename?: "Idea";
-          subthreadId: string;
-          prompt?: string | null;
-          style?: SubthreadStyle | null;
-          createdAt: any;
-          genRequests: Array<{
-            __typename?: "GenRequestSnapshot";
-            genRequestId: string;
-            type: GenRequestApp;
-            createdAt: any;
-            metadata: any;
-            images?: Array<{
-              __typename?: "Media";
-              alt?: string | null;
-              keyS3?: string | null;
-              size?: number | null;
-              type?: string | null;
-              url?: string | null;
-            }> | null;
-            model_mesh?: {
-              __typename?: "Media";
-              alt?: string | null;
-              keyS3?: string | null;
-              size?: number | null;
-              type?: string | null;
-              url?: string | null;
-            } | null;
-          }>;
+        models: Array<{
+          __typename?: "Model";
+          alt?: string | null;
+          keyS3?: string | null;
+          size?: number | null;
+          type?: string | null;
+          url?: string | null;
+          image: {
+            __typename?: "Media";
+            alt?: string | null;
+            keyS3?: string | null;
+            size?: number | null;
+            type?: string | null;
+            url?: string | null;
+          };
         }>;
       };
 };
@@ -1972,40 +1887,26 @@ export type DeleteShareableBoardMutation = {
     | {
         __typename?: "ShareableBoard";
         _id: string;
-        threadId: string;
+        sessionId: string;
         title: string;
-        creator?: string | null;
+        teamId: string;
         isPublic: boolean;
         createdAt: any;
-        ideas: Array<{
-          __typename?: "Idea";
-          subthreadId: string;
-          prompt?: string | null;
-          style?: SubthreadStyle | null;
-          createdAt: any;
-          genRequests: Array<{
-            __typename?: "GenRequestSnapshot";
-            genRequestId: string;
-            type: GenRequestApp;
-            createdAt: any;
-            metadata: any;
-            images?: Array<{
-              __typename?: "Media";
-              alt?: string | null;
-              keyS3?: string | null;
-              size?: number | null;
-              type?: string | null;
-              url?: string | null;
-            }> | null;
-            model_mesh?: {
-              __typename?: "Media";
-              alt?: string | null;
-              keyS3?: string | null;
-              size?: number | null;
-              type?: string | null;
-              url?: string | null;
-            } | null;
-          }>;
+        models: Array<{
+          __typename?: "Model";
+          alt?: string | null;
+          keyS3?: string | null;
+          size?: number | null;
+          type?: string | null;
+          url?: string | null;
+          image: {
+            __typename?: "Media";
+            alt?: string | null;
+            keyS3?: string | null;
+            size?: number | null;
+            type?: string | null;
+            url?: string | null;
+          };
         }>;
       };
 };
@@ -2521,6 +2422,9 @@ export type GetSessionsQuery = {
 
 export type SendMessageMutationVariables = Exact<{
   content: Scalars["String"]["input"];
+  imageUrls?: InputMaybe<
+    Array<Scalars["String"]["input"]> | Scalars["String"]["input"]
+  >;
   sessionId?: InputMaybe<Scalars["String"]["input"]>;
 }>;
 
@@ -2539,6 +2443,7 @@ export type SendMessageMutation = {
           sessionId: string;
           role: MessageRole;
           status: ToolRequestStatus;
+          nftId?: string | null;
           credits?: number | null;
           content?: {
             __typename?: "MessageContent";
@@ -5015,43 +4920,56 @@ export const GetShareableBoardDocument = {
                       { kind: "Field", name: { kind: "Name", value: "_id" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "threadId" },
+                        name: { kind: "Name", value: "sessionId" },
                       },
                       { kind: "Field", name: { kind: "Name", value: "title" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "creator" },
+                        name: { kind: "Name", value: "teamId" },
                       },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "ideas" },
+                        name: { kind: "Name", value: "models" },
                         selectionSet: {
                           kind: "SelectionSet",
                           selections: [
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "subthreadId" },
+                              name: { kind: "Name", value: "alt" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "prompt" },
+                              name: { kind: "Name", value: "keyS3" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "style" },
+                              name: { kind: "Name", value: "size" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "genRequests" },
+                              name: { kind: "Name", value: "type" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "url" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "image" },
                               selectionSet: {
                                 kind: "SelectionSet",
                                 selections: [
                                   {
                                     kind: "Field",
-                                    name: {
-                                      kind: "Name",
-                                      value: "genRequestId",
-                                    },
+                                    name: { kind: "Name", value: "alt" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "keyS3" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "size" },
                                   },
                                   {
                                     kind: "Field",
@@ -5059,82 +4977,10 @@ export const GetShareableBoardDocument = {
                                   },
                                   {
                                     kind: "Field",
-                                    name: { kind: "Name", value: "images" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "alt" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "keyS3",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "size" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "type" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "url" },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "model_mesh" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "alt" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "keyS3",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "size" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "type" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "url" },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "createdAt" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "metadata" },
+                                    name: { kind: "Name", value: "url" },
                                   },
                                 ],
                               },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "createdAt" },
                             },
                           ],
                         },
@@ -5257,7 +5103,7 @@ export const GetUserShareableBoardDocument = {
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "threadId" },
+                              name: { kind: "Name", value: "sessionId" },
                             },
                             {
                               kind: "Field",
@@ -5265,44 +5111,54 @@ export const GetUserShareableBoardDocument = {
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "creator" },
+                              name: { kind: "Name", value: "teamId" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "ideas" },
+                              name: { kind: "Name", value: "models" },
                               selectionSet: {
                                 kind: "SelectionSet",
                                 selections: [
                                   {
                                     kind: "Field",
-                                    name: {
-                                      kind: "Name",
-                                      value: "subthreadId",
-                                    },
+                                    name: { kind: "Name", value: "alt" },
                                   },
                                   {
                                     kind: "Field",
-                                    name: { kind: "Name", value: "prompt" },
+                                    name: { kind: "Name", value: "keyS3" },
                                   },
                                   {
                                     kind: "Field",
-                                    name: { kind: "Name", value: "style" },
+                                    name: { kind: "Name", value: "size" },
                                   },
                                   {
                                     kind: "Field",
-                                    name: {
-                                      kind: "Name",
-                                      value: "genRequests",
-                                    },
+                                    name: { kind: "Name", value: "type" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "url" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "image" },
                                     selectionSet: {
                                       kind: "SelectionSet",
                                       selections: [
                                         {
                                           kind: "Field",
+                                          name: { kind: "Name", value: "alt" },
+                                        },
+                                        {
+                                          kind: "Field",
                                           name: {
                                             kind: "Name",
-                                            value: "genRequestId",
+                                            value: "keyS3",
                                           },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: { kind: "Name", value: "size" },
                                         },
                                         {
                                           kind: "Field",
@@ -5310,118 +5166,10 @@ export const GetUserShareableBoardDocument = {
                                         },
                                         {
                                           kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "images",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "alt",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "keyS3",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "size",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "type",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "model_mesh",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "alt",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "keyS3",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "size",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "type",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "createdAt",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "metadata",
-                                          },
+                                          name: { kind: "Name", value: "url" },
                                         },
                                       ],
                                     },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "createdAt" },
                                   },
                                 ],
                               },
@@ -5521,7 +5269,7 @@ export const CreateShareableBoardDocument = {
           kind: "VariableDefinition",
           variable: {
             kind: "Variable",
-            name: { kind: "Name", value: "threadId" },
+            name: { kind: "Name", value: "sessionId" },
           },
           type: {
             kind: "NonNullType",
@@ -5541,10 +5289,10 @@ export const CreateShareableBoardDocument = {
             arguments: [
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "threadId" },
+                name: { kind: "Name", value: "sessionId" },
                 value: {
                   kind: "Variable",
-                  name: { kind: "Name", value: "threadId" },
+                  name: { kind: "Name", value: "sessionId" },
                 },
               },
             ],
@@ -5563,43 +5311,56 @@ export const CreateShareableBoardDocument = {
                       { kind: "Field", name: { kind: "Name", value: "_id" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "threadId" },
+                        name: { kind: "Name", value: "sessionId" },
                       },
                       { kind: "Field", name: { kind: "Name", value: "title" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "creator" },
+                        name: { kind: "Name", value: "teamId" },
                       },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "ideas" },
+                        name: { kind: "Name", value: "models" },
                         selectionSet: {
                           kind: "SelectionSet",
                           selections: [
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "subthreadId" },
+                              name: { kind: "Name", value: "alt" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "prompt" },
+                              name: { kind: "Name", value: "keyS3" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "style" },
+                              name: { kind: "Name", value: "size" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "genRequests" },
+                              name: { kind: "Name", value: "type" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "url" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "image" },
                               selectionSet: {
                                 kind: "SelectionSet",
                                 selections: [
                                   {
                                     kind: "Field",
-                                    name: {
-                                      kind: "Name",
-                                      value: "genRequestId",
-                                    },
+                                    name: { kind: "Name", value: "alt" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "keyS3" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "size" },
                                   },
                                   {
                                     kind: "Field",
@@ -5607,82 +5368,10 @@ export const CreateShareableBoardDocument = {
                                   },
                                   {
                                     kind: "Field",
-                                    name: { kind: "Name", value: "images" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "alt" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "keyS3",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "size" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "type" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "url" },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "model_mesh" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "alt" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "keyS3",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "size" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "type" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "url" },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "createdAt" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "metadata" },
+                                    name: { kind: "Name", value: "url" },
                                   },
                                 ],
                               },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "createdAt" },
                             },
                           ],
                         },
@@ -5802,43 +5491,56 @@ export const UpdateShareableBoardVisibilityDocument = {
                       { kind: "Field", name: { kind: "Name", value: "_id" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "threadId" },
+                        name: { kind: "Name", value: "sessionId" },
                       },
                       { kind: "Field", name: { kind: "Name", value: "title" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "creator" },
+                        name: { kind: "Name", value: "teamId" },
                       },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "ideas" },
+                        name: { kind: "Name", value: "models" },
                         selectionSet: {
                           kind: "SelectionSet",
                           selections: [
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "subthreadId" },
+                              name: { kind: "Name", value: "alt" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "prompt" },
+                              name: { kind: "Name", value: "keyS3" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "style" },
+                              name: { kind: "Name", value: "size" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "genRequests" },
+                              name: { kind: "Name", value: "type" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "url" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "image" },
                               selectionSet: {
                                 kind: "SelectionSet",
                                 selections: [
                                   {
                                     kind: "Field",
-                                    name: {
-                                      kind: "Name",
-                                      value: "genRequestId",
-                                    },
+                                    name: { kind: "Name", value: "alt" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "keyS3" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "size" },
                                   },
                                   {
                                     kind: "Field",
@@ -5846,82 +5548,10 @@ export const UpdateShareableBoardVisibilityDocument = {
                                   },
                                   {
                                     kind: "Field",
-                                    name: { kind: "Name", value: "images" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "alt" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "keyS3",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "size" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "type" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "url" },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "model_mesh" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "alt" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "keyS3",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "size" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "type" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "url" },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "createdAt" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "metadata" },
+                                    name: { kind: "Name", value: "url" },
                                   },
                                 ],
                               },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "createdAt" },
                             },
                           ],
                         },
@@ -6019,43 +5649,56 @@ export const DeleteShareableBoardDocument = {
                       { kind: "Field", name: { kind: "Name", value: "_id" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "threadId" },
+                        name: { kind: "Name", value: "sessionId" },
                       },
                       { kind: "Field", name: { kind: "Name", value: "title" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "creator" },
+                        name: { kind: "Name", value: "teamId" },
                       },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "ideas" },
+                        name: { kind: "Name", value: "models" },
                         selectionSet: {
                           kind: "SelectionSet",
                           selections: [
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "subthreadId" },
+                              name: { kind: "Name", value: "alt" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "prompt" },
+                              name: { kind: "Name", value: "keyS3" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "style" },
+                              name: { kind: "Name", value: "size" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "genRequests" },
+                              name: { kind: "Name", value: "type" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "url" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "image" },
                               selectionSet: {
                                 kind: "SelectionSet",
                                 selections: [
                                   {
                                     kind: "Field",
-                                    name: {
-                                      kind: "Name",
-                                      value: "genRequestId",
-                                    },
+                                    name: { kind: "Name", value: "alt" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "keyS3" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "size" },
                                   },
                                   {
                                     kind: "Field",
@@ -6063,82 +5706,10 @@ export const DeleteShareableBoardDocument = {
                                   },
                                   {
                                     kind: "Field",
-                                    name: { kind: "Name", value: "images" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "alt" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "keyS3",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "size" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "type" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "url" },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "model_mesh" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "alt" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "keyS3",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "size" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "type" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "url" },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "createdAt" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "metadata" },
+                                    name: { kind: "Name", value: "url" },
                                   },
                                 ],
                               },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "createdAt" },
                             },
                           ],
                         },
@@ -8645,6 +8216,23 @@ export const SendMessageDocument = {
           kind: "VariableDefinition",
           variable: {
             kind: "Variable",
+            name: { kind: "Name", value: "imageUrls" },
+          },
+          type: {
+            kind: "ListType",
+            type: {
+              kind: "NonNullType",
+              type: {
+                kind: "NamedType",
+                name: { kind: "Name", value: "String" },
+              },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
             name: { kind: "Name", value: "sessionId" },
           },
           type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
@@ -8663,6 +8251,14 @@ export const SendMessageDocument = {
                 value: {
                   kind: "Variable",
                   name: { kind: "Name", value: "content" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "imageUrls" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "imageUrls" },
                 },
               },
               {
@@ -8868,6 +8464,10 @@ export const SendMessageDocument = {
                                   },
                                 ],
                               },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "nftId" },
                             },
                             {
                               kind: "Field",

@@ -24,9 +24,11 @@ export type TChatMessage = {
   prompt: MaybeString;
   status: TMessageStatus;
   modelUrl: MaybeString;
+  imageUrls: string[];
   imageUrl: MaybeString;
   role: TMessageRole;
   nftId: MaybeString;
   payload: PromptPayload;
+  isAssistantLastMessage: boolean;
   createdAt?: string;
 };

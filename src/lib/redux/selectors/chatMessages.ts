@@ -16,13 +16,19 @@ export const getMessagesFromStore = createSelector(
           .flatMap((page) => {
             return page.items.map((item) => {
               const { data: payload } = parseJson<PromptPayload>(
-                item.toolRequest?.payload ?? ""
+                item.toolRequest?.payload ?? "",
               );
+              const imageUrls =
+                item.content?.images
+                  ?.map((item) => item.url)
+                  .filter((item) => typeof item === "string") ?? [];
               return {
+                isAssistantLastMessage: false,
                 nftId: item.nftId,
                 messageId: item._id,
                 sessionId: item.sessionId,
                 createdAt: item.createdAt,
+                imageUrls,
                 imageUrl: item.content?.model?.image.url,
                 modelUrl: item.content?.model?.url,
                 prompt: item.content?.text,
@@ -33,16 +39,18 @@ export const getMessagesFromStore = createSelector(
               };
             });
           })
-          .map((item) => [item.messageId, item]) // Use messageId as the key
+          .map((item) => [item.messageId, item]), // Use messageId as the key
       ).values(),
     ].sort(
       (a, b) =>
         new Date(a.createdAt as string).getTime() -
-        new Date(b.createdAt as string).getTime()
+        new Date(b.createdAt as string).getTime(),
     );
-  }
+  },
 );
 
 export const isChatGenerating = createSelector([Messages], (messages) => {
-  return messages.some((message) => isToolCallGeneratingOrPending(message.status));
+  return messages.some((message) =>
+    isToolCallGeneratingOrPending(message.status),
+  );
 });

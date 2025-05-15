@@ -5,7 +5,7 @@ import { InfiniteData } from "@tanstack/react-query";
 import { prepareMessagePayload } from "../prepare/message";
 import {
   ChatState,
-  ImageData,
+  TImageData,
   TAllSubThreadsResponse,
   TMediaRequest,
   TSubThread,
@@ -17,7 +17,7 @@ import {
 const initialState: ChatState = {
   inputQuery: "",
   inputImageUrl: "",
-  inputFile: null,
+  inputFile: [],
   currentGenRequestIndex: 0,
   currentSubThreadIndex: 0,
   subThreads: [],
@@ -70,8 +70,16 @@ const ChatSlice = createSlice({
     setRetrySubthreadId(state, action: PayloadAction<string | null>) {
       state.retry.subThreadId = action.payload;
     },
-    setInputFile(state, action: PayloadAction<ImageData | null>) {
-      state.inputFile = action.payload;
+    setInputFile(state, action: PayloadAction<TImageData>) {
+      state.inputFile?.push(action.payload);
+    },
+    removeImage(state, action: PayloadAction<string>) {
+      state.inputFile = state.inputFile.filter(
+        (item) => item.id !== action.payload,
+      );
+    },
+    clearInputFile(state) {
+      state.inputFile = [];
     },
     setInputImageUrl(state, action: PayloadAction<string>) {
       state.inputImageUrl = action.payload;
@@ -296,6 +304,7 @@ export const {
   pushNewSubThreads,
   setNewGenRequest,
   setInputFile,
+  clearInputFile,
   setInputImageUrl,
   setRetryModalOpen,
   setRetrySubthreadId,
@@ -304,6 +313,7 @@ export const {
   setMessages,
   setNewSession,
   setNewMessage,
+  removeImage,
 } = ChatSlice.actions;
 
 export default ChatSlice.reducer;

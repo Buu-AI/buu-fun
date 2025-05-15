@@ -12,7 +12,7 @@ type ShareableBoardPageType = Extract<
 
 type ShareableBoardType = ShareableBoardPageType["items"][number];
 
-type TIdeas = ShareableBoardType["ideas"];
+type TIdeas = ShareableBoardType;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function clearUndefinedOrNull(value: any | null | undefined): boolean {
   return typeof value !== "undefined" || value !== null;
@@ -25,23 +25,16 @@ export default function BoardsCardMapper({
   ideas: TIdeas;
   title: string;
 }) {
-  const images = ideas
-    .map((idea) => {
-      const genRequest = idea.genRequests;
-      const images = genRequest.map((item) => item.images);
-      if (!images) return [];
-      const imageUrls = images
-        .map((item) => item?.map((item) => item.url))
-        .filter((item) => typeof item === "string")
-        .flatMap((item) => item);
+  const images = ideas.models
+    .map((item) => item?.image?.url)
+    .filter((fv) => typeof fv === "string");
 
-      return imageUrls;
-    })
-    .flatMap((item) => item);
   const imageCmp = getImageComponent({ images });
-  return <BoardCards idea={ideas.length} images={imageCmp} title={title} />;
+  return (
+    <BoardCards idea={ideas.models.length} images={imageCmp} title={title} />
+  );
 }
-// type TMedia =
+
 function getImageComponent({ images }: { images: string[] }) {
   if (!images.length) return null;
   if (images.length === 1) {
