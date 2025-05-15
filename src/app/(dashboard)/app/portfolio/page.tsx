@@ -15,15 +15,15 @@ export default function PortfolioPage() {
     <Bounded className="h-full  max-w-screen-2xl px-0">
       {/* <StakingDataProvider
       > */}
-      <div className="grid overflow-hidden h-full  relative 2xl:grid-cols-[65%_35%]   max-h-[calc(100dvh-90px)] overflow-y-scroll  scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-orange scrollbar-thumb-rounded px-1 lg:px-24 lg:mt-9 pb-12">
-        <div className="">
+      <div className="grid overflow-hidden h-full   relative 2xl:grid-cols-[65%_35%]   max-h-[calc(100dvh-90px)] overflow-y-scroll  scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-orange scrollbar-thumb-rounded px-1 lg:px-24 lg:mt-9 pb-12">
+        <div className="pb-12">
           <HeaderLogo />
           <TokenStatistics />
           <TokenBalance />
           <YourEarnings />
 
           {/* <div className="flex justify-center flex-wrap place-content-center place-items-center  md:grid md:grid-cols-2  gap-2"> */}
-          <div className="w-full">
+          <div className="w-full pt-6">
             <BuuStakedSupply />
           </div>
           {/* <BuuNetworkUtilization /> */}
