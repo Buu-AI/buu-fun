@@ -23,8 +23,6 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
 };
 export default function HistoryNavigation() {
-  //   const data = mockData;
-  //   const isLoading = false;
   const dispatch = useAppDispatch();
   const { identityToken } = useAuthentication();
   const { data, isLoading } = useQuery({
@@ -34,6 +32,7 @@ export default function HistoryNavigation() {
       return await getSessions({ accessToken: accessToken ?? "" });
     },
   });
+
   if (isLoading) {
     return (
       <div className="flex  items-center justify-center w-full h-[80%]">
