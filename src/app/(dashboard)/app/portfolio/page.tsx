@@ -22,7 +22,6 @@ export default function PortfolioPage() {
           <TokenBalance />
           <YourEarnings />
 
-          <div className="py-6">{/* <APICapacityCTA /> */}</div>
           {/* <div className="flex justify-center flex-wrap place-content-center place-items-center  md:grid md:grid-cols-2  gap-2"> */}
           <div className="w-full">
             <BuuStakedSupply />
