@@ -34,7 +34,7 @@ export default function GeneratedModelCard({
   }
   return (
     <div className="">
-      <div className="max-w-[clamp(250px,100%,320px)] w-full aspect-square rounded-2xl relative justify-center">
+      <div className="max-w-[clamp(250px,100%,320px)] overflow-hidden w-full aspect-square rounded-2xl relative justify-center">
         <GenerationLoader isGenerating={isGenerating} />
         <ImageViewLoader imageUrl={imageUrl} isGenerating={isGenerating} />
         <ModelViewWrapper imageUrl={imageUrl} modelUrl={modelUrl} />
