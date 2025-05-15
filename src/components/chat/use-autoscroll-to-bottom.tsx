@@ -1,5 +1,5 @@
 import { TChatMessage } from "@/types/chat/chat-types";
-import { RefObject, useEffect, useRef } from "react";
+import { RefObject, useLayoutEffect, useRef } from "react";
 
 export function useAutoScrollToBottom(
   containerRef: RefObject<HTMLDivElement | null>,
@@ -9,7 +9,7 @@ export function useAutoScrollToBottom(
   const prevMessagesLength = useRef(0);
   const prevHeight = useRef(0);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // Function to check if user is near bottom and scroll if needed
     const handleNewMessage = () => {
       const container = containerRef.current;
