@@ -1242,3 +1242,121 @@ export const CancelToolMessage = gql`
     }
   }
 `;
+
+export const GenerateModelFromImageMutation = gql`
+  mutation GenerateModelFromImage($imageUrl: String!, $sessionId: String!) {
+    generateModelFromImage(imageUrl: $imageUrl, sessionId: $sessionId) {
+      ... on Messages {
+        items {
+          _id
+          createdAt
+          updatedAt
+          teamId
+          sessionId
+          role
+          status
+          content {
+            text
+            model {
+              alt
+              keyS3
+              size
+              type
+              url
+              image {
+                alt
+                keyS3
+                size
+                type
+                url
+              }
+            }
+            images {
+              alt
+              keyS3
+              size
+              type
+              url
+            }
+          }
+          toolRequest {
+            id
+            type
+            priority
+            payload
+          }
+          nftId
+          credits
+        }
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const EditImageMutation = gql`
+  mutation EditImage(
+    $imageUrl: String!
+    $edit: String!
+    $sessionId: String!
+    $numberOfImages: Float
+  ) {
+    editImage(
+      imageUrl: $imageUrl
+      edit: $edit
+      sessionId: $sessionId
+      numberOfImages: $numberOfImages
+    ) {
+      ... on Messages {
+        items {
+          _id
+          createdAt
+          updatedAt
+          teamId
+          sessionId
+          role
+          status
+          content {
+            text
+            model {
+              alt
+              keyS3
+              size
+              type
+              url
+              image {
+                alt
+                keyS3
+                size
+                type
+                url
+              }
+            }
+            images {
+              alt
+              keyS3
+              size
+              type
+              url
+            }
+          }
+          toolRequest {
+            id
+            type
+            priority
+            payload
+          }
+          nftId
+          credits
+        }
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
