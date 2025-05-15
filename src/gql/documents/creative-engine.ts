@@ -406,34 +406,22 @@ export const GetShareableBoardQuery = gql`
     getShareableBoard(id: $getShareableBoardId) {
       ... on ShareableBoard {
         _id
-        threadId
+        sessionId
         title
-        creator
-        ideas {
-          subthreadId
-          prompt
-          style
-          genRequests {
-            genRequestId
+        teamId
+        models {
+          alt
+          keyS3
+          size
+          type
+          url
+          image {
+            alt
+            keyS3
+            size
             type
-            images {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            model_mesh {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            createdAt
-            metadata
+            url
           }
-          createdAt
         }
         isPublic
         createdAt
@@ -455,34 +443,22 @@ export const GetUserShareableBoardsQuery = gql`
       ... on ShareableBoardPage {
         items {
           _id
-          threadId
+          sessionId
           title
-          creator
-          ideas {
-            subthreadId
-            prompt
-            style
-            genRequests {
-              genRequestId
+          teamId
+          models {
+            alt
+            keyS3
+            size
+            type
+            url
+            image {
+              alt
+              keyS3
+              size
               type
-              images {
-                alt
-                keyS3
-                size
-                type
-                url
-              }
-              model_mesh {
-                alt
-                keyS3
-                size
-                type
-                url
-              }
-              createdAt
-              metadata
+              url
             }
-            createdAt
           }
           isPublic
           createdAt
@@ -507,38 +483,26 @@ export const GetUserShareableBoardsQuery = gql`
 `;
 
 export const CreateShareableBoardMutation = gql`
-  mutation CreateShareableBoard($threadId: String!) {
-    createShareableBoard(threadId: $threadId) {
+  mutation CreateShareableBoard($sessionId: String!) {
+    createShareableBoard(sessionId: $sessionId) {
       ... on ShareableBoard {
         _id
-        threadId
+        sessionId
         title
-        creator
-        ideas {
-          subthreadId
-          prompt
-          style
-          genRequests {
-            genRequestId
+        teamId
+        models {
+          alt
+          keyS3
+          size
+          type
+          url
+          image {
+            alt
+            keyS3
+            size
             type
-            images {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            model_mesh {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            createdAt
-            metadata
+            url
           }
-          createdAt
         }
         isPublic
         createdAt
@@ -562,34 +526,22 @@ export const UpdateShareableBoardVisibilityMutation = gql`
     ) {
       ... on ShareableBoard {
         _id
-        threadId
+        sessionId
         title
-        creator
-        ideas {
-          subthreadId
-          prompt
-          style
-          genRequests {
-            genRequestId
+        teamId
+        models {
+          alt
+          keyS3
+          size
+          type
+          url
+          image {
+            alt
+            keyS3
+            size
             type
-            images {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            model_mesh {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            createdAt
-            metadata
+            url
           }
-          createdAt
         }
         isPublic
         createdAt
@@ -607,34 +559,22 @@ export const DeleteShareableBoardMutation = gql`
     deleteShareableBoard(shareableBoardId: $shareableBoardId) {
       ... on ShareableBoard {
         _id
-        threadId
+        sessionId
         title
-        creator
-        ideas {
-          subthreadId
-          prompt
-          style
-          genRequests {
-            genRequestId
+        teamId
+        models {
+          alt
+          keyS3
+          size
+          type
+          url
+          image {
+            alt
+            keyS3
+            size
             type
-            images {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            model_mesh {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            createdAt
-            metadata
+            url
           }
-          createdAt
         }
         isPublic
         createdAt
@@ -1139,8 +1079,16 @@ export const GetSessions = gql`
 `;
 
 export const SendChatMessage = gql`
-  mutation SendMessage($content: String!, $sessionId: String) {
-    sendMessage(content: $content, sessionId: $sessionId) {
+  mutation SendMessage(
+    $content: String!
+    $imageUrls: [String!]
+    $sessionId: String
+  ) {
+    sendMessage(
+      content: $content
+      imageUrls: $imageUrls
+      sessionId: $sessionId
+    ) {
       ... on Messages {
         items {
           _id
@@ -1180,6 +1128,7 @@ export const SendChatMessage = gql`
             priority
             payload
           }
+          nftId
           credits
         }
       }
