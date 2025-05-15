@@ -7,14 +7,15 @@ import { PromptPayload } from "../types.temp";
 type TAssistantToolCall = {
   messageId: string;
   payload?: PromptPayload;
+  credits?: number;
 };
 
 export default function AssistantToolCall({
   messageId,
   payload,
+  credits,
 }: TAssistantToolCall) {
   const shouldDisplayDetails = payload && typeof payload === "object";
-  console.log(payload);
   return (
     <div>
       {shouldDisplayDetails ? (
@@ -27,7 +28,7 @@ export default function AssistantToolCall({
               <InfoIcon />
             </div>
             <p className="text-xs font-bold uppercase text-muted-foreground/60">
-              This request will cost 3 credits
+              This request will cost {credits} credits
             </p>
           </div>
         </div>

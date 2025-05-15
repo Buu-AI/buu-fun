@@ -112,7 +112,7 @@ export default function AssistantMessageShowDetailToolCall({
                       {capitalizeFirstLetter(item)}
                     </p>
                     <p className="">
-                      <span className="">
+                      <span className="text-sm">
                         <span>“</span>
                         {payload[item]}
                         <span>”</span>

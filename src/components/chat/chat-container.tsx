@@ -96,8 +96,10 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
               const payload = item?.payload;
               const role = item.role;
               const sessionId = item.sessionId;
+              const credits = item.credits ?? 0;
               const status = item.status;
               const imageUrl = item.imageUrl;
+              const imageUrls = item.imageUrls;
               const modelUrl = item.modelUrl;
               const prompt = item.prompt;
               const tokenized = typeof item.nftId === "string";
@@ -138,6 +140,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
                       imageUrl={imageUrl}
                       modelUrl={modelUrl}
                       payload={payload}
+                      credits={credits}
                     />
                   ) : null}
                   {isRoleAssistant(role) ? (
@@ -149,7 +152,10 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
                     />
                   ) : null}
                   {isRoleUser(role) ? (
-                    <UserChatMessage text={prompt ?? ""} />
+                    <UserChatMessage
+                      imageUrls={imageUrls}
+                      text={prompt ?? ""}
+                    />
                   ) : null}
                 </motion.div>
               );

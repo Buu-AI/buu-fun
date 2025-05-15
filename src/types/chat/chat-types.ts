@@ -31,4 +31,5 @@ export type TChatMessage = {
   payload: PromptPayload;
   isAssistantLastMessage: boolean;
   createdAt?: string;
+  credits: number | null | undefined;
 };

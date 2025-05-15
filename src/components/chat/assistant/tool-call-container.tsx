@@ -10,10 +10,12 @@ type TAssistantToolCallContainer = {
   messageId: string;
   status: TMessageStatus;
   payload: PromptPayload;
+  credits: number;
 };
 
 export default function AssistantToolCallContainer({
   prompt,
+  credits,
   messageId,
   status,
   payload,
@@ -24,7 +26,11 @@ export default function AssistantToolCallContainer({
       <ChatStatus status={status} />
       <ToolCallHeaderMessage prompt={prompt} status={status} />
       {isPending ? (
-        <AssistantToolCall payload={payload} messageId={messageId} />
+        <AssistantToolCall
+          credits={credits}
+          payload={payload}
+          messageId={messageId}
+        />
       ) : null}
     </div>
   );

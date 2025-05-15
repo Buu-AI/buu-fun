@@ -23,6 +23,7 @@ export function prepareMessagePayload(
                 ?.map((item) => item.url)
                 .filter((item) => typeof item === "string") ?? [];
             return {
+              credits: item.credits,
               isAssistantLastMessage: false,
               messageId: item._id,
               sessionId: item.sessionId,
