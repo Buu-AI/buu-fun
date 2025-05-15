@@ -406,9 +406,11 @@ export type Mutation = {
   disableTeam: TeamResult;
   disconnectTelegram: AccountResult;
   disconnectTwitter: AccountResult;
+  editImage: MessagesResult;
   enableTeam: TeamResult;
   generateImage: GenRequestResult;
   generateModel: GenRequestResult;
+  generateModelFromImage: MessagesResult;
   generateNft: NftResult;
   generatePresignedPost: GeneratePresignedPostResult;
   generatePresignedUrl: GeneratePresignedUrlResult;
@@ -455,6 +457,13 @@ export type MutationDeleteShareableBoardArgs = {
   shareableBoardId: Scalars["String"]["input"];
 };
 
+export type MutationEditImageArgs = {
+  edit: Scalars["String"]["input"];
+  imageUrl: Scalars["String"]["input"];
+  numberOfImages?: InputMaybe<Scalars["Float"]["input"]>;
+  sessionId: Scalars["String"]["input"];
+};
+
 export type MutationGenerateImageArgs = {
   subthreadId: Scalars["String"]["input"];
 };
@@ -463,6 +472,11 @@ export type MutationGenerateModelArgs = {
   imageRequestId?: InputMaybe<Scalars["String"]["input"]>;
   imageUrl: Scalars["String"]["input"];
   subthreadId: Scalars["String"]["input"];
+};
+
+export type MutationGenerateModelFromImageArgs = {
+  imageUrl: Scalars["String"]["input"];
+  sessionId: Scalars["String"]["input"];
 };
 
 export type MutationGenerateNftArgs = {
@@ -1243,8 +1257,10 @@ export enum ToolRequestStatus {
 
 /** The type of the tool request */
 export enum ToolRequestType {
-  EditModel = "EDIT_MODEL",
-  GenerateModel = "GENERATE_MODEL",
+  EditImage = "EDIT_IMAGE",
+  GenerateImages = "GENERATE_IMAGES",
+  GenerateImagesFromReferences = "GENERATE_IMAGES_FROM_REFERENCES",
+  GenerateModelFromImage = "GENERATE_MODEL_FROM_IMAGE",
   GenerateNft = "GENERATE_NFT",
 }
 
