@@ -28,10 +28,10 @@ import {
 
 export async function getUserSharableBoardQuery({
   accessToken,
-  threadId,
+  sessionId,
   count,
   _id,
-}: AccessToken & { threadId?: string; count?: number; _id?: string }) {
+}: AccessToken & { sessionId?: string; count?: number; _id?: string }) {
   const data = await serverRequest<
     GetUserShareableBoardQuery,
     TGetUserShareableBoardQueryVariables
@@ -39,11 +39,11 @@ export async function getUserSharableBoardQuery({
     GetUserShareableBoardsQuery,
     {
       filters: {
-        threadId_eq: threadId,
+        sessionId_eq: sessionId,
         _id_eq: _id,
       },
       pagination: {
-        limit: count ?? 100,
+        limit: count ?? 200,
         orderBy: "createdAt",
         orderDirection: OrderDirection.Desc,
       },
@@ -170,9 +170,9 @@ export async function deleteBoard({
 }
 
 export async function createNewBoardsMutation({
-  threadId,
+  sessionId,
   accessToken,
-}: AccessToken & { threadId: string }) {
+}: AccessToken & { sessionId: string }) {
   try {
     const data = await serverRequest<
       TCreateShareableBoardMutation,
@@ -180,7 +180,7 @@ export async function createNewBoardsMutation({
     >(
       CreateShareableBoardMutation,
       {
-        threadId,
+        sessionId
       },
       {
         Authorization: getAuthorization(accessToken),
