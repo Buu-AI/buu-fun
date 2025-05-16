@@ -27,7 +27,7 @@ export default function ImageRenderer({
     <motion.div
       className={cn(
         "flex mt-2 justify-end gap-2 flex-wrap",
-        containerClassName
+        containerClassName,
       )}
     >
       {imageUrls && imageUrls.length > 0
@@ -68,7 +68,7 @@ export default function ImageRenderer({
                       className,
                       {
                         "blur-md": isGenerating,
-                      }
+                      },
                     )}
                   />
                 </div>

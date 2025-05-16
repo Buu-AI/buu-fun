@@ -35,7 +35,7 @@ export default function AssistantToolCall({
 
             <p
               className={cn(
-                "text-xs font-bold uppercase text-muted-foreground/60"
+                "text-xs font-bold uppercase text-muted-foreground/60",
               )}
             >
               This request will cost {credits} credits

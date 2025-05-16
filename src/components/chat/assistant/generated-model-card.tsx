@@ -3,7 +3,6 @@ import { BorderBeam } from "@/components/ui/border-beam";
 import {
   isToolCallGenerating,
   isToolCallPendingCanceledOrFailed,
-  isToolModel,
 } from "@/lib/helpers/status-checker";
 import { cn } from "@/lib/utils";
 import { MaybeString } from "@/types";
@@ -29,7 +28,6 @@ export default function GeneratedModelCard({
   messageId,
   nftId,
   tokenized,
-  type,
 }: TGeneratedModelCard) {
   const isPendingOrCanceledOrFailed = isToolCallPendingCanceledOrFailed(status);
   const isGenerating = isToolCallGenerating(status);
