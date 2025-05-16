@@ -2,7 +2,7 @@ import InfoIcon from "@/assets/icons/info-icon";
 import ToolCallApproveButton from "./tool-call-approve-button";
 import ToolCallCancelButton from "./tool-call-cancel-button";
 import AssistantMessageShowDetailToolCall from "./tool-show-detail";
-import { PromptPayload } from "../types.temp";
+import { PromptPayload } from "@/types/chat/chat-types";
 
 type TAssistantToolCall = {
   messageId: string;

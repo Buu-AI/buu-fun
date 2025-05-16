@@ -1,4 +1,4 @@
-import { SUB_THREAD_QUERY_LIMIT } from "@/constants/infinity.config";
+import { MESSAGE_QUERY_LIMIT } from "@/constants/infinity.config";
 import { isToolCallGenerating } from "@/lib/helpers/status-checker";
 import { getMessages } from "@/lib/react-query/threads.v3";
 import { useAuthentication } from "@/providers/account.context";
@@ -8,7 +8,7 @@ import { useRef } from "react";
 const GRACE_PERIOD_MS = 9500;
 export function useChatMessage({
   sessionId,
-  limit = SUB_THREAD_QUERY_LIMIT,
+  limit = MESSAGE_QUERY_LIMIT,
 }: {
   sessionId: string;
   limit?: number;

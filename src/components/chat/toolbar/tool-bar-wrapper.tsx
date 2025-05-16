@@ -1,15 +1,23 @@
-import ToolTipGenerateNft from "@/components/generation/tool-tip-generate-nft";
+import ToolTipGenerateNft from "@/components/chat/toolbar/tool-tip-generate-nft";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { MaybeString } from "@/types";
 import DownloadModel from "./download-model";
-import { ChatToolTips } from "./tool-bar-content";
+import {
+  ChatToolTips,
+  isToolbarImage,
+  isToolbarModel,
+} from "./tool-bar-content";
+import ToolTipGenerateModel from "./tool-tip-generate-model";
+import ToolTipRetryImage from "./tool-tip-retry-image";
 
 type TToolBarWrapper = {
-  modelUrl: MaybeString;
+  modelUrl?: MaybeString;
   messageId: string;
-  imageUrl: MaybeString;
-  nftId: MaybeString;
-  tokenized: boolean;
+  imageUrl?: MaybeString;
+  nftId?: MaybeString;
+  tokenized?: boolean;
+  type: "image" | "model";
+  role?: "user" | "assistant";
 };
 
 export default function ToolBarWrapper({
@@ -18,15 +26,24 @@ export default function ToolBarWrapper({
   nftId,
   tokenized,
   imageUrl,
+  type,
 }: TToolBarWrapper) {
   return (
     <TooltipProvider>
       {ChatToolTips.map((item, index) => {
+        if (type === "image") {
+          if (!isToolbarImage(item.type)) return null;
+        }
+
+        if (type === "model") {
+          if (!isToolbarModel(item.type)) return null;
+        }
+
         if (item.type === "DOWNLOAD") {
           return (
             <DownloadModel
               tool={item}
-              modelUrl={modelUrl}
+              url={type === "image" ? imageUrl : modelUrl}
               index={index}
               key={`tool-tip-contents-${item.content.trim()}-${index}`}
             />
@@ -41,6 +58,32 @@ export default function ToolBarWrapper({
               modelUrl={modelUrl}
               nftId={nftId}
               tokenized={tokenized}
+              imageUrl={imageUrl}
+              index={index}
+              key={`tool-tip-contents-${item.content.trim()}-${index}`}
+            />
+          );
+        }
+        if (item.type === "EDIT_IMAGE") {
+          return (
+            <ToolTipRetryImage
+              messageId={messageId}
+              toolTipData={item}
+              length={ChatToolTips.length}
+              modelUrl={modelUrl}
+              imageUrl={imageUrl}
+              index={index}
+              key={`tool-tip-contents-${item.content.trim()}-${index}`}
+            />
+          );
+        }
+        if (item.type === "GENERATE_MODEL") {
+          return (
+            <ToolTipGenerateModel
+              messageId={messageId}
+              toolTipData={item}
+              length={ChatToolTips.length}
+              modelUrl={modelUrl}
               imageUrl={imageUrl}
               index={index}
               key={`tool-tip-contents-${item.content.trim()}-${index}`}

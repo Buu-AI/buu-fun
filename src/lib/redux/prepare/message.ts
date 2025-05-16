@@ -20,11 +20,13 @@ export function prepareMessagePayload(
             );
             const imageUrls =
               item.content?.images
-                ?.map((item) => item.url)
-                .filter((item) => typeof item === "string") ?? [];
+                ?.map((image) => image.url)
+                .filter((fv) => typeof fv === "string") ?? [];
+
             return {
               credits: item.credits,
               isAssistantLastMessage: false,
+              type: item.toolRequest?.type,
               messageId: item._id,
               sessionId: item.sessionId,
               createdAt: item.createdAt,

@@ -19,7 +19,6 @@ export default function InteractiveDropzone({
 }: InteractiveDropzoneProps) {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [isDraggingOver, setIsDraggingOver] = useState(false);
-
   const dispatch = useAppDispatch();
 
   // Configure dropzone to prevent default behavior

@@ -13,14 +13,14 @@ import {
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 type TDownloadModel = {
-  modelUrl: MaybeString;
+  url: MaybeString;
   open?: boolean;
   index: number;
   tool: TChatToolTips;
 };
 
 export default function DownloadModel({
-  modelUrl,
+  url,
   open,
   index,
   tool,
@@ -28,10 +28,10 @@ export default function DownloadModel({
   return (
     <Tooltip open={open}>
       <TooltipTrigger asChild>
-        {modelUrl ? (
+        {url ? (
           <motion.a
             download={true}
-            href={modelUrl ?? ""}
+            href={url ?? ""}
             target="_blank"
             initial="initial"
             whileHover="hover"

@@ -2,9 +2,10 @@ import {
   GetSubthreadGenRequestsQuery,
   GetSubthreadsQuery,
 } from "@/gql/types/graphql";
-import { TThreeDStyles } from "./settings";
+import { MaybeString } from "@/types";
 import { TChatMessage, TMessageQueryData } from "@/types/chat/chat-types";
 import { InfiniteData } from "@tanstack/react-query";
+import { TThreeDStyles } from "./settings";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type TMediaData = {
@@ -50,6 +51,17 @@ export type ChatMessage = {
   subThreads: TSubThread[];
 };
 
+export type TGenerateModal = {
+  isOpened: boolean;
+  imageUrl?: MaybeString;
+  modelUrl?: MaybeString;
+};
+
+export type TEditImage = {
+  isOpened: boolean;
+  imageUrl?: MaybeString;
+};
+
 export type TImageData = {
   id: string;
   url: string;
@@ -78,6 +90,8 @@ export type ChatState = {
     modelUrl?: string | null;
     imageUrl?: string | null;
   };
+  chatMessageEditImage: TEditImage;
+  genModelFromImage: TGenerateModal;
   sessionId: string;
   messages: TChatMessage[];
   chatMessages: InfiniteData<TMessageQueryData>;

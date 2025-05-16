@@ -6,6 +6,8 @@ import {
   GetSessions,
   SendChatMessage,
   CancelToolMessage,
+  GenerateModelFromImageMutation,
+  EditImageMutation,
 } from "@/gql/documents/creative-engine";
 import {
   ConfirmToolMessageMutationVariables,
@@ -21,6 +23,10 @@ import {
   GetSessionsQuery as TGetSessionsQuery,
   CancelToolMessageMutation,
   CancelToolMessageMutationVariables,
+  GenerateModelFromImageMutation as TGenerateModelFromImageMutation,
+  GenerateModelFromImageMutationVariables,
+  EditImageMutation as TEditImageMutation,
+  EditImageMutationVariables,
 } from "@/gql/types/graphql";
 import { QueryFunction } from "@tanstack/react-query";
 import { TThreeDStyles } from "../redux/features/settings";
@@ -234,6 +240,97 @@ export async function cancelToolCall({ messageId, accessToken }: TToolParams) {
     }
 
     return data.cancelToolMessage;
+  } catch (error) {
+    if (error instanceof TypedAppError) {
+      throw error;
+    }
+    // Otherwise, convert to our custom error
+    throw TypedAppError.fromExternalError(
+      "An unexpected error occurred",
+      error,
+    );
+  }
+}
+type TGenerateModelFromImageParams = GenerateModelFromImageMutationVariables &
+  AccessToken;
+export async function generateModelFromImageMutation({
+  accessToken,
+  imageUrl,
+  sessionId,
+}: TGenerateModelFromImageParams) {
+  try {
+    const data = await serverRequest<
+      TGenerateModelFromImageMutation,
+      GenerateModelFromImageMutationVariables
+    >(
+      GenerateModelFromImageMutation,
+      {
+        imageUrl,
+        sessionId,
+      },
+      {
+        Authorization: getAuthorization(accessToken),
+      },
+    );
+    if (!data) {
+      TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
+    }
+
+    if ("code" in data.generateModelFromImage) {
+      TypedAppError.throw(
+        data.generateModelFromImage.message,
+        TypedAppError.mapErrorCode(data.generateModelFromImage.code),
+      );
+    }
+
+    return data.generateModelFromImage;
+  } catch (error) {
+    if (error instanceof TypedAppError) {
+      throw error;
+    }
+    // Otherwise, convert to our custom error
+    throw TypedAppError.fromExternalError(
+      "An unexpected error occurred",
+      error,
+    );
+  }
+}
+
+export async function editImageMutation({
+  accessToken,
+  edit,
+  imageUrl,
+  sessionId,
+  numberOfImages,
+}: EditImageMutationVariables & AccessToken) {
+  try {
+    const data = await serverRequest<
+      TEditImageMutation,
+      EditImageMutationVariables
+    >(
+      EditImageMutation,
+      {
+        edit,
+        imageUrl,
+        sessionId,
+        numberOfImages,
+      },
+      {
+        Authorization: getAuthorization(accessToken),
+      },
+    );
+    if (!data) {
+      TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
+    }
+
+    if ("code" in data.editImage) {
+      TypedAppError.throw(
+        data.editImage.message,
+        TypedAppError.mapErrorCode(data.editImage.code),
+      );
+    }
+
+    return data.editImage;
   } catch (error) {
     if (error instanceof TypedAppError) {
       throw error;

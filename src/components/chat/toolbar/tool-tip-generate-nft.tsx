@@ -3,10 +3,10 @@ import { setGenerateNFT } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
-import { TChatToolTips } from "../chat/toolbar/tool-bar-content";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { ToolTips } from "./handle-tool-calls";
-import { buttonVariants } from "./tool-bar-tool-tips";
+import { TChatToolTips } from "./tool-bar-content";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
+import { ToolTips } from "../../generation/handle-tool-calls";
+import { buttonVariants } from "../../generation/tool-bar-tool-tips";
 import { MaybeString } from "@/types";
 import { useRouter } from "next/navigation";
 
@@ -20,7 +20,7 @@ type TToolTipGenerateNFT = {
   imageUrl: MaybeString;
   modelUrl: MaybeString;
   nftId: MaybeString;
-  tokenized: boolean;
+  tokenized?: boolean;
 };
 
 export default function ToolTipGenerateNft({
@@ -46,7 +46,7 @@ export default function ToolTipGenerateNft({
                 if (nftId) router.push(`/nfts/${nftId}`);
                 return;
               }
-              if (!messageId) {
+              if (!modelUrl) {
                 toast.loading("Model is being generated, Please wait", {
                   duration: 5000,
                 });

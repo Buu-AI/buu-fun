@@ -45,7 +45,7 @@ function MyBitrefillWidget({
           return;
         }
         const invoicePrice = parseFloat(
-          formatUnits(params.paymentAmount.toString(), 9)
+          formatUnits(params.paymentAmount.toString(), 9),
         );
 
         const buuPrice = TokensPrice?.buu ?? 0;

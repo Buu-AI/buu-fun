@@ -78,6 +78,9 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       toast.error("Something went wrong, Please try again.");
     },
   });
+
+  const fileCount = useAppSelector((state) => state.chat.inputFile.length);
+
   const queryClient = useQueryClient();
   // mutation for existing chat
   const { mutate: createExistingChat, isPending: isExistingChatPending } =
@@ -146,7 +149,6 @@ export default function ChatForm({ action }: TBottomBarContainer) {
     accessToken: string,
   ) => {
     try {
-      toast.loading("Preparing image for uploading....");
       const file = await blobUrlToFile(ImageData.url, ImageData.name);
       if (!file?.name) {
         toast.dismiss();
@@ -213,11 +215,6 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       }
 
       if (isChatLoading) {
-        // if (isOverAllRequestLimitReached(isChatPending.totalRequest)) {
-        //   return toast.error(
-        //     "Whoa, you're on fire 🔥. You've hit the limit of 4 creations."
-        //   );
-        // }
         return toast.error("Hold on!, Still generating your model...");
       }
 
@@ -227,11 +224,13 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         const inputFileRequests = inputFile.map((item) =>
           handleImageUploadUrl(item, identityToken),
         );
-        const uploadedImages = await Promise.all(inputFileRequests);
+        toast.loading("Preparing image for uploading....", { duration: 1200 });
 
+        const uploadedImages = await Promise.all(inputFileRequests);
         imageUrls = uploadedImages
           .map((item) => item?.uploadUrl)
           .filter((fv) => typeof fv === "string");
+
         if (imageUrls.length !== inputFile.length) {
           throw new Error("Failed to upload Image, Please try again");
         }
@@ -379,6 +378,11 @@ export default function ChatForm({ action }: TBottomBarContainer) {
                     toast.error(`Image type ${file.type} is not supported yet`);
                     return;
                   }
+                  if (fileCount > 4) {
+                    toast.error(`Maximum file count is 4`);
+                    return;
+                  }
+
                   const imageUrl = URL.createObjectURL(file);
                   const imageData = {
                     id: nanoid(),
