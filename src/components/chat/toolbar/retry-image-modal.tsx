@@ -144,7 +144,7 @@ export default function RetryImageModal() {
         </DialogHeader>
         <div
           className={cn(
-            "flex overflow-hidden w-full md:w-[50%] mx-auto aspect-square",
+            "flex overflow-hidden rounded-lg w-full  mx-auto max-w-[50%]",
             {
               hidden: !imageUrl,
             },
@@ -157,7 +157,7 @@ export default function RetryImageModal() {
               alt="Retrying Image Url"
               width={720}
               height={720}
-              className="aspect-square w-full h-full object-cover"
+              className="overflow-hidden  rounded-lg h-full object-contain"
             />
           ) : null}
         </div>
