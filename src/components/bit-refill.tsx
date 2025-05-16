@@ -59,7 +59,6 @@ function MyBitrefillWidget({
           userAddress: address ?? "",
           wallet,
           paymentAddress,
-          buuDecimals,
           onCompletedCallback() {
             runConfetti({ duration: 5000 });
           },

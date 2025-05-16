@@ -31,7 +31,6 @@ type InvoiceCreatingParams = {
   userAddress: string; // User's wallet address
   wallet: WalletInfo; // User's wallet information
   paymentAddress: string;
-  buuDecimals: number;
   onCompletedCallback?: () => void;
 };
 type TJupiterOrderParams = {
@@ -54,7 +53,6 @@ export const bitRefillFunctions = {
     solPricing,
     invoicePrice,
     invoicePriceLamports,
-    buuDecimals,
     onCompletedCallback,
   }: InvoiceCreatingParams) => {
     // For tracking transaction progress
@@ -98,7 +96,7 @@ export const bitRefillFunctions = {
       // 1000 / (1 - 20 / 100)
       const finalAmount = amountInBuu / (1 - WITHDRAW_REFERRAL_FEE / 100);
       const finalAmountFormatted = Math.floor(
-        finalAmount * 10 ** buuDecimals,
+        finalAmount * 10 ** 6,
       ).toString();
 
       // Prepare Jupiter order parameters
@@ -199,7 +197,9 @@ export const bitRefillFunctions = {
 
       // Connect to Solana network
       // [TODO] Change this in production to helius
-      const connection = new Connection(getClusterUrl());
+      const connection = new Connection(getClusterUrl(), {
+        commitment: "finalized",
+      });
 
       // Create transfer transaction to payment recipient
       toast.loading("Creating payment transaction...", { id: toastId });
@@ -224,24 +224,11 @@ export const bitRefillFunctions = {
       const txSignature = await wallet.walletData.sendTransaction(
         transferringTransaction,
         connection,
-      );
+      )
 
       // Wait for transaction confirmation
       toast.loading("Confirming transaction...", { id: toastId });
 
-      const confirmation = await connection.confirmTransaction(
-        {
-          signature: txSignature ?? "",
-          blockhash: transferringTransaction.recentBlockhash ?? "",
-          lastValidBlockHeight:
-            transferringTransaction.lastValidBlockHeight ?? 0,
-        },
-        "confirmed",
-      );
-
-      if (confirmation.value.err) {
-        throw new Error(`Transaction failed: ${confirmation.value.err}`);
-      }
       try {
         onCompletedCallback?.();
       } catch {}
