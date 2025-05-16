@@ -2,7 +2,8 @@ import InfoIcon from "@/assets/icons/info-icon";
 import ToolCallApproveButton from "./tool-call-approve-button";
 import ToolCallCancelButton from "./tool-call-cancel-button";
 import AssistantMessageShowDetailToolCall from "./tool-show-detail";
-import { PromptPayload } from "../types.temp";
+import { PromptPayload } from "@/types/chat/chat-types";
+import { cn } from "@/lib/utils";
 
 type TAssistantToolCall = {
   messageId: string;
@@ -23,11 +24,20 @@ export default function AssistantToolCall({
       ) : null}
       <div>
         <div className="mt-3">
-          <div className="flex gap-1 items-center">
+          <div
+            className={cn("flex gap-1 items-center", {
+              hidden: !credits,
+            })}
+          >
             <div className="w-3 h-3">
               <InfoIcon />
             </div>
-            <p className="text-xs font-bold uppercase text-muted-foreground/60">
+
+            <p
+              className={cn(
+                "text-xs font-bold uppercase text-muted-foreground/60",
+              )}
+            >
               This request will cost {credits} credits
             </p>
           </div>

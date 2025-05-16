@@ -12,6 +12,9 @@ import {
   TSubThreadsMedia,
   TSubThreadsResponse,
   TSubthreadV1,
+  TEditImage,
+  TGenerateModal,
+  TMaximize,
 } from "./chat-types";
 
 const initialState: ChatState = {
@@ -36,8 +39,20 @@ const initialState: ChatState = {
     modalOpened: false,
     subThreadId: null,
   },
+  maximizedContainer: {
+    isOpened: false,
+    data: undefined,
+  },
   sessionId: "",
   messages: [],
+  chatMessageEditImage: {
+    isOpened: false,
+    imageUrl: null,
+  },
+  genModelFromImage: {
+    isOpened: false,
+    imageUrl: null,
+  },
   chatMessages: {
     pageParams: [],
     pages: [],
@@ -57,7 +72,7 @@ const ChatSlice = createSlice({
         messageId?: string;
         modelUrl?: string | null;
         imageUrl?: string | null;
-      }>,
+      }>
     ) {
       state.genNft.isGenNftModalOpen = action?.payload?.isGenNftOpen;
       state.genNft.messageId = action.payload.messageId;
@@ -71,11 +86,14 @@ const ChatSlice = createSlice({
       state.retry.subThreadId = action.payload;
     },
     setInputFile(state, action: PayloadAction<TImageData>) {
-      state.inputFile?.push(action.payload);
+      const fileLength = state.inputFile.length < 4;
+      if (fileLength) {
+        state.inputFile?.push(action.payload);
+      }
     },
     removeImage(state, action: PayloadAction<string>) {
       state.inputFile = state.inputFile.filter(
-        (item) => item.id !== action.payload,
+        (item) => item.id !== action.payload
       );
     },
     clearInputFile(state) {
@@ -102,7 +120,7 @@ const ChatSlice = createSlice({
         action: PayloadAction<{
           subThreadId: string;
           Media: TSubThreadsMedia[];
-        }>,
+        }>
       ) {
         state.genRequest[action.payload.subThreadId] = action.payload.Media;
       },
@@ -125,13 +143,13 @@ const ChatSlice = createSlice({
             return eachPage.items.map(
               (item): TSubthreadV1 => ({
                 ...item,
-              }),
+              })
             );
           })
           .sort(
             (a, b) =>
               new Date(a.createdAt as string).getTime() -
-              new Date(b.createdAt as string).getTime(),
+              new Date(b.createdAt as string).getTime()
           );
 
         return {
@@ -205,7 +223,7 @@ const ChatSlice = createSlice({
                 modelMesh: modRes.model_mesh,
                 status: modRes.status,
                 type: modRes.type,
-              }),
+              })
             ),
         }));
         return {
@@ -218,7 +236,7 @@ const ChatSlice = createSlice({
       reducer(state, action: PayloadAction<TSubThread>) {
         console.log("PAYLOAD", action.payload);
         const index = state.threads.subThreads.findIndex(
-          (fv) => fv._id === action.payload._id,
+          (fv) => fv._id === action.payload._id
         );
 
         if (index !== -1) {
@@ -268,9 +286,22 @@ const ChatSlice = createSlice({
     setNewSession(state, payload: PayloadAction<string>) {
       state.sessionId = payload.payload;
     },
+    setEditImage(state, action: PayloadAction<TEditImage>) {
+      state.chatMessageEditImage.isOpened = action.payload.isOpened;
+      state.chatMessageEditImage.imageUrl = action.payload.imageUrl;
+    },
+    setGenerateModel(state, action: PayloadAction<TGenerateModal>) {
+      state.genModelFromImage.isOpened = action.payload.isOpened;
+      state.genModelFromImage.imageUrl = action.payload.imageUrl;
+      state.genModelFromImage.modelUrl = action.payload.modelUrl;
+    },
+    setMaximizedViewer(state, action: PayloadAction<TMaximize>) {
+      state.maximizedContainer.isOpened = action.payload.isOpened;
+      state.maximizedContainer.data = action.payload.data;
+    },
     setNewMessage(
       state,
-      action: PayloadAction<InfiniteData<TMessageQueryData>>,
+      action: PayloadAction<InfiniteData<TMessageQueryData>>
     ) {
       state.chatMessages = action.payload;
     },
@@ -314,6 +345,9 @@ export const {
   setNewSession,
   setNewMessage,
   removeImage,
+  setEditImage,
+  setGenerateModel,
+  setMaximizedViewer,
 } = ChatSlice.actions;
 
 export default ChatSlice.reducer;

@@ -8,7 +8,7 @@ export type TBottomBarContainer = {
 export default function BottomBarContainer({ action }: TBottomBarContainer) {
   return (
     <div className="w-full px-1 py-1 mb-1  max-w-2xl mx-auto ">
-      <div className="relative z-50">
+      <div className=" relative z-50">
         <SettingsBar />
       </div>
       <div className="relative">

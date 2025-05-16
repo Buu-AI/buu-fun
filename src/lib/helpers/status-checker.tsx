@@ -1,7 +1,7 @@
 import { PlanKeyMapper } from "@/constants/subscription/subscription-plans";
 import { TGenResponseStatus } from "../redux/features/chat-types";
 import { MessageRole } from "@/gql/types/graphql";
-import { TMessageStatus } from "@/types/chat/chat-types";
+import { TMessageStatus, TToolType } from "@/types/chat/chat-types";
 
 export function isInProgress(status: TGenResponseStatus) {
   return status === "InProgress";
@@ -81,4 +81,8 @@ export function isRoleTool(role: string) {
 
 export function isRoleUser(role: string) {
   return role === MessageRole.User;
+}
+
+export function isToolModel(type?: TToolType) {
+  return type && type === "GENERATE_MODEL_FROM_IMAGE";
 }

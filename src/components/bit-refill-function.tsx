@@ -31,7 +31,6 @@ type InvoiceCreatingParams = {
   userAddress: string; // User's wallet address
   wallet: WalletInfo; // User's wallet information
   paymentAddress: string;
-  buuDecimals: number;
   onCompletedCallback?: () => void;
 };
 type TJupiterOrderParams = {
@@ -54,7 +53,6 @@ export const bitRefillFunctions = {
     solPricing,
     invoicePrice,
     invoicePriceLamports,
-    buuDecimals,
     onCompletedCallback,
   }: InvoiceCreatingParams) => {
     // For tracking transaction progress
@@ -75,7 +73,7 @@ export const bitRefillFunctions = {
       const paymentAmountInUSD = invoicePrice * solPricing;
       if (paymentAmountInUSD < MIN_AMOUNT_TO_PURCHASE_USD) {
         throw new Error(
-          `Invoice amount should be greater than $${MIN_AMOUNT_TO_PURCHASE_USD}`
+          `Invoice amount should be greater than $${MIN_AMOUNT_TO_PURCHASE_USD}`,
         );
       }
 
@@ -97,9 +95,7 @@ export const bitRefillFunctions = {
       console.log("[AMOUNT_IN_BUU]", amountInBuu);
       // 1000 / (1 - 20 / 100)
       const finalAmount = amountInBuu / (1 - WITHDRAW_REFERRAL_FEE / 100);
-      const finalAmountFormatted = Math.floor(
-        finalAmount * 10 ** buuDecimals
-      ).toString();
+      const finalAmountFormatted = Math.floor(finalAmount * 10 ** 6).toString();
 
       // Prepare Jupiter order parameters
       const jupiterOrderParams: TJupiterOrderParams = {
@@ -134,26 +130,26 @@ export const bitRefillFunctions = {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       if (jupiterOrderResponse.status !== 200) {
         throw new Error(
-          `Failed to book order for swapping Buu Tokens, Please try again`
+          `Failed to book order for swapping Buu Tokens, Please try again`,
         );
       }
 
       const jupiterOrder = await jupiterOrderResponse.json();
       if (!jupiterOrder || jupiterOrder.error || !jupiterOrder?.transaction) {
         throw new Error(
-          `Failed to get order from Jupiter: ${jupiterOrder?.error || "Unknown error"}`
+          `Failed to get order from Jupiter: ${jupiterOrder?.error || "Unknown error"}`,
         );
       }
 
       // Deserialize the transaction
       const transactionBase64 = jupiterOrder.transaction;
       const transaction = VersionedTransaction.deserialize(
-        Buffer.from(transactionBase64, "base64")
+        Buffer.from(transactionBase64, "base64"),
       );
 
       toast.loading("Please sign the transaction in your wallet...", {
@@ -173,7 +169,7 @@ export const bitRefillFunctions = {
 
       // Serialize the signed transaction to base64 string
       const signedTransaction = Buffer.from(signature.serialize()).toString(
-        "base64"
+        "base64",
       );
 
       // Execute the Jupiter swap
@@ -189,7 +185,7 @@ export const bitRefillFunctions = {
             signedTransaction: signedTransaction,
             requestId: jupiterOrder.requestId,
           }),
-        }
+        },
       );
 
       const swap = await executeJupiterTransaction.json();
@@ -199,7 +195,9 @@ export const bitRefillFunctions = {
 
       // Connect to Solana network
       // [TODO] Change this in production to helius
-      const connection = new Connection(getClusterUrl());
+      const connection = new Connection(getClusterUrl(), {
+        commitment: "finalized",
+      });
 
       // Create transfer transaction to payment recipient
       toast.loading("Creating payment transaction...", { id: toastId });
@@ -209,13 +207,13 @@ export const bitRefillFunctions = {
           fromPubkey: new PublicKey(wallet.address),
           toPubkey: new PublicKey(paymentAddress),
           lamports: invoicePriceLamports, // Use the actual invoice amount
-        })
+        }),
       );
       const blockhash = (await connection.getLatestBlockhash("finalized"))
         .blockhash;
 
       transferringTransaction.recentBlockhash = blockhash;
-
+      transferringTransaction.feePayer = new PublicKey(wallet.address);
       // Sign and send the transfer transaction
       if (!wallet.walletData.sendTransaction) {
         throw new Error("Wallet does not support sending transactions");
@@ -223,25 +221,12 @@ export const bitRefillFunctions = {
 
       const txSignature = await wallet.walletData.sendTransaction(
         transferringTransaction,
-        connection
+        connection,
       );
 
       // Wait for transaction confirmation
       toast.loading("Confirming transaction...", { id: toastId });
 
-      const confirmation = await connection.confirmTransaction(
-        {
-          signature: txSignature ?? "",
-          blockhash: transferringTransaction.recentBlockhash ?? "",
-          lastValidBlockHeight:
-            transferringTransaction.lastValidBlockHeight ?? 0,
-        },
-        "confirmed"
-      );
-
-      if (confirmation.value.err) {
-        throw new Error(`Transaction failed: ${confirmation.value.err}`);
-      }
       try {
         onCompletedCallback?.();
       } catch {}

@@ -2,7 +2,7 @@
 import GenerateNft from "@/assets/icons/Generate-nft";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { generateNFT } from "@/lib/react-query/nfts";
-import { setGenerateNFT } from "@/lib/redux/features/chat";
+import { setGenerateNFT, setMaximizedViewer } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
 import { createNftSchema, TCreateNftSchema } from "@/lib/zod/create-nft";
 import { useAuthentication } from "@/providers/account.context";
@@ -15,21 +15,22 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Button } from "../ui/button";
-import { Checkbox } from "../ui/checkbox";
+import { Button } from "../../ui/button";
+import { Checkbox } from "../../ui/checkbox";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "../ui/dialog";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
-const ModelViewer = dynamic(() => import("../generation/model-viewer"), {
+} from "../../ui/dialog";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
+import { Textarea } from "../../ui/textarea";
+
+const ModelViewer = dynamic(() => import("../../generation/model-viewer"), {
   ssr: false,
-  loading: () => null, // Use null instead of undefined
+  loading: () => null,
 });
 
 export default function GenerateNFTModal() {
@@ -67,7 +68,13 @@ export default function GenerateNFTModal() {
           messageId: undefined,
           imageUrl: undefined,
           modelUrl: undefined,
-        }),
+        })
+      );
+      dispatch(
+        setMaximizedViewer({
+          isOpened: false,
+          data: undefined,
+        })
       );
     },
     onError(error) {
@@ -111,7 +118,7 @@ export default function GenerateNFTModal() {
               messageId: undefined,
               imageUrl: undefined,
               modelUrl: undefined,
-            }),
+            })
           );
           return;
         }

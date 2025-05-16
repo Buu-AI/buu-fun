@@ -2,6 +2,7 @@ import {
   GetMessagesQuery,
   MessageRole,
   ToolRequestStatus,
+  ToolRequestType,
 } from "@/gql/types/graphql";
 import { TErrorTypeName } from "@/lib/redux/features/chat-types";
 import { MaybeString } from "..";
@@ -10,6 +11,7 @@ import { MaybeString } from "..";
 export type PromptPayload = any;
 export type TMessageRole = `${MessageRole}`;
 export type TMessageStatus = `${ToolRequestStatus}`;
+export type TToolType = `${ToolRequestType}`;
 export type TMessageQueryData = Exclude<
   GetMessagesQuery["getMessages"],
   TErrorTypeName
@@ -26,6 +28,7 @@ export type TChatMessage = {
   modelUrl: MaybeString;
   imageUrls: string[];
   imageUrl: MaybeString;
+  type?: TToolType;
   role: TMessageRole;
   nftId: MaybeString;
   payload: PromptPayload;

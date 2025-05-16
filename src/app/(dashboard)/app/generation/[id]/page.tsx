@@ -1,4 +1,4 @@
-import GenerateNFTModal from "@/components/generation/generate-nft-modal";
+import GenerateNFTModal from "@/components/chat/toolbar/generate-nft-modal";
 import RetryConfirmationDialog from "@/components/generation/retry-confirmation-dialog";
 import ThreadsChatInitializer from "@/components/generation/threads-chat-initializer";
 import ThreadsWrapper from "@/components/generation/threads-wrapper";
