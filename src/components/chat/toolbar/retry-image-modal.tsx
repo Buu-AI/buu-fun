@@ -84,8 +84,7 @@ export default function RetryImageModal() {
       dispatch(
         setMaximizedViewer({
           isOpened: false,
-          imageUrl: undefined,
-          modelUrl: undefined,
+          data: undefined,
         })
       );
       dispatch(
