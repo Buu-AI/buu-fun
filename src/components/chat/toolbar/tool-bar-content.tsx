@@ -1,4 +1,4 @@
-import { MagicPenIcon } from "@/assets/icons";
+import { MaximizeIcon, MagicPenIcon } from "@/assets/icons";
 import CreateChatNftIcon from "@/assets/icons/create-chat-nft-icon";
 import GenerateModelIcon from "@/assets/icons/generate-model-icon";
 import ModelDownload from "@/assets/icons/model-download";
@@ -8,10 +8,12 @@ export const allowedImageTool: TChatToolTips["type"][] = [
   "DOWNLOAD",
   "EDIT_IMAGE",
   "GENERATE_MODEL",
+  "MAXIMIZE_VIEW",
 ];
 export const allowedModelTools: TChatToolTips["type"][] = [
   "DOWNLOAD",
   "GENERATE_NFT",
+  "MAXIMIZE_VIEW",
 ];
 export const isToolbarImage = (type: TChatToolTips["type"]) => {
   return allowedImageTool.some((item) => type === item);
@@ -22,7 +24,12 @@ export const isToolbarModel = (type: TChatToolTips["type"]) => {
 };
 
 export type TChatToolTips = {
-  type: "DOWNLOAD" | "GENERATE_NFT" | "EDIT_IMAGE" | "GENERATE_MODEL";
+  type:
+    | "DOWNLOAD"
+    | "GENERATE_NFT"
+    | "EDIT_IMAGE"
+    | "GENERATE_MODEL"
+    | "MAXIMIZE_VIEW";
   Icon: ReactNode;
   content: string;
 };
@@ -53,5 +60,10 @@ export const ChatToolTips: TChatToolTips[] = [
     type: "GENERATE_MODEL",
     content: "Generate Model",
     Icon: <GenerateModelIcon />,
+  },
+  {
+    type: "MAXIMIZE_VIEW",
+    content: "Maximize view",
+    Icon: <MaximizeIcon />,
   },
 ];

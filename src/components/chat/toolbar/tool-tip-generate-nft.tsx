@@ -16,7 +16,7 @@ type TToolTipGenerateNFT = {
   index: number;
   length: number;
   open?: boolean;
-  messageId: string;
+  messageId?: string;
   imageUrl: MaybeString;
   modelUrl: MaybeString;
   nftId: MaybeString;
@@ -50,6 +50,12 @@ export default function ToolTipGenerateNft({
                 toast.loading("Model is being generated, Please wait", {
                   duration: 5000,
                 });
+                return;
+              }
+              if (!messageId) {
+                toast.success(
+                  `NFT Generation requires it to be a valid Message`,
+                );
                 return;
               }
               dispatch(
