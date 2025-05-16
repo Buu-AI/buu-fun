@@ -1,18 +1,16 @@
 "use client";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { useAppDispatch } from "@/hooks/redux";
+import { setGenerateModel } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
 import { MaybeString } from "@/types";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { ToolTips } from "../../generation/handle-tool-calls";
 import { buttonVariants } from "../../generation/tool-bar-tool-tips";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
 import { TChatToolTips } from "./tool-bar-content";
-import { setEditImage } from "@/lib/redux/features/chat";
-import { isChatGenerating } from "@/lib/redux/selectors/chatMessages";
 
-type TToolTipRetryImage = {
+type TToolTipGenerateModel = {
   toolTipData: TChatToolTips;
   index: number;
   length: number;
@@ -22,23 +20,18 @@ type TToolTipRetryImage = {
   modelUrl: MaybeString;
 };
 
-export default function ToolTipRetryImage({
+export default function ToolTipGenerateModel({
   toolTipData,
   index,
   imageUrl,
-}: TToolTipRetryImage) {
+}: TToolTipGenerateModel) {
   const dispatch = useAppDispatch();
-  const isChatPending = useAppSelector(isChatGenerating);
-
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         {
           <motion.button
             onClick={() => {
-              if (isChatPending) {
-                toast.error("AI is thinking, please try after current message is completed");
-              }
               if (!imageUrl) {
                 toast.loading("Image is being generated, Please wait", {
                   duration: 5000,
@@ -46,7 +39,7 @@ export default function ToolTipRetryImage({
                 return;
               }
               dispatch(
-                setEditImage({
+                setGenerateModel({
                   isOpened: true,
                   imageUrl,
                 })

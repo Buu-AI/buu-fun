@@ -2,6 +2,7 @@ import BottomBarContainer from "@/components/chat-input/bottom-bar-container";
 import ChatContainer from "@/components/chat/chat-container";
 import ChatMessageInitializer from "@/components/chat/chat-initializer";
 import GenerateNFTModal from "@/components/chat/toolbar/generate-nft-modal";
+import ModelGenerationModal from "@/components/chat/toolbar/model-generation-modal";
 import RetryImageModal from "@/components/chat/toolbar/retry-image-modal";
 import ToolTipRetryImage from "@/components/chat/toolbar/tool-tip-retry-image";
 import { DndKitProvider } from "@/providers/dnd-kit-provider";
@@ -24,6 +25,7 @@ export default async function ChatPage({ params }: TChatPage) {
         </div>
       </main>
       <GenerateNFTModal />
+      <ModelGenerationModal />
       <RetryImageModal />
     </DndKitProvider>
   );

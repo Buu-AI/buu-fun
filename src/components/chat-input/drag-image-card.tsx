@@ -1,4 +1,4 @@
-import { useAppDispatch } from "@/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { setInputFile } from "@/lib/redux/features/chat";
 import { TImageData } from "@/lib/redux/features/chat-types";
 import { cn, getAllowedContentTypeMaps } from "@/lib/utils";
@@ -19,7 +19,7 @@ export default function InteractiveDropzone({
 }: InteractiveDropzoneProps) {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [isDraggingOver, setIsDraggingOver] = useState(false);
-
+  const fileCount = useAppSelector((state) => state.chat.inputFile.length);
   const dispatch = useAppDispatch();
 
   // Configure dropzone to prevent default behavior
@@ -41,6 +41,12 @@ export default function InteractiveDropzone({
           toast.error(`Image type ${file.type} is not supported yet`);
           return;
         }
+        
+        if (fileCount > 4) {
+          toast.error(`Maximum file count is 4`);
+          return;
+        }
+
         const imageUrl = URL.createObjectURL(file);
         const imageData = {
           id: nanoid(),
@@ -57,7 +63,7 @@ export default function InteractiveDropzone({
         setRotation({ x: 0, y: 0 });
       }, 200);
     },
-    [dispatch, onImageSelected, setIsDraggingOver, setRotation],
+    [dispatch, onImageSelected, setIsDraggingOver, setRotation]
   );
 
   useEffect(() => {
@@ -85,7 +91,7 @@ export default function InteractiveDropzone({
       if (
         items &&
         Array.from(items).some(
-          (item) => item.kind === "file" && item.type.startsWith("image/"),
+          (item) => item.kind === "file" && item.type.startsWith("image/")
         )
       ) {
         setIsDraggingOver(true);
@@ -101,7 +107,7 @@ export default function InteractiveDropzone({
         const fileArray = Array.from(files);
         // Filter for images
         const imageFiles = fileArray.filter((file) =>
-          file.type.startsWith("image/"),
+          file.type.startsWith("image/")
         );
 
         if (imageFiles.length > 0) {

@@ -2,8 +2,10 @@ import ToolTipGenerateNft from "@/components/chat/toolbar/tool-tip-generate-nft"
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { MaybeString } from "@/types";
 import DownloadModel from "./download-model";
-import { ChatToolTips, isToolImage } from "./tool-bar-content";
+import { ChatToolTips, isToolbarImage,isToolbarModel } from "./tool-bar-content";
 import ToolTipRetryImage from "./tool-tip-retry-image";
+import ToolTipGenerateModel from "./tool-tip-generate-model";
+import { isToolModel } from "@/lib/helpers/status-checker";
 
 type TToolBarWrapper = {
   modelUrl?: MaybeString;
@@ -26,9 +28,15 @@ export default function ToolBarWrapper({
   return (
     <TooltipProvider>
       {ChatToolTips.map((item, index) => {
+
         if (type === "image") {
-          if (!isToolImage(item.type)) return null;
+          if (!isToolbarImage(item.type)) return null;
         }
+
+        if (type === "model") {
+          if (!isToolbarModel(item.type)) return null;
+        }
+
         if (item.type === "DOWNLOAD") {
           return (
             <DownloadModel
@@ -69,7 +77,7 @@ export default function ToolBarWrapper({
         }
         if (item.type === "GENERATE_MODEL") {
           return (
-            <ToolTipRetryImage
+            <ToolTipGenerateModel
               messageId={messageId}
               toolTipData={item}
               length={ChatToolTips.length}

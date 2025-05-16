@@ -3,6 +3,7 @@ import { BorderBeam } from "@/components/ui/border-beam";
 import {
   isToolCallGenerating,
   isToolCallPendingCanceledOrFailed,
+  isToolModel,
 } from "@/lib/helpers/status-checker";
 import { cn } from "@/lib/utils";
 import { MaybeString } from "@/types";
@@ -32,12 +33,12 @@ export default function GeneratedModelCard({
 }: TGeneratedModelCard) {
   const isPendingOrCanceledOrFailed = isToolCallPendingCanceledOrFailed(status);
   const isGenerating = isToolCallGenerating(status);
-  if (isPendingOrCanceledOrFailed || !imageUrl) {
+  if (isPendingOrCanceledOrFailed || !isToolModel(type)) {
     return null;
   }
   return (
     <div className="mt-2">
-      <div className="max-w-[clamp(250px,100%,320px)] border-2 overflow-hidden w-full aspect-square rounded-2xl relative justify-center">
+      <div className="max-w-[clamp(250px,100%,320px)] overflow-hidden w-full aspect-square rounded-2xl relative justify-center">
         <GenerationLoader isGenerating={isGenerating} />
         <ImageViewLoader imageUrl={imageUrl} isGenerating={isGenerating} />
         <ModelViewWrapper imageUrl={imageUrl} modelUrl={modelUrl} />

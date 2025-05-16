@@ -9,9 +9,16 @@ export const allowedImageTool: TChatToolTips["type"][] = [
   "EDIT_IMAGE",
   "GENERATE_MODEL",
 ];
-
-export const isToolImage = (type: TChatToolTips["type"]) => {
+export const allowedModelTools: TChatToolTips["type"][] = [
+  "DOWNLOAD",
+  "GENERATE_NFT",
+];
+export const isToolbarImage = (type: TChatToolTips["type"]) => {
   return allowedImageTool.some((item) => type === item);
+};
+
+export const isToolbarModel = (type: TChatToolTips["type"]) => {
+  return allowedModelTools.some((item) => type === item);
 };
 
 export type TChatToolTips = {
