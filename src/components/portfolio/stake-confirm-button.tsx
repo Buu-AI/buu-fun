@@ -1,8 +1,9 @@
-import React from "react";
-import { Button } from "../ui/button";
 import { CoinStackIcon } from "@/assets/icons";
-
-export default function StakeConfirmButton() {
+import { Button } from "../ui/button";
+type TStakeConfirmButton = {
+  disabled?: boolean;
+};
+export default function StakeConfirmButton({}: TStakeConfirmButton) {
   return (
     <Button className="w-full">
       <CoinStackIcon />

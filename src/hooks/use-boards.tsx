@@ -6,22 +6,22 @@ import { useAuthentication } from "@/providers/account.context";
 import { useQuery } from "@tanstack/react-query";
 
 export function useSharableBoards({
-  threadId,
+  sessionId,
   count,
 }: {
-  threadId?: string;
+  sessionId?: string;
   count?: number;
 }) {
   const { identityToken: accessToken } = useAuthentication();
 
   return useQuery({
-    queryKey: ["user-shareable-boards", threadId, accessToken],
+    queryKey: ["user-shareable-boards", sessionId, accessToken],
     enabled: !!(accessToken && accessToken?.length > 1),
     queryFn: () => {
       if (!accessToken) return;
       return getUserSharableBoardQuery({
         accessToken: accessToken,
-        threadId,
+        sessionId,
         count,
       });
     },

@@ -1,6 +1,6 @@
 import { SheetClose } from "@/components/ui/sheet";
 import { useAppDispatch } from "@/hooks/redux";
-import { getAllThreads } from "@/lib/react-query/threads";
+import { getSessions } from "@/lib/react-query/threads.v3";
 import { setHistoryModel } from "@/lib/redux/features/settings";
 import { useAuthentication } from "@/providers/account.context";
 import { useQuery } from "@tanstack/react-query";
@@ -8,7 +8,6 @@ import { format } from "date-fns";
 import { motion } from "framer-motion";
 import { Ghost, Loader2, MessageCircle, TimerIcon } from "lucide-react";
 import Link from "next/link";
-import { iconByTitle, TKey } from "../settings/styles-data";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 10 },
@@ -24,17 +23,16 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
 };
 export default function HistoryNavigation() {
-  //   const data = mockData;
-  //   const isLoading = false;
   const dispatch = useAppDispatch();
   const { identityToken } = useAuthentication();
   const { data, isLoading } = useQuery({
-    queryKey: ["get-all-recent-threads"],
+    queryKey: ["get-all-recent-sessions"],
     queryFn: async () => {
       const accessToken = identityToken;
-      return await getAllThreads(accessToken ?? "");
+      return await getSessions({ accessToken: accessToken ?? "" });
     },
   });
+
   if (isLoading) {
     return (
       <div className="flex  items-center justify-center w-full h-[80%]">
@@ -69,9 +67,9 @@ export default function HistoryNavigation() {
       variants={containerVariants}
     >
       {data?.items.map((item) => {
-        const styleColor = (item.style ?? "no_style") as TKey;
+        // const styleColor = (item. ?? "no_style") as TKey;
 
-        const IconData = iconByTitle[styleColor];
+        // const IconData = iconByTitle[styleColor];
         return (
           <SheetClose key={item._id} asChild>
             <motion.div
@@ -85,7 +83,7 @@ export default function HistoryNavigation() {
                   dispatch(setHistoryModel(false));
                 }}
                 prefetch={false}
-                href={`/app/generation/${item._id}`}
+                href={`/app/chat/${item._id}`}
                 className="w-full top-0 left-0 absolute  h-full"
               />
               <div className="flex items-center gap-2">
@@ -99,12 +97,12 @@ export default function HistoryNavigation() {
                   <TimerIcon className="w-4 h-4 text-blue-300" />
                   {format(new Date(item.createdAt), "HH:mm: dd MMMM")}
                 </div>
-                <div className="bg-buu flex items-center justify-center gap-1  relative shadow-buu-pill border-buu rounded-full   px-1.5 py-1">
-                  <div className="w-4 h-4">{IconData?.Icon}</div>
-                  <p className="text-xs font-semibold px-0.5  text-[#D5D9DF60] capitalize line-clamp-2">
+                {/* <div className="bg-buu flex items-center justify-center gap-1  relative shadow-buu-pill border-buu rounded-full   px-1.5 py-1"> */}
+                {/* <div className="w-4 h-4">{IconData?.Icon}</div> */}
+                {/* <p className="text-xs font-semibold px-0.5  text-[#D5D9DF60] capitalize line-clamp-2">
                     {IconData?.displayName}
-                  </p>
-                </div>
+                  </p> */}
+                {/* </div> */}
               </div>
             </motion.div>
           </SheetClose>

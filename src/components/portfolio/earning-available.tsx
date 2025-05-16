@@ -1,4 +1,4 @@
-import { useBuuPricingData } from "@/hooks/use-pricing-history";
+import { useBuuPricingData } from "@/hooks/use-pricing";
 import { useUserStakingData } from "@/hooks/use-staking-data";
 import {
   formatNumber,

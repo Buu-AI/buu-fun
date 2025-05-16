@@ -11,10 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useGlobalStakingData } from "@/hooks/use-global-staking";
-import {
-  useBuuPricingData,
-  useTokenBalance,
-} from "@/hooks/use-pricing-history";
+import { useBuuPricingData, useTokenBalance } from "@/hooks/use-pricing";
 import { cn, formatNumberWithFractions } from "@/lib/utils";
 import { ArrowDown } from "lucide-react";
 import { useState } from "react";
@@ -74,7 +71,7 @@ export default function RoiStakingCard() {
 
   function calculatePercentage(
     totalROI: number,
-    amount: number | null
+    amount: number | null,
   ): number {
     if (amount && !isNaN(Number(amount)) && Number(amount) > 0) {
       return (totalROI / Number(amount)) * 100;
@@ -245,7 +242,6 @@ export default function RoiStakingCard() {
                 />
               );
             })}
-            
           </div>
         </div>
         <div className="mt-6">

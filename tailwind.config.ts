@@ -20,6 +20,7 @@ export default {
       },
       colors: {
         buu: {
+          destructive: "#EE255F",
           DEFAULT: "rgba(28, 32, 39, 0.36)",
           blue: "#78D8FC",
           button: {

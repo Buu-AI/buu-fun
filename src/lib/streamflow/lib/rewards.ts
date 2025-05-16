@@ -139,7 +139,6 @@ const createDefaultRewardEntry = (
     buffer: [],
   };
 };
-
 export const calcRewards = (
   rewardEntryAccount: ProgramAccount<RewardEntry> | undefined,
   stakeEntryAccount: ProgramAccount<StakeEntry>,

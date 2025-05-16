@@ -32,11 +32,11 @@ export default function ReferralCode() {
   });
   const { mutate: AddRedeemVoucher, isPending } = useMutation({
     mutationFn: addCreditsMutation,
-    onSuccess() {
+    async onSuccess() {
       SetIsOpen.close();
       toast.success("Added Credits your Account");
       reset();
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: ["get-user-credits"],
       });
     },
@@ -110,7 +110,7 @@ export default function ReferralCode() {
                 ) : (
                   <>
                     <Loader2 className="animate-spin" />
-                    Loading...
+                    Loading
                   </>
                 )}
               </Button>

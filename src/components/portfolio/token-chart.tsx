@@ -1,5 +1,5 @@
 "use client";
-import { usePricingHistoricalPricing } from "@/hooks/use-pricing-history";
+import { usePricingHistoricalPricing } from "@/hooks/use-pricing";
 import { formatUnixTimestamp } from "@/lib/utils";
 import React from "react";
 import {
@@ -75,7 +75,7 @@ export default function TokenPriceChart() {
                 domain={["auto", "auto"]}
                 // alignmentBaseline="text-after-edge"
                 tick={{ fill: "#999" }}
-                className="px-2 text-sm  w-full"
+                className="px-2 text-xs md:text-sm  w-full "
                 axisLine={false}
                 interval={"equidistantPreserveStart"}
                 tickLine={false}

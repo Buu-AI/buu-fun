@@ -16,7 +16,8 @@ export const STAKED_UP_TO = {
     title: "2Y",
   },
 } as const;
-export type TStakedUptoValues = (typeof STAKED_UP_TO)[keyof typeof STAKED_UP_TO]["value"];
+export type TStakedUptoValues =
+  (typeof STAKED_UP_TO)[keyof typeof STAKED_UP_TO]["value"];
 
 export type TCalculateROI = {
   apr: number; // e.g. 20 for 20% APR

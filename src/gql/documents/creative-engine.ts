@@ -1,42 +1,5 @@
 import { gql } from "graphql-request";
 
-export const GenerateSubthreadMutation = gql`
-  mutation GenerateSubthread(
-    $prompt: String!
-    $style: SubthreadStyle
-    $threadId: String
-    $imageUrl: String
-    $numImages: Float
-    $strength: Float
-  ) {
-    generateSubthread(
-      prompt: $prompt
-      style: $style
-      threadId: $threadId
-      imageUrl: $imageUrl
-      numImages: $numImages
-      strength: $strength
-    ) {
-      ... on Subthread {
-        _id
-        teamId
-        address
-        createdAt
-        updatedAt
-        threadId
-        prompt
-        style
-        imageUrl
-        strength
-      }
-      ... on HandledError {
-        code
-        message
-      }
-    }
-  }
-`;
-
 export const GenerateImageMutation = gql`
   mutation GenerateImage($subthreadId: String!) {
     generateImage(subthreadId: $subthreadId) {
@@ -246,6 +209,7 @@ export const GetSubthreadGenRequestsQuery = gql`
           credits
           createdAt
           updatedAt
+          tokenized
         }
         metadata {
           limit
@@ -442,34 +406,22 @@ export const GetShareableBoardQuery = gql`
     getShareableBoard(id: $getShareableBoardId) {
       ... on ShareableBoard {
         _id
-        threadId
+        sessionId
         title
-        creator
-        ideas {
-          subthreadId
-          prompt
-          style
-          genRequests {
-            genRequestId
+        teamId
+        models {
+          alt
+          keyS3
+          size
+          type
+          url
+          image {
+            alt
+            keyS3
+            size
             type
-            images {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            model_mesh {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            createdAt
-            metadata
+            url
           }
-          createdAt
         }
         isPublic
         createdAt
@@ -491,34 +443,22 @@ export const GetUserShareableBoardsQuery = gql`
       ... on ShareableBoardPage {
         items {
           _id
-          threadId
+          sessionId
           title
-          creator
-          ideas {
-            subthreadId
-            prompt
-            style
-            genRequests {
-              genRequestId
+          teamId
+          models {
+            alt
+            keyS3
+            size
+            type
+            url
+            image {
+              alt
+              keyS3
+              size
               type
-              images {
-                alt
-                keyS3
-                size
-                type
-                url
-              }
-              model_mesh {
-                alt
-                keyS3
-                size
-                type
-                url
-              }
-              createdAt
-              metadata
+              url
             }
-            createdAt
           }
           isPublic
           createdAt
@@ -543,38 +483,26 @@ export const GetUserShareableBoardsQuery = gql`
 `;
 
 export const CreateShareableBoardMutation = gql`
-  mutation CreateShareableBoard($threadId: String!) {
-    createShareableBoard(threadId: $threadId) {
+  mutation CreateShareableBoard($sessionId: String!) {
+    createShareableBoard(sessionId: $sessionId) {
       ... on ShareableBoard {
         _id
-        threadId
+        sessionId
         title
-        creator
-        ideas {
-          subthreadId
-          prompt
-          style
-          genRequests {
-            genRequestId
+        teamId
+        models {
+          alt
+          keyS3
+          size
+          type
+          url
+          image {
+            alt
+            keyS3
+            size
             type
-            images {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            model_mesh {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            createdAt
-            metadata
+            url
           }
-          createdAt
         }
         isPublic
         createdAt
@@ -598,34 +526,22 @@ export const UpdateShareableBoardVisibilityMutation = gql`
     ) {
       ... on ShareableBoard {
         _id
-        threadId
+        sessionId
         title
-        creator
-        ideas {
-          subthreadId
-          prompt
-          style
-          genRequests {
-            genRequestId
+        teamId
+        models {
+          alt
+          keyS3
+          size
+          type
+          url
+          image {
+            alt
+            keyS3
+            size
             type
-            images {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            model_mesh {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            createdAt
-            metadata
+            url
           }
-          createdAt
         }
         isPublic
         createdAt
@@ -643,34 +559,22 @@ export const DeleteShareableBoardMutation = gql`
     deleteShareableBoard(shareableBoardId: $shareableBoardId) {
       ... on ShareableBoard {
         _id
-        threadId
+        sessionId
         title
-        creator
-        ideas {
-          subthreadId
-          prompt
-          style
-          genRequests {
-            genRequestId
+        teamId
+        models {
+          alt
+          keyS3
+          size
+          type
+          url
+          image {
+            alt
+            keyS3
+            size
             type
-            images {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            model_mesh {
-              alt
-              keyS3
-              size
-              type
-              url
-            }
-            createdAt
-            metadata
+            url
           }
-          createdAt
         }
         isPublic
         createdAt
@@ -890,6 +794,563 @@ export const GetStakingGlobalDataQuery = gql`
             lastRewardPeriod
             buffer
           }
+        }
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const GetNftsQuery = gql`
+  query GetNfts($pagination: Pagination, $filters: NftFilter) {
+    getNfts(pagination: $pagination, filters: $filters) {
+      ... on NftPage {
+        items {
+          _id
+          teamId
+          genRequestId
+          messageId
+          status
+          metadata {
+            name
+            symbol
+            description
+            image
+            external_url
+            animation_url
+            attributes {
+              trait_type
+              value
+            }
+            properties {
+              files {
+                uri
+                type
+                cdn
+              }
+              category
+            }
+          }
+          mintAddress
+          collectionAddress
+          creator
+          tokenAddress
+          tokenStandard
+          collectionRoyalties
+          chain
+          updatedAt
+          createdAt
+        }
+        metadata {
+          limit
+          offset
+          orderBy
+          orderDirection
+          numElements
+          total
+          page
+          pages
+        }
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const GenerateNftMutation = gql`
+  mutation GenerateNft(
+    $description: String!
+    $name: String!
+    $messageId: String!
+  ) {
+    generateNft(description: $description, name: $name, messageId: $messageId) {
+      ... on Nft {
+        _id
+        teamId
+        genRequestId
+        messageId
+        status
+        metadata {
+          name
+          symbol
+          description
+          image
+          external_url
+          animation_url
+          attributes {
+            trait_type
+            value
+          }
+          properties {
+            files {
+              uri
+              type
+              cdn
+            }
+            category
+          }
+        }
+        mintAddress
+        collectionAddress
+        creator
+        tokenAddress
+        tokenStandard
+        collectionRoyalties
+        chain
+        updatedAt
+        createdAt
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const GetNftQuery = gql`
+  query GetNft($nftId: String!) {
+    getNft(nftId: $nftId) {
+      ... on Nft {
+        _id
+        teamId
+        genRequestId
+        messageId
+        status
+        metadata {
+          name
+          symbol
+          description
+          image
+          external_url
+          animation_url
+          attributes {
+            trait_type
+            value
+          }
+          properties {
+            files {
+              uri
+              type
+              cdn
+            }
+            category
+          }
+        }
+        mintAddress
+        collectionAddress
+        creator
+        tokenAddress
+        tokenStandard
+        collectionRoyalties
+        chain
+        updatedAt
+        createdAt
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const GetPrices = gql`
+  query GetPrices {
+    getPrices {
+      ... on Prices {
+        buu
+        sol
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const GetMessages = gql`
+  query GetMessages(
+    $sessionId: String!
+    $filters: MessageFilter
+    $pagination: Pagination
+  ) {
+    getMessages(
+      sessionId: $sessionId
+      filters: $filters
+      pagination: $pagination
+    ) {
+      ... on MessagesPage {
+        items {
+          _id
+          createdAt
+          updatedAt
+          teamId
+          sessionId
+          role
+          status
+          content {
+            text
+            model {
+              alt
+              keyS3
+              size
+              type
+              url
+              image {
+                alt
+                keyS3
+                size
+                type
+                url
+              }
+            }
+            images {
+              alt
+              keyS3
+              size
+              type
+              url
+            }
+          }
+          toolRequest {
+            id
+            type
+            priority
+            payload
+          }
+          nftId
+          credits
+        }
+        metadata {
+          limit
+          offset
+          orderBy
+          orderDirection
+          numElements
+          total
+          page
+          pages
+        }
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const GetSessions = gql`
+  query GetSessions($pagination: Pagination, $filters: SessionFilter) {
+    getSessions(pagination: $pagination, filters: $filters) {
+      ... on SessionsPage {
+        items {
+          _id
+          createdAt
+          updatedAt
+          teamId
+          title
+        }
+        metadata {
+          limit
+          offset
+          orderBy
+          orderDirection
+          numElements
+          total
+          page
+          pages
+        }
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const SendChatMessage = gql`
+  mutation SendMessage(
+    $content: String!
+    $imageUrls: [String!]
+    $sessionId: String
+  ) {
+    sendMessage(
+      content: $content
+      imageUrls: $imageUrls
+      sessionId: $sessionId
+    ) {
+      ... on Messages {
+        items {
+          _id
+          createdAt
+          updatedAt
+          teamId
+          sessionId
+          role
+          status
+          content {
+            text
+            model {
+              alt
+              keyS3
+              size
+              type
+              url
+              image {
+                alt
+                keyS3
+                size
+                type
+                url
+              }
+            }
+            images {
+              alt
+              keyS3
+              size
+              type
+              url
+            }
+          }
+          toolRequest {
+            id
+            type
+            priority
+            payload
+          }
+          nftId
+          credits
+        }
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const ConfirmToolMessage = gql`
+  mutation ConfirmToolMessage($messageId: String!) {
+    confirmToolMessage(messageId: $messageId) {
+      ... on Message {
+        _id
+        createdAt
+        updatedAt
+        teamId
+        sessionId
+        role
+        status
+        content {
+          text
+          model {
+            alt
+            keyS3
+            size
+            type
+            url
+            image {
+              alt
+              keyS3
+              size
+              type
+              url
+            }
+          }
+          images {
+            alt
+            keyS3
+            size
+            type
+            url
+          }
+        }
+        toolRequest {
+          id
+          type
+          priority
+          payload
+        }
+        credits
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const CancelToolMessage = gql`
+  mutation CancelToolMessage($messageId: String!) {
+    cancelToolMessage(messageId: $messageId) {
+      ... on Message {
+        _id
+        createdAt
+        updatedAt
+        teamId
+        sessionId
+        role
+        status
+        content {
+          text
+          model {
+            alt
+            keyS3
+            size
+            type
+            url
+            image {
+              alt
+              keyS3
+              size
+              type
+              url
+            }
+          }
+          images {
+            alt
+            keyS3
+            size
+            type
+            url
+          }
+        }
+        toolRequest {
+          id
+          type
+          priority
+          payload
+        }
+        nftId
+        credits
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const GenerateModelFromImageMutation = gql`
+  mutation GenerateModelFromImage($imageUrl: String!, $sessionId: String!) {
+    generateModelFromImage(imageUrl: $imageUrl, sessionId: $sessionId) {
+      ... on Messages {
+        items {
+          _id
+          createdAt
+          updatedAt
+          teamId
+          sessionId
+          role
+          status
+          content {
+            text
+            model {
+              alt
+              keyS3
+              size
+              type
+              url
+              image {
+                alt
+                keyS3
+                size
+                type
+                url
+              }
+            }
+            images {
+              alt
+              keyS3
+              size
+              type
+              url
+            }
+          }
+          toolRequest {
+            id
+            type
+            priority
+            payload
+          }
+          nftId
+          credits
+        }
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const EditImageMutation = gql`
+  mutation EditImage(
+    $imageUrl: String!
+    $edit: String!
+    $sessionId: String!
+    $numberOfImages: Float
+  ) {
+    editImage(
+      imageUrl: $imageUrl
+      edit: $edit
+      sessionId: $sessionId
+      numberOfImages: $numberOfImages
+    ) {
+      ... on Messages {
+        items {
+          _id
+          createdAt
+          updatedAt
+          teamId
+          sessionId
+          role
+          status
+          content {
+            text
+            model {
+              alt
+              keyS3
+              size
+              type
+              url
+              image {
+                alt
+                keyS3
+                size
+                type
+                url
+              }
+            }
+            images {
+              alt
+              keyS3
+              size
+              type
+              url
+            }
+          }
+          toolRequest {
+            id
+            type
+            priority
+            payload
+          }
+          nftId
+          credits
         }
       }
       ... on HandledError {

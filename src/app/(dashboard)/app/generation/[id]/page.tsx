@@ -1,4 +1,4 @@
-import BottomBarContainer from "@/components/chat-input/bottom-bar-container";
+import GenerateNFTModal from "@/components/chat/toolbar/generate-nft-modal";
 import RetryConfirmationDialog from "@/components/generation/retry-confirmation-dialog";
 import ThreadsChatInitializer from "@/components/generation/threads-chat-initializer";
 import ThreadsWrapper from "@/components/generation/threads-wrapper";
@@ -21,14 +21,15 @@ export default async function NewChatPage({ params }: TNewChatPage) {
         <ThreadsWrapper threadId={threadId} />
         {/* Bottom input section */}
         <div className="lg:mr-[0.15vw]">
-          <BottomBarContainer
+          {/* <BottomBarContainer
             action={{
               threadId: threadId,
             }}
-          />
+          /> */}
         </div>
       </main>
       <RetryConfirmationDialog />
+      <GenerateNFTModal />
     </DndKitProvider>
   );
 }

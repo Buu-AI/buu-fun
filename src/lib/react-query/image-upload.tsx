@@ -10,10 +10,7 @@ export async function getPresignedUrl({
   contentType: "ImageJpeg" | "ImagePng";
   accessToken: string;
 }) {
-  //   TGenerateSubthreadMutation,
-  //     GenerateSubthreadMutationVariables
   const data = await serverRequest<GeneratePresignedUrlMutation>(
-    // GeneratePresignedUrlMutationVariables
     GeneratePresignedUrlQuery,
     {
       input: {

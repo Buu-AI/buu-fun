@@ -10,6 +10,7 @@ import { DataMuseError } from "./class/data-muse-error";
 import { TDataMuseWord } from "./fetcher/query/query-suggestion-api";
 import { Plans } from "@/constants/subscription/subscription-plans";
 import { StripeSubscriptionPlanKeys } from "@/gql/types/graphql";
+import { TryCatch } from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -215,4 +216,47 @@ export function getStreamflowUrl() {
 
 export function getSolanaExplorerUrl(route: string) {
   return "https://explorer.solana.com" + route;
+}
+
+export function getSolScanUrl(route: string) {
+  let queryParam = "";
+  if (process.env?.NEXT_PUBLIC_STREAMFLOW_CLUSTER === "devnet") {
+    queryParam = `?cluster=devnet`;
+  }
+  return "https://solscan.io" + route + queryParam;
+}
+
+export function getMagicEdenUrl(route: string) {
+  // let queryParam = "";
+  // if (process.env?.NEXT_PUBLIC_STREAMFLOW_CLUSTER === "devnet") {
+  //   queryParam = `?cluster=devnet`;
+  // }
+  return "https://magiceden.io" + route;
+  // + queryParam;
+}
+export function getJupiterUltraAPI(route: string, version = "/v1") {
+  return "https://lite-api.jup.ag/ultra" + version + route;
+}
+
+export function getNumber(value: string) {
+  const num = parseFloat(value);
+  return isNaN(num) ? null : num;
+}
+
+export function parseJson<T>(
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any,
+  showLogs = false,
+  messageKey = "ERROR-PARSE-JSON",
+  errorMsg = "Failed to retrieve data",
+): TryCatch<T> {
+  try {
+    const parsedData = JSON.parse(data);
+    return { data: parsedData, error: null };
+  } catch (error) {
+    if (showLogs) {
+      console.error(messageKey, error);
+    }
+    return { data: null, error: errorMsg };
+  }
 }

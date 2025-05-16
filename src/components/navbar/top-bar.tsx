@@ -15,7 +15,7 @@ export default function Topbar() {
   const shouldConnect = !isAuthenticated || !address;
 
   return (
-    <div className="flex items-center justify-end lg:gap-0 gap-2  lg:justify-between pr-1 lg:pr-10 py-4 lg:py-6">
+    <div className="flex items-center justify-end lg:gap-0 gap-2  lg:justify-between pr-1 lg:pr-10 py-4 lg:pt-6 pb-4">
       <div className="flex items-center gap-4">
         {!shouldConnect ? <RecentChats /> : null}
         {!shouldConnect ? <ShareButtonWrapper /> : null}

@@ -18,26 +18,32 @@ export default async function BoardsPage({ params }: TBoardsPage) {
     return;
   }
 
-  const board = await getUserSharableBoardQuery({
-    _id: boardId,
-    accessToken,
-    count: 1,
-  });
+  try {
+    const board = await getUserSharableBoardQuery({
+      _id: boardId,
+      accessToken,
+      count: 1,
+    });
 
-  const index = 0;
-  return (
-    <main className="flex flex-col relative h-full w-full   max-h-[calc(100vh-100px)]  overflow-hidden">
-      {board?.items.length && board?.items[index] ? (
-        <ViewBoardContainer currentUser={true} board={board?.items[index]} />
-      ) : (
-        <div className="w-full h-full flex gap-3 flex-col items-center justify-center">
-          <Ghost className="w-10 h-10" />
-          <p className="text-2xl font-medium max-w-sm text-center">
-            The Board you are looking for is either deleted or doesn&apos;t
-            exists
-          </p>
-        </div>
-      )}
-    </main>
-  );
+    const index = 0;
+    return (
+      <main className="flex flex-col relative h-full w-full   max-h-[calc(100vh-100px)]  overflow-hidden">
+        {board?.items.length && board?.items[index] ? (
+          <ViewBoardContainer currentUser={true} board={board?.items[index]} />
+        ) : (
+          <div className="w-full h-full flex gap-3 flex-col items-center justify-center">
+            <Ghost className="w-10 h-10" />
+            <p className="text-2xl font-medium max-w-sm text-center">
+              The Board you are looking for is either deleted or doesn&apos;t
+              exists
+            </p>
+          </div>
+        )}
+      </main>
+    );
+  } catch (error) {
+    if (error) {
+    }
+    redirect("/");
+  }
 }

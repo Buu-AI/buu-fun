@@ -1,13 +1,23 @@
+"use client";
+import { CoinStackIcon } from "@/assets/icons";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { useTokenBalance } from "@/hooks/use-pricing-history";
+import { useTokenBalance } from "@/hooks/use-pricing";
 import { useUserStakingData } from "@/hooks/use-staking-data";
-import { setSelectedAmountToStake } from "@/lib/redux/features/buu-pricing";
+import { ethers } from "ethers";
+import {
+  setSelectedAmountToStake,
+  setTogglers,
+} from "@/lib/redux/features/buu-pricing";
 import { executeStakingTransaction } from "@/lib/solana/executeStakingTransaction";
+import { getClusterUrl } from "@/lib/solana/staking";
 import { formatWithComma } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSolanaWallets } from "@privy-io/react-auth";
 import { Connection } from "@solana/web3.js";
-import { useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
@@ -18,96 +28,183 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import StakeConfirmButton from "./stake-confirm-button";
-import StakingRewardReview from "./staking-reward-review";
 import StakingSlider from "./staking-slider";
+import BN from "bn.js";
+import { useConfetti } from "@/providers/confetti-provider";
 
 export default function StakingDialog() {
-  const { wallet } = useAuthentication();
-  // const { data } = useBuuPricingData();
+  const [isLoading, setIsLoading] = useState(false);
+  const { wallet, connectSolanaWallet, address } = useAuthentication();
+
+  const { wallets } = useSolanaWallets();
+  const openState = useAppSelector(
+    (state) => state.BuuPricing.openStakingModal,
+  );
   const {
     userStaking: { data: userStakingData },
-    // globalStaking: { data: globalStakingData },
   } = useUserStakingData();
-
+  const queryClient = useQueryClient();
   const { data: tokenData } = useTokenBalance();
-  const earnings = tokenData?.value.uiAmount ?? 0;
-  // const earnings = formatUnits(
-  //   userStakingData?.yourEarnings ?? "0",
-  //   userStakingData?.decimals ?? 0
-  // );
-
+  const balance = tokenData?.value.uiAmount ?? 0;
+  const decimals = userStakingData?.decimals ?? 6;
   const toBeStaked = useAppSelector((state) => state.BuuPricing.amountToStake);
   const dispatch = useAppDispatch();
-
-  // Define the validation schema
+  const confetti = useConfetti();
   const stakeInputSchema = z.object({
     amount: z
-      .number({
+      .string({
         required_error: "Amount is required",
         invalid_type_error: "Amount must be a number",
       })
-      .positive("Amount must be positive")
-      .max(
-        Number(tokenData?.value.uiAmount ?? 0),
-        `Maximum ${earnings} $BUU allowed`,
+      .refine(
+        (value) => {
+          try {
+            if (Number(value) <= 0) return false;
+            return true;
+          } catch (error) {
+            if (error) {
+            }
+            return false;
+          }
+        },
+        { message: "Please enter a valid number" },
+      )
+      .refine(
+        (value) => {
+          if (!balance || balance <= 0) return false;
+
+          try {
+            // Convert the input value to BigNumber
+            // Convert balance to BigNumber (if it's not already)
+            const balanceInDecimals = ethers.parseUnits(
+              balance.toString(),
+              decimals,
+            );
+            return balanceInDecimals >= parseFloat(value);
+          } catch (error) {
+            console.error("Error comparing values:", error);
+            return false;
+          }
+        },
+        { message: "insufficient balance" },
       ),
   });
 
-  // Initialize form with react-hook-form
   const {
-    register,
     setValue,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm({
     resolver: zodResolver(stakeInputSchema),
     defaultValues: {
-      amount: toBeStaked || 0,
+      amount: toBeStaked || "0",
     },
   });
 
   // Watch the amount field to update Redux when it changes
   const amountValue = watch("amount");
 
-  // Update Redux when form value changes
   useEffect(() => {
     if (amountValue !== undefined) {
-      dispatch(setSelectedAmountToStake(Number(amountValue)));
+      dispatch(setSelectedAmountToStake(amountValue));
     }
   }, [amountValue, dispatch]);
 
-  // Update form when Redux state changes (from slider or elsewhere)
   useEffect(() => {
     if (toBeStaked !== undefined) {
       setValue("amount", toBeStaked);
     }
   }, [toBeStaked, setValue]);
 
+  const refreshStakingData = async () => {
+    await queryClient.invalidateQueries({
+      queryKey: ["get-token-balance"],
+      exact: false,
+      type: "all",
+    });
+    await queryClient.invalidateQueries({
+      queryKey: ["get-global-staking-data"],
+      exact: false,
+      type: "all",
+    });
+    await queryClient.invalidateQueries({
+      queryKey: ["token-data"],
+      exact: false,
+      type: "all",
+    });
+    await queryClient.invalidateQueries({
+      queryKey: ["get-user-staking-data"],
+      exact: false,
+      type: "all",
+    });
+
+    await Promise.all([
+      queryClient.refetchQueries({
+        queryKey: ["get-token-balance"],
+        exact: false,
+        type: "all",
+      }),
+      queryClient.refetchQueries({
+        queryKey: ["get-global-staking-data"],
+        exact: false,
+        type: "all",
+      }),
+      queryClient.refetchQueries({
+        queryKey: ["token-data"],
+        exact: false,
+        type: "all",
+      }),
+      // The user staking query depends on the global staking data,
+      // so we need to ensure it's re-fetched after global data is updated
+      queryClient.refetchQueries({
+        queryKey: ["get-user-staking-data"],
+        exact: false,
+        type: "all",
+      }),
+    ]);
+    toast.dismiss();
+    toast.success("Staking successful!");
+    dispatch(setTogglers({ key: "openStakingModal", value: false }));
+  };
+
+  function revalidate() {
+    setTimeout(async () => {
+      await refreshStakingData();
+    }, 7000);
+  }
   async function onSubmit(data: z.infer<typeof stakeInputSchema>) {
-    if (!wallet || !wallet.address) {
-      toast.error("Authentication is loading...");
-      return;
-    }
-
-    if (wallet?.chainType !== "solana") {
-      toast.error("Please connect using Solana wallet");
-      return;
-    }
-
     try {
-      const connection = new Connection("https://api.devnet.solana.com");
+      setIsLoading(true);
+      if (!wallets.length || !address || !wallet || !wallet?.address) {
+        connectSolanaWallet();
+        return;
+      }
+      if (wallet?.chainType !== "solana") {
+        connectSolanaWallet();
+        toast.error("Please connect using Solana wallet");
+        return;
+      }
+
+      const connection = new Connection(getClusterUrl());
 
       // Show loading state
       toast.loading(`Creating transaction for ${data.amount}...`);
+      const isFirstTimeStaking = !userStakingData?.userStakes.length;
+
+      const scaledAmount = new BN(
+        ethers
+          .parseUnits(data.amount, userStakingData?.decimals ?? 6)
+          .toString(),
+      );
+
       const transaction = await executeStakingTransaction({
         address: wallet.address,
-        amountToStake: data.amount * 10 ** (userStakingData?.decimals ?? 1),
+        amountToStake: scaledAmount,
+        isFirstTimeStaking,
       });
 
       if (!transaction) {
@@ -119,20 +216,13 @@ export default function StakingDialog() {
       toast.dismiss();
       toast.loading("Please confirm the transaction in your wallet");
 
-      // Use the wallet's sendTransaction method
-      // const signature = await wallet.walletData?.sendTransaction(
-      //   transaction,
-      //   connection
-      // );
       const signature = await wallet.walletData?.sendTransaction(
         transaction,
         connection,
       );
-      console.log(signature);
       toast.dismiss();
-
       if (signature) {
-        toast.success("Transaction sent! Waiting for confirmation...");
+        toast.loading("Transaction sent! Waiting for confirmation...");
 
         // Wait for confirmation
         try {
@@ -140,18 +230,26 @@ export default function StakingDialog() {
             signature,
             "confirmed",
           );
-
+          toast.dismiss();
           if (confirmation.value.err) {
+            toast.dismiss();
             toast.error("Transaction failed on-chain");
             console.error("Transaction error:", confirmation.value.err);
           } else {
-            toast.success("Staking successful!");
+            confetti.runConfetti({
+              duration: 3500,
+            });
+            toast.loading("Transaction received! processing transaction...");
+            dispatch(setTogglers({ key: "openStakingModal", value: false }));
+            revalidate();
           }
         } catch (confirmError) {
+          toast.dismiss();
           toast.error("Failed to confirm transaction");
           console.error("Confirmation error:", confirmError);
         }
       } else {
+        toast.dismiss();
         toast.error("Transaction was not sent");
       }
     } catch (error) {
@@ -161,20 +259,32 @@ export default function StakingDialog() {
           (error instanceof Error ? error.message : "Unknown error"),
       );
       console.error("Transaction error:", error);
+    } finally {
+      setIsLoading(false);
     }
   }
+
+  const handleAmountChange = (value: string) => {
+    const input = value;
+    // Allow only numbers, decimal point, and optional minus sign
+    if (/^-?\d*\.?\d*$/.test(input)) {
+      setValue("amount", input);
+    }
+  };
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className="font-medium">Stake $BUU</Button>
-      </DialogTrigger>
+    <Dialog
+      open={openState}
+      onOpenChange={(value) => {
+        dispatch(setTogglers({ key: "openStakingModal", value: value }));
+      }}
+    >
       <DialogContent className="rounded-[20px]  lg:rounded-[20px]  bg-buu/80 backdrop-blur-lg border-buu ">
         <DialogHeader className="flex items-center justify-center ">
           <DialogTitle className="text-2xl">Stake</DialogTitle>
           <DialogDescription className="text-center font-medium max-w-md text-muted-foreground/60">
             If you in top 100 stakers, you&apos;ll start instantly earning
             rewards. Once you unstake, there&apos;s{" "}
-            <span className="text-white">16 yours cooldown</span> period.
+            <span className="text-white">16 days cooldown</span> period.
           </DialogDescription>
         </DialogHeader>{" "}
         <div>
@@ -184,24 +294,39 @@ export default function StakingDialog() {
                 amount to stake
               </Label>
               <Label className="uppercase text-xs font-medium text-muted-foreground/60 ">
-                balance: {formatWithComma(Number(earnings))}
+                balance: {formatWithComma(Number(balance))}
               </Label>
             </div>
             <Input
-              {...register("amount", { valueAsNumber: true })}
-              className="py-2.5 mt-1 appearance-none text-lg h-auto border-gray-700"
-              placeholder="30"
+              value={amountValue}
+              onChange={(e) => {
+                handleAmountChange(e.target.value);
+              }}
+              className="py-2.5 mt-1 appearance-none text-lg h-auto border-gray-700 placeholder:text-gray-600 placeholder:font-medium "
+              placeholder="3000"
             />
             {/* Display error message if there's an error */}
             {errors.amount && (
-              <p className="text-xs ml-2 text-red-500">
+              <p className="text-xs font-medium ml-2 mt-1 text-red-500">
                 {errors.amount.message}
               </p>
             )}
             <StakingSlider />
-            <StakingRewardReview />
+            {/* <StakingRewardReview /> */}
             <div className="mt-6">
-              <StakeConfirmButton />
+              <Button disabled={isSubmitting || isLoading} className="w-full">
+                {isLoading ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Loading{" "}
+                  </>
+                ) : (
+                  <>
+                    <CoinStackIcon />
+                    Stake $BUU
+                  </>
+                )}
+              </Button>{" "}
             </div>
           </form>
         </div>

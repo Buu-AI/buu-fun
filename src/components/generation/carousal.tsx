@@ -114,13 +114,15 @@ const CurvedEmblaCarousel = ({
                       isCurrent={isCurrent}
                       subThreadId={subThreadId}
                       index={index}
+                      tokenized={item.tokenized}
                       status={item.isGenerating ? "inProgress" : "Success"}
-                      showToolTip={isCurrent}
+                      showToolTip={isCurrent && !item.isGenerating}
                       isGenerating={item.isGenerating}
                       images={{
-                        imageUrl: item.image.imageUrl,
+                        imageUrl: item.image.imageUrl ?? null,
                       }}
                       modelUrl={item?.model?.modelUrl}
+                      modelId={item?.model?.modelId}
                     />
                   </CarouselItem>
                 );
@@ -138,10 +140,11 @@ const CurvedEmblaCarousel = ({
         </Carousel>
       ) : (
         <Generate3DCard
-          isCurrent={true}
+          isCurrent={false}
           totalGenerations={totalGenerations}
           subThreadId=""
           index={0}
+          tokenized={false}
           status={"inProgress"}
           showToolTip={true}
           isGenerating={true}

@@ -44,7 +44,7 @@ export default function ViewBoardCarousal({
   return (
     <div className="flex w-full md:flex-row flex-col-rev  erse justify-center px-2 md:px-0 items-center  h-full    gap-2">
       <div className="flex relative z-10 items-center justify-center md:flex-col gap-4 mr-6">
-        {boards.board.length
+        {boards.board && boards.board.length > 0
           ? boards.board.map((item, index) => (
               <button
                 key={`index-button-${item.GenId}`}
@@ -59,7 +59,8 @@ export default function ViewBoardCarousal({
               >
                 <div>
                   <Image
-                    src={item.ImageUrl}
+                    // TODO
+                    src={item.ImageUrl ?? "/logo.png"}
                     alt="Generated AI Image Url"
                     width={1920}
                     height={1080}

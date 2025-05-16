@@ -12,7 +12,7 @@ export default function StakingClaimAndRestake() {
       }}
       className="h-[40px]"
     >
-      <span className="p-3">Claim & Restake</span>
+      <span className="p-3">Restake Rewards</span>
     </Button>
   );
 }

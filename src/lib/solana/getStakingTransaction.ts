@@ -2,6 +2,7 @@
 import { PublicKey, Transaction } from "@solana/web3.js";
 import { BN } from "bn.js";
 import { SolanaStakingClient } from "../streamflow/client";
+import { getClusterUrl } from "./staking";
 
 export async function getStakingTransaction({
   address,
@@ -20,7 +21,7 @@ export async function getStakingTransaction({
       process?.env?.NEXT_PUBLIC_STREAMFLOW_STAKE_POOL_MINT ?? "",
     );
     const solanaStakingClient = new SolanaStakingClient({
-      clusterUrl: "https://api.devnet.solana.com",
+      clusterUrl: getClusterUrl(),
     });
 
     const nonce = 20;

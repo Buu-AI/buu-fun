@@ -20,6 +20,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         muted: "bg-buu-button-muted text-primary",
         link: "text-primary underline-offset-4 hover:underline",
+        muted_button: "muted-button-class",
         special:
           "bg-buu  border-buu  shadow-buu-secondary-button hover:bg-buu-secondary hover:text-accent-foreground ",
       },
