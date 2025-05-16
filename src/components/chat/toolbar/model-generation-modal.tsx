@@ -26,7 +26,7 @@ import { isChatGenerating } from "@/lib/redux/selectors/chatMessages";
 export default function ModelGenerationModal() {
   const { identityToken: accessToken, login } = useAuthentication();
   const generateModelModalState = useAppSelector(
-    (state) => state.chat.genModelFromImage
+    (state) => state.chat.genModelFromImage,
   );
 
   const { imageUrl, isOpened } = generateModelModalState;
@@ -49,7 +49,7 @@ export default function ModelGenerationModal() {
               items: [...page.items, ...data.items],
             })),
           };
-        }
+        },
       );
       await queryClient.invalidateQueries({
         queryKey: ["get-messages", sessionId, accessToken],
@@ -58,7 +58,7 @@ export default function ModelGenerationModal() {
         setGenerateModel({
           isOpened: false,
           imageUrl: null,
-        })
+        }),
       );
     },
     onError(error) {
@@ -72,7 +72,7 @@ export default function ModelGenerationModal() {
   function handleModelGeneration() {
     if (isChatPending) {
       toast.error(
-        "AI is thinking, please try after current message is completed"
+        "AI is thinking, please try after current message is completed",
       );
     }
 
@@ -105,7 +105,7 @@ export default function ModelGenerationModal() {
             setGenerateModel({
               isOpened: false,
               imageUrl: null,
-            })
+            }),
           );
           return;
         }
@@ -124,7 +124,7 @@ export default function ModelGenerationModal() {
             "flex overflow-hidden rounded-lg w-full md:w-[50%] mx-auto aspect-square",
             {
               hidden: !imageUrl,
-            }
+            },
           )}
         >
           {imageUrl ? (

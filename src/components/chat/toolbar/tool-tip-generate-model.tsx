@@ -42,7 +42,7 @@ export default function ToolTipGenerateModel({
                 setGenerateModel({
                   isOpened: true,
                   imageUrl,
-                })
+                }),
               );
             }}
             initial="initial"
@@ -51,12 +51,12 @@ export default function ToolTipGenerateModel({
             variants={buttonVariants}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
             className={cn(
-              "group hover:bg-white hover:shadow-none bg-svg-button pointer-events-auto  group p-0.5  min-w-[24px] rounded-[4px] border-buu  flex items-center justify-center"
+              "group hover:bg-white hover:shadow-none bg-svg-button pointer-events-auto  group p-0.5  min-w-[24px] rounded-[4px] border-buu  flex items-center justify-center",
             )}
           >
             <motion.div
               className={cn(
-                "w-full h-full group-hover:fill-gray-800 group-hover:text-gray-800 "
+                "w-full h-full group-hover:fill-gray-800 group-hover:text-gray-800 ",
               )}
               transition={{ duration: 0.2 }}
             >

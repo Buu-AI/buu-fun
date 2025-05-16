@@ -4,7 +4,6 @@ import ChatMessageInitializer from "@/components/chat/chat-initializer";
 import GenerateNFTModal from "@/components/chat/toolbar/generate-nft-modal";
 import ModelGenerationModal from "@/components/chat/toolbar/model-generation-modal";
 import RetryImageModal from "@/components/chat/toolbar/retry-image-modal";
-import ToolTipRetryImage from "@/components/chat/toolbar/tool-tip-retry-image";
 import { DndKitProvider } from "@/providers/dnd-kit-provider";
 
 export type TChatPage = {

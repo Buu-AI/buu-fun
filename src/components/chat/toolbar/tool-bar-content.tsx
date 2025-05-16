@@ -1,4 +1,4 @@
-import { MagicPenIcon, RetryIcon } from "@/assets/icons";
+import { MagicPenIcon } from "@/assets/icons";
 import CreateChatNftIcon from "@/assets/icons/create-chat-nft-icon";
 import GenerateModelIcon from "@/assets/icons/generate-model-icon";
 import ModelDownload from "@/assets/icons/model-download";

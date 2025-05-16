@@ -36,7 +36,7 @@ import { Textarea } from "../../ui/textarea";
 export default function RetryImageModal() {
   const { identityToken: accessToken, login } = useAuthentication();
   const chatRetryProps = useAppSelector(
-    (state) => state.chat.chatMessageEditImage
+    (state) => state.chat.chatMessageEditImage,
   );
 
   const isChatPending = useAppSelector(isChatGenerating);
@@ -57,7 +57,7 @@ export default function RetryImageModal() {
 
   useEffect(() => {
     setValue("imageUrl", imageUrl ?? "");
-  }, [imageUrl]);
+  }, [imageUrl, setValue]);
 
   const { mutate, isPending } = useMutation({
     mutationKey: [imageUrl, sessionId, "edit-image"],
@@ -76,7 +76,7 @@ export default function RetryImageModal() {
               items: [...page.items, ...data.items],
             })),
           };
-        }
+        },
       );
       await queryClient.invalidateQueries({
         queryKey: ["get-messages", sessionId, accessToken],
@@ -86,7 +86,7 @@ export default function RetryImageModal() {
         setEditImage({
           isOpened: false,
           imageUrl: null,
-        })
+        }),
       );
     },
     onError(error) {
@@ -98,7 +98,7 @@ export default function RetryImageModal() {
   function handleRetryWithImage({ imageUrl, message }: TRetryWithImageSchema) {
     if (isChatPending) {
       toast.error(
-        "AI is thinking, please try after current message is completed"
+        "AI is thinking, please try after current message is completed",
       );
     }
     if (!accessToken) {
@@ -116,11 +116,6 @@ export default function RetryImageModal() {
       sessionId,
     });
   }
-  function Error(error: any, errors: any) {
-    toast.error(imageUrl ?? "Image URL not found");
-    console.log(errors);
-    toast.error(`ERROR:${JSON.stringify(errors)}`);
-  }
 
   const descriptionLength = watch("message")?.length ?? 0;
   return (
@@ -133,7 +128,7 @@ export default function RetryImageModal() {
             setEditImage({
               isOpened: false,
               imageUrl: null,
-            })
+            }),
           );
           return;
         }
@@ -152,7 +147,7 @@ export default function RetryImageModal() {
             "flex overflow-hidden w-full md:w-[50%] mx-auto aspect-square",
             {
               hidden: !imageUrl,
-            }
+            },
           )}
         >
           {imageUrl ? (
@@ -166,7 +161,7 @@ export default function RetryImageModal() {
             />
           ) : null}
         </div>
-        <form onSubmit={handleSubmit(handleRetryWithImage, Error)}>
+        <form onSubmit={handleSubmit(handleRetryWithImage)}>
           <Input
             className="sr-only"
             {...register("imageUrl", {

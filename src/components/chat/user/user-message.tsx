@@ -1,4 +1,3 @@
-import { useAppDispatch } from "@/hooks/redux";
 // import { setRetryWithImage } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
 import { AnimatePresence } from "framer-motion";
@@ -13,15 +12,6 @@ export default function UserChatMessage({
   imageUrls,
   messageId,
 }: TMessages) {
-  const dispatch = useAppDispatch();
-  function handleSetModalImage(imageUrl: string) {
-    // dispatch(
-    //   setRetryWithImage({
-    //     modalOpened: true,
-    //     imageUrl,
-    //   })
-    // );
-  }
   return (
     <div className={cn("flex flex-col items-end w-full first-of-type:pt-[0%]")}>
       <p

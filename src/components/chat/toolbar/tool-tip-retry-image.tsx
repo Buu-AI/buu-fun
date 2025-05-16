@@ -1,16 +1,15 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { setEditImage } from "@/lib/redux/features/chat";
+import { isChatGenerating } from "@/lib/redux/selectors/chatMessages";
 import { cn } from "@/lib/utils";
 import { MaybeString } from "@/types";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { ToolTips } from "../../generation/handle-tool-calls";
 import { buttonVariants } from "../../generation/tool-bar-tool-tips";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
 import { TChatToolTips } from "./tool-bar-content";
-import { setEditImage } from "@/lib/redux/features/chat";
-import { isChatGenerating } from "@/lib/redux/selectors/chatMessages";
 
 type TToolTipRetryImage = {
   toolTipData: TChatToolTips;
@@ -37,7 +36,9 @@ export default function ToolTipRetryImage({
           <motion.button
             onClick={() => {
               if (isChatPending) {
-                toast.error("AI is thinking, please try after current message is completed");
+                toast.error(
+                  "AI is thinking, please try after current message is completed",
+                );
               }
               if (!imageUrl) {
                 toast.loading("Image is being generated, Please wait", {
@@ -49,7 +50,7 @@ export default function ToolTipRetryImage({
                 setEditImage({
                   isOpened: true,
                   imageUrl,
-                })
+                }),
               );
             }}
             initial="initial"
@@ -58,12 +59,12 @@ export default function ToolTipRetryImage({
             variants={buttonVariants}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
             className={cn(
-              "group hover:bg-white hover:shadow-none bg-svg-button pointer-events-auto  group p-0.5  min-w-[24px] rounded-[4px] border-buu  flex items-center justify-center"
+              "group hover:bg-white hover:shadow-none bg-svg-button pointer-events-auto  group p-0.5  min-w-[24px] rounded-[4px] border-buu  flex items-center justify-center",
             )}
           >
             <motion.div
               className={cn(
-                "w-full h-full group-hover:fill-gray-800 group-hover:text-gray-800 "
+                "w-full h-full group-hover:fill-gray-800 group-hover:text-gray-800 ",
               )}
               transition={{ duration: 0.2 }}
             >
