@@ -17,7 +17,7 @@ export type TDisabledToolbar = {
 
 type TToolBarWrapper = {
   modelUrl?: MaybeString;
-  messageId: string;
+  messageId?: string;
   imageUrl?: MaybeString;
   nftId?: MaybeString;
   tokenized?: boolean;
@@ -87,7 +87,6 @@ export default function ToolBarWrapper({
         if (item.type === "GENERATE_MODEL" && !disabled?.GENERATE_MODEL) {
           return (
             <ToolTipGenerateModel
-              messageId={messageId}
               length={ChatToolTips.length}
               toolTipData={item}
               modelUrl={modelUrl}
@@ -106,7 +105,6 @@ export default function ToolBarWrapper({
               key={`tool-tip-contents-${item.content.trim()}-${index}`}
               imageUrl={imageUrl}
               modelUrl={modelUrl}
-              messageId={messageId}
               tool={item}
             />
           );

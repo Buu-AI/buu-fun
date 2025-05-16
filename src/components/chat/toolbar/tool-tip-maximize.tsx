@@ -1,9 +1,6 @@
 "use client";
 import { useAppDispatch } from "@/hooks/redux";
-import {
-  setGenerateModel,
-  setMaximizedViewer,
-} from "@/lib/redux/features/chat";
+import { setMaximizedViewer } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
 import { MaybeString } from "@/types";
 import { motion } from "framer-motion";
@@ -18,7 +15,6 @@ type TToolTipMaximize = {
   index: number;
   length: number;
   open?: boolean;
-  messageId: string;
   imageUrl: MaybeString;
   modelUrl: MaybeString;
   type: "image" | "model";
@@ -50,7 +46,7 @@ export default function ToolTipMaximize({
                   isOpened: true,
                   imageUrl: isModel ? undefined : imageUrl,
                   modelUrl: isModel ? modelUrl : undefined,
-                })
+                }),
               );
             }}
             initial="initial"
@@ -59,12 +55,12 @@ export default function ToolTipMaximize({
             variants={buttonVariants}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
             className={cn(
-              "group hover:bg-white hover:shadow-none bg-svg-button pointer-events-auto  group p-0.5  min-w-[24px] rounded-[4px] border-buu  flex items-center justify-center"
+              "group hover:bg-white hover:shadow-none bg-svg-button pointer-events-auto  group p-0.5  min-w-[24px] rounded-[4px] border-buu  flex items-center justify-center",
             )}
           >
             <motion.div
               className={cn(
-                "w-full h-full group-hover:fill-gray-800 group-hover:text-gray-800 "
+                "w-full h-full group-hover:fill-gray-800 group-hover:text-gray-800 ",
               )}
               transition={{ duration: 0.2 }}
             >

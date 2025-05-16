@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils";
-import ToolBarWrapper, { TDisabledToolbar } from "./tool-bar-wrapper";
 import { MaybeString } from "@/types";
+import ToolBarWrapper, { TDisabledToolbar } from "./tool-bar-wrapper";
 
 type TImageToolbar = {
   role: "user" | "assistant";
   imageUrl?: MaybeString;
-  messageId: string;
+  messageId?: string;
   modelUrl?: MaybeString;
   disabled?: TDisabledToolbar;
   className?: string;
@@ -14,10 +14,10 @@ type TImageToolbar = {
 export default function ImageToolbar({
   role = "user",
   imageUrl,
-  messageId,
   modelUrl,
   disabled,
-  className
+  className,
+  messageId,
 }: TImageToolbar) {
   return (
     <div
@@ -26,14 +26,14 @@ export default function ImageToolbar({
         {
           "justify-normal": role !== "user",
         },
-        className
+        className,
       )}
     >
       <ToolBarWrapper
         role="user"
         type="image"
-        imageUrl={imageUrl}
         messageId={messageId}
+        imageUrl={imageUrl}
         modelUrl={modelUrl}
         nftId={null}
         disabled={disabled}

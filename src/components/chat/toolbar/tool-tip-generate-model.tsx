@@ -15,7 +15,6 @@ type TToolTipGenerateModel = {
   index: number;
   length: number;
   open?: boolean;
-  messageId: string;
   imageUrl: MaybeString;
   modelUrl: MaybeString;
 };

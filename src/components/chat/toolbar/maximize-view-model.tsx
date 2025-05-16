@@ -20,9 +20,8 @@ const ModelViewer = dynamic(() => import("../../generation/model-viewer"), {
 
 export default function MaximizeViewModel() {
   const maximizedContainer = useAppSelector(
-    (state) => state.chat.maximizedContainer
+    (state) => state.chat.maximizedContainer,
   );
-  const sessionId = useAppSelector((state) => state.chat.sessionId);
   const { imageUrl, isOpened, modelUrl } = maximizedContainer;
   const dispatch = useAppDispatch();
 
@@ -37,7 +36,7 @@ export default function MaximizeViewModel() {
               isOpened: false,
               imageUrl: null,
               modelUrl: null,
-            })
+            }),
           );
           return;
         }
@@ -70,7 +69,8 @@ export default function MaximizeViewModel() {
                 <ImageToolbar
                   className="w-full justify-center"
                   imageUrl={imageUrl}
-                  messageId={"messageId"}
+                  messageId=""
+                  // messageId={"messageId"}
                   modelUrl={modelUrl}
                   role={"assistant"}
                   disabled={{
