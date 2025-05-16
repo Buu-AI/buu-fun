@@ -273,8 +273,8 @@ body {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 0.15fr 1.85fr;
-  grid-template-rows: 0.15fr 1.85fr;
+  grid-template-columns: 0.1fr 1.9fr;
+  grid-template-rows: 0.1fr 1.9fr;
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
@@ -305,15 +305,12 @@ body {
       "navigation top-bar"
       "main-body main-body";
   }
-
   .top-bar {
     grid-area: top-bar;
   }
-
   .navigation {
     grid-area: navigation;
   }
-
   .main-body {
     grid-area: main-body;
   }

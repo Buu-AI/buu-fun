@@ -2,7 +2,7 @@ import SuggestionBar from "../chat-input/suggestion-bar";
 import RecentChatButton from "./recent-chat-button";
 export default function SettingsBar() {
   return (
-    <div className="flex group relative  items-center justify-between mb-3">
+    <div className="flex group relative  items-center justify-between mb-2">
       <div className="ml-3 pb-0 px-2 flex  self-end">
         <SuggestionBar />
         <RecentChatButton />
