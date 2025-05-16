@@ -1,9 +1,9 @@
-import { motion } from "framer-motion";
-import Image from "next/image";
-import UserToolBar from "./toolbar/user-tool-bar";
+import { isToolCallInProgress } from "@/lib/helpers/status-checker";
 import { cn } from "@/lib/utils";
 import { TMessageStatus } from "@/types/chat/chat-types";
-import { isToolCallInProgress } from "@/lib/helpers/status-checker";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import ImageToolbar from "./toolbar/user-tool-bar";
 type TImageRenderer = {
   role: "user" | "assistant";
   imageUrls: string[];
@@ -60,7 +60,7 @@ export default function ImageRenderer({
                 <div className="rounded-md border border-muted-foreground/60 overflow-hidden gap-2">
                   <Image
                     src={item}
-                    alt={`${text}-${item}`}
+                    alt={`${text ?? ""}`}
                     width={250}
                     height={250}
                     className={cn(
@@ -94,7 +94,7 @@ export default function ImageRenderer({
                   className=""
                 >
                   {isToolCallInProgress(status) ? null : (
-                    <UserToolBar
+                    <ImageToolbar
                       imageUrl={item}
                       messageId={messageId}
                       role={role}

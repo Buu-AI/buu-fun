@@ -16,7 +16,7 @@ type TToolTipRetryImage = {
   index: number;
   length: number;
   open?: boolean;
-  messageId: string;
+  messageId?: string;
   imageUrl: MaybeString;
   modelUrl: MaybeString;
 };
