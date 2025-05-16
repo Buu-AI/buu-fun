@@ -1,5 +1,4 @@
 "use client";
-import { useGlobalStakingData } from "@/hooks/use-global-staking";
 import { usePricing } from "@/hooks/use-pricing";
 import { formatUnits, parseJson } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
@@ -12,8 +11,8 @@ function MyBitrefillWidget({
   url = "https://embed.bitrefill.com?ref=DniWoOsh",
 }) {
   const { data: TokensPrice } = usePricing();
-  const { data: globalStakingData } = useGlobalStakingData();
-  const buuDecimals = globalStakingData?.tokenMint.decimals ?? 8;
+  // const { data: globalStakingData } = useGlobalStakingData();
+  // const buuDecimals = globalStakingData?.tokenMint.decimals ?? 8;
 
   const { address, wallet, connectSolanaWallet, user } = useAuthentication();
 

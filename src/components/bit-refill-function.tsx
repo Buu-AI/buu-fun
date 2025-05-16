@@ -95,9 +95,7 @@ export const bitRefillFunctions = {
       console.log("[AMOUNT_IN_BUU]", amountInBuu);
       // 1000 / (1 - 20 / 100)
       const finalAmount = amountInBuu / (1 - WITHDRAW_REFERRAL_FEE / 100);
-      const finalAmountFormatted = Math.floor(
-        finalAmount * 10 ** 6,
-      ).toString();
+      const finalAmountFormatted = Math.floor(finalAmount * 10 ** 6).toString();
 
       // Prepare Jupiter order parameters
       const jupiterOrderParams: TJupiterOrderParams = {
@@ -224,7 +222,7 @@ export const bitRefillFunctions = {
       const txSignature = await wallet.walletData.sendTransaction(
         transferringTransaction,
         connection,
-      )
+      );
 
       // Wait for transaction confirmation
       toast.loading("Confirming transaction...", { id: toastId });
