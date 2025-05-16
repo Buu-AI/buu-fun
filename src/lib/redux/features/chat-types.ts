@@ -90,6 +90,7 @@ export type ChatState = {
     modelUrl?: string | null;
     imageUrl?: string | null;
   };
+  maximizedContainer: TGenerateModal;
   chatMessageEditImage: TEditImage;
   genModelFromImage: TGenerateModal;
   sessionId: string;

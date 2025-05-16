@@ -1,7 +1,9 @@
 "use client";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { setEditImage } from "@/lib/redux/features/chat";
-import { isChatGenerating } from "@/lib/redux/selectors/chatMessages";
+import { useAppDispatch } from "@/hooks/redux";
+import {
+  setGenerateModel,
+  setMaximizedViewer,
+} from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
 import { MaybeString } from "@/types";
 import { motion } from "framer-motion";
@@ -11,46 +13,44 @@ import { buttonVariants } from "../../generation/tool-bar-tool-tips";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
 import { TChatToolTips } from "./tool-bar-content";
 
-type TToolTipRetryImage = {
-  toolTipData: TChatToolTips;
+type TToolTipMaximize = {
+  tool: TChatToolTips;
   index: number;
   length: number;
   open?: boolean;
-  messageId?: string;
+  messageId: string;
   imageUrl: MaybeString;
   modelUrl: MaybeString;
+  type: "image" | "model";
 };
 
-export default function ToolTipRetryImage({
-  toolTipData,
+export default function ToolTipMaximize({
+  tool,
   index,
   imageUrl,
-}: TToolTipRetryImage) {
+  modelUrl,
+  type,
+}: TToolTipMaximize) {
   const dispatch = useAppDispatch();
-  const isChatPending = useAppSelector(isChatGenerating);
-
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         {
           <motion.button
             onClick={() => {
-              if (isChatPending) {
-                toast.error(
-                  "AI is thinking, please try after current message is completed",
-                );
-              }
-              if (!imageUrl) {
-                toast.loading("Image is being generated, Please wait", {
+              if (!imageUrl && !modelUrl) {
+                toast.loading("Please wait until the generation are finished", {
                   duration: 5000,
                 });
                 return;
               }
+              const isModel = type === "model";
               dispatch(
-                setEditImage({
+                setMaximizedViewer({
                   isOpened: true,
-                  imageUrl,
-                }),
+                  imageUrl: isModel ? undefined : imageUrl,
+                  modelUrl: isModel ? modelUrl : undefined,
+                })
               );
             }}
             initial="initial"
@@ -59,16 +59,16 @@ export default function ToolTipRetryImage({
             variants={buttonVariants}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
             className={cn(
-              "group hover:bg-white hover:shadow-none bg-svg-button pointer-events-auto  group p-0.5  min-w-[24px] rounded-[4px] border-buu  flex items-center justify-center",
+              "group hover:bg-white hover:shadow-none bg-svg-button pointer-events-auto  group p-0.5  min-w-[24px] rounded-[4px] border-buu  flex items-center justify-center"
             )}
           >
             <motion.div
               className={cn(
-                "w-full h-full group-hover:fill-gray-800 group-hover:text-gray-800 ",
+                "w-full h-full group-hover:fill-gray-800 group-hover:text-gray-800 "
               )}
               transition={{ duration: 0.2 }}
             >
-              {toolTipData.Icon}
+              {tool.Icon}
             </motion.div>
           </motion.button>
         }
@@ -79,7 +79,7 @@ export default function ToolTipRetryImage({
           "mr-2": index === ToolTips.length - 1,
         })}
       >
-        <p>{toolTipData.content}</p>
+        <p>{tool.content}</p>
       </TooltipContent>
     </Tooltip>
   );

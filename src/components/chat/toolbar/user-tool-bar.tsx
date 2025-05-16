@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import ToolBarWrapper from "./tool-bar-wrapper";
+import ToolBarWrapper, { TDisabledToolbar } from "./tool-bar-wrapper";
 import { MaybeString } from "@/types";
 
 type TImageToolbar = {
@@ -7,6 +7,8 @@ type TImageToolbar = {
   imageUrl?: MaybeString;
   messageId: string;
   modelUrl?: MaybeString;
+  disabled?: TDisabledToolbar;
+  className?: string;
 };
 
 export default function ImageToolbar({
@@ -14,12 +16,18 @@ export default function ImageToolbar({
   imageUrl,
   messageId,
   modelUrl,
+  disabled,
+  className
 }: TImageToolbar) {
   return (
     <div
-      className={cn("flex gap-2 h-6 mt-2 justify-end", {
-        "justify-normal": role !== "user",
-      })}
+      className={cn(
+        "flex gap-2 h-6 mt-2 justify-end",
+        {
+          "justify-normal": role !== "user",
+        },
+        className
+      )}
     >
       <ToolBarWrapper
         role="user"
@@ -28,6 +36,7 @@ export default function ImageToolbar({
         messageId={messageId}
         modelUrl={modelUrl}
         nftId={null}
+        disabled={disabled}
       />
     </div>
   );
