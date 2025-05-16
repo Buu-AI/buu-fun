@@ -27,9 +27,10 @@ import {
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 import { Textarea } from "../../ui/textarea";
+
 const ModelViewer = dynamic(() => import("../../generation/model-viewer"), {
   ssr: false,
-  loading: () => null, // Use null instead of undefined
+  loading: () => null,
 });
 
 export default function GenerateNFTModal() {
@@ -67,7 +68,7 @@ export default function GenerateNFTModal() {
           messageId: undefined,
           imageUrl: undefined,
           modelUrl: undefined,
-        }),
+        })
       );
     },
     onError(error) {
@@ -111,7 +112,7 @@ export default function GenerateNFTModal() {
               messageId: undefined,
               imageUrl: undefined,
               modelUrl: undefined,
-            }),
+            })
           );
           return;
         }

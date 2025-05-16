@@ -4,6 +4,7 @@ import UserToolBar from "./toolbar/user-tool-bar";
 import { cn } from "@/lib/utils";
 import { TMessageStatus } from "@/types/chat/chat-types";
 import { isToolCallInProgress } from "@/lib/helpers/status-checker";
+import ImageToolbar from "./toolbar/user-tool-bar";
 type TImageRenderer = {
   role: "user" | "assistant";
   imageUrls: string[];
@@ -94,7 +95,7 @@ export default function ImageRenderer({
                   className=""
                 >
                   {isToolCallInProgress(status) ? null : (
-                    <UserToolBar
+                    <ImageToolbar
                       imageUrl={item}
                       messageId={messageId}
                       role={role}
