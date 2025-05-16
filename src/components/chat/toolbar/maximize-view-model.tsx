@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import ImageToolbar from "./user-tool-bar";
-
+import ToolBarWrapper from "./tool-bar-wrapper";
 const ModelViewer = dynamic(() => import("../../generation/model-viewer"), {
   ssr: false,
   loading: () => null, // Use null instead of undefined
@@ -20,23 +20,22 @@ const ModelViewer = dynamic(() => import("../../generation/model-viewer"), {
 
 export default function MaximizeViewModel() {
   const maximizedContainer = useAppSelector(
-    (state) => state.chat.maximizedContainer,
+    (state) => state.chat.maximizedContainer
   );
-  const { imageUrl, isOpened, modelUrl } = maximizedContainer;
+  const { isOpened, data } = maximizedContainer;
+
   const dispatch = useAppDispatch();
 
   return (
     <Dialog
-      key={`maximize-view-model-${imageUrl}-${modelUrl}`}
+      key={`maximize-view-model-${data?.type}-${data?.modelUrl}-${data?.imageUrl}`}
       open={isOpened}
       onOpenChange={(value) => {
         if (!value) {
           dispatch(
             setMaximizedViewer({
               isOpened: false,
-              imageUrl: null,
-              modelUrl: null,
-            }),
+            })
           );
           return;
         }
@@ -51,15 +50,15 @@ export default function MaximizeViewModel() {
         <DialogHeader className="flex items-center justify-center sr-only">
           <DialogTitle>Generate model</DialogTitle>
           <DialogDescription className="text-center text-pretty ">
-            This request will generate a 3D model from this image{" "}
+            This request will generate a 3D model from this image.
           </DialogDescription>
         </DialogHeader>
         <div className={cn("flex  rounded-lg w-full  mx-auto max-w-[100%]")}>
-          {imageUrl ? (
+          {data?.type === "image" ? (
             <div className="">
               <Image
-                key={imageUrl}
-                src={imageUrl}
+                key={data.imageUrl}
+                src={data.imageUrl}
                 alt="Retrying Image Url"
                 width={720}
                 height={720}
@@ -68,10 +67,10 @@ export default function MaximizeViewModel() {
               <div className="flex pl-4  pb-2">
                 <ImageToolbar
                   className="w-full justify-center"
-                  imageUrl={imageUrl}
+                  imageUrl={data.imageUrl}
                   messageId=""
                   // messageId={"messageId"}
-                  modelUrl={modelUrl}
+                  modelUrl={data.modelUrl}
                   role={"assistant"}
                   disabled={{
                     MAXIMIZE_VIEW: true,
@@ -79,10 +78,28 @@ export default function MaximizeViewModel() {
                 />
               </div>
             </div>
-          ) : modelUrl ? (
-            <div className="flex flex-wrap text-wrap w-full md:w-[100%] mx-auto aspect-square">
-              {/* {modelUrl} */}
-              <ModelViewer src={modelUrl ?? ""} alt="" poster={imageUrl} />
+          ) : data?.type === "model" ? (
+            <div className="w-full h-full">
+              <div className="flex border rounded-2xl bg-balance-card flex-wrap text-wrap w-full md:w-[100%] mx-auto aspect-square">
+                <ModelViewer
+                  src={data?.modelUrl ?? ""}
+                  alt=""
+                  poster={data?.imageUrl ?? ""}
+                />
+              </div>
+              <div className="h-6 w-full flex justify-center gap-2 mt-2">
+                <ToolBarWrapper
+                  type="model"
+                  imageUrl={data?.imageUrl}
+                  modelUrl={data?.modelUrl}
+                  messageId={data?.messageId ?? ""}
+                  nftId={data?.nftId}
+                  tokenized={data?.tokenized}
+                  disabled={{
+                    MAXIMIZE_VIEW: true,
+                  }}
+                />
+              </div>
             </div>
           ) : (
             <></>

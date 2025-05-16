@@ -51,6 +51,26 @@ export type ChatMessage = {
   subThreads: TSubThread[];
 };
 
+export type TMaximizeModelViewer = {
+  type: "model";
+  modelUrl: MaybeString;
+  imageUrl: MaybeString;
+  messageId: string;
+  nftId?: MaybeString;
+  tokenized?: boolean;
+};
+
+export type TMaximizeImage = {
+  type: "image";
+  modelUrl: string;
+  imageUrl: string;
+};
+type TMaximizeData = TMaximizeImage | TMaximizeModelViewer;
+export type TMaximize = {
+  isOpened: boolean;
+  data?: TMaximizeData;
+};
+
 export type TGenerateModal = {
   isOpened: boolean;
   imageUrl?: MaybeString;
@@ -90,7 +110,7 @@ export type ChatState = {
     modelUrl?: string | null;
     imageUrl?: string | null;
   };
-  maximizedContainer: TGenerateModal;
+  maximizedContainer: TMaximize;
   chatMessageEditImage: TEditImage;
   genModelFromImage: TGenerateModal;
   sessionId: string;

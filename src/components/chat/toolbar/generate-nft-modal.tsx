@@ -2,10 +2,7 @@
 import GenerateNft from "@/assets/icons/Generate-nft";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { generateNFT } from "@/lib/react-query/nfts";
-import {
-  setGenerateNFT,
-  setMaximizedViewer
-} from "@/lib/redux/features/chat";
+import { setGenerateNFT, setMaximizedViewer } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
 import { createNftSchema, TCreateNftSchema } from "@/lib/zod/create-nft";
 import { useAuthentication } from "@/providers/account.context";
@@ -76,8 +73,7 @@ export default function GenerateNFTModal() {
       dispatch(
         setMaximizedViewer({
           isOpened: false,
-          imageUrl: undefined,
-          modelUrl: undefined,
+          data: undefined,
         })
       );
     },

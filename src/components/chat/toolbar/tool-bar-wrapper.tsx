@@ -104,8 +104,11 @@ export default function ToolBarWrapper({
               index={index}
               key={`tool-tip-contents-${item.content.trim()}-${index}`}
               imageUrl={imageUrl}
+              messageId={messageId}
               modelUrl={modelUrl}
               tool={item}
+              nftId={nftId}
+              tokenized={tokenized}
             />
           );
         }

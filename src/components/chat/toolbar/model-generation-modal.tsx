@@ -6,7 +6,10 @@ import {
   generateModelFromImageMutation,
   TGetMessagesReturn,
 } from "@/lib/react-query/threads.v3";
-import { setGenerateModel, setMaximizedViewer } from "@/lib/redux/features/chat";
+import {
+  setGenerateModel,
+  setMaximizedViewer,
+} from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
 import { InfiniteData, useMutation } from "@tanstack/react-query";
@@ -57,8 +60,7 @@ export default function ModelGenerationModal() {
       dispatch(
         setMaximizedViewer({
           isOpened: false,
-          imageUrl: undefined,
-          modelUrl: undefined,
+          data: undefined,
         })
       );
       dispatch(

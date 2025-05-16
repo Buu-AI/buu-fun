@@ -40,6 +40,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
   const { ref: topObserverRef } = useInView({
     threshold: 0,
     rootMargin: `${VIEW_BEFORE_PX}px 0px`,
+
     onChange(inView, entry) {
       if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
         console.log("Fetching next page.");
@@ -81,7 +82,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
         id="chat-window"
         ref={chatContainerRef}
         className={cn(
-          "overflow-y-scroll  scrollbar-w-hidden overflow-x-hidden snap-y px-2 snap-mandatory w-full h-full relative",
+          "overflow-y-scroll  scrollbar-w-hidden overflow-x-hidden snap-y px-2 snap-mandatory w-full h-full relative"
         )}
       >
         <div ref={topObserverRef} className="absolute top-6 w-full h-3" />
