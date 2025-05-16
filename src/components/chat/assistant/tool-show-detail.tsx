@@ -113,9 +113,9 @@ export default function AssistantMessageShowDetailToolCall({
                     </p>
                     <p className="">
                       <span className="text-sm">
-                        <span>“</span>
+                        <span></span>
                         {payload[item]}
-                        <span>”</span>
+                        <span></span>
                       </span>
                     </p>
                   </div>

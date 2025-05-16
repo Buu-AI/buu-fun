@@ -48,6 +48,7 @@ export default function AssistantToolMessage({
             <ImageRenderer
               messageId={messageId}
               role="assistant"
+              status={status}
               imageUrls={imageUrls}
               containerClassName="justify-normal"
             />

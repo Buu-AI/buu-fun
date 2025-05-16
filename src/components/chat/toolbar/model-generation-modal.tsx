@@ -26,7 +26,7 @@ import { isChatGenerating } from "@/lib/redux/selectors/chatMessages";
 export default function ModelGenerationModal() {
   const { identityToken: accessToken, login } = useAuthentication();
   const generateModelModalState = useAppSelector(
-    (state) => state.chat.genModelFromImage,
+    (state) => state.chat.genModelFromImage
   );
 
   const { imageUrl, isOpened } = generateModelModalState;
@@ -49,7 +49,7 @@ export default function ModelGenerationModal() {
               items: [...page.items, ...data.items],
             })),
           };
-        },
+        }
       );
       await queryClient.invalidateQueries({
         queryKey: ["get-messages", sessionId, accessToken],
@@ -58,7 +58,7 @@ export default function ModelGenerationModal() {
         setGenerateModel({
           isOpened: false,
           imageUrl: null,
-        }),
+        })
       );
     },
     onError(error) {
@@ -72,7 +72,7 @@ export default function ModelGenerationModal() {
   function handleModelGeneration() {
     if (isChatPending) {
       toast.error(
-        "AI is thinking, please try after current message is completed",
+        "AI is thinking, please try after current message is completed"
       );
     }
 
@@ -105,7 +105,7 @@ export default function ModelGenerationModal() {
             setGenerateModel({
               isOpened: false,
               imageUrl: null,
-            }),
+            })
           );
           return;
         }
@@ -114,17 +114,17 @@ export default function ModelGenerationModal() {
     >
       <DialogContent className="rounded-[20px] pt-6 lg:rounded-[20px] bg-nft-modal-card overflow-y-scroll max-h-[90dvh] scrollbar-w-hidden">
         <DialogHeader className="flex items-center justify-center ">
-          <DialogTitle>Edit Image</DialogTitle>
+          <DialogTitle>Generate model</DialogTitle>
           <DialogDescription className="text-center text-pretty ">
-            You can tell me what edits to make...
+            This request will generate a 3D model from this image{" "}
           </DialogDescription>
         </DialogHeader>
         <div
           className={cn(
-            "flex overflow-hidden rounded-lg w-full md:w-[50%] mx-auto aspect-square",
+            "flex overflow-hidden rounded-lg w-full  mx-auto max-w-[50%]",
             {
               hidden: !imageUrl,
-            },
+            }
           )}
         >
           {imageUrl ? (
@@ -134,7 +134,7 @@ export default function ModelGenerationModal() {
               alt="Retrying Image Url"
               width={720}
               height={720}
-              className="aspect-square w-full overflow-hidden rounded-lg h-full object-cover"
+              className="overflow-hidden  rounded-lg h-full object-contain"
             />
           ) : null}
         </div>
@@ -149,12 +149,12 @@ export default function ModelGenerationModal() {
               {isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Generating model...
+                  Generating...
                 </>
               ) : (
                 <>
                   <MagicPenIcon className="current-color" />
-                  Generate Model
+                  Generate
                 </>
               )}
             </Button>

@@ -81,7 +81,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
         id="chat-window"
         ref={chatContainerRef}
         className={cn(
-          "overflow-y-scroll  scrollbar-w-hidden overflow-x-hidden snap-y px-2 snap-mandatory w-full h-full relative",
+          "overflow-y-scroll  scrollbar-w-hidden overflow-x-hidden snap-y px-2 snap-mandatory w-full h-full relative"
         )}
       >
         <div ref={topObserverRef} className="absolute top-6 w-full h-3" />
@@ -161,6 +161,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
                   ) : null}
                   {isRoleUser(role) ? (
                     <UserChatMessage
+                      status={status}
                       messageId={messageId}
                       imageUrls={imageUrls}
                       text={prompt ?? ""}

@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import UserToolBar from "./toolbar/user-tool-bar";
 import { cn } from "@/lib/utils";
+import { TMessageStatus } from "@/types/chat/chat-types";
+import { isToolCallInProgress } from "@/lib/helpers/status-checker";
 type TImageRenderer = {
   role: "user" | "assistant";
   imageUrls: string[];
@@ -9,6 +11,7 @@ type TImageRenderer = {
   className?: string;
   messageId: string;
   containerClassName?: string;
+  status: TMessageStatus;
 };
 export default function ImageRenderer({
   imageUrls,
@@ -17,12 +20,14 @@ export default function ImageRenderer({
   containerClassName,
   role = "user",
   messageId,
+  status,
 }: TImageRenderer) {
+  const isGenerating = isToolCallInProgress(status);
   return (
     <motion.div
       className={cn(
         "flex mt-2 justify-end gap-2 flex-wrap",
-        containerClassName,
+        containerClassName
       )}
     >
       {imageUrls && imageUrls.length > 0
@@ -58,7 +63,13 @@ export default function ImageRenderer({
                     alt={`${text}-${item}`}
                     width={250}
                     height={250}
-                    className={cn("object-cover w-40 aspect-square", className)}
+                    className={cn(
+                      "object-cover w-40 aspect-square",
+                      className,
+                      {
+                        "blur-md": isGenerating,
+                      }
+                    )}
                   />
                 </div>
                 <motion.div
@@ -82,11 +93,13 @@ export default function ImageRenderer({
                   }}
                   className=""
                 >
-                  <UserToolBar
-                    imageUrl={item}
-                    messageId={messageId}
-                    role={role}
-                  />
+                  {isToolCallInProgress(status) ? null : (
+                    <UserToolBar
+                      imageUrl={item}
+                      messageId={messageId}
+                      role={role}
+                    />
+                  )}
                 </motion.div>
               </motion.div>
             );

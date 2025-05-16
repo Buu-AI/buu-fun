@@ -33,7 +33,7 @@ export default function GeneratedModelCard({
 }: TGeneratedModelCard) {
   const isPendingOrCanceledOrFailed = isToolCallPendingCanceledOrFailed(status);
   const isGenerating = isToolCallGenerating(status);
-  if (isPendingOrCanceledOrFailed || !isToolModel(type)) {
+  if (isPendingOrCanceledOrFailed || !imageUrl) {
     return null;
   }
   return (
