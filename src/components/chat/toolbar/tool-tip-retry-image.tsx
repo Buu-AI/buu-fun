@@ -18,7 +18,6 @@ type TToolTipRetryImage = {
   open?: boolean;
   messageId?: string;
   imageUrl: MaybeString;
-  modelUrl: MaybeString;
 };
 
 export default function ToolTipRetryImage({
