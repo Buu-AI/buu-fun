@@ -77,7 +77,6 @@ export default function ToolBarWrapper({
             <ToolTipRetryImage
               toolTipData={item}
               length={ChatToolTips.length}
-              modelUrl={modelUrl}
               imageUrl={imageUrl}
               index={index}
               key={`tool-tip-contents-${item.content.trim()}-${index}`}

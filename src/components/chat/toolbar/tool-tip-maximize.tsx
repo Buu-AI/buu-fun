@@ -50,7 +50,11 @@ export default function ToolTipMaximize({
                 dispatch(
                   setMaximizedViewer({
                     isOpened: true,
-                    data: { type: "image", imageUrl: "", modelUrl: "" },
+                    data: {
+                      type: "image",
+                      imageUrl: imageUrl ?? "",
+                      modelUrl: "",
+                    },
                   })
                 );
               }
