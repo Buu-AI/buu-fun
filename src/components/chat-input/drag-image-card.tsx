@@ -1,21 +1,15 @@
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { useAppDispatch } from "@/hooks/redux";
 import { setInputFile } from "@/lib/redux/features/chat";
+import { TImageData } from "@/lib/redux/features/chat-types";
 import { cn, getAllowedContentTypeMaps } from "@/lib/utils";
+import { nanoid } from "@reduxjs/toolkit";
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 
-export interface ImageData {
-  url: string;
-  name: string;
-  size: number;
-  type: string;
-}
-
 interface InteractiveDropzoneProps {
-  onImageSelected?: (image: ImageData | null) => void;
+  onImageSelected?: (image: TImageData | null) => void;
   className?: string;
 }
 
@@ -25,8 +19,6 @@ export default function InteractiveDropzone({
 }: InteractiveDropzoneProps) {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [isDraggingOver, setIsDraggingOver] = useState(false);
-  const image = useAppSelector((state) => state.chat.inputFile);
-
   const dispatch = useAppDispatch();
 
   // Configure dropzone to prevent default behavior
@@ -42,25 +34,23 @@ export default function InteractiveDropzone({
 
   const handleImageDrop = useCallback(
     (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
-      if (file) {
+      const files = acceptedFiles;
+      for (const file of files) {
         if (!getAllowedContentTypeMaps(file.type)) {
           toast.error(`Image type ${file.type} is not supported yet`);
           return;
         }
         const imageUrl = URL.createObjectURL(file);
         const imageData = {
+          id: nanoid(),
           url: imageUrl,
           name: file.name,
           size: file.size,
           type: file.type,
         };
-        toast.success(`${imageUrl}`);
-        console.log(imageUrl);
         dispatch(setInputFile(imageData));
         onImageSelected?.(imageData);
       }
-
       setTimeout(() => {
         setIsDraggingOver(false);
         setRotation({ x: 0, y: 0 });
@@ -146,14 +136,13 @@ export default function InteractiveDropzone({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const handleRemoveImage = () => {
-    if (image) {
-      // Revoke the object URL to free up memory
-      URL.revokeObjectURL(image.url);
-      onImageSelected?.(null);
-      dispatch(setInputFile(null));
-    }
-  };
+
+  // const handleRemoveImage = (imageToRemove: TImageData) => {
+  //   // Revoke the object URL to free up memory
+  //   URL.revokeObjectURL(imageToRemove.url);
+  //   onImageSelected?.(null);
+  //   dispatch(removeImage(imageToRemove.id));
+  // };
 
   const dropzoneVariants = {
     hidden: {
@@ -199,7 +188,7 @@ export default function InteractiveDropzone({
               transformStyle: "preserve-3d",
               rotate: `${rotation.x}deg`,
             }}
-            className="absolute top-[-20px]"
+            className="absolute  -left-[108px] hidden lg:block top-[10px]"
           >
             <motion.div
               initial="hidden"
@@ -225,44 +214,56 @@ export default function InteractiveDropzone({
           </div>
         )}
 
-        {!isDraggingOver && image && (
-          <div
-            className="
-              absolute -left-[20px] top-[-20px]
-              transform -rotate-12 
-              border-buu border rounded-xl z-50 pointer-events-none
-              w-[77px] h-[106px]
-            "
-          >
-            <div className="relative w-full h-full group">
-              <Image
-                src={image.url}
-                alt="Uploaded image"
-                fill
-                className="object-cover rounded-lg"
-              />
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleRemoveImage();
-                }}
-                className="
-                  pointer-events-auto
-                  absolute top-1 right-1 
-                  bg-red-500 text-white 
-                  rounded-full animate-pulse
-                  w-5 h-5 
-                  flex items-center justify-center
-                  text-xs
-                  transition-opacity
-                  z-50
-                "
-              >
-                ✕
-              </button>
-            </div>
-          </div>
-        )}
+        {/* {!isDraggingOver && image && image.length
+          ? image.map((item, index) => {
+              if (index > 1) return null;
+              return (
+                <motion.div
+                  initial={{
+                    y: 700,
+                    x: -120,
+                    rotate: 0,
+                  }}
+                  animate={{
+                    y: 0,
+                    x: 0,
+                    rotate: index > 0 ? "12deg" : "-12deg",
+                    transition: { duration: 1, delay: index * 0.1 },
+                  }}
+                  exit={{
+                    y: 700,
+                    x: -120,
+                    transition: { duration: 1 },
+                  }}
+                  key={item.id}
+                  className={cn(
+                    "absolute  -left-[108px] hidden lg:block top-[10px]  transform -rotate-12  border-buu  rounded-xl z-50 pointer-events-none w-[77px] h-[106px]",
+                    { "-left-[88px] z-0 top-[5px] rotate-12": index > 0 }
+                  )}
+                >
+                  <div className="relative w-full h-full group">
+                    <Image
+                      src={item.url}
+                      alt="Uploaded image"
+                      fill
+                      className="object-cover rounded-lg"
+                    />
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        handleRemoveImage(item);
+                      }}
+                      className={
+                        "pointer-events-auto absolute top-1 right-1  bg-buu-destructive text-white  rounded-full animate-pulse w-5 h-5  flex items-center justify-center text-xs transition-opacity z-50"
+                      }
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </motion.div>
+              );
+            })
+          : null} */}
       </AnimatePresence>
     </>
   );

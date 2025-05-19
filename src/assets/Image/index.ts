@@ -267,4 +267,43 @@ import PricingImage2 from "@/assets/Image/pricing/image_2.png";
 import PricingImage3 from "@/assets/Image/pricing/image_3.png";
 import PricingImage4 from "@/assets/Image/pricing/image_4.png";
 
+import TensorFlow from "@/assets/icons/chain/TENSOR.png";
+import OpenSea from "@/assets/icons/chain/OPEN_SEA.png";
+import MagicEden from "@/assets/icons/chain/MAGIC_EDEN.jpg";
 export { PricingImage1, PricingImage2, PricingImage3, PricingImage4 };
+
+export { TensorFlow, OpenSea, MagicEden };
+
+import BitRefillImageOne from "@/assets/Image/bitrefill-card/image-0.png";
+import BitRefillImageTwo from "@/assets/Image/bitrefill-card/image-1.png";
+import BitRefillImageThree from "@/assets/Image/bitrefill-card/image-2.png";
+import BitRefillImageFour from "@/assets/Image/bitrefill-card/image-3.png";
+import BitRefillImageFive from "@/assets/Image/bitrefill-card/image-4.png";
+import BitRefillImageSix from "@/assets/Image/bitrefill-card/image-5.png";
+import BitRefillImageSeven from "@/assets/Image/bitrefill-card/image-6.png";
+import BitRefillImageEight from "@/assets/Image/bitrefill-card/image-7.png";
+import BitRefillImageNine from "@/assets/Image/bitrefill-card/image-8.png";
+import BitRefillImageTen from "@/assets/Image/bitrefill-card/image-9.png";
+
+export const BitRefillImagesOne = [
+  BitRefillImageOne,
+  BitRefillImageTwo,
+  BitRefillImageThree,
+  BitRefillImageFour,
+  BitRefillImageEight,
+];
+
+export const BitRefillImagesTwo = [
+  BitRefillImageFive,
+  BitRefillImageSix,
+  BitRefillImageSeven,
+  BitRefillImageEight,
+];
+
+export const BitRefillImagesThree = [
+  BitRefillImageNine,
+  BitRefillImageTen,
+  BitRefillImageOne,
+  BitRefillImageFour,
+  BitRefillImageFive,
+];

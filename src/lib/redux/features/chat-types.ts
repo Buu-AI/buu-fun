@@ -2,6 +2,9 @@ import {
   GetSubthreadGenRequestsQuery,
   GetSubthreadsQuery,
 } from "@/gql/types/graphql";
+import { MaybeString } from "@/types";
+import { TChatMessage, TMessageQueryData } from "@/types/chat/chat-types";
+import { InfiniteData } from "@tanstack/react-query";
 import { TThreeDStyles } from "./settings";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -17,7 +20,6 @@ export type TMediaRequest = {
   _id: string;
   // status of the image
   status: string;
-
   //Could be more specific based on actual data
   metadata: any;
   //type of image
@@ -49,7 +51,39 @@ export type ChatMessage = {
   subThreads: TSubThread[];
 };
 
-export type ImageData = {
+export type TMaximizeModelViewer = {
+  type: "model";
+  modelUrl: MaybeString;
+  imageUrl: MaybeString;
+  messageId: string;
+  nftId?: MaybeString;
+  tokenized?: boolean;
+};
+
+export type TMaximizeImage = {
+  type: "image";
+  modelUrl: string;
+  imageUrl: string;
+};
+type TMaximizeData = TMaximizeImage | TMaximizeModelViewer;
+export type TMaximize = {
+  isOpened: boolean;
+  data?: TMaximizeData;
+};
+
+export type TGenerateModal = {
+  isOpened: boolean;
+  imageUrl?: MaybeString;
+  modelUrl?: MaybeString;
+};
+
+export type TEditImage = {
+  isOpened: boolean;
+  imageUrl?: MaybeString;
+};
+
+export type TImageData = {
+  id: string;
   url: string;
   name: string;
   size: number;
@@ -58,7 +92,7 @@ export type ImageData = {
 export type ChatState = {
   inputQuery: string;
   inputImageUrl: string | null;
-  inputFile: ImageData | null;
+  inputFile: TImageData[];
   currentSubThreadIndex: number;
   currentGenRequestIndex: number;
   draggingImage?: string;
@@ -70,22 +104,34 @@ export type ChatState = {
     modalOpened: boolean;
     subThreadId: string | null;
   };
+  genNft: {
+    isGenNftModalOpen: boolean;
+    messageId?: string | null;
+    modelUrl?: string | null;
+    imageUrl?: string | null;
+  };
+  maximizedContainer: TMaximize;
+  chatMessageEditImage: TEditImage;
+  genModelFromImage: TGenerateModal;
+  sessionId: string;
+  messages: TChatMessage[];
+  chatMessages: InfiniteData<TMessageQueryData>;
 };
 
 export type TErrorTypeName = { __typename?: "HandledError" };
-
-export type TAllSubThreads = TAllSubThreadsResponse["items"];
 
 export type TAllSubThreadsResponse = Exclude<
   GetSubthreadsQuery["getSubthreads"],
   TErrorTypeName
 >;
+export type TAllSubThreads = TAllSubThreadsResponse["items"];
 
 export type TSubThreadsResponse = Exclude<
   GetSubthreadGenRequestsQuery["getSubthreadGenRequests"],
   TErrorTypeName
 >;
 export type TGenResponseStatus = "InProgress" | "Success" | "Error";
+
 export type TSubThreadsMedia = Omit<
   TSubThreadsResponse["items"][number],
   "status"
@@ -97,14 +143,15 @@ export type TGenerationalData = {
   style: TThreeDStyles | null | undefined;
   isGenerating: boolean;
   isErrored: boolean;
+  tokenized: boolean;
   model?: {
     modelId: string;
-    modelUrl?: string;
+    modelUrl?: string | null;
     modelStatus: TGenResponseStatus;
   };
   image: {
     imageId: string;
     imageStatus: TGenResponseStatus;
-    imageUrl: string | null;
+    imageUrl?: string | null;
   };
 };

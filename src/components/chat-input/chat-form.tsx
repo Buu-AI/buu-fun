@@ -2,52 +2,64 @@
 import { ArrowUp, ImageIcon } from "@/assets/icons";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { getPresignedUrl } from "@/lib/react-query/image-upload";
-import { queryClient } from "@/lib/react-query/query-client";
-import { generateSubThreads } from "@/lib/react-query/threads";
+import { motion } from "framer-motion";
+// import { generateSubThreads } from "@/lib/react-query/threads";
+import { TypedAppError } from "@/class/error";
+import {
+  sendChatMessage,
+  TGetMessagesReturn,
+} from "@/lib/react-query/threads.v3";
 import {
   clearInput,
-  pushNewSubThreads,
+  clearInputFile,
+  removeImage,
   setInputFile,
-  setNewThreadId,
+  setNewSession,
 } from "@/lib/redux/features/chat";
-import { isSubThreadGenerating } from "@/lib/redux/selectors/chat";
-import {
-  blobUrlToFile,
-  cn,
-  getAllowedContentTypeMaps,
-  isOverAllRequestLimitReached,
-} from "@/lib/utils";
+import { setSubscriptionModel } from "@/lib/redux/features/subscription";
+import { blobUrlToFile, cn, getAllowedContentTypeMaps } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
-import { useMutation } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { TBottomBarContainer } from "./bottom-bar-container";
 import ChatTextArea from "./chat-text-area";
-import DragImageCard, { ImageData } from "./drag-image-card";
-import { TypedAppError } from "@/class/error";
-import { setSubscriptionModel } from "@/lib/redux/features/subscription";
+import DragImageCard from "./drag-image-card";
+import { isChatGenerating } from "@/lib/redux/selectors/chatMessages";
+import { nanoid } from "@reduxjs/toolkit";
+import { TImageData } from "@/lib/redux/features/chat-types";
+import Image from "next/image";
+import { AnimatePresence } from "framer-motion";
 
 export default function ChatForm({ action }: TBottomBarContainer) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { identityToken, login } = useAuthentication();
+
   const dispatch = useAppDispatch();
   const router = useRouter();
   const prompt = useAppSelector((state) => state.chat.inputQuery);
   const style = useAppSelector((state) => state.settings.ThreeDStyle);
   const inputFile = useAppSelector((state) => state.chat.inputFile);
 
-  const isChatPending = useAppSelector(isSubThreadGenerating);
+  const isChatPending = useAppSelector(isChatGenerating);
   // Mutation for creating a new chat
   const { mutate: createNewChat, isPending: isCreatePending } = useMutation({
     onMutate() {
-      toast.dismiss();
       toast.loading("Generating model...", { duration: 2000 });
+      toast.dismiss();
     },
-    mutationFn: generateSubThreads,
+    mutationFn: sendChatMessage,
     onSuccess(data) {
-      dispatch(setNewThreadId(data?.threadId));
-      router.push(`/app/generation/${data?.threadId}`);
+      dispatch(clearInput());
+      const sessionId = data?.items[0].sessionId;
+      dispatch(setNewSession(sessionId));
+      router.push(`/app/chat/${sessionId}`);
     },
     onError(error) {
       if (error instanceof TypedAppError) {
@@ -67,16 +79,32 @@ export default function ChatForm({ action }: TBottomBarContainer) {
     },
   });
 
+  const fileCount = useAppSelector((state) => state.chat.inputFile.length);
+
+  const queryClient = useQueryClient();
   // mutation for existing chat
   const { mutate: createExistingChat, isPending: isExistingChatPending } =
     useMutation({
-      mutationFn: generateSubThreads,
-      onSuccess(data) {
-        toast.loading("Generating your model...", { duration: 8000 });
-        dispatch(pushNewSubThreads(data));
+      mutationFn: sendChatMessage,
+      async onSuccess(data) {
         dispatch(clearInput());
-        queryClient.invalidateQueries({
-          queryKey: [data.threadId, "get-sub-threads"],
+        const sessionId = data.items[0].sessionId;
+        queryClient.setQueryData<InfiniteData<TGetMessagesReturn>>(
+          ["get-messages", sessionId, identityToken],
+          (old) => {
+            if (!old) return old;
+            return {
+              ...old,
+              pages: old.pages.map((page) => ({
+                ...page,
+                __typename: page.__typename,
+                items: [...page.items, ...data.items],
+              })),
+            };
+          },
+        );
+        await queryClient.invalidateQueries({
+          queryKey: ["get-messages", sessionId, identityToken],
         });
       },
       onError(error) {
@@ -100,8 +128,11 @@ export default function ChatForm({ action }: TBottomBarContainer) {
   const isChatLoading =
     isCreatePending ||
     isExistingChatPending ||
-    (action !== "new_chat" && isChatPending.isJustStarted) ||
-    isOverAllRequestLimitReached(isChatPending.totalRequest);
+    (action !== "new_chat" && isChatPending) ||
+    isChatPending ||
+    isSubmitting;
+
+  // isOverAllRequestLimitReached(isChatPending.totalRequest);
 
   const { mutateAsync: getImagePresignedUrl } = useMutation({
     mutationFn: getPresignedUrl,
@@ -114,17 +145,17 @@ export default function ChatForm({ action }: TBottomBarContainer) {
   });
 
   const handleImageUploadUrl = async (
-    ImageData: ImageData,
+    ImageData: TImageData,
     accessToken: string,
   ) => {
     try {
-      toast.loading("Preparing image for uploading....");
       const file = await blobUrlToFile(ImageData.url, ImageData.name);
       if (!file?.name) {
         toast.dismiss();
         toast.error("Failed to retrieve file");
         return null;
       }
+
       const contentType = getAllowedContentTypeMaps(file.type);
       if (!contentType) {
         toast.dismiss();
@@ -156,9 +187,10 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         toast.error("Failed to upload the image");
         return null;
       }
-      dispatch(setInputFile(null));
-      URL.revokeObjectURL(ImageData.url);
-      return data.url;
+      return {
+        uploadUrl: data.url,
+        nativeUrl: ImageData.url,
+      };
     } catch (error) {
       if (error) {
       }
@@ -171,52 +203,83 @@ export default function ChatForm({ action }: TBottomBarContainer) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Don't submit if there's no prompt
-    if ((!prompt || prompt.trim() === "") && !inputFile?.url) {
-      return;
-    }
-
-    if (isChatLoading) {
-      if (isOverAllRequestLimitReached(isChatPending.totalRequest)) {
-        return toast.error(
-          "Whoa, you're on fire 🔥. You've hit the limit of 4 creations.",
-        );
-      }
-      return toast.error("Hold on!, Still generating your model...");
-    }
-    if (!identityToken) {
-      login();
-      return;
-    }
-    let imageUrl: string | null = null;
-    if (inputFile?.url) {
-      imageUrl = await handleImageUploadUrl(inputFile, identityToken);
-      // stopper condition, because error message is done in `handleImageUploadUrl` already
-      if (!imageUrl) {
+    try {
+      setIsSubmitting(true);
+      if (!identityToken) {
+        login();
         return;
       }
-    }
+      // Don't submit if there's no prompt
+      if (!prompt || prompt.trim() === "") {
+        return;
+      }
 
-    // Handle based on action type
-    if (action === "new_chat") {
-      createNewChat({
-        accessToken: identityToken ?? "",
-        prompt: prompt,
-        style: style,
-        imageUrl,
-      });
-    } else if (typeof action !== "string") {
-      createExistingChat({
-        accessToken: identityToken ?? "",
-        prompt,
-        style,
-        threadId: action.threadId,
-        imageUrl,
-      });
+      if (isChatLoading) {
+        return toast.error("Hold on!, Still generating your model...");
+      }
+
+      let imageUrls: string[] | null = [];
+
+      if (inputFile && inputFile?.length > 0) {
+        const inputFileRequests = inputFile.map((item) =>
+          handleImageUploadUrl(item, identityToken),
+        );
+        toast.loading("Preparing image for uploading....", { duration: 1200 });
+
+        const uploadedImages = await Promise.all(inputFileRequests);
+        imageUrls = uploadedImages
+          .map((item) => item?.uploadUrl)
+          .filter((fv) => typeof fv === "string");
+
+        if (imageUrls.length !== inputFile.length) {
+          throw new Error("Failed to upload Image, Please try again");
+        }
+
+        dispatch(clearInputFile());
+
+        uploadedImages.forEach((item) => {
+          if (item && item.nativeUrl) {
+            URL.revokeObjectURL(item.nativeUrl);
+          }
+        });
+        if (!imageUrls) {
+          // stopper condition, because error message is done in `handleImageUploadUrl` already
+          return;
+        }
+      }
+
+      // Handle based on action type
+      if (action === "new_chat") {
+        createNewChat({
+          accessToken: identityToken ?? "",
+          prompt: prompt,
+          style: style,
+          imageUrls,
+        });
+      } else if (typeof action !== "string") {
+        createExistingChat({
+          accessToken: identityToken ?? "",
+          prompt,
+          style,
+          sessionId: action.sessionId,
+          imageUrls,
+        });
+      }
+    } catch (error) {
+      if (error) {
+        toast.error(`${error}`);
+      }
+      toast.error("Failed to send message, Please try again");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
+  const handleRemoveImage = (imageToRemove: TImageData) => {
+    // Revoke the object URL to free up memory
+    URL.revokeObjectURL(imageToRemove.url);
+    dispatch(removeImage(imageToRemove.id));
+  };
   return (
     <form
       onSubmit={handleSubmit}
@@ -227,13 +290,63 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         },
       )}
     >
-      <button
+      <AnimatePresence mode="popLayout">
+        <div className="flex gap-2 items-center   w-full overflow-hidden">
+          {inputFile.map((item, index) => {
+            return (
+              <motion.button
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{
+                  scale: 1,
+                  opacity: 1,
+                  transition: {
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 20,
+                    delay: index * 0.1,
+                  },
+                }}
+                exit={{
+                  scale: 0,
+                  opacity: 0,
+                  transition: {
+                    duration: 0.3,
+                    ease: "easeInOut",
+                  },
+                }}
+                layout
+                key={item.id}
+                type="button"
+                onClick={() => handleRemoveImage(item)}
+                className="w-14 h-14 relative rounded-xl overflow-hidden"
+              >
+                <div
+                  className={
+                    "pointer-events-auto absolute top-1 right-1  bg-white text-black  rounded-full animate-pulse w-4 h-4  flex items-center justify-center text-xs transition-opacity z-50"
+                  }
+                >
+                  ✕
+                </div>{" "}
+                <Image
+                  className=""
+                  src={item.url}
+                  alt="user input file"
+                  width={200}
+                  height={200}
+                />
+              </motion.button>
+            );
+          })}
+        </div>
+      </AnimatePresence>
+
+      {/* <button
         disabled={isChatLoading}
         className={cn(
           "bg-buu-button     shadow-buu-button rounded-xl left-0 absolute w-full h-full top-0",
           {
-            hidden: !inputFile?.url.length,
-          },
+            hidden: !inputFile?..length,
+          }
         )}
       >
         <div className="flex   gap-2 items-center justify-center">
@@ -244,33 +357,42 @@ export default function ChatForm({ action }: TBottomBarContainer) {
             <ImageIcon />
           </div>
         </div>
-      </button>
+      </button> */}
       {/* Other components */}
       <DragImageCard className={""} onImageSelected={() => {}} />
-      <ChatTextArea />
+      <ChatTextArea isChatLoading={isChatLoading} />
       <div className="w-full  flex justify-between">
         <label htmlFor="file-input" className="cursor-pointer">
           <input
+            multiple
             id="file-input"
             className="hidden"
             type="file"
             accept="image/png, image/jpeg"
             // capture="user"
             onChange={(e) => {
-              const file = e.target?.files && e.target?.files[0];
-              if (file) {
-                if (!getAllowedContentTypeMaps(file.type)) {
-                  toast.error(`Image type ${file.type} is not supported yet`);
-                  return;
+              const files = e.target?.files;
+              if (files) {
+                for (const file of files) {
+                  if (!getAllowedContentTypeMaps(file.type)) {
+                    toast.error(`Image type ${file.type} is not supported yet`);
+                    return;
+                  }
+                  if (fileCount > 4) {
+                    toast.error(`Maximum file count is 4`);
+                    return;
+                  }
+
+                  const imageUrl = URL.createObjectURL(file);
+                  const imageData = {
+                    id: nanoid(),
+                    url: imageUrl,
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                  };
+                  dispatch(setInputFile(imageData));
                 }
-                const imageUrl = URL.createObjectURL(file);
-                const imageData = {
-                  url: imageUrl,
-                  name: file.name,
-                  size: file.size,
-                  type: file.type,
-                };
-                dispatch(setInputFile(imageData));
               }
             }}
           />

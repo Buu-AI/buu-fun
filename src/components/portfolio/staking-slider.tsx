@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { useTokenBalance } from "@/hooks/use-pricing-history";
+import { useTokenBalance } from "@/hooks/use-pricing";
 import { setSelectedAmountToStake } from "@/lib/redux/features/buu-pricing";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -12,15 +12,17 @@ export default function StakingSlider() {
   const dispatch = useAppDispatch();
 
   // Calculate percentages of earnings
-  const is25Percent = selected === Math.round(Number(earnings) * 0.25);
-  const is50Percent = selected === Math.round(Number(earnings) * 0.5);
-  const is75Percent = selected === Math.round(Number(earnings) * 0.75);
-  const isMax = selected === Math.round(Number(earnings));
+  const is25Percent = Number(selected) === Math.floor(Number(earnings) * 0.25);
+  const is50Percent = Number(selected) === Math.floor(Number(earnings) * 0.5);
+  const is75Percent = Number(selected) === Math.floor(Number(earnings) * 0.75);
+  const isMax = Number(selected) === Math.floor(Number(earnings));
 
   // Handle button clicks
   const handlePercentageClick = (percentage: number) => {
     dispatch(
-      setSelectedAmountToStake(Math.round(Number(earnings) * percentage)),
+      setSelectedAmountToStake(
+        Math.floor(Number(earnings) * percentage).toString(),
+      ),
     );
   };
 

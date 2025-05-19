@@ -273,8 +273,8 @@ body {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 0.15fr 1.85fr;
-  grid-template-rows: 0.15fr 1.85fr;
+  grid-template-columns: 0.1fr 1.9fr;
+  grid-template-rows: 0.1fr 1.9fr;
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
@@ -294,7 +294,7 @@ body {
   grid-area: navigation;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
   .grid-container {
     display: grid;
     grid-template-columns: 0.2fr 1.8fr;
@@ -305,15 +305,12 @@ body {
       "navigation top-bar"
       "main-body main-body";
   }
-
   .top-bar {
     grid-area: top-bar;
   }
-
   .navigation {
     grid-area: navigation;
   }
-
   .main-body {
     grid-area: main-body;
   }
@@ -764,11 +761,22 @@ body {
   background: rgba(255, 135, 70, 0.5);
   box-shadow: 0px 0px 10.5px 3px rgba(179, 187, 197, 0.2) inset;
 }
-
+.green-pill {
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  background: rgba(120, 255, 138, 0.36);
+}
+.gray-pill {
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.36);
+}
 .golden-pill {
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 215, 0, 0.5); /* Gold color */
   box-shadow: 0px 0px 10.5px 3px rgba(179, 187, 197, 0.2) inset;
+}
+.dark-yellow {
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 250, 120, 0.36);
 }
 .destructive-pill {
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -776,6 +784,10 @@ body {
   box-shadow: 0px 0px 10.5px 3px rgba(179, 187, 197, 0.2) inset;
 }
 
+.accent-destructive-pill {
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  background: rgba(238, 37, 95, 0.36);
+}
 .bg-api-key-display {
   border: 1.5px solid rgba(120, 219, 255, 0);
   background: rgba(26, 33, 41, 0.36);
@@ -885,6 +897,13 @@ body {
   }
 }
 
+.bg-total-staked {
+  border-radius: 12px;
+  background: rgba(28, 32, 39, 0.4);
+  box-shadow: 0px 0px 46.6px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(10px);
+}
+
 input[type="number"] {
   -moz-appearance: textfield;
 }
@@ -894,7 +913,103 @@ input[type="number"] {
 }
 
 .bg-roi-shadow {
-  background: rgba(45, 50, 60, 0.70);
+  background: rgba(45, 50, 60, 0.7);
   box-shadow: 0px 0px 30.2px 3px rgba(52, 59, 66, 0.8) inset;
   backdrop-filter: blur(25px);
+}
+
+.bg-shadow-nft-cards {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(28, 32, 39, 0.36);
+  box-shadow: 0px 0px 46.6px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(40px);
+}
+
+.bg-shadow-nft-cards:hover {
+  background: rgba(120, 219, 255, 0.36);
+  box-shadow: 0px 0px 46.6px 3px rgba(33, 42, 52, 0.8) inset;
+  backdrop-filter: blur(40px);
+}
+
+.bg-nft-modal-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(45, 50, 60, 0.7);
+  box-shadow: 0px 0px 30.2px 3px rgba(52, 59, 66, 0.8) inset;
+  backdrop-filter: blur(25px);
+}
+
+.bg-balance-card {
+  background:
+    linear-gradient(
+      120deg,
+      rgba(79, 208, 255, 0.2) 5.33%,
+      rgba(0, 0, 0, 0) 33.45%
+    ),
+    linear-gradient(
+      223deg,
+      rgba(28, 32, 39, 0.1) 62.44%,
+      rgba(255, 255, 255, 0.01) 80.61%,
+      rgba(191, 197, 208, 0.05) 86.71%,
+      rgba(156, 166, 182, 0) 94.57%,
+      rgba(101, 116, 141, 0.1) 105.91%
+    ),
+    rgba(45, 50, 60, 0.2);
+  backdrop-filter: blur(25px);
+}
+
+.nft-style-card {
+  background: rgba(120, 219, 255, 0.36);
+  box-shadow: 0px 0px 19.1px 0px rgba(31, 39, 49, 0.8) inset;
+}
+
+.nft-failed-card {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(238, 37, 95, 0.1) 0%,
+      rgba(238, 37, 95, 0.5) 100%
+    ),
+    rgba(28, 32, 39, 0.36);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+.bg-user-chat-message {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(120, 219, 255, 0.36);
+}
+
+.bg-show-detailed-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.36);
+}
+
+.muted-button-class {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(28, 32, 39, 0.38);
+}
+.all-white * {
+  color: white !important;
+}
+.bg-svg-button {
+  background: rgba(255, 255, 255, 0.08);
+}
+.svg-download-button {
+  fill: rgba(255, 255, 255, 0.08);
+  stroke-width: 1.131px;
+  stroke: rgba(255, 255, 255, 0.08);
+}
+
+.svg-download-button:hover {
+  fill: rgba(255, 255, 255, 1);
+  stroke-width: 1.131px;
+  stroke: rgba(255, 255, 255, 0.08);
+}
+
+.shadow-scroll-marquee-box {
+  box-shadow: 0px 0px 30px 0px rgba(116, 218, 255, 0.3);
+}
+
+.bit-refill-image-border {
+  border: 2px solid rgba(255, 255, 255, 0.349);
 }

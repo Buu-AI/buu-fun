@@ -5,7 +5,7 @@ import {
   TokenMint,
 } from "@/gql/types/graphql";
 import { calcRewards } from "@/lib/streamflow/lib/rewards";
-import { PublicKey } from "@solana/web3.js";
+import { clusterApiUrl, PublicKey } from "@solana/web3.js";
 import BN from "bn.js";
 
 export async function getUserStakingData({
@@ -26,9 +26,12 @@ export async function getUserStakingData({
   stakePool?: PublicKey;
 }) {
   const rewardPool = rewardPools[0];
-  const userStakeEntries = stakeEntries.filter((stakeEntry) =>
-    new PublicKey(stakeEntry.account.payer).equals(new PublicKey(publicKey)),
-  );
+  const userStakeEntries = stakeEntries.filter((stakeEntry) => {
+    return new PublicKey(stakeEntry.account.payer).equals(
+      new PublicKey(publicKey),
+    );
+  });
+
   const rewardEntriesByStakeEntry = userStakeEntries.map((stakeEntry) => {
     return rewardEntries.filter(
       (rewardEntry) => rewardEntry.account.stakeEntry === stakeEntry.publicKey,
@@ -114,8 +117,9 @@ export async function getUserStakingData({
     const stakeUnlockedTs = new Date(
       stakeLockedTs.getTime() + Number(stakeEntry.account.duration) * 1000,
     );
-
+    const closedTs = stakeEntry.account.closedTs;
     return {
+      closedTs: closedTs,
       staked: stakeEntry.account.amount.toString(),
       duration: stakeEntry.account.duration.toString(),
       stakeLockedTs,
@@ -171,10 +175,16 @@ export async function getUserStakingData({
     available: totalClaimableRewards.toString(),
     share: share.toNumber() / 100,
     userStakeEntries,
-    userStakes,
+    userStakes: userStakes.filter((item) => item.closedTs === "0"),
   };
 }
 
 export function getClusterUrl() {
   return `${process.env.NEXT_PUBLIC_CLUSTER_URL}/?api-key=${process.env.NEXT_PUBLIC_CLUSTER_API_KEY}`;
+}
+export function isDevnet() {
+  return process.env.NEXT_PUBLIC_STREAMFLOW_CLUSTER === "devnet";
+}
+export function getSolanaClusterUrl() {
+  return clusterApiUrl("mainnet-beta");
 }

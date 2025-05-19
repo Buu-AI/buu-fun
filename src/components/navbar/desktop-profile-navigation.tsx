@@ -5,7 +5,6 @@ import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
 import LogoutIcon from "@/assets/icons/log-out-Icon";
 import ReferralIcon from "@/assets/icons/referral-icon";
 import SettingsIcon from "@/assets/icons/settings-icon";
-import WalletIcon2 from "@/assets/icons/wallet-icon-2";
 import { profilePicture } from "@/lib/dice-bear";
 import { useAuthentication } from "@/providers/account.context";
 import { ChevronDown } from "lucide-react";
@@ -65,17 +64,15 @@ export default function DesktopProfileNavigation() {
               {/* <SettingsIcon /> */}
               <p className="rainbow-text">Referral Program</p>
             </Link>
-            <Link
+            {/* <Link
               href={"/app/portfolio"}
               className="flex w-full items-center gap-1.5 hover:bg-buu-button/60 py-2 rounded-md px-2 font-medium"
             >
               <div className="flex w-5 h-5 ">
-                {/* fill="#78DBFF" */}
                 <WalletIcon2 />
               </div>
-              {/* <SettingsIcon /> */}
               <p>$BUU Token</p>
-            </Link>
+            </Link> */}
             <Link
               href={"/app/api-key"}
               className="flex w-full items-center gap-1.5 hover:bg-buu-button/60 py-2 rounded-md px-2 font-medium"

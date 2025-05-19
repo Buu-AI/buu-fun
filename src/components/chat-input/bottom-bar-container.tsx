@@ -1,13 +1,14 @@
 import SettingsBar from "../settings/settings-bar";
 import ChatForm from "./chat-form";
 import ImageDragAndDrop from "./image-drag-n-dropper";
+// import SettingsBar from "../settings/settings-bar";
 export type TBottomBarContainer = {
-  action: "new_chat" | { threadId: string };
+  action: "new_chat" | { sessionId: string };
 };
 export default function BottomBarContainer({ action }: TBottomBarContainer) {
   return (
     <div className="w-full px-1 py-1 mb-1  max-w-2xl mx-auto ">
-      <div className="relative z-50">
+      <div className=" relative z-50">
         <SettingsBar />
       </div>
       <div className="relative">
