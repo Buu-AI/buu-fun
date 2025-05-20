@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.63](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.62...buu-fun-v0.1.63) (2025-05-20)
+
+
+### ✨ Features
+
+* added staking dialog text from 16 ~ 90 ([992cbd7](https://github.com/Buu-AI/buu-fun/commit/992cbd731b4f4fb8771737b81f07bdbae16306ff))
+* added staking dialog text from 16 ~ 90 ([69f103e](https://github.com/Buu-AI/buu-fun/commit/69f103ec905120431ad8304efb4648e92ad7b4ff))
+
 ## [0.1.62](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.61...buu-fun-v0.1.62) (2025-05-19)
 
 
