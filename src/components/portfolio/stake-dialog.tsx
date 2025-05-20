@@ -284,7 +284,7 @@ export default function StakingDialog() {
           <DialogDescription className="text-center font-medium max-w-md text-muted-foreground/60">
             If you in top 100 stakers, you&apos;ll start instantly earning
             rewards. Once you unstake, there&apos;s{" "}
-            <span className="text-white">16 days cooldown</span> period.
+            <span className="text-white">90 days cooldown</span> period.
           </DialogDescription>
         </DialogHeader>{" "}
         <div>
