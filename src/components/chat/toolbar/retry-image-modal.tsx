@@ -36,7 +36,7 @@ import { Textarea } from "../../ui/textarea";
 export default function RetryImageModal() {
   const { identityToken: accessToken, login } = useAuthentication();
   const chatRetryProps = useAppSelector(
-    (state) => state.chat.chatMessageEditImage,
+    (state) => state.chat.chatMessageEditImage
   );
 
   const isChatPending = useAppSelector(isChatGenerating);
@@ -62,37 +62,25 @@ export default function RetryImageModal() {
   const { mutate, isPending } = useMutation({
     mutationKey: [imageUrl, sessionId, "edit-image"],
     mutationFn: editImageMutation,
-    async onSuccess(data) {
+    onMutate() {
       reset();
-      queryClient.setQueryData<InfiniteData<TGetMessagesReturn>>(
-        ["get-messages", sessionId, accessToken],
-        (old) => {
-          if (!old) return old;
-          return {
-            ...old,
-            pages: old.pages.map((page) => ({
-              ...page,
-              __typename: page.__typename,
-              items: [...page.items, ...data.items],
-            })),
-          };
-        },
-      );
-      // await queryClient.invalidateQueries({
-      //   queryKey: ["get-messages", sessionId, accessToken],
-      // });
       dispatch(
         setMaximizedViewer({
           isOpened: false,
           data: undefined,
-        }),
+        })
       );
       dispatch(
         setEditImage({
           isOpened: false,
           imageUrl: null,
-        }),
+        })
       );
+    },
+    async onSuccess(data) {
+      await queryClient.invalidateQueries({
+        queryKey: ["get-messages", sessionId, accessToken],
+      });
     },
     onError(error) {
       if (error.message) {
@@ -103,7 +91,7 @@ export default function RetryImageModal() {
   function handleRetryWithImage({ imageUrl, message }: TRetryWithImageSchema) {
     if (isChatPending) {
       toast.error(
-        "AI is thinking, please try after current message is completed",
+        "AI is thinking, please try after current message is completed"
       );
     }
     if (!accessToken) {
@@ -133,7 +121,7 @@ export default function RetryImageModal() {
             setEditImage({
               isOpened: false,
               imageUrl: null,
-            }),
+            })
           );
           return;
         }
@@ -152,7 +140,7 @@ export default function RetryImageModal() {
             "flex overflow-hidden rounded-lg w-full  mx-auto max-w-[50%]",
             {
               hidden: !imageUrl,
-            },
+            }
           )}
         >
           {imageUrl ? (
