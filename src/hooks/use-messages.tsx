@@ -3,7 +3,7 @@ import { getMessages } from "@/lib/react-query/threads.v3";
 import { useAuthentication } from "@/providers/account.context";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-const GRACE_PERIOD_MS = 9500;
+export const GRACE_PERIOD_MS = 9500;
 export function useChatMessage({
   sessionId,
   limit = MESSAGE_QUERY_LIMIT,

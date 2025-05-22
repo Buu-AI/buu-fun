@@ -1,16 +1,12 @@
+import { buttonVariants } from "@/components/ui/button";
+import { ONE_MINUTE_FORTY_FIVE_SECONDS } from "@/constants/time";
+import { isToolCallGeneratingOrPending } from "@/lib/helpers/status-checker";
 import { cn, hasDatePassedThreshold } from "@/lib/utils";
-import { SplitText } from "gsap/SplitText";
-import { useEffect, useRef } from "react";
+import { TMessageStatus } from "@/types/chat/chat-types";
+import { Loader2, X } from "lucide-react";
+import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { gsap } from "gsap";
-import { Loader2, X } from "lucide-react";
-import BuuLogoSvg from "@/assets/icons/logo/buu-logo";
-import { ONE_MINUTE_FORTY_FIVE_SECONDS } from "@/constants/time";
-import { TMessageStatus } from "@/types/chat/chat-types";
-import { isToolCallGeneratingOrPending } from "@/lib/helpers/status-checker";
-import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
 
 type TAssistantMessage = {
   prompt?: string | null;
@@ -21,11 +17,14 @@ type TAssistantMessage = {
 
 export default function AssistantMessage({
   prompt,
-  isLastMessage = false,
+  // isLastMessage = false,
   createdAt,
   status,
 }: TAssistantMessage) {
-  const isTimedOut = hasDatePassedThreshold(createdAt, ONE_MINUTE_FORTY_FIVE_SECONDS);
+  const isTimedOut = hasDatePassedThreshold(
+    createdAt,
+    ONE_MINUTE_FORTY_FIVE_SECONDS,
+  );
   const isGenerating = isToolCallGeneratingOrPending(status);
 
   if (!prompt && isGenerating && !isTimedOut) {

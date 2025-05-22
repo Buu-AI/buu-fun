@@ -1,18 +1,15 @@
 "use client";
 import { MagicPenIcon } from "@/assets/icons";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { queryClient } from "@/lib/react-query/query-client";
-import {
-  generateModelFromImageMutation,
-  TGetMessagesReturn,
-} from "@/lib/react-query/threads.v3";
+import { generateModelFromImageMutation } from "@/lib/react-query/threads.v3";
 import {
   setGenerateModel,
   setMaximizedViewer,
 } from "@/lib/redux/features/chat";
+import { isChatGenerating } from "@/lib/redux/selectors/chatMessages";
 import { cn } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
-import { InfiniteData, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import toast from "react-hot-toast";
@@ -24,12 +21,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../../ui/dialog";
-import { isChatGenerating } from "@/lib/redux/selectors/chatMessages";
 
 export default function ModelGenerationModal() {
   const { identityToken: accessToken, login } = useAuthentication();
   const generateModelModalState = useAppSelector(
-    (state) => state.chat.genModelFromImage
+    (state) => state.chat.genModelFromImage,
   );
 
   const { imageUrl, isOpened } = generateModelModalState;
@@ -39,18 +35,18 @@ export default function ModelGenerationModal() {
   const { mutate, isPending } = useMutation({
     mutationKey: [imageUrl, sessionId, "generate-model"],
     mutationFn: generateModelFromImageMutation,
-    onMutate(variables) {
+    onMutate() {
       dispatch(
         setMaximizedViewer({
           isOpened: false,
           data: undefined,
-        })
+        }),
       );
       dispatch(
         setGenerateModel({
           isOpened: false,
           imageUrl: null,
-        })
+        }),
       );
     },
     onError(error) {
@@ -64,7 +60,7 @@ export default function ModelGenerationModal() {
   function handleModelGeneration() {
     if (isChatPending) {
       toast.error(
-        "AI is thinking, please try after current message is completed"
+        "AI is thinking, please try after current message is completed",
       );
     }
 
@@ -97,7 +93,7 @@ export default function ModelGenerationModal() {
             setGenerateModel({
               isOpened: false,
               imageUrl: null,
-            })
+            }),
           );
           return;
         }
@@ -116,7 +112,7 @@ export default function ModelGenerationModal() {
             "flex overflow-hidden rounded-lg w-full  mx-auto max-w-[50%]",
             {
               hidden: !imageUrl,
-            }
+            },
           )}
         >
           {imageUrl ? (

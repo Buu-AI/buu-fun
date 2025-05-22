@@ -12,7 +12,7 @@ import {
 } from "@/lib/helpers/status-checker";
 import { setMessages } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import AssistantMessage from "./assistant/assistant-message";
@@ -82,7 +82,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
         id="chat-window"
         ref={chatContainerRef}
         className={cn(
-          "overflow-y-scroll  scrollbar-w-hidden overflow-x-hidden snap-y px-2 snap-mandatory w-full h-full relative"
+          "overflow-y-scroll  scrollbar-w-hidden overflow-x-hidden snap-y px-2 snap-mandatory w-full h-full relative",
         )}
       >
         <div ref={topObserverRef} className="absolute top-6 w-full h-3" />

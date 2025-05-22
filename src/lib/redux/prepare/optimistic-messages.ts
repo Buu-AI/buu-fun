@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 export const optimisticUserMessages = (
   text: string,
   sessionId: string,
-  imageUrls: string[] = []
+  imageUrls: string[] = [],
 ): TChatMessage => {
   return {
     credits: 0,
@@ -31,7 +31,7 @@ export const optimisticUserMessages = (
 export const AiChatStreamMessage = (
   prompt: string,
   messageId: string,
-  sessionId: string
+  sessionId: string,
 ): TChatMessage => {
   return {
     credits: 0,
@@ -52,10 +52,10 @@ export const AiChatStreamMessage = (
 };
 
 export const handleMessageUpdate = (
-  data: MessageUpdatedEvent["payload"]
+  data: MessageUpdatedEvent["payload"],
 ): TChatMessage => {
   const { data: payload } = parseJson<PromptPayload>(
-    data.toolRequest?.payload ?? ""
+    data.toolRequest?.payload ?? "",
   );
 
   const imageUrls =

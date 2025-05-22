@@ -82,7 +82,7 @@ const ChatSlice = createSlice({
         messageId?: string;
         modelUrl?: string | null;
         imageUrl?: string | null;
-      }>
+      }>,
     ) {
       state.genNft.isGenNftModalOpen = action?.payload?.isGenNftOpen;
       state.genNft.messageId = action.payload.messageId;
@@ -103,7 +103,7 @@ const ChatSlice = createSlice({
     },
     removeImage(state, action: PayloadAction<string>) {
       state.inputFile = state.inputFile.filter(
-        (item) => item.id !== action.payload
+        (item) => item.id !== action.payload,
       );
     },
     clearInputFile(state) {
@@ -130,7 +130,7 @@ const ChatSlice = createSlice({
         action: PayloadAction<{
           subThreadId: string;
           Media: TSubThreadsMedia[];
-        }>
+        }>,
       ) {
         state.genRequest[action.payload.subThreadId] = action.payload.Media;
       },
@@ -153,13 +153,13 @@ const ChatSlice = createSlice({
             return eachPage.items.map(
               (item): TSubthreadV1 => ({
                 ...item,
-              })
+              }),
             );
           })
           .sort(
             (a, b) =>
               new Date(a.createdAt as string).getTime() -
-              new Date(b.createdAt as string).getTime()
+              new Date(b.createdAt as string).getTime(),
           );
 
         return {
@@ -233,7 +233,7 @@ const ChatSlice = createSlice({
                 modelMesh: modRes.model_mesh,
                 status: modRes.status,
                 type: modRes.type,
-              })
+              }),
             ),
         }));
         return {
@@ -246,7 +246,7 @@ const ChatSlice = createSlice({
       reducer(state, action: PayloadAction<TSubThread>) {
         console.log("PAYLOAD", action.payload);
         const index = state.threads.subThreads.findIndex(
-          (fv) => fv._id === action.payload._id
+          (fv) => fv._id === action.payload._id,
         );
 
         if (index !== -1) {
@@ -311,7 +311,7 @@ const ChatSlice = createSlice({
     },
     setNewMessage(
       state,
-      action: PayloadAction<InfiniteData<TMessageQueryData>>
+      action: PayloadAction<InfiniteData<TMessageQueryData>>,
     ) {
       state.chatMessages = action.payload;
     },
@@ -329,7 +329,7 @@ const ChatSlice = createSlice({
     handleMessageUpdates: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId
+          (item) => item.messageId === action.payload.messageId,
         );
         if (!item) {
           state.messages.push(action.payload);
@@ -348,7 +348,7 @@ const ChatSlice = createSlice({
     appendAIChatMessage: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId
+          (item) => item.messageId === action.payload.messageId,
         );
         if (!item) {
           state.messages.push(action.payload);

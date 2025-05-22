@@ -38,12 +38,12 @@ export default function HeaderQuickSelectButton() {
       dispatch(setNewSession(sessionId));
       dispatch(clearMessages());
       dispatch(clearInput());
-      const imageUrls = variables.imageUrls;
-      const urls = imageUrls
-        ? Array.isArray(imageUrls)
-          ? imageUrls
-          : [imageUrls]
-        : undefined;
+      // const imageUrls = variables.imageUrls;
+      // const urls = imageUrls
+      //   ? Array.isArray(imageUrls)
+      //     ? imageUrls
+      //     : [imageUrls]
+      //   : undefined;
       // dispatch(appendUserChatMessage(prompt, sessionId, urls));
       router.push(`/app/chat/${sessionId}`);
     },
@@ -87,6 +87,7 @@ export default function HeaderQuickSelectButton() {
     <section className="hidden lg:block">
       <div className="flex items-center justify-center gap-2 mt-4">
         <button
+          disabled={isCreatePending}
           onClick={() => {
             helpMeGenerate3DObject();
           }}

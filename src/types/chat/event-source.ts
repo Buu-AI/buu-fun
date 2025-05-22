@@ -1,6 +1,6 @@
-import { Maybe, ToolRequest } from "@/gql/types/graphql";
-import { TMessageStatus } from "./chat-types";
+import { ToolRequest } from "@/gql/types/graphql";
 import { MaybeString } from "..";
+import { TMessageStatus } from "./chat-types";
 
 type BaseEvent = {
   sessionId: string;
@@ -57,10 +57,12 @@ type ChatEventMap = {
 
 // Updated handler type to accept extended parameters per event
 export type TChatEventHandler<
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   ExtendedParams extends Partial<Record<keyof ChatEventMap, object>> = {},
 > = {
   [K in keyof ChatEventMap]?: (
     data: ChatEventMap[K] &
-      (K extends keyof ExtendedParams ? ExtendedParams[K] : {})
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      (K extends keyof ExtendedParams ? ExtendedParams[K] : {}),
   ) => void | unknown;
 };

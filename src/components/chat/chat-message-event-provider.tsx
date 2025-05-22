@@ -32,7 +32,7 @@ export default function ChatMessageEventProvider({
       });
     }
     const eventSource = getEventSource(slug);
-    eventSource.addEventListener("open", (ev) => {});
+    eventSource.addEventListener("open", () => {});
     let message = "";
 
     eventSource.onmessage = (ev) => {
@@ -42,7 +42,7 @@ export default function ChatMessageEventProvider({
       switch (data.type) {
         case "message-updated": {
           message = "";
-          console.log(data.payload)
+          console.log(data.payload);
           dispatch(handleMessageUpdates(data.payload));
           handleEventSource["message-updated"]?.({
             ...data,
@@ -63,7 +63,7 @@ export default function ChatMessageEventProvider({
     };
     // eventSource.addEventListener("message", (ev) => {});
 
-    eventSource.addEventListener("error", (ev) => {
+    eventSource.addEventListener("error", () => {
       invalidatorMessage();
     });
     return () => {
@@ -73,6 +73,3 @@ export default function ChatMessageEventProvider({
   }, [sessionId, accessToken, slug, dispatch, queryClient]);
   return null;
 }
-
-
-

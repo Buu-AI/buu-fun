@@ -1,12 +1,11 @@
-import { useMutation } from "@tanstack/react-query";
-import { Button } from "../../ui/button";
-import toast from "react-hot-toast";
-import { approveTool } from "@/lib/react-query/threads.v3";
-import { queryClient } from "@/lib/react-query/query-client";
 import { TypedAppError } from "@/class/error";
-import { setSubscriptionModel } from "@/lib/redux/features/subscription";
 import { useAppDispatch } from "@/hooks/redux";
+import { approveTool } from "@/lib/react-query/threads.v3";
+import { setSubscriptionModel } from "@/lib/redux/features/subscription";
 import { useAuthentication } from "@/providers/account.context";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { Button } from "../../ui/button";
 
 type TToolCallApproveButton = {
   messageId: string;
@@ -20,10 +19,10 @@ export default function ToolCallApproveButton({
   const { mutate: approveToolMessage, isPending: isExistingChatPending } =
     useMutation({
       mutationFn: approveTool,
-      async onSuccess(data) {
-        toast.loading("Generating your model...", { duration: 8000 });
+      async onSuccess() {
+        // toast.loading("Generating your model...", { duration: 8000 });
         // dispatch(pushNewSubThreads(data));
-        const sessionId = data.sessionId;
+        // const sessionId = data.sessionId;
         // await queryClient.invalidateQueries({
         //   exact: false,
         //   queryKey: ["get-messages", sessionId],

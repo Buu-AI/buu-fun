@@ -19,7 +19,7 @@ export default function ToolCallHeaderMessage({
           "text-buu-destructive": headerDetails?.isFailed,
           "text-white": headerDetails.isSuccess,
           "text-muted-foreground/70 animate-pulse": headerDetails.isPending,
-        }
+        },
       )}
     >
       {prompt ?? headerDetails?.text}
