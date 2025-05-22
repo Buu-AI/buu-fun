@@ -1,3 +1,4 @@
+"use client";
 import ShareAndSaveIcon from "@/assets/icons/share-and-save";
 import { TypedAppError } from "@/class/error";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -163,17 +164,6 @@ export default function ShareableBoardsButton() {
         dispatch(setShareableModalOpen(value));
       }}
     >
-      {/* <DialogTrigger asChild>
-        <Button
-          variant={"ghost"}
-          className="px-3 flex items-center hover:bg-buu-button justify-center gap-1 text-base h-[40px] group  py-2  rounded-[10px]"
-        >
-          <div className="w-4 h-4">
-            <ShareIcon />
-          </div>
-          <span className="hidden lg:block">Share</span>
-        </Button>
-      </DialogTrigger> */}
       <DialogContent className="bg-referral-modal px-6 py-8">
         <DialogHeader className="flex items-center justify-center">
           <DialogTitle>Share Board</DialogTitle>

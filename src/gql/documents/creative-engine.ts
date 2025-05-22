@@ -1080,14 +1080,14 @@ export const GetSessions = gql`
 
 export const SendChatMessage = gql`
   mutation SendMessage(
+    $sessionId: String!
     $content: String!
     $imageUrls: [String!]
-    $sessionId: String
   ) {
     sendMessage(
+      sessionId: $sessionId
       content: $content
       imageUrls: $imageUrls
-      sessionId: $sessionId
     ) {
       ... on Messages {
         items {

@@ -33,24 +33,6 @@ export type Scalars = {
   JSON: { input: any; output: any };
 };
 
-export type Account = {
-  __typename?: "Account";
-  address: Scalars["String"]["output"];
-  createdAt: Scalars["DateTimeISO"]["output"];
-  telegramAvatar?: Maybe<Scalars["String"]["output"]>;
-  telegramId?: Maybe<Scalars["Float"]["output"]>;
-  telegramName?: Maybe<Scalars["String"]["output"]>;
-  telegramUsername?: Maybe<Scalars["String"]["output"]>;
-  twitterAvatar?: Maybe<Scalars["String"]["output"]>;
-  twitterEmail?: Maybe<Scalars["String"]["output"]>;
-  twitterId?: Maybe<Scalars["String"]["output"]>;
-  twitterName?: Maybe<Scalars["String"]["output"]>;
-  twitterUsername?: Maybe<Scalars["String"]["output"]>;
-  updatedAt: Scalars["DateTimeISO"]["output"];
-};
-
-export type AccountResult = Account | HandledError;
-
 export type ApiKey = {
   __typename?: "ApiKey";
   _id: Scalars["String"]["output"];
@@ -404,8 +386,6 @@ export type Mutation = {
   deleteApiKey: ApiKeyResult;
   deleteShareableBoard: ShareableBoardResult;
   disableTeam: TeamResult;
-  disconnectTelegram: AccountResult;
-  disconnectTwitter: AccountResult;
   editImage: MessagesResult;
   enableTeam: TeamResult;
   generateImage: GenRequestResult;
@@ -513,7 +493,7 @@ export type MutationRotateApiKeyArgs = {
 export type MutationSendMessageArgs = {
   content: Scalars["String"]["input"];
   imageUrls?: InputMaybe<Array<Scalars["String"]["input"]>>;
-  sessionId?: InputMaybe<Scalars["String"]["input"]>;
+  sessionId: Scalars["String"]["input"];
 };
 
 export type MutationUpdateShareableBoardVisibilityArgs = {
@@ -704,7 +684,6 @@ export type Query = {
   getTokenOverview: BirdeyeTokenOverviewResult;
   getUserShareableBoard: ShareableBoardPageResult;
   getUserTeams: TeamPageResult;
-  me: AccountResult;
   searchPaginatedApiKeys: ApiKeyPageResult;
 };
 
@@ -1270,76 +1249,6 @@ export type Url = {
 };
 
 export type UrlResult = HandledError | Url;
-
-export type MeQueryVariables = Exact<{ [key: string]: never }>;
-
-export type MeQuery = {
-  __typename?: "Query";
-  me:
-    | {
-        __typename?: "Account";
-        address: string;
-        twitterId?: string | null;
-        twitterName?: string | null;
-        twitterUsername?: string | null;
-        twitterAvatar?: string | null;
-        telegramId?: number | null;
-        telegramName?: string | null;
-        telegramUsername?: string | null;
-        telegramAvatar?: string | null;
-        createdAt: any;
-        updatedAt: any;
-      }
-    | { __typename?: "HandledError"; code: string; message: string };
-};
-
-export type DisconnectTwitterMutationVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type DisconnectTwitterMutation = {
-  __typename?: "Mutation";
-  disconnectTwitter:
-    | {
-        __typename?: "Account";
-        address: string;
-        twitterId?: string | null;
-        twitterName?: string | null;
-        twitterUsername?: string | null;
-        twitterAvatar?: string | null;
-        telegramId?: number | null;
-        telegramName?: string | null;
-        telegramUsername?: string | null;
-        telegramAvatar?: string | null;
-        createdAt: any;
-        updatedAt: any;
-      }
-    | { __typename?: "HandledError"; code: string; message: string };
-};
-
-export type DisconnectTelegramMutationVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type DisconnectTelegramMutation = {
-  __typename?: "Mutation";
-  disconnectTelegram:
-    | {
-        __typename?: "Account";
-        address: string;
-        twitterId?: string | null;
-        twitterName?: string | null;
-        twitterUsername?: string | null;
-        twitterAvatar?: string | null;
-        telegramId?: number | null;
-        telegramName?: string | null;
-        telegramUsername?: string | null;
-        telegramAvatar?: string | null;
-        createdAt: any;
-        updatedAt: any;
-      }
-    | { __typename?: "HandledError"; code: string; message: string };
-};
 
 export type GenerateImageMutationVariables = Exact<{
   subthreadId: Scalars["String"]["input"];
@@ -2437,11 +2346,11 @@ export type GetSessionsQuery = {
 };
 
 export type SendMessageMutationVariables = Exact<{
+  sessionId: Scalars["String"]["input"];
   content: Scalars["String"]["input"];
   imageUrls?: InputMaybe<
     Array<Scalars["String"]["input"]> | Scalars["String"]["input"]
   >;
-  sessionId?: InputMaybe<Scalars["String"]["input"]>;
 }>;
 
 export type SendMessageMutation = {
@@ -2737,303 +2646,6 @@ export type EditImageMutation = {
       };
 };
 
-export const MeDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "Me" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "me" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "InlineFragment",
-                  typeCondition: {
-                    kind: "NamedType",
-                    name: { kind: "Name", value: "Account" },
-                  },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "address" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "twitterId" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "twitterName" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "twitterUsername" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "twitterAvatar" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "telegramId" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "telegramName" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "telegramUsername" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "telegramAvatar" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "createdAt" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "updatedAt" },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: "InlineFragment",
-                  typeCondition: {
-                    kind: "NamedType",
-                    name: { kind: "Name", value: "HandledError" },
-                  },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "code" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "message" },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
-export const DisconnectTwitterDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "DisconnectTwitter" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "disconnectTwitter" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "InlineFragment",
-                  typeCondition: {
-                    kind: "NamedType",
-                    name: { kind: "Name", value: "Account" },
-                  },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "address" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "twitterId" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "twitterName" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "twitterUsername" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "twitterAvatar" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "telegramId" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "telegramName" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "telegramUsername" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "telegramAvatar" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "createdAt" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "updatedAt" },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: "InlineFragment",
-                  typeCondition: {
-                    kind: "NamedType",
-                    name: { kind: "Name", value: "HandledError" },
-                  },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "code" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "message" },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  DisconnectTwitterMutation,
-  DisconnectTwitterMutationVariables
->;
-export const DisconnectTelegramDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "DisconnectTelegram" },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "disconnectTelegram" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "InlineFragment",
-                  typeCondition: {
-                    kind: "NamedType",
-                    name: { kind: "Name", value: "Account" },
-                  },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "address" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "twitterId" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "twitterName" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "twitterUsername" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "twitterAvatar" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "telegramId" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "telegramName" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "telegramUsername" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "telegramAvatar" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "createdAt" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "updatedAt" },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: "InlineFragment",
-                  typeCondition: {
-                    kind: "NamedType",
-                    name: { kind: "Name", value: "HandledError" },
-                  },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "code" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "message" },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  DisconnectTelegramMutation,
-  DisconnectTelegramMutationVariables
->;
 export const GenerateImageDocument = {
   kind: "Document",
   definitions: [
@@ -8342,6 +7954,20 @@ export const SendMessageDocument = {
           kind: "VariableDefinition",
           variable: {
             kind: "Variable",
+            name: { kind: "Name", value: "sessionId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
             name: { kind: "Name", value: "content" },
           },
           type: {
@@ -8369,14 +7995,6 @@ export const SendMessageDocument = {
             },
           },
         },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "sessionId" },
-          },
-          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-        },
       ],
       selectionSet: {
         kind: "SelectionSet",
@@ -8385,6 +8003,14 @@ export const SendMessageDocument = {
             kind: "Field",
             name: { kind: "Name", value: "sendMessage" },
             arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "sessionId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "sessionId" },
+                },
+              },
               {
                 kind: "Argument",
                 name: { kind: "Name", value: "content" },
@@ -8399,14 +8025,6 @@ export const SendMessageDocument = {
                 value: {
                   kind: "Variable",
                   name: { kind: "Name", value: "imageUrls" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "sessionId" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "sessionId" },
                 },
               },
             ],
