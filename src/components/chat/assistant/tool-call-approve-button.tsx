@@ -24,10 +24,10 @@ export default function ToolCallApproveButton({
         toast.loading("Generating your model...", { duration: 8000 });
         // dispatch(pushNewSubThreads(data));
         const sessionId = data.sessionId;
-        await queryClient.invalidateQueries({
-          exact: false,
-          queryKey: ["get-messages", sessionId],
-        });
+        // await queryClient.invalidateQueries({
+        //   exact: false,
+        //   queryKey: ["get-messages", sessionId],
+        // });
       },
       onError(error) {
         if (error instanceof TypedAppError) {

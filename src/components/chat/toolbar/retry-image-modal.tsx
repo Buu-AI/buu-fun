@@ -36,7 +36,7 @@ import { Textarea } from "../../ui/textarea";
 export default function RetryImageModal() {
   const { identityToken: accessToken, login } = useAuthentication();
   const chatRetryProps = useAppSelector(
-    (state) => state.chat.chatMessageEditImage
+    (state) => state.chat.chatMessageEditImage,
   );
 
   const isChatPending = useAppSelector(isChatGenerating);
@@ -76,22 +76,22 @@ export default function RetryImageModal() {
               items: [...page.items, ...data.items],
             })),
           };
-        }
+        },
       );
-      await queryClient.invalidateQueries({
-        queryKey: ["get-messages", sessionId, accessToken],
-      });
+      // await queryClient.invalidateQueries({
+      //   queryKey: ["get-messages", sessionId, accessToken],
+      // });
       dispatch(
         setMaximizedViewer({
           isOpened: false,
           data: undefined,
-        })
+        }),
       );
       dispatch(
         setEditImage({
           isOpened: false,
           imageUrl: null,
-        })
+        }),
       );
     },
     onError(error) {
@@ -103,7 +103,7 @@ export default function RetryImageModal() {
   function handleRetryWithImage({ imageUrl, message }: TRetryWithImageSchema) {
     if (isChatPending) {
       toast.error(
-        "AI is thinking, please try after current message is completed"
+        "AI is thinking, please try after current message is completed",
       );
     }
     if (!accessToken) {
@@ -133,7 +133,7 @@ export default function RetryImageModal() {
             setEditImage({
               isOpened: false,
               imageUrl: null,
-            })
+            }),
           );
           return;
         }
@@ -152,7 +152,7 @@ export default function RetryImageModal() {
             "flex overflow-hidden rounded-lg w-full  mx-auto max-w-[50%]",
             {
               hidden: !imageUrl,
-            }
+            },
           )}
         >
           {imageUrl ? (

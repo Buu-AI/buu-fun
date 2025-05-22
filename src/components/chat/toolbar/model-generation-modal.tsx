@@ -39,24 +39,7 @@ export default function ModelGenerationModal() {
   const { mutate, isPending } = useMutation({
     mutationKey: [imageUrl, sessionId, "generate-model"],
     mutationFn: generateModelFromImageMutation,
-    async onSuccess(data) {
-      queryClient.setQueryData<InfiniteData<TGetMessagesReturn>>(
-        ["get-messages", sessionId, accessToken],
-        (old) => {
-          if (!old) return old;
-          return {
-            ...old,
-            pages: old.pages.map((page) => ({
-              ...page,
-              __typename: page.__typename,
-              items: [...page.items, ...data.items],
-            })),
-          };
-        }
-      );
-      await queryClient.invalidateQueries({
-        queryKey: ["get-messages", sessionId, accessToken],
-      });
+    onMutate(variables) {
       dispatch(
         setMaximizedViewer({
           isOpened: false,
