@@ -2,6 +2,8 @@ import { TSubthread as TResponseThread } from "@/lib/react-query/threads-types";
 import { TChatMessage, TMessageQueryData } from "@/types/chat/chat-types";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { InfiniteData } from "@tanstack/react-query";
+import { MessageUpdatedEvent } from "@/types/chat/event-source";
+
 import { prepareMessagePayload } from "../prepare/message";
 import {
   ChatState,
@@ -16,6 +18,11 @@ import {
   TGenerateModal,
   TMaximize,
 } from "./chat-types";
+import {
+  AiChatStreamMessage,
+  handleMessageUpdate,
+  optimisticUserMessages,
+} from "../prepare/optimistic-messages";
 
 const initialState: ChatState = {
   inputQuery: "",
@@ -62,6 +69,9 @@ const ChatSlice = createSlice({
   name: "Chat",
   initialState,
   reducers: {
+    clearMessages: (state) => {
+      state.messages = [];
+    },
     setOpenGenerateNFTModal(state, action: PayloadAction<boolean>) {
       state.genNft.isGenNftModalOpen = action.payload;
     },
@@ -316,6 +326,54 @@ const ChatSlice = createSlice({
         };
       },
     },
+    handleMessageUpdates: {
+      reducer: (state, action: PayloadAction<TChatMessage>) => {
+        const item = state.messages.find(
+          (item) => item.messageId === action.payload.messageId
+        );
+        if (!item) {
+          state.messages.push(action.payload);
+        } else {
+          item.prompt = action.payload.prompt;
+        }
+      },
+      prepare(payload: MessageUpdatedEvent["payload"]) {
+        const data = handleMessageUpdate(payload);
+        return {
+          payload: data,
+        };
+      },
+    },
+
+    appendAIChatMessage: {
+      reducer: (state, action: PayloadAction<TChatMessage>) => {
+        const item = state.messages.find(
+          (item) => item.messageId === action.payload.messageId
+        );
+        if (!item) {
+          state.messages.push(action.payload);
+        } else {
+          item.prompt = action.payload.prompt;
+        }
+      },
+      prepare: (prompt: string, messageId: string, sessionId: string) => {
+        const payload = AiChatStreamMessage(prompt, messageId, sessionId);
+        return {
+          payload,
+        };
+      },
+    },
+    appendUserChatMessage: {
+      reducer: (state, payload: PayloadAction<TChatMessage>) => {
+        state.messages.push(payload.payload);
+      },
+      prepare(prompt: string, sessionId: string, imageUrls: string[] = []) {
+        const newMessage = optimisticUserMessages(prompt, sessionId, imageUrls);
+        return {
+          payload: newMessage,
+        };
+      },
+    },
   },
 });
 
@@ -348,6 +406,10 @@ export const {
   setEditImage,
   setGenerateModel,
   setMaximizedViewer,
+  appendUserChatMessage,
+  appendAIChatMessage,
+  handleMessageUpdates,
+  clearMessages,
 } = ChatSlice.actions;
 
 export default ChatSlice.reducer;
