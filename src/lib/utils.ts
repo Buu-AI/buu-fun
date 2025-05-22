@@ -4,13 +4,13 @@ import {
   MAXIMUM_RETRY_ALLOWED,
   SHARE_LINK_CONFIG,
 } from "@/constants/request.config";
+import { Plans } from "@/constants/subscription/subscription-plans";
+import { StripeSubscriptionPlanKeys } from "@/gql/types/graphql";
+import { TryCatch } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { DataMuseError } from "./class/data-muse-error";
 import { TDataMuseWord } from "./fetcher/query/query-suggestion-api";
-import { Plans } from "@/constants/subscription/subscription-plans";
-import { StripeSubscriptionPlanKeys } from "@/gql/types/graphql";
-import { TryCatch } from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -27,19 +27,19 @@ export function isLocalMode() {
 export function pluralize(
   num: number,
   word: string,
-  plural: (value: string) => string = simplePlural,
+  plural: (value: string) => string = simplePlural
 ) {
   return isPlural(num) ? plural(word) : word;
 }
 
 export async function handleResponse(
-  response: Response,
+  response: Response
 ): Promise<TDataMuseWord[]> {
   if (!response.ok) {
     // add other generic messages later for api backends.
     throw new DataMuseError(
       `API request failed: ${response.statusText}`,
-      response.status,
+      response.status
     );
   }
   return response.json();
@@ -86,7 +86,7 @@ export function isImageUrl(value: string | null | undefined) {
 
 export async function blobUrlToFile(
   blobUrl: string,
-  fileName: string,
+  fileName: string
 ): Promise<File | null> {
   try {
     const response = await fetch(blobUrl);
@@ -107,7 +107,7 @@ export function getAllowedContentTypeMaps(key: string) {
 export function truncateString(
   value: string,
   startEnd: number = 4,
-  endStartAt: number = 4,
+  endStartAt: number = 4
 ): string {
   if (value.length <= startEnd + endStartAt) {
     return value;
@@ -248,7 +248,7 @@ export function parseJson<T>(
   data: any,
   showLogs = false,
   messageKey = "ERROR-PARSE-JSON",
-  errorMsg = "Failed to retrieve data",
+  errorMsg = "Failed to retrieve data"
 ): TryCatch<T> {
   try {
     const parsedData = JSON.parse(data);
@@ -259,4 +259,14 @@ export function parseJson<T>(
     }
     return { data: null, error: errorMsg };
   }
+}
+
+export function hasDatePassedThreshold(date: string, thresholdInMs: number) {
+  const targetTime = new Date(date).getTime() + thresholdInMs;
+  return Date.now() > targetTime;
+}
+
+export function getRandomElement<T>(arr: T[]): T {
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
 }
