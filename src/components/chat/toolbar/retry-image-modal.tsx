@@ -4,8 +4,7 @@ import { Input } from "@/components/ui/input";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { queryClient } from "@/lib/react-query/query-client";
 import {
-  editImageMutation,
-  TGetMessagesReturn,
+  editImageMutation
 } from "@/lib/react-query/threads.v3";
 import { setEditImage, setMaximizedViewer } from "@/lib/redux/features/chat";
 import { isChatGenerating } from "@/lib/redux/selectors/chatMessages";
@@ -16,7 +15,7 @@ import {
 } from "@/lib/zod/retry-modal";
 import { useAuthentication } from "@/providers/account.context";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { InfiniteData, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useEffect } from "react";
@@ -77,7 +76,7 @@ export default function RetryImageModal() {
         })
       );
     },
-    async onSuccess(data) {
+    async onSuccess() {
       await queryClient.invalidateQueries({
         queryKey: ["get-messages", sessionId, accessToken],
       });
