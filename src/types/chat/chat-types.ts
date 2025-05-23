@@ -33,6 +33,6 @@ export type TChatMessage = {
   nftId: MaybeString;
   payload: PromptPayload;
   isAssistantLastMessage: boolean;
-  createdAt?: string;
+  createdAt: string;
   credits: number | null | undefined;
 };

@@ -37,7 +37,7 @@ export default function RetryConfirmationDialog() {
   const { mutateAsync: generateNewImage, isPending } = useMutation({
     mutationFn: mutateGenerateNewImage,
     async onSuccess(data) {
-      toast.loading("Generating new 3D models...", { duration: 8000 });
+      toast.loading("Generating new 3D models", { duration: 8000 });
       dispatch(setNewGenRequest(data));
       await queryClient.invalidateQueries({
         queryKey: [data.subthreadId, "get-all-sub-threads"],
@@ -158,7 +158,7 @@ export default function RetryConfirmationDialog() {
               {isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Generating...
+                  Generating
                 </>
               ) : (
                 <>

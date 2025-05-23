@@ -10,7 +10,7 @@ export default function StakingDataDisplay() {
   } = useUserStakingData();
 
   if (isLoading) {
-    return <div>Loading staking data...</div>;
+    return <div>Loading staking data</div>;
   }
 
   if (!globalStakingData) {

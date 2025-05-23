@@ -3,7 +3,6 @@ import { parseJson } from "@/lib/utils";
 import { PromptPayload, TChatMessage } from "@/types/chat/chat-types";
 import { RootState } from "@/types/reduxStore";
 import { createSelector } from "@reduxjs/toolkit";
-
 const Messages = (state: RootState) => state.chat.messages;
 const ChatMessages = (state: RootState) => state.chat.chatMessages;
 
@@ -51,7 +50,7 @@ export const getMessagesFromStore = createSelector(
 );
 
 export const isChatGenerating = createSelector([Messages], (messages) => {
-  return messages.some((message) =>
-    isToolCallGeneratingOrPending(message.status),
-  );
+  return messages.some((message) => {
+    return isToolCallGeneratingOrPending(message.status);
+  });
 });

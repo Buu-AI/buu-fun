@@ -192,7 +192,7 @@ export default function StakingDialog() {
       const connection = new Connection(getClusterUrl());
 
       // Show loading state
-      toast.loading(`Creating transaction for ${data.amount}...`);
+      toast.loading(`Creating transaction for ${data.amount}`);
       const isFirstTimeStaking = !userStakingData?.userStakes.length;
 
       const scaledAmount = new BN(
@@ -222,7 +222,7 @@ export default function StakingDialog() {
       );
       toast.dismiss();
       if (signature) {
-        toast.loading("Transaction sent! Waiting for confirmation...");
+        toast.loading("Transaction sent! Waiting for confirmation");
 
         // Wait for confirmation
         try {
@@ -239,7 +239,7 @@ export default function StakingDialog() {
             confetti.runConfetti({
               duration: 3500,
             });
-            toast.loading("Transaction received! processing transaction...");
+            toast.loading("Transaction received! processing transaction");
             dispatch(setTogglers({ key: "openStakingModal", value: false }));
             revalidate();
           }

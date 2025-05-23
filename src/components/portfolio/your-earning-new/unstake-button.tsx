@@ -106,7 +106,7 @@ export default function UnstakeButton({
       );
 
       if (signature) {
-        toast.loading("Transaction sent! Waiting for confirmation...");
+        toast.loading("Transaction sent! Waiting for confirmation");
 
         // Wait for confirmation
         try {
@@ -119,7 +119,7 @@ export default function UnstakeButton({
             toast.error("Transaction failed on-chain");
             console.error("Transaction error:", confirmation.value.err);
           } else {
-            toast.loading("Transaction received!, processing unstaking...");
+            toast.loading("Transaction received!, processing unstaking");
             revalidate();
           }
         } catch (confirmError) {

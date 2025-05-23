@@ -20,7 +20,7 @@ const ModelViewer = dynamic(() => import("../../generation/model-viewer"), {
 
 export default function MaximizeViewModel() {
   const maximizedContainer = useAppSelector(
-    (state) => state.chat.maximizedContainer
+    (state) => state.chat.maximizedContainer,
   );
   const { isOpened, data } = maximizedContainer;
 
@@ -35,7 +35,7 @@ export default function MaximizeViewModel() {
           dispatch(
             setMaximizedViewer({
               isOpened: false,
-            })
+            }),
           );
           return;
         }
