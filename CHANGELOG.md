@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.64](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.63...buu-fun-v0.1.64) (2025-05-23)
+
+
+### 🐛 Bugfixes
+
+* maximize modal to be fit to the window ([933967e](https://github.com/Buu-AI/buu-fun/commit/933967e72694ac0c6231e424e176f794623cd865))
+* removed all ... from toast notification and loader state ([e42bd19](https://github.com/Buu-AI/buu-fun/commit/e42bd19f4cf4beb3ea0aeb862299fd66d32a92ff))
+* removed bottom padding from the chat container ([6c0899a](https://github.com/Buu-AI/buu-fun/commit/6c0899a78dd7f32a365160b34d6b8272a83424cf))
+* removed bottom padding from the chat container ([9ccb02c](https://github.com/Buu-AI/buu-fun/commit/9ccb02cb908534f6962448f4476e913bd1ac368f))
+
 ## [0.1.63](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.62...buu-fun-v0.1.63) (2025-05-20)
 
 
