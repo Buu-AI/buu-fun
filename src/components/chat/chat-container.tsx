@@ -96,7 +96,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
           </motion.div>
         )}
         {/* <AnimatePresence> */}
-        <div className="flex gap-5 flex-col w-full mt-2 pb-12">
+        <div className="flex gap-5 flex-col w-full mt-2 pb-2">
           {messages.map((item) => {
             const messageId = item.messageId;
             const payload = item?.payload;
