@@ -53,7 +53,7 @@ export default function ShareableBoardsButton() {
   } = useMutation({
     mutationFn: createNewBoardsMutation,
     onMutate() {
-      toast.loading("Adding to boards...", {
+      toast.loading("Adding to boards", {
         duration: 3000,
       });
     },
@@ -91,7 +91,7 @@ export default function ShareableBoardsButton() {
   } = useMutation({
     mutationFn: updateBoardsVisibility,
     onMutate() {
-      toast.loading("Adding to boards...");
+      toast.loading("Updating boards");
     },
     async onSuccess(data) {
       await queryClient.invalidateQueries({
@@ -209,13 +209,13 @@ export default function ShareableBoardsButton() {
               <>
                 {!isCreateNewBoardPending
                   ? "Add to Boards & Copy Link"
-                  : "adding..."}
+                  : "adding"}
               </>
             ) : (
               <>
                 {!isCreateNewBoardPending
                   ? "Update & Copy Link"
-                  : "updating..."}
+                  : "updating"}
               </>
             )}
           </Button>

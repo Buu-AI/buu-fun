@@ -131,7 +131,7 @@ export default function RetryImageModal() {
         <DialogHeader className="flex items-center justify-center ">
           <DialogTitle>Edit Image</DialogTitle>
           <DialogDescription className="text-center text-pretty ">
-            You can tell me what to edits to make...
+            You can tell me what to edits to make.
           </DialogDescription>
         </DialogHeader>
         <div
@@ -191,7 +191,7 @@ export default function RetryImageModal() {
               {isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Editing Image...
+                  Editing Image
                 </>
               ) : (
                 <>
