@@ -4,13 +4,13 @@ import {
   MAXIMUM_RETRY_ALLOWED,
   SHARE_LINK_CONFIG,
 } from "@/constants/request.config";
+import { Plans } from "@/constants/subscription/subscription-plans";
+import { StripeSubscriptionPlanKeys } from "@/gql/types/graphql";
+import { TryCatch } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { DataMuseError } from "./class/data-muse-error";
 import { TDataMuseWord } from "./fetcher/query/query-suggestion-api";
-import { Plans } from "@/constants/subscription/subscription-plans";
-import { StripeSubscriptionPlanKeys } from "@/gql/types/graphql";
-import { TryCatch } from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -259,4 +259,14 @@ export function parseJson<T>(
     }
     return { data: null, error: errorMsg };
   }
+}
+
+export function hasDatePassedThreshold(date: string, thresholdInMs: number) {
+  const targetTime = new Date(date).getTime() + thresholdInMs;
+  return Date.now() > targetTime;
+}
+
+export function getRandomElement<T>(arr: T[]): T {
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
 }

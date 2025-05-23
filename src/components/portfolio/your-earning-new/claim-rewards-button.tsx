@@ -95,7 +95,7 @@ export default function ClaimRewardButton({
       );
 
       if (signature) {
-        toast.loading("Transaction sent! Waiting for confirmation...");
+        toast.loading("Transaction sent! Waiting for confirmation");
         // Wait for confirmation
         try {
           const confirmation = await connection?.confirmTransaction(
@@ -107,7 +107,7 @@ export default function ClaimRewardButton({
             toast.error("Transaction failed on-chain");
             console.error("Transaction error:", confirmation.value.err);
           } else {
-            toast.loading("Transaction received!, processing claims...");
+            toast.loading("Transaction received!, processing claims");
             revalidate();
           }
         } catch (confirmError) {
@@ -140,7 +140,7 @@ export default function ClaimRewardButton({
       {isLoading ? (
         <>
           <Loader2 className="h-4 w-4 animate-spin" />
-          Claiming...
+          Claiming
         </>
       ) : (
         <span className="p-3">Claim Rewards</span>

@@ -56,7 +56,7 @@ export const bitRefillFunctions = {
     onCompletedCallback,
   }: InvoiceCreatingParams) => {
     // For tracking transaction progress
-    const toastId = toast.loading("Processing your transaction...");
+    const toastId = toast.loading("Processing your transaction");
 
     try {
       // Validate required environment variables
@@ -122,7 +122,7 @@ export const bitRefillFunctions = {
       });
 
       // Get order from Jupiter API
-      toast.loading("Preparing swap details...", { id: toastId });
+      toast.loading("Preparing swap details", { id: toastId });
       const jupiterOrderResponse = await fetch(
         getJupiterUltraAPI(`/order?${queryParams.toString()}`),
         {
@@ -152,7 +152,7 @@ export const bitRefillFunctions = {
         Buffer.from(transactionBase64, "base64"),
       );
 
-      toast.loading("Please sign the transaction in your wallet...", {
+      toast.loading("Please sign the transaction in your wallet", {
         id: toastId,
       });
 
@@ -173,7 +173,7 @@ export const bitRefillFunctions = {
       );
 
       // Execute the Jupiter swap
-      toast.loading("Executing swap...", { id: toastId });
+      toast.loading("Executing swap", { id: toastId });
       const executeJupiterTransaction = await fetch(
         getJupiterUltraAPI("/execute"),
         {
@@ -200,7 +200,7 @@ export const bitRefillFunctions = {
       });
 
       // Create transfer transaction to payment recipient
-      toast.loading("Creating payment transaction...", { id: toastId });
+      toast.loading("Creating payment transaction", { id: toastId });
       const transferringTransaction = new Transaction();
       transferringTransaction.add(
         SystemProgram.transfer({
@@ -225,7 +225,7 @@ export const bitRefillFunctions = {
       );
 
       // Wait for transaction confirmation
-      toast.loading("Confirming transaction...", { id: toastId });
+      toast.loading("Confirming transaction", { id: toastId });
 
       try {
         onCompletedCallback?.();

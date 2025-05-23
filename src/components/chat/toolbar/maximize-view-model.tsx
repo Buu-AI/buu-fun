@@ -20,7 +20,7 @@ const ModelViewer = dynamic(() => import("../../generation/model-viewer"), {
 
 export default function MaximizeViewModel() {
   const maximizedContainer = useAppSelector(
-    (state) => state.chat.maximizedContainer
+    (state) => state.chat.maximizedContainer,
   );
   const { isOpened, data } = maximizedContainer;
 
@@ -35,7 +35,7 @@ export default function MaximizeViewModel() {
           dispatch(
             setMaximizedViewer({
               isOpened: false,
-            })
+            }),
           );
           return;
         }
@@ -45,7 +45,7 @@ export default function MaximizeViewModel() {
       <DialogContent
         closeButtonContainer="p-1 bg-buu ring-none"
         overlayClassName="bg-black/30"
-        className="rounded-[20px] p-0 lg:rounded-[20px] bg-transparent border-none overflow-y-scroll max-h-[90dvh] scrollbar-w-hidden"
+        className="p-0 h-full max-w-fit aspect-square bg-transparent max-md:max-w-lg border-none w-full max-h-[80dvh] max-md:max-h-max scrollbar-w-hidden rounded-[20px]"
       >
         <DialogHeader className="flex items-center justify-center sr-only">
           <DialogTitle>Generate model</DialogTitle>
@@ -53,16 +53,16 @@ export default function MaximizeViewModel() {
             This request will generate a 3D model from this image.
           </DialogDescription>
         </DialogHeader>
-        <div className={cn("flex  rounded-lg w-full  mx-auto max-w-[100%]")}>
+        <div className={cn("flex   max-md:max-h-max   rounded-lg w-full h-full  mx-auto max-w-[100%]")}>
           {data?.type === "image" ? (
-            <div className="">
+            <div className="h-full w-full max-h-[90dvh]">
               <Image
                 key={data.imageUrl}
                 src={data.imageUrl}
                 alt="Retrying Image Url"
                 width={720}
                 height={720}
-                className="rounded-lg  object-contain"
+                className="rounded-lg w-full  max-h-[80dvh] object-contain"
               />
               <div className="flex pl-4  pb-2">
                 <ImageToolbar
@@ -79,8 +79,8 @@ export default function MaximizeViewModel() {
               </div>
             </div>
           ) : data?.type === "model" ? (
-            <div className="w-full h-full">
-              <div className="flex border rounded-2xl bg-balance-card flex-wrap text-wrap w-full md:w-[100%] mx-auto aspect-square">
+            <div className="w-full max-md:max-h-max md:h-full">
+              <div className="flex items-center justify-center  rounded-2xl bg-balance-card flex-wrap text-wrap w-full md:w-[100%] mx-auto aspect-square">
                 <ModelViewer
                   src={data?.modelUrl ?? ""}
                   alt=""

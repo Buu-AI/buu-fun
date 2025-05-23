@@ -4,8 +4,7 @@ import { Input } from "@/components/ui/input";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { queryClient } from "@/lib/react-query/query-client";
 import {
-  editImageMutation,
-  TGetMessagesReturn,
+  editImageMutation
 } from "@/lib/react-query/threads.v3";
 import { setEditImage, setMaximizedViewer } from "@/lib/redux/features/chat";
 import { isChatGenerating } from "@/lib/redux/selectors/chatMessages";
@@ -16,7 +15,7 @@ import {
 } from "@/lib/zod/retry-modal";
 import { useAuthentication } from "@/providers/account.context";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { InfiniteData, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useEffect } from "react";
@@ -62,25 +61,8 @@ export default function RetryImageModal() {
   const { mutate, isPending } = useMutation({
     mutationKey: [imageUrl, sessionId, "edit-image"],
     mutationFn: editImageMutation,
-    async onSuccess(data) {
+    onMutate() {
       reset();
-      queryClient.setQueryData<InfiniteData<TGetMessagesReturn>>(
-        ["get-messages", sessionId, accessToken],
-        (old) => {
-          if (!old) return old;
-          return {
-            ...old,
-            pages: old.pages.map((page) => ({
-              ...page,
-              __typename: page.__typename,
-              items: [...page.items, ...data.items],
-            })),
-          };
-        }
-      );
-      await queryClient.invalidateQueries({
-        queryKey: ["get-messages", sessionId, accessToken],
-      });
       dispatch(
         setMaximizedViewer({
           isOpened: false,
@@ -93,6 +75,11 @@ export default function RetryImageModal() {
           imageUrl: null,
         })
       );
+    },
+    async onSuccess() {
+      await queryClient.invalidateQueries({
+        queryKey: ["get-messages", sessionId, accessToken],
+      });
     },
     onError(error) {
       if (error.message) {
@@ -144,7 +131,7 @@ export default function RetryImageModal() {
         <DialogHeader className="flex items-center justify-center ">
           <DialogTitle>Edit Image</DialogTitle>
           <DialogDescription className="text-center text-pretty ">
-            You can tell me what to edits to make...
+            You can tell me what to edits to make.
           </DialogDescription>
         </DialogHeader>
         <div
@@ -204,7 +191,7 @@ export default function RetryImageModal() {
               {isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Editing Image...
+                  Editing Image
                 </>
               ) : (
                 <>
