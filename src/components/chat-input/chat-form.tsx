@@ -95,34 +95,9 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       mutationFn: sendChatMessage,
       onMutate() {
         dispatch(clearInput());
-        // const urls = imageUrls
-        //   ? Array.isArray(imageUrls)
-        //     ? imageUrls
-        //     : [imageUrls]
-        //   : undefined;
-
-        // dispatch(appendUserChatMessage(prompt, sessionId, urls));
       },
       async onSuccess() {
         dispatch(clearInput());
-        // const sessionId = data.items[0].sessionId;
-        // queryClient.setQueryData<InfiniteData<TGetMessagesReturn>>(
-        //   ["get-messages", sessionId, identityToken],
-        //   (old) => {
-        //     if (!old) return old;
-        //     return {
-        //       ...old,
-        //       pages: old.pages.map((page) => ({
-        //         ...page,
-        //         __typename: page.__typename,
-        //         items: [...page.items, ...data.items],
-        //       })),
-        //     };
-        //   }
-        // );
-        // await queryClient.invalidateQueries({
-        //   queryKey: ["get-messages", sessionId, identityToken],
-        // });
       },
       onError(error, variables) {
         dispatch(setInputQuery(variables.prompt));
@@ -149,9 +124,6 @@ export default function ChatForm({ action }: TBottomBarContainer) {
     (action !== "new_chat" && isChatPending) ||
     isChatPending ||
     isSubmitting;
-
-  // isOverAllRequestLimitReached(isChatPending.totalRequest);
-
   const { mutateAsync: getImagePresignedUrl } = useMutation({
     mutationFn: getPresignedUrl,
     async onSuccess() {
@@ -164,7 +136,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
 
   const handleImageUploadUrl = async (
     ImageData: TImageData,
-    accessToken: string,
+    accessToken: string
   ) => {
     try {
       const file = await blobUrlToFile(ImageData.url, ImageData.name);
@@ -191,7 +163,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         return null;
       }
       toast.dismiss();
-      toast.loading("Uploading file...");
+      toast.loading("Uploading image");
       const uploadFile = await fetch(data.presignedUrl, {
         method: "PUT",
         body: file,
@@ -233,16 +205,16 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       }
 
       if (isChatLoading) {
-        return toast.error("Hold on!, Still generating your model...");
+        return toast.error("Hold on!, Still generating your model");
       }
 
       let imageUrls: string[] | null = [];
 
       if (inputFile && inputFile?.length > 0) {
         const inputFileRequests = inputFile.map((item) =>
-          handleImageUploadUrl(item, identityToken),
+          handleImageUploadUrl(item, identityToken)
         );
-        toast.loading("Preparing image for uploading....", { duration: 1200 });
+        toast.loading("Preparing image for uploading", { duration: 1200 });
 
         const uploadedImages = await Promise.all(inputFileRequests);
         imageUrls = uploadedImages
@@ -306,7 +278,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         "relative flex-col gap-1 flex items-start w-full p-4  mb-2  rounded-[20px]  shadow-buu-inner bg-buu",
         {
           // "p-0": !inputFile?.url.length
-        },
+        }
       )}
     >
       <AnimatePresence mode="popLayout">

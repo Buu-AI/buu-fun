@@ -19,7 +19,7 @@ export default function ToolCallHeaderMessage({
           "text-buu-destructive": headerDetails?.isFailed,
           "text-white": headerDetails.isSuccess,
           "text-muted-foreground/70 animate-pulse": headerDetails.isPending,
-        },
+        }
       )}
     >
       {prompt ?? headerDetails?.text}
@@ -37,18 +37,20 @@ function getToolMessage(status: TMessageStatus): TGetToolMessage {
   switch (status) {
     case "IN_QUEUE": {
       return {
-        text: "The request is in queue...",
+        text: "The request is in queue",
       };
     }
     case "PENDING": {
       return {
-        text: "I'm gonna generate a 3D Model...",
+        text: "I'm gonna generate a 3D Model",
         isPending: true,
       };
     }
     case "IN_PROGRESS": {
       return {
         text: "Approve request to generate your model",
+        // change if there is specific use-case
+        isPending: true,
       };
     }
     case "FAILED": {
@@ -72,7 +74,7 @@ function getToolMessage(status: TMessageStatus): TGetToolMessage {
     }
     default: {
       return {
-        text: "I'm gonna generate a 3D Model...",
+        text: "I'm gonna generate a 3D Model",
       };
     }
   }

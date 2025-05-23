@@ -22,7 +22,7 @@ export default function ToolCallCancelButton({
     useMutation({
       mutationFn: cancelToolCall,
       async onSuccess(data) {
-        toast.loading("Canceling Generation...", { duration: 8000 });
+        toast.loading("Canceling Generation", { duration: 8000 });
         // dispatch(pushNewSubThreads(data));
         const sessionId = data.sessionId;
         await queryClient.invalidateQueries({

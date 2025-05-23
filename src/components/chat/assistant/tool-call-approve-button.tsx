@@ -19,15 +19,7 @@ export default function ToolCallApproveButton({
   const { mutate: approveToolMessage, isPending: isExistingChatPending } =
     useMutation({
       mutationFn: approveTool,
-      async onSuccess() {
-        // toast.loading("Generating your model...", { duration: 8000 });
-        // dispatch(pushNewSubThreads(data));
-        // const sessionId = data.sessionId;
-        // await queryClient.invalidateQueries({
-        //   exact: false,
-        //   queryKey: ["get-messages", sessionId],
-        // });
-      },
+      async onSuccess() {},
       onError(error) {
         if (error instanceof TypedAppError) {
           switch (error.code) {

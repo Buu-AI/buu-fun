@@ -127,7 +127,7 @@ export default function DeleteApiKeyModal() {
                     <div>
                       <Loader2 className="w-4 h-5 animate-spin" />
                     </div>
-                    Deleting...
+                    Deleting
                   </>
                 )}
               </Button>

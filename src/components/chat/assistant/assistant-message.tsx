@@ -23,7 +23,7 @@ export default function AssistantMessage({
 }: TAssistantMessage) {
   const isTimedOut = hasDatePassedThreshold(
     createdAt,
-    ONE_MINUTE_FORTY_FIVE_SECONDS,
+    ONE_MINUTE_FORTY_FIVE_SECONDS
   );
   const isGenerating = isToolCallGeneratingOrPending(status);
 
@@ -34,7 +34,7 @@ export default function AssistantMessage({
           <Loader2 className="animate-spin text-[#78dbff] w-4 h-4" />
         </div>
         <p className="text-sm font-semibold blue-text-clip">
-          AI is Thinking...
+          Thinking
         </p>
       </div>
     );
@@ -83,9 +83,7 @@ export default function AssistantMessage({
             <div className="w-4 h-4 flex  items-center">
               <Loader2 className="animate-spin text-[#78dbff] w-4 h-4" />
             </div>
-            <p className="text-sm font-semibold blue-text-clip">
-              AI is Thinking...
-            </p>
+            <p className="text-sm font-semibold blue-text-clip">Thinking</p>
           </div>
         ) : null}
       </div>

@@ -195,7 +195,7 @@ export default function GenerateNFTModal() {
               {isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Creating NFT...
+                  Creating NFT
                 </>
               ) : (
                 <>
