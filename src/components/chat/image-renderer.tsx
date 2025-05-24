@@ -1,9 +1,12 @@
+"use client";
 import { isToolCallInProgress } from "@/lib/helpers/status-checker";
 import { cn } from "@/lib/utils";
 import { TMessageStatus } from "@/types/chat/chat-types";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import ImageToolbar from "./toolbar/user-tool-bar";
+import { useAppDispatch } from "@/hooks/redux";
+import { setMaximizedViewer } from "@/lib/redux/features/chat";
 type TImageRenderer = {
   role: "user" | "assistant";
   imageUrls: string[];
@@ -23,11 +26,12 @@ export default function ImageRenderer({
   status,
 }: TImageRenderer) {
   const isGenerating = isToolCallInProgress(status);
+  const dispatch = useAppDispatch();
   return (
     <motion.div
       className={cn(
         "flex mt-2 justify-end gap-2 flex-wrap",
-        containerClassName,
+        containerClassName
       )}
     >
       {imageUrls && imageUrls.length > 0
@@ -57,7 +61,21 @@ export default function ImageRenderer({
                 layout
                 className=""
               >
-                <div className="rounded-md border border-muted-foreground/60 overflow-hidden gap-2">
+                <button
+                  onClick={() => {
+                    dispatch(
+                      setMaximizedViewer({
+                        isOpened: true,
+                        data: {
+                          type: "image",
+                          imageUrl: item ?? "",
+                          modelUrl: "",
+                        },
+                      })
+                    );
+                  }}
+                  className="rounded-md overflow-hidden gap-2"
+                >
                   <Image
                     src={item}
                     alt={`${text ?? ""}`}
@@ -68,10 +86,10 @@ export default function ImageRenderer({
                       className,
                       {
                         "blur-md": isGenerating,
-                      },
+                      }
                     )}
                   />
-                </div>
+                </button>
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{

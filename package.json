@@ -1,6 +1,6 @@
 {
   "name": "buu-fun",
-  "version": "0.1.58",
+  "version": "0.1.64",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -98,6 +98,7 @@
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.169.0",
+    "uuid": "^11.1.0",
     "vaul": "^1.1.2",
     "zod": "^3.24.2"
   },

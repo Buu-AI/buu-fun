@@ -121,7 +121,7 @@ export async function getSessions({ accessToken }: { accessToken: string }) {
 type TSendChatMessage = {
   prompt: string;
   style?: TThreeDStyles;
-  sessionId?: string;
+  sessionId: string;
   accessToken: string;
   imageUrls?: SendMessageMutationVariables["imageUrls"];
 };

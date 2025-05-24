@@ -25,7 +25,7 @@ export default function RecentChats() {
         dispatch(setHistoryModel(value));
       }}
     >
-      <SheetTrigger asChild className="hidden md:flex">
+      <SheetTrigger asChild className="hidden md:flex relative">
         <div className="flex  items-center gap-1 justify-center">
           <div>
             <Button

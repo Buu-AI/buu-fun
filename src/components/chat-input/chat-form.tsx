@@ -5,37 +5,33 @@ import { getPresignedUrl } from "@/lib/react-query/image-upload";
 import { motion } from "framer-motion";
 // import { generateSubThreads } from "@/lib/react-query/threads";
 import { TypedAppError } from "@/class/error";
-import {
-  sendChatMessage,
-  TGetMessagesReturn,
-} from "@/lib/react-query/threads.v3";
+import { sendChatMessage } from "@/lib/react-query/threads.v3";
 import {
   clearInput,
   clearInputFile,
+  clearMessages,
   removeImage,
   setInputFile,
+  setInputQuery,
   setNewSession,
 } from "@/lib/redux/features/chat";
+import { TImageData } from "@/lib/redux/features/chat-types";
 import { setSubscriptionModel } from "@/lib/redux/features/subscription";
+import { isChatGenerating } from "@/lib/redux/selectors/chatMessages";
 import { blobUrlToFile, cn, getAllowedContentTypeMaps } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
-import {
-  InfiniteData,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { nanoid } from "@reduxjs/toolkit";
+import { useMutation } from "@tanstack/react-query";
+import { AnimatePresence } from "framer-motion";
 import { Loader2 } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { v4 as uuid } from "uuid";
 import { TBottomBarContainer } from "./bottom-bar-container";
 import ChatTextArea from "./chat-text-area";
 import DragImageCard from "./drag-image-card";
-import { isChatGenerating } from "@/lib/redux/selectors/chatMessages";
-import { nanoid } from "@reduxjs/toolkit";
-import { TImageData } from "@/lib/redux/features/chat-types";
-import Image from "next/image";
-import { AnimatePresence } from "framer-motion";
 
 export default function ChatForm({ action }: TBottomBarContainer) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,15 +46,26 @@ export default function ChatForm({ action }: TBottomBarContainer) {
   const isChatPending = useAppSelector(isChatGenerating);
   // Mutation for creating a new chat
   const { mutate: createNewChat, isPending: isCreatePending } = useMutation({
-    onMutate() {
-      toast.loading("Generating model...", { duration: 2000 });
-      toast.dismiss();
-    },
     mutationFn: sendChatMessage,
+
+    onMutate(variables) {
+      const sessionId = variables.sessionId;
+      dispatch(setNewSession(sessionId));
+      dispatch(clearMessages());
+      dispatch(clearInput());
+      // const imageUrls = variables.imageUrls;
+      // const urls = imageUrls
+      //   ? Array.isArray(imageUrls)
+      //     ? imageUrls
+      //     : [imageUrls]
+      //   : undefined;
+      // dispatch(appendUserChatMessage(prompt, sessionId, urls));
+      router.push(`/app/chat/${sessionId}`);
+    },
+
     onSuccess(data) {
       dispatch(clearInput());
       const sessionId = data?.items[0].sessionId;
-      dispatch(setNewSession(sessionId));
       router.push(`/app/chat/${sessionId}`);
     },
     onError(error) {
@@ -81,33 +88,19 @@ export default function ChatForm({ action }: TBottomBarContainer) {
 
   const fileCount = useAppSelector((state) => state.chat.inputFile.length);
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   // mutation for existing chat
   const { mutate: createExistingChat, isPending: isExistingChatPending } =
     useMutation({
       mutationFn: sendChatMessage,
-      async onSuccess(data) {
+      onMutate() {
         dispatch(clearInput());
-        const sessionId = data.items[0].sessionId;
-        queryClient.setQueryData<InfiniteData<TGetMessagesReturn>>(
-          ["get-messages", sessionId, identityToken],
-          (old) => {
-            if (!old) return old;
-            return {
-              ...old,
-              pages: old.pages.map((page) => ({
-                ...page,
-                __typename: page.__typename,
-                items: [...page.items, ...data.items],
-              })),
-            };
-          },
-        );
-        await queryClient.invalidateQueries({
-          queryKey: ["get-messages", sessionId, identityToken],
-        });
       },
-      onError(error) {
+      async onSuccess() {
+        dispatch(clearInput());
+      },
+      onError(error, variables) {
+        dispatch(setInputQuery(variables.prompt));
         if (error instanceof TypedAppError) {
           switch (error.code) {
             case "CREDIT_NOT_FOUND": {
@@ -131,9 +124,6 @@ export default function ChatForm({ action }: TBottomBarContainer) {
     (action !== "new_chat" && isChatPending) ||
     isChatPending ||
     isSubmitting;
-
-  // isOverAllRequestLimitReached(isChatPending.totalRequest);
-
   const { mutateAsync: getImagePresignedUrl } = useMutation({
     mutationFn: getPresignedUrl,
     async onSuccess() {
@@ -146,7 +136,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
 
   const handleImageUploadUrl = async (
     ImageData: TImageData,
-    accessToken: string,
+    accessToken: string
   ) => {
     try {
       const file = await blobUrlToFile(ImageData.url, ImageData.name);
@@ -173,7 +163,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         return null;
       }
       toast.dismiss();
-      toast.loading("Uploading file...");
+      toast.loading("Uploading image");
       const uploadFile = await fetch(data.presignedUrl, {
         method: "PUT",
         body: file,
@@ -215,16 +205,16 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       }
 
       if (isChatLoading) {
-        return toast.error("Hold on!, Still generating your model...");
+        return toast.error("Hold on!, Still generating your model");
       }
 
       let imageUrls: string[] | null = [];
 
       if (inputFile && inputFile?.length > 0) {
         const inputFileRequests = inputFile.map((item) =>
-          handleImageUploadUrl(item, identityToken),
+          handleImageUploadUrl(item, identityToken)
         );
-        toast.loading("Preparing image for uploading....", { duration: 1200 });
+        toast.loading("Preparing image for uploading", { duration: 1200 });
 
         const uploadedImages = await Promise.all(inputFileRequests);
         imageUrls = uploadedImages
@@ -251,6 +241,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       // Handle based on action type
       if (action === "new_chat") {
         createNewChat({
+          sessionId: uuid(),
           accessToken: identityToken ?? "",
           prompt: prompt,
           style: style,
@@ -287,7 +278,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         "relative flex-col gap-1 flex items-start w-full p-4  mb-2  rounded-[20px]  shadow-buu-inner bg-buu",
         {
           // "p-0": !inputFile?.url.length
-        },
+        }
       )}
     >
       <AnimatePresence mode="popLayout">
