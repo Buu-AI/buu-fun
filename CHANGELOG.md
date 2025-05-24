@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.65](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.64...buu-fun-v0.1.65) (2025-05-24)
+
+
+### 🐛 Bugfixes
+
+* **chat:** clicking on toolbar also open up maximizer view ([303fa59](https://github.com/Buu-AI/buu-fun/commit/303fa5989d040403d8640cf80efdde3384a8c1b5))
+* fixed the history page is not accessible from the settings page because of lanyard component blocking the clicks ([b0765b9](https://github.com/Buu-AI/buu-fun/commit/b0765b90862f1f652152f06e34af871af22c462c))
+
 ## [0.1.64](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.63...buu-fun-v0.1.64) (2025-05-23)
 
 
