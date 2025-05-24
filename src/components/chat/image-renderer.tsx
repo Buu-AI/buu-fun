@@ -37,19 +37,7 @@ export default function ImageRenderer({
       {imageUrls && imageUrls.length > 0
         ? imageUrls.map((item, index) => {
             return (
-              <motion.button
-                onClick={() => {
-                  dispatch(
-                    setMaximizedViewer({
-                      isOpened: true,
-                      data: {
-                        type: "image",
-                        imageUrl: item ?? "",
-                        modelUrl: "",
-                      },
-                    })
-                  );
-                }}
+              <motion.div
                 key={`${text}-${item}`}
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{
@@ -73,7 +61,21 @@ export default function ImageRenderer({
                 layout
                 className=""
               >
-                <div className="rounded-md overflow-hidden gap-2">
+                <button
+                  onClick={() => {
+                    dispatch(
+                      setMaximizedViewer({
+                        isOpened: true,
+                        data: {
+                          type: "image",
+                          imageUrl: item ?? "",
+                          modelUrl: "",
+                        },
+                      })
+                    );
+                  }}
+                  className="rounded-md overflow-hidden gap-2"
+                >
                   <Image
                     src={item}
                     alt={`${text ?? ""}`}
@@ -87,7 +89,7 @@ export default function ImageRenderer({
                       }
                     )}
                   />
-                </div>
+                </button>
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{
@@ -117,7 +119,7 @@ export default function ImageRenderer({
                     />
                   )}
                 </motion.div>
-              </motion.button>
+              </motion.div>
             );
           })
         : null}
