@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.66](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.65...buu-fun-v0.1.66) (2025-05-26)
+
+
+### ✨ Features
+
+* added twitter short video ([e5ff454](https://github.com/Buu-AI/buu-fun/commit/e5ff45487a953768a55530b849b662af246e7a5f))
+
 ## [0.1.65](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.64...buu-fun-v0.1.65) (2025-05-24)
 
 
