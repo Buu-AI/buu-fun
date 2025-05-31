@@ -2,6 +2,7 @@
 import { useBuuPricingData, useTokenBalance } from "@/hooks/use-pricing";
 import { formatNumberWithFractions, formatWithComma } from "@/lib/utils";
 import { Button } from "../ui/button";
+import BuyBuuButton from "./buy-buu-button";
 
 export default function TokenBalance() {
   const { data: tokenBalance } = useTokenBalance();
@@ -29,7 +30,7 @@ export default function TokenBalance() {
             </p>
           </div>
           <div className="flex items-center justify-center">
-            <Button className="h-[40px] w-full">BUY $BUU</Button>
+            <BuyBuuButton />
           </div>
         </div>
       </div>
