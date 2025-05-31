@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.67](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.66...buu-fun-v0.1.67) (2025-05-31)
+
+
+### 🐛 Bugfixes
+
+* removed unused Button from token-balance ([f847486](https://github.com/Buu-AI/buu-fun/commit/f84748607e71a4c7cf19c3a5448e336e63f990ba))
+
 ## [0.1.66](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.65...buu-fun-v0.1.66) (2025-05-26)
 
 
