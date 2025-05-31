@@ -109,7 +109,7 @@ export default function BitRefillSheet() {
         </div>
         <Sheet>
           <SheetTrigger asChild>
-            <Button>More Info</Button>
+            <Button>CASH OUT</Button>
           </SheetTrigger>
           <SheetContent
             overlayClassName="bg-black/40"
