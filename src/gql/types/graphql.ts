@@ -404,6 +404,7 @@ export type Mutation = {
   generateNft: ToolRequestConfirmationResult;
   generatePresignedPost: GeneratePresignedPostResult;
   generatePresignedUrl: GeneratePresignedUrlResult;
+  linkReferralAccount: ReferralAccountResult;
   redeemVoucher: CreditResult;
   removeTeamMember: TeamResult;
   rotateApiKey: ApiKeyResult;
@@ -476,6 +477,10 @@ export type MutationGeneratePresignedPostArgs = {
 
 export type MutationGeneratePresignedUrlArgs = {
   input: GeneratePresignedUrlInput;
+};
+
+export type MutationLinkReferralAccountArgs = {
+  code: Scalars["String"]["input"];
 };
 
 export type MutationRedeemVoucherArgs = {
@@ -678,6 +683,7 @@ export type Query = {
   getNft: NftResult;
   getNfts: NftPageResult;
   getPrices: PricesResult;
+  getReferralAccount: ReferralAccountResult;
   getReferralRewards: ReferralRewardPageResult;
   getSessions: SessionsPageResult;
   getShareableBoard: ShareableBoardResult;
@@ -759,6 +765,18 @@ export type QuerySearchPaginatedApiKeysArgs = {
   filters?: InputMaybe<ApiKeyFilter>;
   pagination?: InputMaybe<Pagination>;
 };
+
+export type ReferralAccount = {
+  __typename?: "ReferralAccount";
+  _id: Scalars["String"]["output"];
+  createdAt: Scalars["DateTimeISO"]["output"];
+  linkedAt?: Maybe<Scalars["DateTimeISO"]["output"]>;
+  referee?: Maybe<ReferralAccount>;
+  refereeCode?: Maybe<Scalars["String"]["output"]>;
+  referralCode: Scalars["String"]["output"];
+};
+
+export type ReferralAccountResult = HandledError | ReferralAccount;
 
 export type ReferralReward = {
   __typename?: "ReferralReward";
@@ -3280,6 +3298,56 @@ export type GetReferralRewardsQuery = {
           page?: number | null;
           pages?: number | null;
         };
+      };
+};
+
+export type GetReferralAccountQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetReferralAccountQuery = {
+  __typename?: "Query";
+  getReferralAccount:
+    | { __typename?: "HandledError"; code: string; message: string }
+    | {
+        __typename?: "ReferralAccount";
+        _id: string;
+        referralCode: string;
+        refereeCode?: string | null;
+        linkedAt?: any | null;
+        createdAt: any;
+        referee?: {
+          __typename?: "ReferralAccount";
+          _id: string;
+          referralCode: string;
+          refereeCode?: string | null;
+          linkedAt?: any | null;
+          createdAt: any;
+        } | null;
+      };
+};
+
+export type LinkReferralAccountMutationVariables = Exact<{
+  code: Scalars["String"]["input"];
+}>;
+
+export type LinkReferralAccountMutation = {
+  __typename?: "Mutation";
+  linkReferralAccount:
+    | { __typename?: "HandledError"; code: string; message: string }
+    | {
+        __typename?: "ReferralAccount";
+        _id: string;
+        referralCode: string;
+        refereeCode?: string | null;
+        linkedAt?: any | null;
+        createdAt: any;
+        referee?: {
+          __typename?: "ReferralAccount";
+          _id: string;
+          referralCode: string;
+          refereeCode?: string | null;
+          linkedAt?: any | null;
+          createdAt: any;
+        } | null;
       };
 };
 
@@ -14291,6 +14359,233 @@ export const GetReferralRewardsDocument = {
 } as unknown as DocumentNode<
   GetReferralRewardsQuery,
   GetReferralRewardsQueryVariables
+>;
+export const GetReferralAccountDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "GetReferralAccount" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "getReferralAccount" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "ReferralAccount" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "_id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "referralCode" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "refereeCode" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "referee" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "_id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "referralCode" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "refereeCode" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "linkedAt" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "createdAt" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "linkedAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "createdAt" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "HandledError" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "message" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetReferralAccountQuery,
+  GetReferralAccountQueryVariables
+>;
+export const LinkReferralAccountDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "LinkReferralAccount" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "code" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "linkReferralAccount" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "code" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "code" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "ReferralAccount" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "_id" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "referralCode" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "refereeCode" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "referee" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "_id" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "referralCode" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "refereeCode" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "linkedAt" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "createdAt" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "linkedAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "createdAt" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "InlineFragment",
+                  typeCondition: {
+                    kind: "NamedType",
+                    name: { kind: "Name", value: "HandledError" },
+                  },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "code" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "message" },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  LinkReferralAccountMutation,
+  LinkReferralAccountMutationVariables
 >;
 export const GenerateCustomerPortalSessionDocument = {
   kind: "Document",

@@ -37,44 +37,52 @@ export const GetReferralRewardsQuery = gql`
   }
 `;
 
-// export const GetReferralAccountQuery = gql`
-//   query GetReferralAccount {
-//     getReferralAccount {
-//       ... on ReferralAccount {
-//         _id
-//         referralCode
-//         refereeCode
-//         referee {
-//           _id
-//         }
-//         linkedAt
-//         createdAt
-//       }
-//       ... on HandledError {
-//         code
-//         message
-//       }
-//     }
-//   }
-// `;
+export const GetReferralAccountQuery = gql`
+  query GetReferralAccount {
+    getReferralAccount {
+      ... on ReferralAccount {
+        _id
+        referralCode
+        refereeCode
+        referee {
+          _id
+          referralCode
+          refereeCode
+          linkedAt
+          createdAt
+        }
+        linkedAt
+        createdAt
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
 
-// export const LinkReferralAccountMutation = gql`
-//   mutation LinkReferralAccount($code: String!) {
-//     linkReferralAccount(code: $code) {
-//       ... on ReferralAccount {
-//         _id
-//         referralCode
-//         refereeCode
-//         referee {
-//           _id
-//         }
-//         linkedAt
-//         createdAt
-//       }
-//       ... on HandledError {
-//         code
-//         message
-//       }
-//     }
-//   }
-// `;
+export const LinkReferralAccountMutation = gql`
+  mutation LinkReferralAccount($code: String!) {
+    linkReferralAccount(code: $code) {
+      ... on ReferralAccount {
+        _id
+        referralCode
+        refereeCode
+        referee {
+          _id
+          referralCode
+          refereeCode
+          linkedAt
+          createdAt
+        }
+        linkedAt
+        createdAt
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
