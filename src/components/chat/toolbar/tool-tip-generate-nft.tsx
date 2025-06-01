@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { TChatToolTips } from "./tool-bar-content";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
 import { ToolTips } from "../../generation/handle-tool-calls";
-import { buttonVariants } from "../../generation/tool-bar-tool-tips";
+import { buttonVariants } from "../../generation/tool-tip-button-variant";
 import { MaybeString } from "@/types";
 import { useRouter } from "next/navigation";
 

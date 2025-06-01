@@ -4,7 +4,7 @@ import {
   GenerateNftMutation,
   GetNftsQuery,
   GetNftQuery,
-} from "@/gql/documents/creative-engine";
+} from "@/gql/documents/nft";
 import {
   GetNftsQuery as TGetNftsQuery,
   GetNftsQueryVariables,

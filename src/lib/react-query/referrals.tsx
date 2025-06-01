@@ -3,7 +3,7 @@ import {
   GetReferralAccountQuery,
   GetReferralRewardsQuery,
   LinkReferralAccountMutation,
-} from "@/gql/documents/creative-engine";
+} from "@/gql/documents/referrals";
 
 import {
   OrderDirection,

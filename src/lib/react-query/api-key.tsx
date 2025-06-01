@@ -15,7 +15,7 @@ import {
   DeleteApiKeyMutation,
   RotateApiKeyMutation,
   SearchPaginatedApiKeysQuery,
-} from "@/gql/documents/creative-engine";
+} from "@/gql/documents/api";
 import { getAuthorization } from "../utils";
 
 export async function createApiKey({

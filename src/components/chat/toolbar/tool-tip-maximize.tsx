@@ -6,7 +6,7 @@ import { MaybeString } from "@/types";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { ToolTips } from "../../generation/handle-tool-calls";
-import { buttonVariants } from "../../generation/tool-bar-tool-tips";
+import { buttonVariants } from "../../generation/tool-tip-button-variant";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
 import { TChatToolTips } from "./tool-bar-content";
 

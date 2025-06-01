@@ -4,7 +4,7 @@ import { serverRequest } from "@/gql/client";
 import {
   GetMyCreditsQuery,
   RedeemVoucherMutation,
-} from "@/gql/documents/creative-engine";
+} from "@/gql/documents/boards";
 
 import {
   GetMyCreditsQueryVariables,

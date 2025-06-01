@@ -2,13 +2,12 @@ import { TypedAppError } from "@/class/error";
 import { serverRequest } from "@/gql/client";
 import {
   ConfirmToolMessage,
-  GetMessages,
   GetSessions,
   SendChatMessage,
   CancelToolMessage,
   GenerateModelFromImageMutation,
-  EditImageMutation,
-} from "@/gql/documents/creative-engine";
+  EditModelMutation,
+} from "@/gql/documents/messages";
 import {
   ConfirmToolMessageMutationVariables,
   GetMessagesQueryVariables,
@@ -32,6 +31,8 @@ import { QueryFunction } from "@tanstack/react-query";
 import { TThreeDStyles } from "../redux/features/settings";
 import { getAuthorization } from "../utils";
 import { AccessToken } from "./user";
+
+import { GetMessages } from "@/gql/documents/messages";
 
 export type TGetMessages = {
   sessionId: string;
@@ -308,7 +309,7 @@ export async function editImageMutation({
       TEditImageMutation,
       EditImageMutationVariables
     >(
-      EditImageMutation,
+      EditModelMutation,
       {
         edit,
         imageUrl,
