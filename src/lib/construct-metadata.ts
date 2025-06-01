@@ -20,8 +20,8 @@ export function constructMetadata({
     ],
     videos: [
       {
-        url: "https://www.buu.fun/videos/buu-ai-demo.mp4",
-        secureUrl: "https://www.buu.fun/videos/buu-ai-demo.mp4",
+        url: "https://dkl5j4dbh1gr3.cloudfront.net/video/Kinetic_buu.mp4",
+        secureUrl: "https://dkl5j4dbh1gr3.cloudfront.net/video/Kinetic_buu.mp4",
         type: "video/mp4",
         width: 1280,
         height: 720,
