@@ -24,7 +24,7 @@ export default function ModelScene() {
   const { gl } = useThree();
 
   const selectedModel = useAppSelector(
-    (state) => state.stage.present.selectedModel
+    (state) => state.stage.present.selectedModel,
   );
 
   const handleCanvasClick = () => {
@@ -43,7 +43,7 @@ export default function ModelScene() {
   }) => {
     if (isDragging) return;
     dispatch(
-      setSelectedModel({ id, polygonCount, transformModel: "translate" })
+      setSelectedModel({ id, polygonCount, transformModel: "translate" }),
     );
   };
 
@@ -52,7 +52,7 @@ export default function ModelScene() {
       setIsDragging(false);
       setDragStartPosition({ x: e.clientX, y: e.clientY });
     },
-    [setIsDragging, setDragStartPosition]
+    [setIsDragging, setDragStartPosition],
   );
 
   const handlePointerMove = useCallback(
@@ -67,7 +67,7 @@ export default function ModelScene() {
         }
       }
     },
-    [dragStartPosition, setIsDragging]
+    [dragStartPosition, setIsDragging],
   );
 
   const handlePointerUp = useCallback(() => {
@@ -118,7 +118,7 @@ export default function ModelScene() {
   // Get the selected object for transform controls
   const selectedObject = selectedModel?.id
     ? sceneRef.current?.children.find(
-        (child) => child.userData?.id === selectedModel.id
+        (child) => child.userData?.id === selectedModel.id,
       )
     : null;
 

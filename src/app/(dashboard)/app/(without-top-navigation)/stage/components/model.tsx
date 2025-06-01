@@ -36,7 +36,7 @@ export default function Model({
 
   // Get the current model data from Redux to detect external updates
   const currentModel = useAppSelector((state) =>
-    state.stage.present.models.find((m) => m.id === id)
+    state.stage.present.models.find((m) => m.id === id),
   );
 
   // Track if position is being updated internally (from transform controls)
@@ -52,13 +52,13 @@ export default function Model({
             position: newPosition,
             rotation: newRotation,
             scale: newScale,
-          })
+          }),
         );
         isInternalUpdate.current = false;
       },
-      [dispatch, id]
+      [dispatch, id],
     ),
-    500 // 500ms debounce delay
+    500, // 500ms debounce delay
   );
 
   // Effect to sync Redux position changes to the mesh (external updates)
