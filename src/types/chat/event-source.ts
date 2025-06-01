@@ -57,12 +57,10 @@ type ChatEventMap = {
 
 // Updated handler type to accept extended parameters per event
 export type TChatEventHandler<
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   ExtendedParams extends Partial<Record<keyof ChatEventMap, object>> = {},
 > = {
   [K in keyof ChatEventMap]?: (
     data: ChatEventMap[K] &
-      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
       (K extends keyof ExtendedParams ? ExtendedParams[K] : {}),
   ) => void | unknown;
 };
