@@ -21,12 +21,16 @@ export default async function ChatPage({ params }: TChatPage) {
     <DndKitProvider>
       <main className="flex flex-col relative h-full w-full   max-h-[calc(100vh-100px)]  overflow-hidden">
         <ChatMessageInitializer sessionId={sessionId} />
+
         <ChatMessageEventProvider sessionId={sessionId} />
+
         <ChatContainer sessionId={sessionId} />
+
         <div className="lg:mr-[0.15vw]">
           <BottomBarContainer action={{ sessionId }} />
         </div>
       </main>
+
       <GenerateNFTModal />
       <MaximizeViewModel />
       <RetryImageModal />
