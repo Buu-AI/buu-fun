@@ -6,7 +6,7 @@ import * as THREE from "three";
 import { TextureLoader } from "three";
 
 export function Worlds() {
-  const textureUrl = "/background.png";
+  const textureUrl = "/background.jpg";
   const hdrTexture = useLoader(TextureLoader, textureUrl);
   // const envMap = useEnvironment({ files: textureUrl });
   const sphereRef = useRef<THREE.Mesh>(null);

@@ -1,7 +1,7 @@
 export default function Lights() {
   return (
     <>
-      <ambientLight />
+      <ambientLight intensity={10} />
       <directionalLight />
       <pointLight />
       <spotLight />

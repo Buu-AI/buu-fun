@@ -36,7 +36,7 @@ export default function Model({
 
   // Get the current model data from Redux to detect external updates
   const currentModel = useAppSelector((state) =>
-    state.stage.present.models.find((m) => m.id === id),
+    state.stage.present.models.find((m) => m.id === id)
   );
 
   // Track if position is being updated internally (from transform controls)
@@ -52,13 +52,13 @@ export default function Model({
             position: newPosition,
             rotation: newRotation,
             scale: newScale,
-          }),
+          })
         );
         isInternalUpdate.current = false;
       },
-      [dispatch, id],
+      [dispatch, id]
     ),
-    500, // 500ms debounce delay
+    500 // 500ms debounce delay
   );
 
   // Effect to sync Redux position changes to the mesh (external updates)
@@ -159,16 +159,27 @@ export default function Model({
 
         // Clone materials to avoid affecting other instances
         if (Array.isArray(child.material)) {
-          child.material = child.material.map((mat) => mat.clone());
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          child.material.forEach((mat: any) => {
-            if ("wireframe" in mat) {
-              mat.wireframe = isSelected;
+          child.material = child.material.map((mat) => {
+            const newMat = mat.clone();
+            // Force standard material for proper lighting
+            if (newMat.type === "MeshBasicMaterial") {
+              const standardMat = new THREE.MeshStandardMaterial();
+              standardMat.copy(newMat);
+              standardMat.wireframe = isSelected;
+              return standardMat;
             }
+            newMat.wireframe = isSelected;
+            return newMat;
           });
         } else {
-          child.material = child.material.clone();
-          child.material.wireframe = isSelected;
+          let newMat = child.material.clone();
+          if (newMat.type === "MeshBasicMaterial") {
+            const standardMat = new THREE.MeshStandardMaterial();
+            standardMat.copy(newMat);
+            standardMat.wireframe = isSelected;
+            newMat = standardMat;
+          }
+          child.material = newMat;
         }
       }
     });
@@ -191,6 +202,6 @@ export default function Model({
         e.stopPropagation();
         onSelect({ id, polygonCount: polyCount });
       }}
-    />
+    ></mesh>
   );
 }
