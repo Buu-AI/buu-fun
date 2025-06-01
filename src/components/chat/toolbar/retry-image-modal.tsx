@@ -3,9 +3,7 @@ import { RetryIcon } from "@/assets/icons";
 import { Input } from "@/components/ui/input";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { queryClient } from "@/lib/react-query/query-client";
-import {
-  editImageMutation
-} from "@/lib/react-query/threads.v3";
+import { editImageMutation } from "@/lib/react-query/threads.v3";
 import { setEditImage, setMaximizedViewer } from "@/lib/redux/features/chat";
 import { isChatGenerating } from "@/lib/redux/selectors/chatMessages";
 import { cn } from "@/lib/utils";
@@ -35,7 +33,7 @@ import { Textarea } from "../../ui/textarea";
 export default function RetryImageModal() {
   const { identityToken: accessToken, login } = useAuthentication();
   const chatRetryProps = useAppSelector(
-    (state) => state.chat.chatMessageEditImage
+    (state) => state.chat.chatMessageEditImage,
   );
 
   const isChatPending = useAppSelector(isChatGenerating);
@@ -67,13 +65,13 @@ export default function RetryImageModal() {
         setMaximizedViewer({
           isOpened: false,
           data: undefined,
-        })
+        }),
       );
       dispatch(
         setEditImage({
           isOpened: false,
           imageUrl: null,
-        })
+        }),
       );
     },
     async onSuccess() {
@@ -90,7 +88,7 @@ export default function RetryImageModal() {
   function handleRetryWithImage({ imageUrl, message }: TRetryWithImageSchema) {
     if (isChatPending) {
       toast.error(
-        "AI is thinking, please try after current message is completed"
+        "AI is thinking, please try after current message is completed",
       );
     }
     if (!accessToken) {
@@ -120,7 +118,7 @@ export default function RetryImageModal() {
             setEditImage({
               isOpened: false,
               imageUrl: null,
-            })
+            }),
           );
           return;
         }
@@ -139,7 +137,7 @@ export default function RetryImageModal() {
             "flex overflow-hidden rounded-lg w-full  mx-auto max-w-[50%]",
             {
               hidden: !imageUrl,
-            }
+            },
           )}
         >
           {imageUrl ? (

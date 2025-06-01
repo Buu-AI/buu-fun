@@ -53,7 +53,11 @@ export default function MaximizeViewModel() {
             This request will generate a 3D model from this image.
           </DialogDescription>
         </DialogHeader>
-        <div className={cn("flex   max-md:max-h-max   rounded-lg w-full h-full  mx-auto max-w-[100%]")}>
+        <div
+          className={cn(
+            "flex   max-md:max-h-max   rounded-lg w-full h-full  mx-auto max-w-[100%]",
+          )}
+        >
           {data?.type === "image" ? (
             <div className="h-full w-full max-h-[90dvh]">
               <Image
