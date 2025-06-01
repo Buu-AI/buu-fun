@@ -9,7 +9,7 @@ type TAddPropertiesContainer = {};
 
 export default function AddPropertiesContainer({}: TAddPropertiesContainer) {
   const isModelSelected = useAppSelector(
-    (state) => state.stage.present.selectedModel,
+    (state) => state.stage.present.selectedModel
   );
   const models = useAppSelector((state) => state.stage.present.models);
   const dispatch = useAppDispatch();
@@ -19,13 +19,13 @@ export default function AddPropertiesContainer({}: TAddPropertiesContainer) {
         <CameraAdjustButton />
         <button
           onClick={() => {
-            const lastModel = models.pop();
-            if (lastModel) {
+            const lastModel = models && models.length > 0 ? models[models.length -1] : null
+            if (lastModel?.id) {
               dispatch(
                 setSelectedModel({
                   id: lastModel.id,
                   transformModel: "translate",
-                }),
+                })
               );
             } else {
               toast.error("no models presented at the scene");
@@ -42,7 +42,7 @@ export default function AddPropertiesContainer({}: TAddPropertiesContainer) {
           >
             <SelectObjectIcon />
           </div>
-          <p>Object</p>
+          <p>Object {models.length}</p>
         </button>
         {/* <button className="flex items-center rounded-lg py-2 px-2.5 h-10 bg-white text-black">
           <div className="text-[#515761]">

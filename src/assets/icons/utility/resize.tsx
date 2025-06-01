@@ -14,7 +14,7 @@ export default function Resize() {
         height="17.7246"
         rx="3.79813"
         fill="currentColor"
-        fill-opacity="0.4"
+        fillOpacity="0.4"
       />
       <rect
         x="0.604562"
@@ -23,8 +23,8 @@ export default function Resize() {
         height="17.0663"
         rx="3.46896"
         stroke="currentColor"
-        stroke-opacity="0.08"
-        stroke-width="0.658342"
+        strokeOpacity="0.08"
+        strokeWidth="0.658342"
       />
       <rect
         y="8.00879"
@@ -40,8 +40,8 @@ export default function Resize() {
         height="9.48668"
         rx="1.9283"
         stroke="currentColor"
-        stroke-opacity="0.08"
-        stroke-width="0.365955"
+        strokeOpacity="0.08"
+        strokeWidth="0.365955"
       />
     </svg>
   );
