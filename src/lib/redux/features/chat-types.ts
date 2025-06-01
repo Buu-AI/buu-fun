@@ -1,7 +1,3 @@
-import {
-  GetSubthreadGenRequestsQuery,
-  GetSubthreadsQuery,
-} from "@/gql/types/graphql";
 import { MaybeString } from "@/types";
 import { TChatMessage, TMessageQueryData } from "@/types/chat/chat-types";
 import { InfiniteData } from "@tanstack/react-query";
@@ -93,17 +89,8 @@ export type ChatState = {
   inputQuery: string;
   inputImageUrl: string | null;
   inputFile: TImageData[];
-  currentSubThreadIndex: number;
-  currentGenRequestIndex: number;
   draggingImage?: string;
   placedImage?: string;
-  threads: ChatMessage;
-  subThreads: TSubthreadV1[];
-  genRequest: Record<string, TSubThreadsMedia[]>;
-  retry: {
-    modalOpened: boolean;
-    subThreadId: string | null;
-  };
   genNft: {
     isGenNftModalOpen: boolean;
     messageId?: string | null;
@@ -115,29 +102,11 @@ export type ChatState = {
   genModelFromImage: TGenerateModal;
   sessionId: string;
   messages: TChatMessage[];
-  chatMessages: InfiniteData<TMessageQueryData>;
 };
 
 export type TErrorTypeName = { __typename?: "HandledError" };
 
-export type TAllSubThreadsResponse = Exclude<
-  GetSubthreadsQuery["getSubthreads"],
-  TErrorTypeName
->;
-export type TAllSubThreads = TAllSubThreadsResponse["items"];
-
-export type TSubThreadsResponse = Exclude<
-  GetSubthreadGenRequestsQuery["getSubthreadGenRequests"],
-  TErrorTypeName
->;
 export type TGenResponseStatus = "InProgress" | "Success" | "Error";
-
-export type TSubThreadsMedia = Omit<
-  TSubThreadsResponse["items"][number],
-  "status"
-> & { status: TGenResponseStatus };
-
-export type TSubthreadV1 = TAllSubThreads[number];
 
 export type TGenerationalData = {
   style: TThreeDStyles | null | undefined;
