@@ -3,6 +3,7 @@ import { MessageUpdatedEvent } from "@/types/chat/event-source";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { InfiniteData } from "@tanstack/react-query";
 
+import { Model, ToolRequest } from "@/gql/types/graphql";
 import { prepareMessagePayload } from "../prepare/message";
 import {
   AiChatStreamMessage,
@@ -16,8 +17,6 @@ import {
   TImageData,
   TMaximize,
 } from "./chat-types";
-import { Model, ToolRequest } from "@/gql/types/graphql";
-import { TooltipPortal } from "@radix-ui/react-tooltip";
 
 const initialState: ChatState = {
   inputQuery: "",
@@ -62,7 +61,7 @@ const ChatSlice = createSlice({
         modelUrl?: string | null;
         imageUrl?: string | null;
         modelId?: string | null;
-      }>
+      }>,
     ) {
       state.genNft.isGenNftModalOpen = action?.payload?.isGenNftOpen;
       state.genNft.messageId = action.payload.messageId;
@@ -78,7 +77,7 @@ const ChatSlice = createSlice({
     },
     removeImage(state, action: PayloadAction<string>) {
       state.inputFile = state.inputFile.filter(
-        (item) => item.id !== action.payload
+        (item) => item.id !== action.payload,
       );
     },
     clearInputFile(state) {
@@ -143,7 +142,7 @@ const ChatSlice = createSlice({
     handleMessageUpdates: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId
+          (item) => item.messageId === action.payload.messageId,
         );
         if (!item) {
           state.messages.push(action.payload);
@@ -162,12 +161,12 @@ const ChatSlice = createSlice({
       const model = action.payload;
 
       const message = state.messages.find(
-        (fv) => fv.messageId === model.messageId
+        (fv) => fv.messageId === model.messageId,
       );
 
       if (message) {
         const modelIndex = message.models.findIndex(
-          (fv) => fv._id === model._id
+          (fv) => fv._id === model._id,
         );
 
         if (modelIndex !== -1) {
@@ -186,7 +185,7 @@ const ChatSlice = createSlice({
       const tool = action.payload;
 
       const message = state.messages.find(
-        (fv) => fv.messageId === tool.messageId
+        (fv) => fv.messageId === tool.messageId,
       );
 
       if (message) {
@@ -204,7 +203,7 @@ const ChatSlice = createSlice({
     appendAIChatMessage: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId
+          (item) => item.messageId === action.payload.messageId,
         );
         if (!item) {
           state.messages.push(action.payload);
