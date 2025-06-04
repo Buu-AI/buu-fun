@@ -1,15 +1,18 @@
 import { TypedAppError } from "@/class/error";
 import { serverRequest } from "@/gql/client";
 import {
-  ConfirmToolMessage,
+  CancelToolRequest,
+  ConfirmToolRequest,
+  GenerateModelFromImageMutation,
   GetSessions,
   SendChatMessage,
-  CancelToolMessage,
-  GenerateModelFromImageMutation,
-  EditModelMutation,
 } from "@/gql/documents/messages";
 import {
-  ConfirmToolMessageMutationVariables,
+  CancelToolRequestMutation,
+  CancelToolRequestMutationVariables,
+  ConfirmToolRequestMutationVariables,
+  // EditImageMutationVariables,
+  GenerateModelFromImageMutationVariables,
   GetMessagesQueryVariables,
   GetSessionsQueryVariables,
   MessageFilter,
@@ -17,15 +20,11 @@ import {
   Pagination,
   SendMessageMutation,
   SendMessageMutationVariables,
-  ConfirmToolMessageMutation as TConfirmToolMessageMutation,
+  ConfirmToolRequestMutation as TConfirmToolRequestMutation,
+  // EditImageMutation as TEditImageMutation,
+  GenerateModelFromImageMutation as TGenerateModelFromImageMutation,
   GetMessagesQuery as TGetMessagesQuery,
   GetSessionsQuery as TGetSessionsQuery,
-  CancelToolMessageMutation,
-  CancelToolMessageMutationVariables,
-  GenerateModelFromImageMutation as TGenerateModelFromImageMutation,
-  GenerateModelFromImageMutationVariables,
-  EditImageMutation as TEditImageMutation,
-  EditImageMutationVariables,
 } from "@/gql/types/graphql";
 import { QueryFunction } from "@tanstack/react-query";
 import { TThreeDStyles } from "../redux/features/settings";
@@ -55,6 +54,7 @@ export type TGetMessagesQueryVariables = Omit<
 export type TqueryFun = Awaited<
   ReturnType<Awaited<ReturnType<QueryFunction<typeof getMessages>>>>
 >;
+
 export async function getMessages({
   sessionId,
   accessToken,
@@ -65,6 +65,7 @@ export async function getMessages({
     orderBy: "createdAt",
   },
 }: TGetMessages) {
+  // return await getChatMessages()
   const data = await serverRequest<
     TGetMessagesQuery,
     TGetMessagesQueryVariables
@@ -79,14 +80,15 @@ export async function getMessages({
     },
     { Authorization: getAuthorization(accessToken) },
   );
+
   if (!data) {
-    throw new Error("Internal server error");
+    throw new Error("Internal server error NO DATA AVAILABLE");
   }
 
   if ("code" in data.getMessages) {
     throw new Error("Failed to fetch data");
   }
-
+  console.log("GET:MESSAGES:", data);
   return data.getMessages;
 }
 
@@ -174,18 +176,18 @@ export async function sendChatMessage({
 }
 
 type TToolParams = {
-  messageId: string;
+  requestId: string;
 } & AccessToken;
 
-export async function approveTool({ messageId, accessToken }: TToolParams) {
+export async function approveTool({ requestId, accessToken }: TToolParams) {
   try {
     const data = await serverRequest<
-      TConfirmToolMessageMutation,
-      ConfirmToolMessageMutationVariables
+      TConfirmToolRequestMutation,
+      ConfirmToolRequestMutationVariables
     >(
-      ConfirmToolMessage,
+      ConfirmToolRequest,
       {
-        messageId,
+        requestId,
       },
       {
         Authorization: getAuthorization(accessToken),
@@ -195,14 +197,14 @@ export async function approveTool({ messageId, accessToken }: TToolParams) {
       TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
     }
 
-    if ("code" in data.confirmToolMessage) {
+    if ("code" in data.confirmToolRequest) {
       TypedAppError.throw(
-        data.confirmToolMessage.message,
-        TypedAppError.mapErrorCode(data.confirmToolMessage.code),
+        data.confirmToolRequest.message,
+        TypedAppError.mapErrorCode(data.confirmToolRequest.code),
       );
     }
 
-    return data.confirmToolMessage;
+    return data.confirmToolRequest;
   } catch (error) {
     if (error instanceof TypedAppError) {
       throw error;
@@ -215,15 +217,15 @@ export async function approveTool({ messageId, accessToken }: TToolParams) {
   }
 }
 
-export async function cancelToolCall({ messageId, accessToken }: TToolParams) {
+export async function cancelToolCall({ requestId, accessToken }: TToolParams) {
   try {
     const data = await serverRequest<
-      CancelToolMessageMutation,
-      CancelToolMessageMutationVariables
+      CancelToolRequestMutation,
+      CancelToolRequestMutationVariables
     >(
-      CancelToolMessage,
+      CancelToolRequest,
       {
-        messageId,
+        requestId,
       },
       {
         Authorization: getAuthorization(accessToken),
@@ -233,14 +235,14 @@ export async function cancelToolCall({ messageId, accessToken }: TToolParams) {
       TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
     }
 
-    if ("code" in data.cancelToolMessage) {
+    if ("code" in data.cancelToolRequest) {
       TypedAppError.throw(
-        data.cancelToolMessage.message,
-        TypedAppError.mapErrorCode(data.cancelToolMessage.code),
+        data.cancelToolRequest.message,
+        TypedAppError.mapErrorCode(data.cancelToolRequest.code),
       );
     }
 
-    return data.cancelToolMessage;
+    return data.cancelToolRequest;
   } catch (error) {
     if (error instanceof TypedAppError) {
       throw error;
@@ -254,9 +256,10 @@ export async function cancelToolCall({ messageId, accessToken }: TToolParams) {
 }
 type TGenerateModelFromImageParams = GenerateModelFromImageMutationVariables &
   AccessToken;
+
 export async function generateModelFromImageMutation({
   accessToken,
-  imageUrl,
+  imageId,
   sessionId,
 }: TGenerateModelFromImageParams) {
   try {
@@ -266,8 +269,9 @@ export async function generateModelFromImageMutation({
     >(
       GenerateModelFromImageMutation,
       {
-        imageUrl,
+        imageId,
         sessionId,
+        numberOfModels: 1,
       },
       {
         Authorization: getAuthorization(accessToken),
@@ -297,49 +301,49 @@ export async function generateModelFromImageMutation({
   }
 }
 
-export async function editImageMutation({
-  accessToken,
-  edit,
-  imageUrl,
-  sessionId,
-  numberOfImages,
-}: EditImageMutationVariables & AccessToken) {
-  try {
-    const data = await serverRequest<
-      TEditImageMutation,
-      EditImageMutationVariables
-    >(
-      EditModelMutation,
-      {
-        edit,
-        imageUrl,
-        sessionId,
-        numberOfImages,
-      },
-      {
-        Authorization: getAuthorization(accessToken),
-      },
-    );
-    if (!data) {
-      TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
-    }
+// export async function editImageMutation({
+//   accessToken,
+//   edit,
+//   imageUrl,
+//   sessionId,
+//   numberOfImages,
+// }: EditImageMutationVariables & AccessToken) {
+//   try {
+//     const data = await serverRequest<
+//       TEditImageMutation,
+//       EditImageMutationVariables
+//     >(
+//       EditModelMutation,
+//       {
+//         edit,
+//         imageUrl,
+//         sessionId,
+//         numberOfImages,
+//       },
+//       {
+//         Authorization: getAuthorization(accessToken),
+//       }
+//     );
+//     if (!data) {
+//       TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
+//     }
 
-    if ("code" in data.editImage) {
-      TypedAppError.throw(
-        data.editImage.message,
-        TypedAppError.mapErrorCode(data.editImage.code),
-      );
-    }
+//     if ("code" in data.editImage) {
+//       TypedAppError.throw(
+//         data.editImage.message,
+//         TypedAppError.mapErrorCode(data.editImage.code)
+//       );
+//     }
 
-    return data.editImage;
-  } catch (error) {
-    if (error instanceof TypedAppError) {
-      throw error;
-    }
-    // Otherwise, convert to our custom error
-    throw TypedAppError.fromExternalError(
-      "An unexpected error occurred",
-      error,
-    );
-  }
-}
+//     return data.editImage;
+//   } catch (error) {
+//     if (error instanceof TypedAppError) {
+//       throw error;
+//     }
+//     // Otherwise, convert to our custom error
+//     throw TypedAppError.fromExternalError(
+//       "An unexpected error occurred",
+//       error
+//     );
+//   }
+// }
