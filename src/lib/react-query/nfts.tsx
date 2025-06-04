@@ -4,7 +4,7 @@ import {
   GenerateNftMutation,
   GetNftsQuery,
   GetNftQuery,
-} from "@/gql/documents/creative-engine";
+} from "@/gql/documents/nft";
 import {
   GetNftsQuery as TGetNftsQuery,
   GetNftsQueryVariables,
@@ -15,6 +15,7 @@ import {
 } from "@/gql/types/graphql";
 import { getAuthorization } from "../utils";
 import { TErrorTypeName } from "../redux/features/chat-types";
+import { MaybeString } from "@/types";
 
 export async function getNftsQuery({
   address,
@@ -71,15 +72,17 @@ export async function getNftQuery({
 }
 
 export async function generateNFT({
-  messageId,
+  modelId,
   accessToken,
   description,
   name,
+  sessionId,
 }: {
   name: string;
   description: string;
-  messageId: string;
+  modelId: string;
   accessToken: string;
+  sessionId: MaybeString;
 }) {
   const data = await serverRequest<
     TGenerateNftMutation,
@@ -89,7 +92,8 @@ export async function generateNFT({
     {
       name,
       description,
-      messageId,
+      modelId,
+      sessionId,
     },
     {
       Authorization: getAuthorization(accessToken),

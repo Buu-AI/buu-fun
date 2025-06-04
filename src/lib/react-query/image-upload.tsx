@@ -1,5 +1,5 @@
 import { serverRequest } from "@/gql/client";
-import { GeneratePresignedUrlQuery } from "@/gql/documents/creative-engine";
+import { GeneratePresignedUrlQuery } from "@/gql/documents/uploads";
 import { GeneratePresignedUrlMutation } from "@/gql/types/graphql";
 import { getAuthorization } from "../utils";
 

@@ -64,6 +64,7 @@ export default function ModelViewer({
       className="w-full h-full "
     >
       <model-viewer
+        auto-play
         style={
           {
             width: "100%",
@@ -80,15 +81,14 @@ export default function ModelViewer({
         ios-src=""
         poster={poster ?? ""}
         alt={alt}
-        rotation-per-second="45deg"
-        auto-rotate-delay={1}
-        environment-image=""
-        shadow-intensity={0}
+        rotation-per-second="12deg"
+        auto-rotate-delay={2}
+        // shadow-intensity={5}
         loading="eager"
-        exposure={3}
+        // exposure={1}
         camera-controls
         auto-rotate
-        touch-action="pan-y"
+        // touch-action="pan-y"
         interaction-prompt="none"
         ar
       >

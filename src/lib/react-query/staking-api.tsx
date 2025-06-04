@@ -1,5 +1,5 @@
 import { serverRequest } from "@/gql/client";
-import { GetStakingGlobalDataQuery } from "@/gql/documents/creative-engine";
+import { GetStakingGlobalDataQuery } from "@/gql/documents/pricing";
 import { GetStakingGlobalDataQuery as TGetStakingGlobalDataQuery } from "@/gql/types/graphql";
 
 export async function getStakingGlobalDataQuery() {

@@ -53,19 +53,12 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       dispatch(setNewSession(sessionId));
       dispatch(clearMessages());
       dispatch(clearInput());
-      // const imageUrls = variables.imageUrls;
-      // const urls = imageUrls
-      //   ? Array.isArray(imageUrls)
-      //     ? imageUrls
-      //     : [imageUrls]
-      //   : undefined;
-      // dispatch(appendUserChatMessage(prompt, sessionId, urls));
       router.push(`/app/chat/${sessionId}`);
     },
 
     onSuccess(data) {
       dispatch(clearInput());
-      const sessionId = data?.items[0].sessionId;
+      const sessionId = data.messages?.[0]?.sessionId;
       router.push(`/app/chat/${sessionId}`);
     },
     onError(error) {
@@ -240,8 +233,9 @@ export default function ChatForm({ action }: TBottomBarContainer) {
 
       // Handle based on action type
       if (action === "new_chat") {
+        const sessionId = uuid();
         createNewChat({
-          sessionId: uuid(),
+          sessionId,
           accessToken: identityToken ?? "",
           prompt: prompt,
           style: style,

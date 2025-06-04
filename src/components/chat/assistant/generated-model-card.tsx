@@ -1,24 +1,27 @@
 import ToolBarWrapper from "@/components/chat/toolbar/tool-bar-wrapper";
-import { BorderBeam } from "@/components/ui/border-beam";
 import {
+  isToolCallCanceled,
   isToolCallGenerating,
-  isToolCallPendingCanceledOrFailed,
+  isToolCallPending,
 } from "@/lib/helpers/status-checker";
 import { cn } from "@/lib/utils";
 import { MaybeString } from "@/types";
 import { TMessageStatus, TToolType } from "@/types/chat/chat-types";
-import GenerationLoader from "./generation-card/generation-loader";
+import MagicLoaderWand from "../magic-loader-wand";
 import ImageViewLoader from "./generation-card/image-view-loader";
 import ModelViewWrapper from "./generation-card/model-view-wrapper";
+import ModelToolHeader from "./model-tool-header";
 type TGeneratedModelCard = {
   imageUrl: MaybeString;
-  imageUrls?: string[];
   modelUrl: MaybeString;
-  status: TMessageStatus;
+  status?: TMessageStatus;
   messageId: string;
   nftId: MaybeString;
   tokenized: boolean;
   type?: TToolType;
+  message: MaybeString;
+  toolPersentage: number;
+  modelId: MaybeString;
 };
 
 export default function GeneratedModelCard({
@@ -28,45 +31,57 @@ export default function GeneratedModelCard({
   messageId,
   nftId,
   tokenized,
+  message,
+  toolPersentage,
+  modelId,
 }: TGeneratedModelCard) {
-  const isPendingOrCanceledOrFailed = isToolCallPendingCanceledOrFailed(status);
   const isGenerating = isToolCallGenerating(status);
-  if (isPendingOrCanceledOrFailed || !imageUrl) {
-    return null;
-  }
+  const isPending = isToolCallPending(status);
+  const isCanceledMessage = isToolCallCanceled(status);
+
+  if (isPending || isCanceledMessage) return null;
+
   return (
-    <div className="mt-2">
-      <div className="max-w-[clamp(250px,100%,320px)] overflow-hidden w-full aspect-square rounded-2xl relative justify-center">
-        <GenerationLoader isGenerating={isGenerating} />
+    <div className="mt-3">
+      <ModelToolHeader
+        message={message}
+        persentage={toolPersentage}
+        status={status}
+        isGenerating={isGenerating}
+      />
+      <div className="max-w-[clamp(250px,100%,320px)] bg-balance-card overflow-hidden  w-full aspect-square rounded-b-2xl relative justify-center">
+        {isGenerating ? (
+          <div className="w-full h-full  absolute top-0 left-0 z-20">
+            <div className="flex items-center justify-center  h-full w-full">
+              <MagicLoaderWand />
+            </div>
+          </div>
+        ) : null}
         <ImageViewLoader imageUrl={imageUrl} isGenerating={isGenerating} />
+
         <ModelViewWrapper imageUrl={imageUrl} modelUrl={modelUrl} />
-        <BorderBeam
-          transition={{
-            velocity: 1,
-          }}
-          containerClassName={cn("border-2 rounded-2xl", {
-            hidden: !isGenerating,
-          })}
-          initialOffset={0}
-          size={270}
-          colorFrom="rgba(119, 217, 253,1)"
-          colorTo="rgba(119, 217, 253,1)"
-          className="border-2 rounded-2xl z-50 relative"
-        />
       </div>
-      <div
-        className={cn("flex mt-2 gap-2 pl-3", {
-          hidden: isGenerating || !modelUrl,
-        })}
-      >
-        <ToolBarWrapper
-          type="model"
-          imageUrl={imageUrl}
-          modelUrl={modelUrl}
-          messageId={messageId}
-          nftId={nftId}
-          tokenized={tokenized}
-        />
+      <div className="h-[20px]">
+        <div
+          className={cn("flex mt-2 gap-2 pl-3", {
+            hidden: isGenerating || !modelUrl,
+          })}
+        >
+          <ToolBarWrapper
+            type="model"
+            imageId={null}
+            imageUrl={imageUrl}
+            modelUrl={modelUrl}
+            messageId={messageId}
+            nftId={nftId}
+            tokenized={tokenized}
+            modelId={modelId}
+            disabled={{
+              GENERATE_MODEL: true,
+              GENERATE_NFT: true,
+            }}
+          />
+        </div>
       </div>
     </div>
   );

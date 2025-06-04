@@ -13,7 +13,7 @@ import {
   BoardToolTips,
   TBoardToolTipData,
 } from "../generation/handle-tool-calls";
-import { buttonVariants } from "../generation/tool-bar-tool-tips";
+import { buttonVariants } from "../generation/tool-tip-button-variant";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 type TToolTipModify = {

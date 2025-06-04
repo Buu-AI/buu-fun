@@ -9,6 +9,7 @@ type TImageToolbar = {
   modelUrl?: MaybeString;
   disabled?: TDisabledToolbar;
   className?: string;
+  imageId: MaybeString;
 };
 
 export default function ImageToolbar({
@@ -18,6 +19,7 @@ export default function ImageToolbar({
   disabled,
   className,
   messageId,
+  imageId,
 }: TImageToolbar) {
   return (
     <div
@@ -30,9 +32,11 @@ export default function ImageToolbar({
       )}
     >
       <ToolBarWrapper
+        modelId={null}
         role="user"
         type="image"
         messageId={messageId}
+        imageId={imageId}
         imageUrl={imageUrl}
         modelUrl={modelUrl}
         nftId={null}

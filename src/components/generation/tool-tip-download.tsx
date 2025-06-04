@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { ToolTips, TToolTipsData } from "./handle-tool-calls";
-import { buttonVariants } from "./tool-bar-tool-tips";
+import { buttonVariants } from "./tool-tip-button-variant";
 
 type TToolTipModify = {
   subThreadId?: string;

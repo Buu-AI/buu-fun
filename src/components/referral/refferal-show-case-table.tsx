@@ -123,27 +123,3 @@ export default function ReferralShowcaseTable() {
     </Bounded>
   );
 }
-
-export const referralData = [
-  {
-    id: "01",
-    walletAddress: "0xf99760xf9...14a8",
-    registrationDate: "March 10, 2025 12:48 PM",
-    stakedAmount: "138.012456",
-    earnings: "38.012456",
-  },
-  {
-    id: "02",
-    walletAddress: "0xf99760xf9...14a8",
-    registrationDate: "March 10, 2025 12:48 PM",
-    stakedAmount: "138.012456",
-    earnings: "38.012456",
-  },
-  {
-    id: "03",
-    walletAddress: "0xf99760xf9...14a8",
-    registrationDate: "March 10, 2025 12:48 PM",
-    stakedAmount: "138.012456",
-    earnings: "38.012456",
-  },
-];

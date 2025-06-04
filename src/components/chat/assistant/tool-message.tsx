@@ -1,70 +1,81 @@
-import { MaybeString } from "@/types";
+import { TChatMessage } from "@/types/chat/chat-types";
+import ImageRenderer from "../image-renderer";
 import GeneratedModelCard from "./generated-model-card";
 import AssistantToolCallContainer from "./tool-call-container";
 import {
-  PromptPayload,
-  TMessageStatus,
-  TToolType,
-} from "@/types/chat/chat-types";
-import ImageRenderer from "../image-renderer";
-type TAssistantMessage = {
-  messageId: string;
-  status: TMessageStatus;
-  prompt: MaybeString;
-  payload: PromptPayload;
-  modelUrl: MaybeString;
-  imageUrl: MaybeString;
-  nftId: MaybeString;
-  tokenized: boolean;
-  credits: number;
-  type?: TToolType;
-  imageUrls: string[];
-};
+  getModelBasedOnPriority,
+  getModelMessagesAndPersentage,
+} from "@/lib/helpers/chat/model";
+type TAssistantMessage = {} & TChatMessage;
 export default function AssistantToolMessage({
   status,
   prompt,
   payload,
-  imageUrl,
-  imageUrls,
-  modelUrl,
   messageId,
-  nftId,
-  tokenized,
   credits,
   type,
+  medias,
+  models,
+  toolRequest,
 }: TAssistantMessage) {
   return (
     <div className="">
       <AssistantToolCallContainer
         payload={payload}
         messageId={messageId}
+        toolRequestId={toolRequest?._id}
         prompt={prompt}
         status={status}
-        credits={credits}
+        credits={credits ?? 0}
       />
       <div className="">
         <div className="">
-          {imageUrls && imageUrls.length > 0 ? (
+          {medias && medias.length > 0 ? (
             <ImageRenderer
               messageId={messageId}
               role="assistant"
               status={status}
-              imageUrls={imageUrls}
+              medias={medias}
               containerClassName="justify-normal"
             />
           ) : null}
         </div>
       </div>
-      <GeneratedModelCard
-        messageId={messageId}
-        imageUrl={imageUrl}
-        nftId={nftId}
-        tokenized={tokenized}
-        modelUrl={modelUrl}
-        imageUrls={imageUrls}
-        status={status}
-        type={type}
-      />
+      {models.map((item) => {
+        const modelUrl = getModelBasedOnPriority(item);
+        const { message, persentage, status } =
+          getModelMessagesAndPersentage(item);
+        return (
+          <GeneratedModelCard
+            modelId={item._id}
+            message={message}
+            key={`${item._id}-${item.messageId}`}
+            messageId={messageId}
+            nftId={item.nftId}
+            tokenized={
+              item.nftId && typeof item.nftId === "string" ? true : false
+            }
+            modelUrl={modelUrl}
+            toolPersentage={persentage}
+            imageUrl={item.image.url}
+            status={status}
+            type={type}
+          />
+        );
+      })}
     </div>
   );
+}
+
+{
+  /* <GeneratedModelCard
+  messageId={messageId}
+  imageUrl={imageUrl}
+  nftId={nftId}
+  tokenized={tokenized}
+  modelUrl={modelUrl}
+  imageUrls={imageUrls}
+  status={status}
+  type={type}
+/>; */
 }

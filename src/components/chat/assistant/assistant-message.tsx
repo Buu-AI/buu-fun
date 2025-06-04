@@ -2,7 +2,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { ONE_MINUTE_FORTY_FIVE_SECONDS } from "@/constants/time";
 import { isToolCallGeneratingOrPending } from "@/lib/helpers/status-checker";
 import { cn, hasDatePassedThreshold } from "@/lib/utils";
-import { TMessageStatus } from "@/types/chat/chat-types";
+import { TChatMessage } from "@/types/chat/chat-types";
 import { Loader2, X } from "lucide-react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
@@ -12,12 +12,10 @@ type TAssistantMessage = {
   prompt?: string | null;
   isLastMessage: boolean;
   createdAt: string;
-  status: TMessageStatus;
-};
+} & TChatMessage;
 
 export default function AssistantMessage({
   prompt,
-  // isLastMessage = false,
   createdAt,
   status,
 }: TAssistantMessage) {

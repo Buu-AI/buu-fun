@@ -1,26 +1,32 @@
 import InfoIcon from "@/assets/icons/info-icon";
+import { getPayloadInformation, isValidPayload } from "@/lib/helpers/chat/tool";
+import { cn } from "@/lib/utils";
+import { MaybeString } from "@/types";
+import { PromptPayload } from "@/types/chat/chat-types";
 import ToolCallApproveButton from "./tool-call-approve-button";
 import ToolCallCancelButton from "./tool-call-cancel-button";
 import AssistantMessageShowDetailToolCall from "./tool-show-detail";
-import { PromptPayload } from "@/types/chat/chat-types";
-import { cn } from "@/lib/utils";
 
 type TAssistantToolCall = {
   messageId: string;
-  payload?: PromptPayload;
+  payload?: PromptPayload | string;
   credits?: number;
+  toolRequestId: MaybeString;
 };
 
 export default function AssistantToolCall({
-  messageId,
   payload,
   credits,
+  toolRequestId,
 }: TAssistantToolCall) {
-  const shouldDisplayDetails = payload && typeof payload === "object";
+  const parsedPayload = getPayloadInformation(payload);
+
+  const shouldDisplayDetails = isValidPayload(parsedPayload);
+  if (!toolRequestId) return;
   return (
     <div>
       {shouldDisplayDetails ? (
-        <AssistantMessageShowDetailToolCall payload={payload} />
+        <AssistantMessageShowDetailToolCall payload={parsedPayload} />
       ) : null}
       <div>
         <div className="mt-3">
@@ -43,8 +49,8 @@ export default function AssistantToolCall({
           </div>
         </div>
         <div className="mt-3 flex gap-4">
-          <ToolCallApproveButton messageId={messageId} />
-          <ToolCallCancelButton messageId={messageId} />
+          <ToolCallApproveButton requestId={toolRequestId} />
+          <ToolCallCancelButton requestId={toolRequestId} />
         </div>
       </div>
     </div>

@@ -6,13 +6,14 @@ import { useAuthentication } from "@/providers/account.context";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { Button } from "../../ui/button";
+import { MaybeString } from "@/types";
 
 type TToolCallApproveButton = {
-  messageId: string;
+  requestId: MaybeString;
 };
 
 export default function ToolCallApproveButton({
-  messageId,
+  requestId,
 }: TToolCallApproveButton) {
   const { identityToken } = useAuthentication();
   const dispatch = useAppDispatch();
@@ -39,7 +40,11 @@ export default function ToolCallApproveButton({
     });
   function handleApproveMessage() {
     const accessToken = identityToken ?? "";
-    approveToolMessage({ accessToken, messageId });
+    if (!requestId) {
+      toast.error("Failed to retrieve Request!");
+      return;
+    }
+    approveToolMessage({ accessToken, requestId });
   }
   return (
     <Button

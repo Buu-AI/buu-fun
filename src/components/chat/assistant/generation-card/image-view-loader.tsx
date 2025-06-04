@@ -14,15 +14,17 @@ export default function ImageViewLoader({
   if (!imageUrl) return null;
   if (!isGenerating && imageUrl) return null;
   return (
-    <Image
-      src={imageUrl}
-      width={1920}
-      height={1080}
-      alt="3D model preview"
-      className={cn("w-full h-full p-1  object-cover", {
-        "blur-md": isGenerating,
-      })}
-      priority
-    />
+    <div className="w-full h-full relative">
+      <Image
+        src={imageUrl}
+        width={1920}
+        height={1080}
+        alt="3D model preview"
+        className={cn("w-full h-full p-1  object-cover", {
+          "blur-md": isGenerating,
+        })}
+        priority
+      />
+    </div>
   );
 }
