@@ -17,12 +17,14 @@ type TToolTipGenerateModel = {
   open?: boolean;
   imageUrl: MaybeString;
   modelUrl: MaybeString;
+  imageId: MaybeString;
 };
 
 export default function ToolTipGenerateModel({
   toolTipData,
   index,
   imageUrl,
+  imageId,
 }: TToolTipGenerateModel) {
   const dispatch = useAppDispatch();
   return (
@@ -41,6 +43,7 @@ export default function ToolTipGenerateModel({
                 setGenerateModel({
                   isOpened: true,
                   imageUrl,
+                  imageId,
                 }),
               );
             }}
