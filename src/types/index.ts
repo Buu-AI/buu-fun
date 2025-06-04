@@ -18,4 +18,9 @@ export type TryCatch<T> =
       data: null;
       error: string | { message: string };
     };
-export type MaybeString = string | null | undefined;
+
+export type Maybe<T> = T | null | undefined;
+
+export type MaybeString = Maybe<string>;
+
+export type MaybeNumber = Maybe<number>;
