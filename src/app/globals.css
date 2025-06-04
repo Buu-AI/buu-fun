@@ -1089,3 +1089,8 @@ input[type="number"] {
 .bg-visible-eye {
   background: rgba(28, 32, 39, 0.8);
 }
+
+
+.bg-model-viewer {
+background: radial-gradient(138.3% 135.41% at 115.27% 105.13%, rgba(255, 120, 255, 0.20) 0%, rgba(28, 32, 39, 0.00) 100%), radial-gradient(93.48% 93.35% at 0% 3.1%, rgba(120, 219, 255, 0.50) 0%, rgba(28, 32, 39, 0.00) 100%), #1C2027;
+}
