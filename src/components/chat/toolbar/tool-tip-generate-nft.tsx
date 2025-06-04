@@ -21,6 +21,7 @@ type TToolTipGenerateNFT = {
   modelUrl: MaybeString;
   nftId: MaybeString;
   tokenized?: boolean;
+  modelId: MaybeString;
 };
 
 export default function ToolTipGenerateNft({
@@ -31,6 +32,7 @@ export default function ToolTipGenerateNft({
   modelUrl,
   nftId,
   tokenized,
+  modelId,
 }: TToolTipGenerateNFT) {
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -43,7 +45,10 @@ export default function ToolTipGenerateNft({
             onClick={() => {
               if (tokenized) {
                 toast.success(`NFT has already been generated `);
-                if (nftId) router.push(`/nfts/${nftId}`);
+                if (nftId) {
+                  router.push(`/nfts/${nftId}`);
+                  return;
+                }
                 return;
               }
               if (!modelUrl) {
@@ -58,12 +63,19 @@ export default function ToolTipGenerateNft({
                 );
                 return;
               }
+              if (!modelId) {
+                toast.success(
+                  `NFT Generation requires it to be a valid Models`,
+                );
+                return;
+              }
               dispatch(
                 setGenerateNFT({
                   isGenNftOpen: true,
                   messageId,
                   imageUrl,
                   modelUrl,
+                  modelId,
                 }),
               );
             }}

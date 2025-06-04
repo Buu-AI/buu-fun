@@ -21,6 +21,8 @@ type TToolTipMaximize = {
   messageId?: string;
   nftId?: MaybeString;
   tokenized?: boolean;
+  modelId: MaybeString;
+  imageId: MaybeString;
 };
 
 export default function ToolTipMaximize({
@@ -32,6 +34,8 @@ export default function ToolTipMaximize({
   messageId,
   nftId,
   tokenized = false,
+  modelId,
+  imageId,
 }: TToolTipMaximize) {
   const dispatch = useAppDispatch();
   return (
@@ -53,6 +57,7 @@ export default function ToolTipMaximize({
                     data: {
                       type: "image",
                       imageUrl: imageUrl ?? "",
+                      imageId: imageId,
                       modelUrl: "",
                     },
                   }),
@@ -69,6 +74,7 @@ export default function ToolTipMaximize({
                       messageId: messageId ?? "",
                       modelUrl: modelUrl ?? "",
                       tokenized: tokenized,
+                      modelId,
                     },
                   }),
                 );

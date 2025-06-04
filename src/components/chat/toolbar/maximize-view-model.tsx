@@ -73,11 +73,14 @@ export default function MaximizeViewModel() {
                   className="w-full justify-center"
                   imageUrl={data.imageUrl}
                   messageId=""
+                  imageId={data.imageId}
                   // messageId={"messageId"}
                   modelUrl={data.modelUrl}
                   role={"assistant"}
                   disabled={{
                     MAXIMIZE_VIEW: true,
+                    EDIT_IMAGE: true,
+                    GENERATE_NFT: true,
                   }}
                 />
               </div>
@@ -96,11 +99,14 @@ export default function MaximizeViewModel() {
                   type="model"
                   imageUrl={data?.imageUrl}
                   modelUrl={data?.modelUrl}
+                  imageId={null}
+                  modelId={data.modelId}
                   messageId={data?.messageId ?? ""}
                   nftId={data?.nftId}
                   tokenized={data?.tokenized}
                   disabled={{
                     MAXIMIZE_VIEW: true,
+                    GENERATE_NFT: true,
                   }}
                 />
               </div>
