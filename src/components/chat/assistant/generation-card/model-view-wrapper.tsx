@@ -17,8 +17,11 @@ export default function ModelViewWrapper({
 }: TModelViewWrapper) {
   if (!modelUrl) return null;
   return (
-    <div className="w-full h-full border overflow-hidden rounded-3xl">
-      <ModelViewer key={modelUrl} poster={imageUrl} src={modelUrl} />
+    <div className="w-full h-full relative">
+      <div className="bg-balance-card w-full h-full absolute top-0 left-0" />
+      <div className="w-full h-full  backdrop-blur-xl overflow-hidden relative rounded-b-3xl">
+        <ModelViewer key={modelUrl} poster={imageUrl} src={modelUrl} />
+      </div>
     </div>
   );
 }
