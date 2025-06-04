@@ -5,6 +5,8 @@ import { handleEventSource } from "@/lib/helpers/eventsource/chat";
 import {
   appendAIChatMessage,
   handleMessageUpdates,
+  updateMessageModel,
+  updateMessageToolRequest,
 } from "@/lib/redux/features/chat";
 import { parseJson } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
@@ -57,13 +59,16 @@ export default function ChatMessageEventProvider({
             ...data,
             message,
           });
+          return;
         }
         case "model-updated": {
-          console.log("model-event-triggered");
+          const model = data.payload;
+          dispatch(updateMessageModel(model));
           break;
         }
         case "tool-request-updated": {
-          console.log("model-event-triggered");
+          const tool = data.payload;
+          dispatch(updateMessageToolRequest(tool));
           break;
         }
       }

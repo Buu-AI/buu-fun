@@ -16,6 +16,8 @@ import {
   TImageData,
   TMaximize,
 } from "./chat-types";
+import { Model, ToolRequest } from "@/gql/types/graphql";
+import { TooltipPortal } from "@radix-ui/react-tooltip";
 
 const initialState: ChatState = {
   inputQuery: "",
@@ -60,7 +62,7 @@ const ChatSlice = createSlice({
         modelUrl?: string | null;
         imageUrl?: string | null;
         modelId?: string | null;
-      }>,
+      }>
     ) {
       state.genNft.isGenNftModalOpen = action?.payload?.isGenNftOpen;
       state.genNft.messageId = action.payload.messageId;
@@ -76,7 +78,7 @@ const ChatSlice = createSlice({
     },
     removeImage(state, action: PayloadAction<string>) {
       state.inputFile = state.inputFile.filter(
-        (item) => item.id !== action.payload,
+        (item) => item.id !== action.payload
       );
     },
     clearInputFile(state) {
@@ -141,7 +143,7 @@ const ChatSlice = createSlice({
     handleMessageUpdates: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId,
+          (item) => item.messageId === action.payload.messageId
         );
         if (!item) {
           state.messages.push(action.payload);
@@ -156,11 +158,53 @@ const ChatSlice = createSlice({
         };
       },
     },
+    updateMessageModel(state, action: PayloadAction<Model>) {
+      const model = action.payload;
 
+      const message = state.messages.find(
+        (fv) => fv.messageId === model.messageId
+      );
+
+      if (message) {
+        const modelIndex = message.models.findIndex(
+          (fv) => fv._id === model._id
+        );
+
+        if (modelIndex !== -1) {
+          // Update the existing model
+          message.models[modelIndex] = {
+            ...message.models[modelIndex],
+            ...model,
+          };
+        } else {
+          // If model doesn't exist, add it to the models array
+          message.models.push(model);
+        }
+      }
+    },
+    updateMessageToolRequest(state, action: PayloadAction<ToolRequest>) {
+      const tool = action.payload;
+
+      const message = state.messages.find(
+        (fv) => fv.messageId === tool.messageId
+      );
+
+      if (message) {
+        // Replace the message toolRequest with the new tool
+        message.toolRequest = tool;
+
+        // Update toolRequest in all models within this message
+        if (message.models && message.models.length > 0) {
+          message.models.forEach((model) => {
+            model.toolRequest = tool;
+          });
+        }
+      }
+    },
     appendAIChatMessage: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId,
+          (item) => item.messageId === action.payload.messageId
         );
         if (!item) {
           state.messages.push(action.payload);
@@ -209,6 +253,8 @@ export const {
   appendUserChatMessage,
   appendAIChatMessage,
   handleMessageUpdates,
+  updateMessageModel,
+  updateMessageToolRequest,
   clearMessages,
 } = ChatSlice.actions;
 
