@@ -9,11 +9,11 @@ import toast from "react-hot-toast";
 import { Button } from "../../ui/button";
 
 type TToolCallCancelButton = {
-  messageId: string;
+  requestId: string;
 };
 
 export default function ToolCallCancelButton({
-  messageId,
+  requestId,
 }: TToolCallCancelButton) {
   const { identityToken } = useAuthentication();
   const dispatch = useAppDispatch();
@@ -49,7 +49,7 @@ export default function ToolCallCancelButton({
 
   function handleCancelMessage() {
     const accessToken = identityToken ?? "";
-    cancelToolMessage({ accessToken, messageId });
+    cancelToolMessage({ accessToken, requestId });
   }
   return (
     <Button
