@@ -77,6 +77,21 @@ export const GetUserShareableBoardsQuery = gql`
               createdAt
               updatedAt
             }
+            toolRequest {
+              _id
+              teamId
+              sessionId
+              messageId
+              type
+              priority
+              payload
+              credits
+              status
+              createdAt
+              updatedAt
+              message
+              percentage
+            }
             transformedMultiview {
               alt
               keyS3
@@ -177,6 +192,21 @@ export const CreateShareableBoardMutation = gql`
             percentage
             createdAt
             updatedAt
+          }
+          toolRequest {
+            _id
+            teamId
+            sessionId
+            messageId
+            type
+            priority
+            payload
+            credits
+            status
+            createdAt
+            updatedAt
+            message
+            percentage
           }
           mesh {
             alt
@@ -333,6 +363,21 @@ export const UpdateShareableBoardVisibilityMutation = gql`
             percentage
             createdAt
             updatedAt
+          }
+          toolRequest {
+            _id
+            teamId
+            sessionId
+            messageId
+            type
+            priority
+            payload
+            credits
+            status
+            createdAt
+            updatedAt
+            message
+            percentage
           }
           optimizedMesh {
             alt
@@ -529,6 +574,21 @@ export const DeleteShareableBoardMutation = gql`
             createdAt
             updatedAt
           }
+          toolRequest {
+            _id
+            teamId
+            sessionId
+            messageId
+            type
+            priority
+            payload
+            credits
+            status
+            createdAt
+            updatedAt
+            message
+            percentage
+          }
           texture {
             alt
             keyS3
@@ -648,6 +708,21 @@ export const GetShareableBoardQuery = gql`
             percentage
             createdAt
             updatedAt
+          }
+          toolRequest {
+            _id
+            teamId
+            sessionId
+            messageId
+            type
+            priority
+            payload
+            credits
+            status
+            createdAt
+            updatedAt
+            message
+            percentage
           }
           texturedMesh {
             alt

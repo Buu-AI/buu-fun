@@ -51,7 +51,7 @@ export type TGetMessagesQueryVariables = Omit<
 > & {
   pagination: TPagination;
 };
-export type TqueryFun = Awaited<
+export type TQueryFun = Awaited<
   ReturnType<Awaited<ReturnType<QueryFunction<typeof getMessages>>>>
 >;
 

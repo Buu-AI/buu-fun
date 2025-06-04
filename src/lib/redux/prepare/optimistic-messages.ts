@@ -25,7 +25,7 @@ export const optimisticUserMessages = (
 export const AiChatStreamMessage = (
   prompt: string,
   messageId: string,
-  sessionId: string
+  sessionId: string,
 ): TChatMessage => {
   return {
     isAssistantLastMessage: true,
@@ -45,7 +45,7 @@ export const AiChatStreamMessage = (
 };
 
 export const handleMessageUpdate = (
-  data: MessageUpdatedEvent["payload"]
+  data: MessageUpdatedEvent["payload"],
 ): TChatMessage => {
   return TransformMessage(data);
 };

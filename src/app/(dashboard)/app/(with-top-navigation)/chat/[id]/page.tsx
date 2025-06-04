@@ -6,7 +6,7 @@ import ChatMessageEventProvider from "@/components/chat/chat-message-event-provi
 import GenerateNFTModal from "@/components/chat/toolbar/generate-nft-modal";
 import MaximizeViewModel from "@/components/chat/toolbar/maximize-view-model";
 import ModelGenerationModal from "@/components/chat/toolbar/model-generation-modal";
-import RetryImageModal from "@/components/chat/toolbar/retry-image-modal";
+// import RetryImageModal from "@/components/chat/toolbar/retry-image-modal";
 import { DndKitProvider } from "@/providers/dnd-kit-provider";
 
 export type TChatPage = {
@@ -33,7 +33,7 @@ export default async function ChatPage({ params }: TChatPage) {
 
       <GenerateNFTModal />
       <MaximizeViewModel />
-      <RetryImageModal />
+      {/* <RetryImageModal /> */}
       <ModelGenerationModal />
       <ShareableBoardsButton />
     </DndKitProvider>

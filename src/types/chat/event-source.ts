@@ -45,6 +45,6 @@ export type TChatEventHandler<
 > = {
   [K in keyof ChatEventMap]?: (
     data: ChatEventMap[K] &
-      (K extends keyof ExtendedParams ? ExtendedParams[K] : {})
+      (K extends keyof ExtendedParams ? ExtendedParams[K] : {}),
   ) => void | unknown;
 };

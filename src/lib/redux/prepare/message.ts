@@ -12,7 +12,6 @@ import { InfiniteData } from "@tanstack/react-query";
 export function prepareMessagePayload(
   params: InfiniteData<TMessageQueryData>
 ): TChatMessage[] {
-  console.log("RECEIVED PARAMS:", params);
   const data = TransformMessages({ params }).sort(
     (a, b) =>
       new Date(a.createdAt as string).getTime() -
@@ -27,7 +26,6 @@ export function prepareMessagePayload(
     const arrIndex = reversedArray.length - 1 - lastAssistantMessage;
     data[arrIndex]["isAssistantLastMessage"] = true;
   }
-  console.log("SELECTED:", data);
   return data;
 }
 
