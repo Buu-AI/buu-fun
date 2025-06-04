@@ -1,56 +1,12 @@
 import { MaybeString } from "@/types";
-import { TChatMessage, TMessageQueryData } from "@/types/chat/chat-types";
-import { InfiniteData } from "@tanstack/react-query";
+import { TChatMessage } from "@/types/chat/chat-types";
 import { TThreeDStyles } from "./settings";
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export type TMediaData = {
-  content_type: string;
-  file_name: string;
-  file_size: number;
-  url: string;
-};
-
-export type TMediaRequest = {
-  // id of image
-  _id: string;
-  // status of the image
-  status: string;
-  //Could be more specific based on actual data
-  metadata: any;
-  //type of image
-  type: string;
-  images: TMediaData[];
-  modelMesh: TMediaData | null;
-};
-
-export type TSubThread = {
-  // subThreadID
-  loadingNewGeneration: boolean;
-  _id: string;
-
-  createdAt: string;
-
-  // threadId which the message belongs to.
-  threadId: string;
-
-  // Prompt which was given by the user to generate
-  message: string;
-  // Style which a user was given to generate the model.
-  style: string;
-  imageRequest: TMediaRequest[];
-  modelRequest: TMediaRequest[];
-};
-
-export type ChatMessage = {
-  threadId: string;
-  subThreads: TSubThread[];
-};
 
 export type TMaximizeModelViewer = {
   type: "model";
   modelUrl: MaybeString;
   imageUrl: MaybeString;
+  modelId: MaybeString;
   messageId: string;
   nftId?: MaybeString;
   tokenized?: boolean;
@@ -60,6 +16,7 @@ export type TMaximizeImage = {
   type: "image";
   modelUrl: string;
   imageUrl: string;
+  imageId: MaybeString;
 };
 type TMaximizeData = TMaximizeImage | TMaximizeModelViewer;
 export type TMaximize = {
@@ -69,6 +26,7 @@ export type TMaximize = {
 
 export type TGenerateModal = {
   isOpened: boolean;
+  imageId?: MaybeString;
   imageUrl?: MaybeString;
   modelUrl?: MaybeString;
 };
@@ -93,6 +51,7 @@ export type ChatState = {
   placedImage?: string;
   genNft: {
     isGenNftModalOpen: boolean;
+    modelId?: MaybeString;
     messageId?: string | null;
     modelUrl?: string | null;
     imageUrl?: string | null;

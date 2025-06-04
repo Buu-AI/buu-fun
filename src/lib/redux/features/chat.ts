@@ -59,12 +59,14 @@ const ChatSlice = createSlice({
         messageId?: string;
         modelUrl?: string | null;
         imageUrl?: string | null;
-      }>
+        modelId?: string | null;
+      }>,
     ) {
       state.genNft.isGenNftModalOpen = action?.payload?.isGenNftOpen;
       state.genNft.messageId = action.payload.messageId;
       state.genNft.modelUrl = action.payload.modelUrl;
       state.genNft.imageUrl = action.payload.imageUrl;
+      state.genNft.modelId = action.payload.imageUrl;
     },
     setInputFile(state, action: PayloadAction<TImageData>) {
       const fileLength = state.inputFile.length < 4;
@@ -74,7 +76,7 @@ const ChatSlice = createSlice({
     },
     removeImage(state, action: PayloadAction<string>) {
       state.inputFile = state.inputFile.filter(
-        (item) => item.id !== action.payload
+        (item) => item.id !== action.payload,
       );
     },
     clearInputFile(state) {
@@ -118,6 +120,7 @@ const ChatSlice = createSlice({
     setGenerateModel(state, action: PayloadAction<TGenerateModal>) {
       state.genModelFromImage.isOpened = action.payload.isOpened;
       state.genModelFromImage.imageUrl = action.payload.imageUrl;
+      state.genModelFromImage.imageId = action.payload.imageId;
       state.genModelFromImage.modelUrl = action.payload.modelUrl;
     },
     setMaximizedViewer(state, action: PayloadAction<TMaximize>) {
@@ -138,7 +141,7 @@ const ChatSlice = createSlice({
     handleMessageUpdates: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId
+          (item) => item.messageId === action.payload.messageId,
         );
         if (!item) {
           state.messages.push(action.payload);
@@ -157,7 +160,7 @@ const ChatSlice = createSlice({
     appendAIChatMessage: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId
+          (item) => item.messageId === action.payload.messageId,
         );
         if (!item) {
           state.messages.push(action.payload);
@@ -176,8 +179,8 @@ const ChatSlice = createSlice({
       reducer: (state, payload: PayloadAction<TChatMessage>) => {
         state.messages.push(payload.payload);
       },
-      prepare(prompt: string, sessionId: string, imageUrls: string[] = []) {
-        const newMessage = optimisticUserMessages(prompt, sessionId, imageUrls);
+      prepare(prompt: string, sessionId: string) {
+        const newMessage = optimisticUserMessages(prompt, sessionId);
         return {
           payload: newMessage,
         };
