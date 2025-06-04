@@ -56,9 +56,6 @@ export default function AssistantToolMessage({
               item.nftId && typeof item.nftId === "string" ? true : false
             }
             modelUrl={modelUrl}
-            imageStatus={item.image.status}
-            imagePersentage={item.image.percentage}
-            modelPersentage={item.texturedMesh?.percentage}
             toolPersentage={persentage}
             imageUrl={item.image.url}
             status={status}

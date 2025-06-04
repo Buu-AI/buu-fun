@@ -10,16 +10,16 @@ import {
 import { InfiniteData } from "@tanstack/react-query";
 
 export function prepareMessagePayload(
-  params: InfiniteData<TMessageQueryData>
+  params: InfiniteData<TMessageQueryData>,
 ): TChatMessage[] {
   const data = TransformMessages({ params }).sort(
     (a, b) =>
       new Date(a.createdAt as string).getTime() -
-      new Date(b.createdAt as string).getTime()
+      new Date(b.createdAt as string).getTime(),
   );
   const reversedArray = [...data];
   const lastAssistantMessage = reversedArray.findIndex((item) =>
-    isRoleAssistant(item.role)
+    isRoleAssistant(item.role),
   );
 
   if (lastAssistantMessage !== -1) {
@@ -40,14 +40,14 @@ export function TransformMessages({
         .flatMap((page) => {
           return page.items.map((item) => TransformMessage(item));
         })
-        ?.map((item) => [item.messageId, item])
+        ?.map((item) => [item.messageId, item]),
     ).values(),
   ];
 }
 
 export function TransformMessage(item: Message) {
   const { data: payload } = parseJson<PromptPayload>(
-    item.toolRequest?.payload ?? ""
+    item.toolRequest?.payload ?? "",
   );
   console.log("payload:", payload);
   const toolRequest: TToolRequest | undefined = item?.toolRequest

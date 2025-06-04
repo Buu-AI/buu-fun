@@ -42,8 +42,6 @@ export const GenerateNftMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -57,8 +55,6 @@ export const GenerateNftMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -72,8 +68,6 @@ export const GenerateNftMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -87,12 +81,10 @@ export const GenerateNftMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
-              transformedMultiview {
+              views {
                 alt
                 keyS3
                 size
@@ -102,8 +94,6 @@ export const GenerateNftMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -117,8 +107,6 @@ export const GenerateNftMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -132,8 +120,6 @@ export const GenerateNftMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -153,8 +139,6 @@ export const GenerateNftMutation = gql`
               teamId
               sessionId
               messageId
-              status
-              percentage
               createdAt
               updatedAt
             }
@@ -208,6 +192,8 @@ export const GenerateNftMutation = gql`
             status
             createdAt
             updatedAt
+            message
+            percentage
           }
         }
         toolRequest {
@@ -222,6 +208,8 @@ export const GenerateNftMutation = gql`
           status
           createdAt
           updatedAt
+          message
+          percentage
         }
       }
       ... on HandledError {
@@ -241,6 +229,7 @@ export const GetNftsQuery = gql`
           teamId
           genRequestId
           messageId
+          modelId
           status
           metadata {
             name
@@ -299,7 +288,17 @@ export const GetNftQuery = gql`
         teamId
         genRequestId
         messageId
+        modelId
         status
+        mintAddress
+        collectionAddress
+        creator
+        tokenAddress
+        tokenStandard
+        collectionRoyalties
+        chain
+        updatedAt
+        createdAt
         metadata {
           name
           symbol
@@ -320,15 +319,6 @@ export const GetNftQuery = gql`
             category
           }
         }
-        mintAddress
-        collectionAddress
-        creator
-        tokenAddress
-        tokenStandard
-        collectionRoyalties
-        chain
-        updatedAt
-        createdAt
       }
       ... on HandledError {
         code

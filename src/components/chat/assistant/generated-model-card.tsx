@@ -5,7 +5,7 @@ import {
   isToolCallPending,
 } from "@/lib/helpers/status-checker";
 import { cn } from "@/lib/utils";
-import { MaybeNumber, MaybeString } from "@/types";
+import { MaybeString } from "@/types";
 import { TMessageStatus, TToolType } from "@/types/chat/chat-types";
 import MagicLoaderWand from "../magic-loader-wand";
 import ImageViewLoader from "./generation-card/image-view-loader";
@@ -19,9 +19,6 @@ type TGeneratedModelCard = {
   nftId: MaybeString;
   tokenized: boolean;
   type?: TToolType;
-  imageStatus?: TMessageStatus;
-  imagePersentage?: MaybeNumber;
-  modelPersentage: MaybeNumber;
   message: MaybeString;
   toolPersentage: number;
   modelId: MaybeString;
@@ -34,7 +31,6 @@ export default function GeneratedModelCard({
   messageId,
   nftId,
   tokenized,
-  imagePersentage,
   message,
   toolPersentage,
   modelId,
@@ -61,11 +57,7 @@ export default function GeneratedModelCard({
             </div>
           </div>
         ) : null}
-        <ImageViewLoader
-          imagePersentage={imagePersentage}
-          imageUrl={imageUrl}
-          isGenerating={isGenerating}
-        />
+        <ImageViewLoader imageUrl={imageUrl} isGenerating={isGenerating} />
 
         <ModelViewWrapper imageUrl={imageUrl} modelUrl={modelUrl} />
       </div>

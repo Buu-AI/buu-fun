@@ -1,17 +1,15 @@
 import { cn } from "@/lib/utils";
-import { MaybeNumber, MaybeString } from "@/types";
+import { MaybeString } from "@/types";
 import Image from "next/image";
 
 type TImageViewLoader = {
   imageUrl: MaybeString;
   isGenerating: boolean;
-  imagePersentage: MaybeNumber;
 };
 
 export default function ImageViewLoader({
   imageUrl,
   isGenerating,
-  // imagePersentage,
 }: TImageViewLoader) {
   if (!imageUrl) return null;
   if (!isGenerating && imageUrl) return null;

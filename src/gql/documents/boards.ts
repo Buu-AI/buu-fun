@@ -2,10 +2,10 @@ import { gql } from "graphql-request";
 
 export const GetUserShareableBoardsQuery = gql`
   query GetUserShareableBoard(
-    $pagination: Pagination
     $filters: ShareableBoardFilter
+    $pagination: Pagination
   ) {
-    getUserShareableBoard(pagination: $pagination, filters: $filters) {
+    getUserShareableBoard(filters: $filters, pagination: $pagination) {
       ... on ShareableBoardPage {
         items {
           _id
@@ -27,8 +27,6 @@ export const GetUserShareableBoardsQuery = gql`
               teamId
               sessionId
               messageId
-              status
-              percentage
               createdAt
               updatedAt
             }
@@ -42,8 +40,6 @@ export const GetUserShareableBoardsQuery = gql`
               teamId
               sessionId
               messageId
-              status
-              percentage
               createdAt
               updatedAt
             }
@@ -57,8 +53,6 @@ export const GetUserShareableBoardsQuery = gql`
               teamId
               sessionId
               messageId
-              status
-              percentage
               createdAt
               updatedAt
             }
@@ -72,11 +66,53 @@ export const GetUserShareableBoardsQuery = gql`
               teamId
               sessionId
               messageId
-              status
-              percentage
               createdAt
               updatedAt
             }
+            views {
+              alt
+              keyS3
+              size
+              type
+              url
+              _id
+              teamId
+              sessionId
+              messageId
+              createdAt
+              updatedAt
+            }
+            texturedMesh {
+              alt
+              keyS3
+              size
+              type
+              url
+              _id
+              teamId
+              sessionId
+              messageId
+              createdAt
+              updatedAt
+            }
+            texture {
+              alt
+              keyS3
+              size
+              type
+              url
+              _id
+              teamId
+              sessionId
+              messageId
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+            prompt
+            style
+            nftId
             toolRequest {
               _id
               teamId
@@ -92,56 +128,6 @@ export const GetUserShareableBoardsQuery = gql`
               message
               percentage
             }
-            transformedMultiview {
-              alt
-              keyS3
-              size
-              type
-              url
-              _id
-              teamId
-              sessionId
-              messageId
-              status
-              percentage
-              createdAt
-              updatedAt
-            }
-            texturedMesh {
-              alt
-              keyS3
-              size
-              type
-              url
-              _id
-              teamId
-              sessionId
-              messageId
-              status
-              percentage
-              createdAt
-              updatedAt
-            }
-            texture {
-              alt
-              keyS3
-              size
-              type
-              url
-              _id
-              teamId
-              sessionId
-              messageId
-              status
-              percentage
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-            prompt
-            style
-            nftId
           }
           isPublic
           createdAt
@@ -188,11 +174,92 @@ export const CreateShareableBoardMutation = gql`
             teamId
             sessionId
             messageId
-            status
-            percentage
             createdAt
             updatedAt
           }
+          mesh {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          optimizedMesh {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          multiview {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          views {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          texturedMesh {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          texture {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+          prompt
+          style
+          nftId
           toolRequest {
             _id
             teamId
@@ -208,101 +275,6 @@ export const CreateShareableBoardMutation = gql`
             message
             percentage
           }
-          mesh {
-            alt
-            keyS3
-            size
-            type
-            url
-            _id
-            teamId
-            sessionId
-            messageId
-            status
-            percentage
-            createdAt
-            updatedAt
-          }
-          optimizedMesh {
-            alt
-            keyS3
-            size
-            type
-            url
-            _id
-            teamId
-            sessionId
-            messageId
-            status
-            percentage
-            createdAt
-            updatedAt
-          }
-          multiview {
-            alt
-            keyS3
-            size
-            type
-            url
-            _id
-            teamId
-            sessionId
-            messageId
-            status
-            percentage
-            createdAt
-            updatedAt
-          }
-          transformedMultiview {
-            alt
-            keyS3
-            size
-            type
-            url
-            _id
-            teamId
-            sessionId
-            messageId
-            status
-            percentage
-            createdAt
-            updatedAt
-          }
-          texturedMesh {
-            alt
-            keyS3
-            size
-            type
-            url
-            _id
-            teamId
-            sessionId
-            messageId
-            status
-            percentage
-            createdAt
-            updatedAt
-          }
-          texture {
-            alt
-            keyS3
-            size
-            type
-            url
-            _id
-            teamId
-            sessionId
-            messageId
-            status
-            percentage
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-          prompt
-          style
-          nftId
         }
         isPublic
         createdAt
@@ -344,8 +316,6 @@ export const UpdateShareableBoardVisibilityMutation = gql`
             teamId
             sessionId
             messageId
-            status
-            percentage
             createdAt
             updatedAt
           }
@@ -359,11 +329,79 @@ export const UpdateShareableBoardVisibilityMutation = gql`
             teamId
             sessionId
             messageId
-            status
-            percentage
             createdAt
             updatedAt
           }
+          optimizedMesh {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          multiview {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          views {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          texturedMesh {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          texture {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+          prompt
+          style
+          nftId
           toolRequest {
             _id
             teamId
@@ -379,86 +417,6 @@ export const UpdateShareableBoardVisibilityMutation = gql`
             message
             percentage
           }
-          optimizedMesh {
-            alt
-            keyS3
-            size
-            type
-            url
-            _id
-            teamId
-            sessionId
-            messageId
-            status
-            percentage
-            createdAt
-            updatedAt
-          }
-          multiview {
-            alt
-            keyS3
-            size
-            type
-            url
-            _id
-            teamId
-            sessionId
-            messageId
-            status
-            percentage
-            createdAt
-            updatedAt
-          }
-          transformedMultiview {
-            alt
-            keyS3
-            size
-            type
-            url
-            _id
-            teamId
-            sessionId
-            messageId
-            status
-            percentage
-            createdAt
-            updatedAt
-          }
-          texturedMesh {
-            alt
-            keyS3
-            size
-            type
-            url
-            _id
-            teamId
-            sessionId
-            messageId
-            status
-            percentage
-            createdAt
-            updatedAt
-          }
-          texture {
-            alt
-            keyS3
-            size
-            type
-            url
-            _id
-            teamId
-            sessionId
-            messageId
-            status
-            percentage
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-          prompt
-          style
-          nftId
         }
         isPublic
         createdAt
@@ -494,8 +452,6 @@ export const DeleteShareableBoardMutation = gql`
             teamId
             sessionId
             messageId
-            status
-            percentage
             createdAt
             updatedAt
           }
@@ -509,8 +465,6 @@ export const DeleteShareableBoardMutation = gql`
             teamId
             sessionId
             messageId
-            status
-            percentage
             createdAt
             updatedAt
           }
@@ -524,8 +478,6 @@ export const DeleteShareableBoardMutation = gql`
             teamId
             sessionId
             messageId
-            status
-            percentage
             createdAt
             updatedAt
           }
@@ -539,12 +491,10 @@ export const DeleteShareableBoardMutation = gql`
             teamId
             sessionId
             messageId
-            status
-            percentage
             createdAt
             updatedAt
           }
-          transformedMultiview {
+          views {
             alt
             keyS3
             size
@@ -554,8 +504,6 @@ export const DeleteShareableBoardMutation = gql`
             teamId
             sessionId
             messageId
-            status
-            percentage
             createdAt
             updatedAt
           }
@@ -569,11 +517,27 @@ export const DeleteShareableBoardMutation = gql`
             teamId
             sessionId
             messageId
-            status
-            percentage
             createdAt
             updatedAt
           }
+          texture {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+          prompt
+          style
+          nftId
           toolRequest {
             _id
             teamId
@@ -589,26 +553,6 @@ export const DeleteShareableBoardMutation = gql`
             message
             percentage
           }
-          texture {
-            alt
-            keyS3
-            size
-            type
-            url
-            _id
-            teamId
-            sessionId
-            messageId
-            status
-            percentage
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-          prompt
-          style
-          nftId
         }
         isPublic
         createdAt
@@ -644,8 +588,6 @@ export const GetShareableBoardQuery = gql`
             teamId
             sessionId
             messageId
-            status
-            percentage
             createdAt
             updatedAt
           }
@@ -659,8 +601,6 @@ export const GetShareableBoardQuery = gql`
             teamId
             sessionId
             messageId
-            status
-            percentage
             createdAt
             updatedAt
           }
@@ -674,8 +614,6 @@ export const GetShareableBoardQuery = gql`
             teamId
             sessionId
             messageId
-            status
-            percentage
             createdAt
             updatedAt
           }
@@ -689,12 +627,10 @@ export const GetShareableBoardQuery = gql`
             teamId
             sessionId
             messageId
-            status
-            percentage
             createdAt
             updatedAt
           }
-          transformedMultiview {
+          views {
             alt
             keyS3
             size
@@ -704,11 +640,40 @@ export const GetShareableBoardQuery = gql`
             teamId
             sessionId
             messageId
-            status
-            percentage
             createdAt
             updatedAt
           }
+          texturedMesh {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          texture {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+          prompt
+          style
+          nftId
           toolRequest {
             _id
             teamId
@@ -724,41 +689,6 @@ export const GetShareableBoardQuery = gql`
             message
             percentage
           }
-          texturedMesh {
-            alt
-            keyS3
-            size
-            type
-            url
-            _id
-            teamId
-            sessionId
-            messageId
-            status
-            percentage
-            createdAt
-            updatedAt
-          }
-          texture {
-            alt
-            keyS3
-            size
-            type
-            url
-            _id
-            teamId
-            sessionId
-            messageId
-            status
-            percentage
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-          prompt
-          style
-          nftId
         }
         isPublic
         createdAt

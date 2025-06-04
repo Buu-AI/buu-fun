@@ -8,4 +8,3 @@ export function isThreeDModel(type: string) {
 export function isImageModel(type: string) {
   return ImageModelType.includes(type);
 }
-

@@ -1,8 +1,16 @@
 import { gql } from "graphql-request";
 
 export const GetMessages = gql`
-  query GetMessages($sessionId: String!) {
-    getMessages(sessionId: $sessionId) {
+  query GetMessages(
+    $sessionId: String!
+    $filters: MessageFilter
+    $pagination: Pagination
+  ) {
+    getMessages(
+      sessionId: $sessionId
+      filters: $filters
+      pagination: $pagination
+    ) {
       ... on MessagesPage {
         items {
           _id
@@ -28,106 +36,9 @@ export const GetMessages = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
-              mesh {
-                alt
-                keyS3
-                size
-                type
-                url
-                _id
-                teamId
-                sessionId
-                messageId
-                status
-                percentage
-                createdAt
-                updatedAt
-              }
-              optimizedMesh {
-                alt
-                keyS3
-                size
-                type
-                url
-                _id
-                teamId
-                sessionId
-                messageId
-                status
-                percentage
-                createdAt
-                updatedAt
-              }
-              multiview {
-                alt
-                keyS3
-                size
-                type
-                url
-                _id
-                teamId
-                sessionId
-                messageId
-                status
-                percentage
-                createdAt
-                updatedAt
-              }
-              transformedMultiview {
-                alt
-                keyS3
-                size
-                type
-                url
-                _id
-                teamId
-                sessionId
-                messageId
-                status
-                percentage
-                createdAt
-                updatedAt
-              }
-              texturedMesh {
-                alt
-                keyS3
-                size
-                type
-                url
-                _id
-                teamId
-                sessionId
-                messageId
-                status
-                percentage
-                createdAt
-                updatedAt
-              }
-              texture {
-                alt
-                keyS3
-                size
-                type
-                url
-                _id
-                teamId
-                sessionId
-                messageId
-                status
-                percentage
-                createdAt
-                updatedAt
-              }
-              createdAt
-              updatedAt
-              prompt
-              style
-              nftId
               toolRequest {
                 _id
                 teamId
@@ -143,6 +54,89 @@ export const GetMessages = gql`
                 message
                 percentage
               }
+              mesh {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              optimizedMesh {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              multiview {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              views {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              texturedMesh {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              texture {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              createdAt
+              updatedAt
+              prompt
+              style
+              nftId
             }
             medias {
               alt
@@ -154,8 +148,6 @@ export const GetMessages = gql`
               teamId
               sessionId
               messageId
-              status
-              percentage
               createdAt
               updatedAt
             }
@@ -232,30 +224,6 @@ export const GetMessages = gql`
   }
 `;
 
-export const ConfirmToolRequest = gql`
-  mutation ConfirmToolRequest($requestId: String!) {
-    confirmToolRequest(requestId: $requestId) {
-      ... on ToolRequest {
-        _id
-        teamId
-        sessionId
-        messageId
-        type
-        priority
-        payload
-        credits
-        status
-        createdAt
-        updatedAt
-      }
-      ... on HandledError {
-        code
-        message
-      }
-    }
-  }
-`;
-
 export const CancelToolRequest = gql`
   mutation CancelToolRequest($requestId: String!) {
     cancelToolRequest(requestId: $requestId) {
@@ -282,15 +250,15 @@ export const CancelToolRequest = gql`
 
 export const GenerateModelFromImageMutation = gql`
   mutation GenerateModelFromImage(
-    $imageId: String!
     $sessionId: String
     $numberOfModels: Float
+    $imageId: String!
     $texturized: Boolean
   ) {
     generateModelFromImage(
-      imageId: $imageId
       sessionId: $sessionId
       numberOfModels: $numberOfModels
+      imageId: $imageId
       texturized: $texturized
     ) {
       ... on ToolRequestConfirmation {
@@ -318,8 +286,6 @@ export const GenerateModelFromImageMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -333,8 +299,6 @@ export const GenerateModelFromImageMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -348,8 +312,6 @@ export const GenerateModelFromImageMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -363,12 +325,10 @@ export const GenerateModelFromImageMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
-              transformedMultiview {
+              views {
                 alt
                 keyS3
                 size
@@ -378,8 +338,6 @@ export const GenerateModelFromImageMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -393,8 +351,6 @@ export const GenerateModelFromImageMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -408,8 +364,6 @@ export const GenerateModelFromImageMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -429,8 +383,6 @@ export const GenerateModelFromImageMutation = gql`
               teamId
               sessionId
               messageId
-              status
-              percentage
               createdAt
               updatedAt
             }
@@ -472,6 +424,21 @@ export const GenerateModelFromImageMutation = gql`
               createdAt
             }
           }
+          toolRequest {
+            _id
+            teamId
+            sessionId
+            messageId
+            type
+            priority
+            payload
+            credits
+            status
+            createdAt
+            updatedAt
+            message
+            percentage
+          }
         }
         toolRequest {
           _id
@@ -485,6 +452,8 @@ export const GenerateModelFromImageMutation = gql`
           status
           createdAt
           updatedAt
+          message
+          percentage
         }
       }
       ... on HandledError {
@@ -535,8 +504,6 @@ export const EditModelMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -550,8 +517,6 @@ export const EditModelMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -565,8 +530,6 @@ export const EditModelMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -580,12 +543,10 @@ export const EditModelMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
-              transformedMultiview {
+              views {
                 alt
                 keyS3
                 size
@@ -595,8 +556,6 @@ export const EditModelMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -610,8 +569,6 @@ export const EditModelMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -625,8 +582,6 @@ export const EditModelMutation = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -646,8 +601,6 @@ export const EditModelMutation = gql`
               teamId
               sessionId
               messageId
-              status
-              percentage
               createdAt
               updatedAt
             }
@@ -765,8 +718,6 @@ export const SendChatMessage = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -780,8 +731,6 @@ export const SendChatMessage = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -795,8 +744,6 @@ export const SendChatMessage = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -810,12 +757,10 @@ export const SendChatMessage = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
-              transformedMultiview {
+              views {
                 alt
                 keyS3
                 size
@@ -825,8 +770,6 @@ export const SendChatMessage = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -840,8 +783,6 @@ export const SendChatMessage = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -855,8 +796,6 @@ export const SendChatMessage = gql`
                 teamId
                 sessionId
                 messageId
-                status
-                percentage
                 createdAt
                 updatedAt
               }
@@ -865,21 +804,6 @@ export const SendChatMessage = gql`
               prompt
               style
               nftId
-              toolRequest {
-                _id
-                teamId
-                sessionId
-                messageId
-                type
-                priority
-                payload
-                credits
-                status
-                createdAt
-                updatedAt
-                message
-                percentage
-              }
             }
             medias {
               alt
@@ -891,8 +815,6 @@ export const SendChatMessage = gql`
               teamId
               sessionId
               messageId
-              status
-              percentage
               createdAt
               updatedAt
             }
@@ -980,6 +902,32 @@ export const GetSessions = gql`
           page
           pages
         }
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const ConfirmToolRequest = gql`
+  mutation ConfirmToolRequest($requestId: String!) {
+    confirmToolRequest(requestId: $requestId) {
+      ... on ToolRequest {
+        _id
+        teamId
+        sessionId
+        messageId
+        type
+        priority
+        payload
+        credits
+        status
+        createdAt
+        updatedAt
+        message
+        percentage
       }
       ... on HandledError {
         code
