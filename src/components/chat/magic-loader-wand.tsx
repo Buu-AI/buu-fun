@@ -13,25 +13,26 @@ export default function MagicLoaderWand() {
     if (!svgRef) return;
 
     const context = gsap.context(() => {
-      // Color palette for the wand
       const colors = ["#78DBFF", "#A378FF", "#EB78FF", "#A378FF", "#78DBFF"];
 
-      // Enhanced wand wave animation with smooth color transitions
-      const wandTimeline = gsap.timeline({
-        repeat: Infinity,
-        defaults: { ease: "sine.inOut", duration: 2.2 },
+      // Smooth wand wave animation with yoyo effect
+      gsap.to(svgRef, {
+        rotation: 15,
+        duration: 1.5,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+        transformOrigin: "center center",
       });
-
-      wandTimeline.to(svgRef, {
-        keyframes: [
-          { rotate: -15, color: colors[0] },
-          { rotate: 0, color: colors[1] },
-          { rotate: 15, color: colors[2] },
-          { rotate: 0, color: colors[3] },
-          { rotate: -10, color: colors[4] },
-        ],
+      gsap.to(svgRef, {
+        duration: 7.5,
+        keyframes: colors.map((color) => ({
+          color,
+        })),
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut'
       });
-
       // Star bubble pop animation
       const stars = [
         "#star_1",
@@ -62,30 +63,25 @@ export default function MagicLoaderWand() {
             scale: 0.3,
             opacity: 0.6,
             duration: 0.4,
-            // ease: "back.out(2)",
           })
           .to(star, {
             scale: 1,
             opacity: 1,
             duration: 0.6,
-            // ease: "power2.out",
           })
           .to(star, {
             duration: 0.8,
-            // ease: "none",
           })
           // Pop and scale down (bubble burst effect)
           .to(star, {
             scale: 1.3,
             opacity: 0.8,
             duration: 0.2,
-            // ease: "power2.out",
           })
           .to(star, {
             scale: 0,
             opacity: 0,
             duration: 0.4,
-            // ease: "back.in(2)",
           })
           // Wait before next cycle
           .to(star, {
@@ -95,14 +91,12 @@ export default function MagicLoaderWand() {
 
       // Add subtle floating animation to wand parts
       gsap.to("#wand_head", {
-        // y: -2,
         duration: 2,
         repeat: -1,
         yoyo: true,
       });
 
       gsap.to("#wand_tail", {
-        // y: 1,
         duration: 2.5,
         repeat: -1,
         yoyo: true,

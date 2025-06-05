@@ -20,7 +20,7 @@ type TGeneratedModelCard = {
   tokenized: boolean;
   type?: TToolType;
   message: MaybeString;
-  toolPersentage: number;
+  toolPercentage?: number;
   modelId: MaybeString;
 };
 
@@ -32,7 +32,7 @@ export default function GeneratedModelCard({
   nftId,
   tokenized,
   message,
-  toolPersentage,
+  toolPercentage,
   modelId,
 }: TGeneratedModelCard) {
   const isGenerating = isToolCallGenerating(status);
@@ -45,21 +45,21 @@ export default function GeneratedModelCard({
     <div className="mt-3">
       <ModelToolHeader
         message={message}
-        persentage={toolPersentage}
+        percentage={toolPercentage}
         status={status}
         isGenerating={isGenerating}
       />
       <div className="max-w-[clamp(250px,100%,320px)] bg-balance-card overflow-hidden  w-full aspect-square rounded-b-2xl relative justify-center">
-        {isGenerating ? (
+        {!modelUrl ? (
           <div className="w-full h-full  absolute top-0 left-0 z-20">
             <div className="flex items-center justify-center  h-full w-full">
               <MagicLoaderWand />
             </div>
           </div>
         ) : null}
-        <ImageViewLoader imageUrl={imageUrl} isGenerating={isGenerating} />
+        <ImageViewLoader imageUrl={null} isGenerating={isGenerating} />
 
-        <ModelViewWrapper imageUrl={imageUrl} modelUrl={modelUrl} />
+        <ModelViewWrapper imageUrl={null} modelUrl={modelUrl} />
       </div>
       <div className="h-[20px]">
         <div

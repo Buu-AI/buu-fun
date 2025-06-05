@@ -49,7 +49,6 @@ export function TransformMessage(item: Message) {
   const { data: payload } = parseJson<PromptPayload>(
     item.toolRequest?.payload ?? "",
   );
-  console.log("payload:", payload);
   const toolRequest: TToolRequest | undefined = item?.toolRequest
     ? {
         ...item?.toolRequest,
