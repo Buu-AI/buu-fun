@@ -25,7 +25,7 @@ import {
 export default function ModelGenerationModal() {
   const { identityToken: accessToken, login } = useAuthentication();
   const generateModelModalState = useAppSelector(
-    (state) => state.chat.genModelFromImage,
+    (state) => state.chat.genModelFromImage
   );
 
   const { imageId, isOpened, imageUrl } = generateModelModalState;
@@ -40,14 +40,14 @@ export default function ModelGenerationModal() {
         setMaximizedViewer({
           isOpened: false,
           data: undefined,
-        }),
+        })
       );
       dispatch(
         setGenerateModel({
           isOpened: false,
           imageId: null,
           imageUrl: null,
-        }),
+        })
       );
     },
     onError(error) {
@@ -61,7 +61,7 @@ export default function ModelGenerationModal() {
   function handleModelGeneration() {
     if (isChatPending) {
       toast.error(
-        "AI is thinking, please try after current message is completed",
+        "AI is thinking, please try after current message is completed"
       );
     }
 
@@ -70,7 +70,7 @@ export default function ModelGenerationModal() {
       return;
     }
 
-    if (!imageId) {
+    if (!imageUrl) {
       toast.error("Please select a valid Image");
       return;
     }
@@ -81,7 +81,7 @@ export default function ModelGenerationModal() {
     mutate({
       accessToken,
       sessionId,
-      imageId,
+      imageUrl,
     });
   }
   return (
@@ -95,7 +95,7 @@ export default function ModelGenerationModal() {
               isOpened: false,
               imageId: null,
               imageUrl: null,
-            }),
+            })
           );
           return;
         }

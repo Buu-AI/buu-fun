@@ -259,7 +259,7 @@ type TGenerateModelFromImageParams = GenerateModelFromImageMutationVariables &
 
 export async function generateModelFromImageMutation({
   accessToken,
-  imageId,
+  imageUrl,
   sessionId,
 }: TGenerateModelFromImageParams) {
   try {
@@ -269,7 +269,7 @@ export async function generateModelFromImageMutation({
     >(
       GenerateModelFromImageMutation,
       {
-        imageId,
+        imageUrl,
         sessionId,
         numberOfModels: 1,
       },

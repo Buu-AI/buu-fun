@@ -18,7 +18,7 @@ const ProgressCircle: React.FC<ProgressCircleProps> = ({
 
   // Calculate how much of the circle to show based on maxDegrees
   const maxArcLength = (maxDegrees / 360) * circumference;
-  const progressArcLength = ((percentage ?? 0)  / 100) * maxArcLength;
+  const progressArcLength = ((percentage ?? 0) / 100) * maxArcLength;
 
   // Calculate stroke-dasharray and stroke-dashoffset
   const strokeDasharray = maxArcLength;
