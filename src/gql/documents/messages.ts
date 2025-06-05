@@ -936,3 +936,143 @@ export const ConfirmToolRequest = gql`
     }
   }
 `;
+
+export const GetModels = gql`
+  query GetModels($pagination: Pagination, $filters: ModelFilter) {
+    getModels(pagination: $pagination, filters: $filters) {
+      ... on ModelPage {
+        items {
+          _id
+          teamId
+          sessionId
+          messageId
+          image {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          mesh {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          optimizedMesh {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          multiview {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          views {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          texturedMesh {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          texture {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+          prompt
+          style
+          nftId
+          toolRequest {
+            _id
+            teamId
+            sessionId
+            messageId
+            type
+            priority
+            payload
+            credits
+            status
+            createdAt
+            updatedAt
+            message
+            percentage
+          }
+        }
+        metadata {
+          limit
+          offset
+          orderBy
+          orderDirection
+          numElements
+          total
+          page
+          pages
+        }
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;

@@ -50,7 +50,7 @@ export default function ModelToolHeader({
 export function getLogoByStatusAndPercentage(
   status: Maybe<TMessageStatus>,
   message: Maybe<string>,
-  percentage?: number
+  percentage?: number,
 ) {
   switch (status) {
     case "COMPLETED": {
