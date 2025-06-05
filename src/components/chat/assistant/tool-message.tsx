@@ -4,7 +4,7 @@ import GeneratedModelCard from "./generated-model-card";
 import AssistantToolCallContainer from "./tool-call-container";
 import {
   getModelBasedOnPriority,
-  getModelMessagesAndPersentage,
+  getModelMessagesAndPercentage,
 } from "@/lib/helpers/chat/model";
 type TAssistantMessage = {} & TChatMessage;
 export default function AssistantToolMessage({
@@ -43,8 +43,8 @@ export default function AssistantToolMessage({
       </div>
       {models.map((item) => {
         const modelUrl = getModelBasedOnPriority(item);
-        const { message, persentage, status } =
-          getModelMessagesAndPersentage(item);
+        const { message, percentage, status } =
+          getModelMessagesAndPercentage(toolRequest);
         return (
           <GeneratedModelCard
             modelId={item._id}
@@ -56,7 +56,7 @@ export default function AssistantToolMessage({
               item.nftId && typeof item.nftId === "string" ? true : false
             }
             modelUrl={modelUrl}
-            toolPersentage={persentage}
+            toolPercentage={percentage}
             imageUrl={item.image.url}
             status={status}
             type={type}
@@ -65,17 +65,4 @@ export default function AssistantToolMessage({
       })}
     </div>
   );
-}
-
-{
-  /* <GeneratedModelCard
-  messageId={messageId}
-  imageUrl={imageUrl}
-  nftId={nftId}
-  tokenized={tokenized}
-  modelUrl={modelUrl}
-  imageUrls={imageUrls}
-  status={status}
-  type={type}
-/>; */
 }

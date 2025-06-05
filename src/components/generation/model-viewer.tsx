@@ -1,4 +1,3 @@
-import { ThreeDCubeOne } from "@/assets/Image";
 import "@google/model-viewer";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
@@ -115,19 +114,21 @@ export default function ModelViewer({
             // style="transform: translate3d(-10m, 10m, -10m)"
           ></div>
         </div>
-        <div
-          id="lazy-load-poster"
-          className="overflow-hidden w-full h-full"
-          slot="poster"
-        >
-          <Image
-            src={poster ?? ThreeDCubeOne.src}
-            alt="model preview image"
-            width={720}
-            height={720}
-            className="w-full h-full object-cover blur-md"
-          />
-        </div>
+        {poster ? (
+          <div
+            id="lazy-load-poster"
+            className="overflow-hidden w-full h-full"
+            slot="poster"
+          >
+            <Image
+              src={poster}
+              alt="model preview image"
+              width={720}
+              height={720}
+              className="w-full h-full object-cover blur-md"
+            />
+          </div>
+        ) : null}
       </model-viewer>
     </div>
   );

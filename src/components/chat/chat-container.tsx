@@ -72,14 +72,13 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
     isFetchingNextPage,
     messages,
   });
-  console.log("Messages:", messages);
   return (
     <div className="flex-1 overflow-x-hidden max-w-4xl mx-auto w-full  md:px-8 relative h-full  lg:mt-4 scroll-smooth">
       <div
         id="chat-window"
         ref={chatContainerRef}
         className={cn(
-          "overflow-y-scroll  scrollbar-w-hidde overflow-x-hidden snap-y px-2  scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-white scrollbar-thumb-rounded w-full h-full relative",
+          "overflow-y-scroll overflow-x-hidden snap-y px-2  scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-white scrollbar-thumb-rounded w-full h-full relative"
         )}
       >
         <div ref={topObserverRef} className="absolute top-6 w-full h-3" />

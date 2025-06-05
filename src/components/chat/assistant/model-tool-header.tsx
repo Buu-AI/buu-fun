@@ -8,22 +8,22 @@ import ProgressCircle from "./tool-loader";
 
 type TModelToolHeader = {
   message: MaybeString;
-  persentage: number;
+  percentage?: number;
   status?: TMessageStatus;
   isGenerating: boolean;
 };
 
 export default function ModelToolHeader({
   message,
-  persentage,
+  percentage,
   status,
   isGenerating,
 }: TModelToolHeader) {
   const {
     logo,
-    persentage: ToolPercentage,
+    percentage: ToolPercentage,
     message: toolMessage,
-  } = getLogoByStatusAndPercentage(status, persentage, message);
+  } = getLogoByStatusAndPercentage(status, message, percentage);
   const isPending = isToolCallPending(status);
   // const isNotFailed = isToolCallFailed(status);
 
@@ -49,14 +49,14 @@ export default function ModelToolHeader({
 
 export function getLogoByStatusAndPercentage(
   status: Maybe<TMessageStatus>,
-  persentage: number,
   message: Maybe<string>,
+  percentage?: number
 ) {
   switch (status) {
     case "COMPLETED": {
       return {
         logo: <GreenCompleted />,
-        persentage: null,
+        percentage: null,
         message: <span className="text-green-500 leading-none">{message}</span>,
       };
     }
@@ -64,7 +64,7 @@ export function getLogoByStatusAndPercentage(
     case "FAILED": {
       return {
         logo: <CrossFailed />,
-        persentage: null,
+        percentage: null,
         message: (
           <span className="text-red-500 leading-none">
             Failed to generate model.
@@ -74,8 +74,8 @@ export function getLogoByStatusAndPercentage(
     }
     default: {
       return {
-        logo: <ProgressCircle percentage={persentage} />,
-        persentage: `${persentage}%`,
+        logo: <ProgressCircle percentage={percentage} />,
+        percentage: `${percentage}%`,
         message,
       };
     }
