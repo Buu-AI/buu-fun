@@ -1,18 +1,22 @@
-import { Model } from "@/gql/types/graphql";
+import { Model, ToolRequest } from "@/gql/types/graphql";
+import { Maybe } from "@/types";
 
 export function getModelBasedOnPriority(item: Model) {
   const texturedModel = item.texturedMesh?.url;
   const optimizedModel = item.optimizedMesh?.url;
   const basicMesh = item.mesh?.url;
+  
   if (texturedModel) return texturedModel;
+  
   if (optimizedModel) return optimizedModel;
+  
   if (basicMesh) return basicMesh;
 }
 
-export function getModelMessagesAndPersentage(item: Model) {
+export function getModelMessagesAndPercentage(toolRequest?: Maybe<ToolRequest>) {
   return {
-    persentage: item.toolRequest.percentage,
-    message: item.toolRequest.message,
-    status: item.toolRequest.status,
+    percentage: toolRequest?.percentage,
+    message: toolRequest?.message,
+    status: toolRequest?.status,
   };
 }
