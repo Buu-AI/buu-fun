@@ -31,7 +31,7 @@ export default function MagicLoaderWand() {
         })),
         yoyo: true,
         repeat: -1,
-        ease: 'sine.inOut'
+        ease: "sine.inOut",
       });
       // Star bubble pop animation
       const stars = [

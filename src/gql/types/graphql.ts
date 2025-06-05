@@ -350,7 +350,7 @@ export type Model = {
   texturedMesh?: Maybe<Media>;
   toolRequest: ToolRequest;
   updatedAt: Scalars["DateTimeISO"]["output"];
-  views?: Maybe<Array<Media>>;
+  views: Array<Media>;
 };
 
 export type ModelFilter = {
@@ -400,6 +400,8 @@ export type Mutation = {
   editModel: ToolRequestConfirmationResult;
   enableTeam: TeamResult;
   generateModelFromImage: ToolRequestConfirmationResult;
+  generateModelFromPrompt: ToolRequestConfirmationResult;
+  generateModelFromReferences: ToolRequestConfirmationResult;
   generateNft: ToolRequestConfirmationResult;
   generatePresignedPost: GeneratePresignedPostResult;
   generatePresignedUrl: GeneratePresignedUrlResult;
@@ -449,16 +451,27 @@ export type MutationDeleteShareableBoardArgs = {
 export type MutationEditModelArgs = {
   edit: Scalars["String"]["input"];
   modelId: Scalars["String"]["input"];
-  numberOfModels?: InputMaybe<Scalars["Float"]["input"]>;
+  options?: InputMaybe<Options>;
   sessionId?: InputMaybe<Scalars["String"]["input"]>;
-  texturized?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
 
 export type MutationGenerateModelFromImageArgs = {
-  imageId: Scalars["String"]["input"];
-  numberOfModels?: InputMaybe<Scalars["Float"]["input"]>;
+  imageUrl: Scalars["String"]["input"];
+  options?: InputMaybe<Options>;
   sessionId?: InputMaybe<Scalars["String"]["input"]>;
-  texturized?: InputMaybe<Scalars["Boolean"]["input"]>;
+};
+
+export type MutationGenerateModelFromPromptArgs = {
+  options?: InputMaybe<Options>;
+  prompt: Scalars["String"]["input"];
+  sessionId?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type MutationGenerateModelFromReferencesArgs = {
+  imageUrls: Array<Scalars["String"]["input"]>;
+  instructions?: InputMaybe<Scalars["String"]["input"]>;
+  options?: InputMaybe<Options>;
+  sessionId?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type MutationGenerateNftArgs = {
@@ -497,6 +510,7 @@ export type MutationRotateApiKeyArgs = {
 export type MutationSendMessageArgs = {
   content: Scalars["String"]["input"];
   imageUrls?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  options?: InputMaybe<Options>;
   sessionId: Scalars["String"]["input"];
 };
 
@@ -641,6 +655,21 @@ export type NftProperties = {
 };
 
 export type NftResult = HandledError | Nft;
+
+/** The number of faces to apply to the model */
+export enum NumberOfFaces {
+  FiftyKey = "fiftyKey",
+  OneHundredKey = "oneHundredKey",
+  TenKey = "tenKey",
+  TwentyKey = "twentyKey",
+}
+
+export type Options = {
+  numberOfFaces?: InputMaybe<NumberOfFaces>;
+  numberOfModels?: InputMaybe<Scalars["Int"]["input"]>;
+  style?: InputMaybe<Style>;
+  texture?: InputMaybe<TextureType>;
+};
 
 /** Order direction */
 export enum OrderDirection {
@@ -1090,6 +1119,14 @@ export enum TeamType {
   Studio = "STUDIO",
 }
 
+/** The type of texture to apply to the model */
+export enum TextureType {
+  Fast = "fast",
+  Hd = "hd",
+  None = "none",
+  TwoKey = "twoKey",
+}
+
 export type TokenMint = {
   __typename?: "TokenMint";
   address: Scalars["String"]["output"];
@@ -1362,7 +1399,7 @@ export type GetUserShareableBoardQuery = {
               createdAt: any;
               updatedAt: any;
             } | null;
-            views?: Array<{
+            views: Array<{
               __typename?: "Media";
               alt?: string | null;
               keyS3?: string | null;
@@ -1375,7 +1412,7 @@ export type GetUserShareableBoardQuery = {
               messageId?: string | null;
               createdAt: any;
               updatedAt: any;
-            }> | null;
+            }>;
             texturedMesh?: {
               __typename?: "Media";
               alt?: string | null;
@@ -1519,7 +1556,7 @@ export type CreateShareableBoardMutation = {
             createdAt: any;
             updatedAt: any;
           } | null;
-          views?: Array<{
+          views: Array<{
             __typename?: "Media";
             alt?: string | null;
             keyS3?: string | null;
@@ -1532,7 +1569,7 @@ export type CreateShareableBoardMutation = {
             messageId?: string | null;
             createdAt: any;
             updatedAt: any;
-          }> | null;
+          }>;
           texturedMesh?: {
             __typename?: "Media";
             alt?: string | null;
@@ -1665,7 +1702,7 @@ export type UpdateShareableBoardVisibilityMutation = {
             createdAt: any;
             updatedAt: any;
           } | null;
-          views?: Array<{
+          views: Array<{
             __typename?: "Media";
             alt?: string | null;
             keyS3?: string | null;
@@ -1678,7 +1715,7 @@ export type UpdateShareableBoardVisibilityMutation = {
             messageId?: string | null;
             createdAt: any;
             updatedAt: any;
-          }> | null;
+          }>;
           texturedMesh?: {
             __typename?: "Media";
             alt?: string | null;
@@ -1810,7 +1847,7 @@ export type DeleteShareableBoardMutation = {
             createdAt: any;
             updatedAt: any;
           } | null;
-          views?: Array<{
+          views: Array<{
             __typename?: "Media";
             alt?: string | null;
             keyS3?: string | null;
@@ -1823,7 +1860,7 @@ export type DeleteShareableBoardMutation = {
             messageId?: string | null;
             createdAt: any;
             updatedAt: any;
-          }> | null;
+          }>;
           texturedMesh?: {
             __typename?: "Media";
             alt?: string | null;
@@ -1955,7 +1992,7 @@ export type GetShareableBoardQuery = {
             createdAt: any;
             updatedAt: any;
           } | null;
-          views?: Array<{
+          views: Array<{
             __typename?: "Media";
             alt?: string | null;
             keyS3?: string | null;
@@ -1968,7 +2005,7 @@ export type GetShareableBoardQuery = {
             messageId?: string | null;
             createdAt: any;
             updatedAt: any;
-          }> | null;
+          }>;
           texturedMesh?: {
             __typename?: "Media";
             alt?: string | null;
@@ -2123,7 +2160,7 @@ export type GetMessagesQuery = {
                 createdAt: any;
                 updatedAt: any;
               } | null;
-              views?: Array<{
+              views: Array<{
                 __typename?: "Media";
                 alt?: string | null;
                 keyS3?: string | null;
@@ -2136,7 +2173,7 @@ export type GetMessagesQuery = {
                 messageId?: string | null;
                 createdAt: any;
                 updatedAt: any;
-              }> | null;
+              }>;
               texturedMesh?: {
                 __typename?: "Media";
                 alt?: string | null;
@@ -2279,10 +2316,9 @@ export type CancelToolRequestMutation = {
 };
 
 export type GenerateModelFromImageMutationVariables = Exact<{
+  imageUrl: Scalars["String"]["input"];
+  options?: InputMaybe<Options>;
   sessionId?: InputMaybe<Scalars["String"]["input"]>;
-  numberOfModels?: InputMaybe<Scalars["Float"]["input"]>;
-  imageId: Scalars["String"]["input"];
-  texturized?: InputMaybe<Scalars["Boolean"]["input"]>;
 }>;
 
 export type GenerateModelFromImageMutation = {
@@ -2369,7 +2405,7 @@ export type GenerateModelFromImageMutation = {
                 createdAt: any;
                 updatedAt: any;
               } | null;
-              views?: Array<{
+              views: Array<{
                 __typename?: "Media";
                 alt?: string | null;
                 keyS3?: string | null;
@@ -2382,7 +2418,7 @@ export type GenerateModelFromImageMutation = {
                 messageId?: string | null;
                 createdAt: any;
                 updatedAt: any;
-              }> | null;
+              }>;
               texturedMesh?: {
                 __typename?: "Media";
                 alt?: string | null;
@@ -2508,9 +2544,8 @@ export type GenerateModelFromImageMutation = {
 export type EditModelMutationVariables = Exact<{
   modelId: Scalars["String"]["input"];
   edit: Scalars["String"]["input"];
+  options?: InputMaybe<Options>;
   sessionId?: InputMaybe<Scalars["String"]["input"]>;
-  numberOfModels?: InputMaybe<Scalars["Float"]["input"]>;
-  texturized?: InputMaybe<Scalars["Boolean"]["input"]>;
 }>;
 
 export type EditModelMutation = {
@@ -2597,7 +2632,7 @@ export type EditModelMutation = {
                 createdAt: any;
                 updatedAt: any;
               } | null;
-              views?: Array<{
+              views: Array<{
                 __typename?: "Media";
                 alt?: string | null;
                 keyS3?: string | null;
@@ -2610,7 +2645,7 @@ export type EditModelMutation = {
                 messageId?: string | null;
                 createdAt: any;
                 updatedAt: any;
-              }> | null;
+              }>;
               texturedMesh?: {
                 __typename?: "Media";
                 alt?: string | null;
@@ -2736,6 +2771,7 @@ export type EditModelMutation = {
 export type SendMessageMutationVariables = Exact<{
   sessionId: Scalars["String"]["input"];
   content: Scalars["String"]["input"];
+  options?: InputMaybe<Options>;
   imageUrls?: InputMaybe<
     Array<Scalars["String"]["input"]> | Scalars["String"]["input"]
   >;
@@ -2825,7 +2861,7 @@ export type SendMessageMutation = {
                 createdAt: any;
                 updatedAt: any;
               } | null;
-              views?: Array<{
+              views: Array<{
                 __typename?: "Media";
                 alt?: string | null;
                 keyS3?: string | null;
@@ -2838,7 +2874,7 @@ export type SendMessageMutation = {
                 messageId?: string | null;
                 createdAt: any;
                 updatedAt: any;
-              }> | null;
+              }>;
               texturedMesh?: {
                 __typename?: "Media";
                 alt?: string | null;
@@ -3097,7 +3133,7 @@ export type GenerateNftMutation = {
                 createdAt: any;
                 updatedAt: any;
               } | null;
-              views?: Array<{
+              views: Array<{
                 __typename?: "Media";
                 alt?: string | null;
                 keyS3?: string | null;
@@ -3110,7 +3146,7 @@ export type GenerateNftMutation = {
                 messageId?: string | null;
                 createdAt: any;
                 updatedAt: any;
-              }> | null;
+              }>;
               texturedMesh?: {
                 __typename?: "Media";
                 alt?: string | null;
@@ -8821,23 +8857,7 @@ export const GenerateModelFromImageDocument = {
           kind: "VariableDefinition",
           variable: {
             kind: "Variable",
-            name: { kind: "Name", value: "sessionId" },
-          },
-          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "numberOfModels" },
-          },
-          type: { kind: "NamedType", name: { kind: "Name", value: "Float" } },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "imageId" },
+            name: { kind: "Name", value: "imageUrl" },
           },
           type: {
             kind: "NonNullType",
@@ -8851,9 +8871,17 @@ export const GenerateModelFromImageDocument = {
           kind: "VariableDefinition",
           variable: {
             kind: "Variable",
-            name: { kind: "Name", value: "texturized" },
+            name: { kind: "Name", value: "options" },
           },
-          type: { kind: "NamedType", name: { kind: "Name", value: "Boolean" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Options" } },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "sessionId" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
         },
       ],
       selectionSet: {
@@ -8865,34 +8893,26 @@ export const GenerateModelFromImageDocument = {
             arguments: [
               {
                 kind: "Argument",
+                name: { kind: "Name", value: "imageUrl" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "imageUrl" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "options" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "options" },
+                },
+              },
+              {
+                kind: "Argument",
                 name: { kind: "Name", value: "sessionId" },
                 value: {
                   kind: "Variable",
                   name: { kind: "Name", value: "sessionId" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "numberOfModels" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "numberOfModels" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "imageId" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "imageId" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "texturized" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "texturized" },
                 },
               },
             ],
@@ -10147,25 +10167,17 @@ export const EditModelDocument = {
           kind: "VariableDefinition",
           variable: {
             kind: "Variable",
+            name: { kind: "Name", value: "options" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Options" } },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
             name: { kind: "Name", value: "sessionId" },
           },
           type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "numberOfModels" },
-          },
-          type: { kind: "NamedType", name: { kind: "Name", value: "Float" } },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "texturized" },
-          },
-          type: { kind: "NamedType", name: { kind: "Name", value: "Boolean" } },
         },
       ],
       selectionSet: {
@@ -10193,26 +10205,18 @@ export const EditModelDocument = {
               },
               {
                 kind: "Argument",
+                name: { kind: "Name", value: "options" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "options" },
+                },
+              },
+              {
+                kind: "Argument",
                 name: { kind: "Name", value: "sessionId" },
                 value: {
                   kind: "Variable",
                   name: { kind: "Name", value: "sessionId" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "numberOfModels" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "numberOfModels" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "texturized" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "texturized" },
                 },
               },
             ],
@@ -11467,6 +11471,14 @@ export const SendMessageDocument = {
           kind: "VariableDefinition",
           variable: {
             kind: "Variable",
+            name: { kind: "Name", value: "options" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Options" } },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
             name: { kind: "Name", value: "imageUrls" },
           },
           type: {
@@ -11502,6 +11514,14 @@ export const SendMessageDocument = {
                 value: {
                   kind: "Variable",
                   name: { kind: "Name", value: "content" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "options" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "options" },
                 },
               },
               {
