@@ -17,7 +17,9 @@ import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import AssistantMessage from "./assistant/assistant-message";
 import AssistantToolMessage from "./assistant/tool-message";
+import ScrollToBottomButton from "./scroll-to-bottom-button";
 import { useUnifiedChatScroll } from "./use-chat-scroll";
+import useScrollDownAvailable from "./use-scroll-down-available";
 import UserChatMessage from "./user/user-message";
 
 export default function ChatContainer({ sessionId }: { sessionId: string }) {
@@ -66,19 +68,28 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
     }
   }, [messages]);
 
-  // useAutoScrollToBottom(chatContainerRef, messages, 300);
   useUnifiedChatScroll({
     chatContainerRef,
     isFetchingNextPage,
     messages,
   });
+
+  const { isScrollDownAvailable, scrollToBottom } = useScrollDownAvailable({
+    ref: chatContainerRef,
+  });
+
   return (
-    <div className="flex-1 overflow-x-hidden max-w-4xl mx-auto w-full  md:px-8 relative h-full  lg:mt-4 scroll-smooth">
+    <div className="flex-1 overflow-x-hidden overflow-y-hidden  max-w-4xl mx-auto w-full  relative h-full   scroll-smooth">
+      <ScrollToBottomButton
+        isScrollDownAvailable={isScrollDownAvailable}
+        scrollToBottom={scrollToBottom}
+      />
+
       <div
         id="chat-window"
         ref={chatContainerRef}
         className={cn(
-          "overflow-y-scroll overflow-x-hidden snap-y px-2  scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-white scrollbar-thumb-rounded w-full h-full relative",
+          "overflow-y-scroll  overflow-x-hidden snap-y px-2   scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-white scrollbar-thumb-rounded w-full h-full relative"
         )}
       >
         <div ref={topObserverRef} className="absolute top-6 w-full h-3" />
