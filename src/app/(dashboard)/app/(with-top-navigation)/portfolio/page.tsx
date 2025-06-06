@@ -1,5 +1,4 @@
 import BitRefillSheet from "@/components/bit-refill-dialog";
-import BuuStakedSupply from "@/components/portfolio/buu-staked-supply";
 import BuyBuuRedirectDialog from "@/components/portfolio/buy-buu-redirect-dialog";
 import HeaderLogo from "@/components/portfolio/header-logo";
 import OverviewContainer from "@/components/portfolio/overview-container";
@@ -22,12 +21,6 @@ export default function PortfolioPage() {
           <TokenBalance />
           <YourEarnings />
 
-          {/* <div className="flex justify-center flex-wrap place-content-center place-items-center  md:grid md:grid-cols-2  gap-2"> */}
-          <div className="w-full pt-6">
-            <BuuStakedSupply />
-          </div>
-          {/* <BuuNetworkUtilization /> */}
-          {/* </div> */}
           <BitRefillSheet />
         </div>
         <div className="2xl:px-8 py-8 2xl:py-0">
