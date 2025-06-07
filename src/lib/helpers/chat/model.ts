@@ -14,11 +14,16 @@ export function getModelBasedOnPriority(item: Model) {
 }
 
 export function getModelMessagesAndPercentage(
-  toolRequest?: Maybe<ToolRequest>,
+  toolRequest?: Maybe<ToolRequest>
 ) {
   return {
     percentage: toolRequest?.percentage,
     message: toolRequest?.message,
     status: toolRequest?.status,
   };
+}
+
+export function isTexturedMeshReady(item: Model) {
+  if (item.texturedMesh?.url) return true;
+  return false;
 }

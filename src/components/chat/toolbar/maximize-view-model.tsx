@@ -20,7 +20,7 @@ const ModelViewer = dynamic(() => import("../../generation/model-viewer"), {
 
 export default function MaximizeViewModel() {
   const maximizedContainer = useAppSelector(
-    (state) => state.chat.maximizedContainer,
+    (state) => state.chat.maximizedContainer
   );
   const { isOpened, data } = maximizedContainer;
 
@@ -35,7 +35,7 @@ export default function MaximizeViewModel() {
           dispatch(
             setMaximizedViewer({
               isOpened: false,
-            }),
+            })
           );
           return;
         }
@@ -55,7 +55,7 @@ export default function MaximizeViewModel() {
         </DialogHeader>
         <div
           className={cn(
-            "flex   max-md:max-h-max   rounded-lg w-full h-full  mx-auto max-w-[100%]",
+            "flex   max-md:max-h-max   rounded-lg w-full h-full  mx-auto max-w-[100%]"
           )}
         >
           {data?.type === "image" ? (
@@ -106,6 +106,7 @@ export default function MaximizeViewModel() {
                   tokenized={data?.tokenized}
                   disabled={{
                     MAXIMIZE_VIEW: true,
+                    GENERATE_NFT: data.isTexturedMesh,
                   }}
                 />
               </div>

@@ -10,6 +10,7 @@ export type TMaximizeModelViewer = {
   messageId: string;
   nftId?: MaybeString;
   tokenized?: boolean;
+  isTexturedMesh: boolean
 };
 
 export type TMaximizeImage = {
