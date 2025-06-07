@@ -23,7 +23,7 @@ export default async function NftPage({ params }: TNFTPage) {
     accessToken,
   });
   return (
-    <div className="overflow-y-scroll max-h-[calc(100vh-100px)] scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-orange scrollbar-thumb-rounded">
+    <div className="overflow-y-scroll max-h-[calc(100vh-100px)] max-w-7xl mx-auto scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-orange scrollbar-thumb-rounded">
       <NFTModelWrapper accessToken={accessToken} nft={nft} />
     </div>
   );

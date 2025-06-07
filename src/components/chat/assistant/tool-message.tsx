@@ -49,7 +49,7 @@ export default function AssistantToolMessage({
           <GeneratedModelCard
             modelId={item._id}
             message={message}
-            key={`${item._id}-${item.messageId}`}
+            key={`${item._id}-${item.messageId}-${modelUrl}`}
             messageId={messageId}
             nftId={item.nftId}
             tokenized={
