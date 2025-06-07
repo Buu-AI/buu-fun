@@ -154,8 +154,7 @@ export const GetMessages = gql`
             nfts {
               _id
               teamId
-              genRequestId
-              messageId
+
               modelId
               status
               metadata {
@@ -387,8 +386,6 @@ export const GenerateModelFromImageMutation = gql`
             nfts {
               _id
               teamId
-              genRequestId
-              messageId
               modelId
               status
               metadata {
@@ -603,8 +600,7 @@ export const EditModelMutation = gql`
             nfts {
               _id
               teamId
-              genRequestId
-              messageId
+
               modelId
               status
               metadata {
@@ -819,8 +815,7 @@ export const SendChatMessage = gql`
             nfts {
               _id
               teamId
-              genRequestId
-              messageId
+
               modelId
               status
               metadata {

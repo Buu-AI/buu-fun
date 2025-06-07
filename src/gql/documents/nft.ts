@@ -145,8 +145,6 @@ export const GenerateNftMutation = gql`
             nfts {
               _id
               teamId
-              genRequestId
-              messageId
               modelId
               status
               metadata {
@@ -156,10 +154,6 @@ export const GenerateNftMutation = gql`
                 image
                 external_url
                 animation_url
-                attributes {
-                  trait_type
-                  value
-                }
                 properties {
                   files {
                     uri
@@ -188,6 +182,177 @@ export const GenerateNftMutation = gql`
             type
             priority
             payload
+            references
+            details {
+              ... on GenerateModelsDetails {
+                texture
+                numberOfFaces
+                numberOfModels
+              }
+              ... on GenerateModelsFromPromptDetails {
+                texture
+                numberOfFaces
+                numberOfModels
+                prompt
+                style
+              }
+              ... on GenerateModelsFromImageDetails {
+                texture
+                numberOfFaces
+                numberOfModels
+                image {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+              }
+              ... on GenerateModelsFromReferencesDetails {
+                texture
+                numberOfFaces
+                numberOfModels
+                images {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+                instructions
+              }
+              ... on GenerateModelsFromEditDetails {
+                texture
+                numberOfFaces
+                numberOfModels
+                edit
+                model {
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  mesh {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  optimizedMesh {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  multiview {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  views {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  texturedMesh {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  texture {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  createdAt
+                  updatedAt
+                  prompt
+                  style
+                  nftId
+                  toolRequest {
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    type
+                    priority
+                    payload
+                    credits
+                    status
+                    createdAt
+                    updatedAt
+                    message
+                    percentage
+                  }
+                }
+              }
+              ... on GenerateNftDetails {
+                name
+                description
+                symbol
+                attributes {
+                  trait_type
+                  value
+                }
+              }
+            }
             credits
             status
             createdAt
@@ -204,6 +369,71 @@ export const GenerateNftMutation = gql`
           type
           priority
           payload
+          references
+          details {
+            ... on GenerateModelsDetails {
+              texture
+              numberOfFaces
+              numberOfModels
+            }
+            ... on GenerateModelsFromPromptDetails {
+              texture
+              numberOfFaces
+              numberOfModels
+              prompt
+              style
+            }
+            ... on GenerateModelsFromImageDetails {
+              texture
+              numberOfFaces
+              numberOfModels
+            }
+            ... on GenerateModelsFromReferencesDetails {
+              texture
+              numberOfFaces
+              numberOfModels
+              images {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              instructions
+            }
+            ... on GenerateModelsFromEditDetails {
+              texture
+              numberOfFaces
+              numberOfModels
+              edit
+              model {
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+                prompt
+                style
+                nftId
+              }
+            }
+            ... on GenerateNftDetails {
+              name
+              description
+              symbol
+              attributes {
+                trait_type
+                value
+              }
+            }
+          }
           credits
           status
           createdAt
@@ -227,8 +457,6 @@ export const GetNftsQuery = gql`
         items {
           _id
           teamId
-          genRequestId
-          messageId
           modelId
           status
           metadata {
@@ -286,19 +514,8 @@ export const GetNftQuery = gql`
       ... on Nft {
         _id
         teamId
-        genRequestId
-        messageId
         modelId
         status
-        mintAddress
-        collectionAddress
-        creator
-        tokenAddress
-        tokenStandard
-        collectionRoyalties
-        chain
-        updatedAt
-        createdAt
         metadata {
           name
           symbol
@@ -319,6 +536,15 @@ export const GetNftQuery = gql`
             category
           }
         }
+        mintAddress
+        collectionAddress
+        creator
+        tokenAddress
+        tokenStandard
+        collectionRoyalties
+        chain
+        updatedAt
+        createdAt
       }
       ... on HandledError {
         code
