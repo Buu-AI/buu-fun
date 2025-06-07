@@ -22,6 +22,7 @@ type TGeneratedModelCard = {
   message: MaybeString;
   toolPercentage?: number;
   modelId: MaybeString;
+  isTexturedMesh: boolean;
 };
 
 export default function GeneratedModelCard({
@@ -34,6 +35,7 @@ export default function GeneratedModelCard({
   message,
   toolPercentage,
   modelId,
+  isTexturedMesh,
 }: TGeneratedModelCard) {
   const isGenerating = isToolCallGenerating(status);
   const isPending = isToolCallPending(status);
@@ -78,6 +80,7 @@ export default function GeneratedModelCard({
             modelId={modelId}
             disabled={{
               GENERATE_MODEL: true,
+              GENERATE_NFT: !isTexturedMesh,
             }}
           />
         </div>

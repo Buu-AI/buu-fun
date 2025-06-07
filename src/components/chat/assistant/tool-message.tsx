@@ -5,6 +5,7 @@ import AssistantToolCallContainer from "./tool-call-container";
 import {
   getModelBasedOnPriority,
   getModelMessagesAndPercentage,
+  isTexturedMeshReady,
 } from "@/lib/helpers/chat/model";
 type TAssistantMessage = {} & TChatMessage;
 export default function AssistantToolMessage({
@@ -45,8 +46,10 @@ export default function AssistantToolMessage({
         const modelUrl = getModelBasedOnPriority(item);
         const { message, percentage, status } =
           getModelMessagesAndPercentage(toolRequest);
+        const isTexturedMesh = isTexturedMeshReady(item);
         return (
           <GeneratedModelCard
+            isTexturedMesh={isTexturedMesh}
             modelId={item._id}
             message={message}
             key={`${item._id}-${item.messageId}-${modelUrl}`}
