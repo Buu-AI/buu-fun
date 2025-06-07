@@ -12,24 +12,33 @@ import {
   GenerateNftMutationVariables,
   GetNftQuery as TGetNftQuery,
   GetNftQueryVariables,
+  Pagination,
 } from "@/gql/types/graphql";
 import { getAuthorization } from "../utils";
 import { TErrorTypeName } from "../redux/features/chat-types";
 import { MaybeString } from "@/types";
 
+export type TPagination = Omit<Pagination, "orderDirection"> & {
+  orderDirection?: "asc" | "desc";
+};
+
+export type TGetNftsQueryVariables = Omit<
+  GetNftsQueryVariables,
+  "pagination"
+> & {
+  pagination: TPagination;
+};
+
 export async function getNftsQuery({
-  address,
   accessToken,
+  pagination,
 }: {
-  address: string;
   accessToken: string;
-}) {
-  const data = await serverRequest<TGetNftsQuery, GetNftsQueryVariables>(
+} & TGetNftsQueryVariables) {
+  const data = await serverRequest<TGetNftsQuery, TGetNftsQueryVariables>(
     GetNftsQuery,
     {
-      filters: {
-        creator_eq: address,
-      },
+      pagination,
     },
     {
       Authorization: getAuthorization(accessToken),
@@ -45,6 +54,7 @@ export async function getNftsQuery({
   return data.getNfts;
 }
 export type TGetNftQueryData = Exclude<TGetNftQuery["getNft"], TErrorTypeName>;
+
 export async function getNftQuery({
   id,
   accessToken,
@@ -93,7 +103,6 @@ export async function generateNFT({
       name,
       description,
       modelId,
-      sessionId,
     },
     {
       Authorization: getAuthorization(accessToken),
