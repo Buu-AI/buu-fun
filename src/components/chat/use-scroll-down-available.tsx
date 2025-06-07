@@ -33,7 +33,7 @@ export default function useScrollDownAvailable({
         behavior,
       });
     },
-    [ref]
+    [ref],
   );
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function useScrollDownAvailable({
       element.removeEventListener("scroll", checkScrollAvailability);
       resizeObserver.disconnect();
     };
-  }, [checkScrollAvailability]);
+  }, [checkScrollAvailability, ref]);
 
   return {
     isScrollDownAvailable,

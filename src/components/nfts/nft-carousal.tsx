@@ -6,9 +6,8 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { NftFile } from "@/gql/types/graphql";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { useAppDispatch } from "@/hooks/redux";
 import { setIndex } from "@/lib/redux/features/boards";
-import { getBoards } from "@/lib/redux/selectors/board";
 import { cn } from "@/lib/utils";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import { Ghost } from "lucide-react";

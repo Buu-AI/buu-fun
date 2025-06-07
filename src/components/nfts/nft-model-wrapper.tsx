@@ -2,9 +2,8 @@
 import { ToolRequestStatus } from "@/gql/types/graphql";
 import { getNftQuery, TGetNftQueryData } from "@/lib/react-query/nfts";
 import { useQuery } from "@tanstack/react-query";
-import NFTModelViewer from "./nft-model-viewer";
-import NFTOverViewContainer from "./nft-over-view-container";
 import ViewNFTCarousal from "./nft-carousal";
+import NFTOverViewContainer from "./nft-over-view-container";
 
 export default function NFTModelWrapper({
   nft,

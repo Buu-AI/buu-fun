@@ -2,21 +2,21 @@ import { serverRequest } from "@/gql/client";
 // GeneratePresignedUrlMutationVariables
 import {
   GenerateNftMutation,
-  GetNftsQuery,
   GetNftQuery,
+  GetNftsQuery,
 } from "@/gql/documents/nft";
 import {
-  GetNftsQuery as TGetNftsQuery,
-  GetNftsQueryVariables,
-  GenerateNftMutation as TGenerateNftMutation,
   GenerateNftMutationVariables,
-  GetNftQuery as TGetNftQuery,
   GetNftQueryVariables,
+  GetNftsQueryVariables,
   Pagination,
+  GenerateNftMutation as TGenerateNftMutation,
+  GetNftQuery as TGetNftQuery,
+  GetNftsQuery as TGetNftsQuery,
 } from "@/gql/types/graphql";
-import { getAuthorization } from "../utils";
-import { TErrorTypeName } from "../redux/features/chat-types";
 import { MaybeString } from "@/types";
+import { TErrorTypeName } from "../redux/features/chat-types";
+import { getAuthorization } from "../utils";
 
 export type TPagination = Omit<Pagination, "orderDirection"> & {
   orderDirection?: "asc" | "desc";
@@ -86,7 +86,6 @@ export async function generateNFT({
   accessToken,
   description,
   name,
-  sessionId,
 }: {
   name: string;
   description: string;

@@ -73,13 +73,13 @@ export default function GenerateNFTModal() {
           imageUrl: undefined,
           modelUrl: undefined,
           modelId: undefined,
-        })
+        }),
       );
       dispatch(
         setMaximizedViewer({
           isOpened: false,
           data: undefined,
-        })
+        }),
       );
     },
     onError(error) {
@@ -131,7 +131,7 @@ export default function GenerateNFTModal() {
               messageId: undefined,
               imageUrl: undefined,
               modelUrl: undefined,
-            })
+            }),
           );
           return;
         }
