@@ -88,7 +88,6 @@ export async function getMessages({
   if ("code" in data.getMessages) {
     throw new Error("Failed to fetch data");
   }
-  console.log("GET:MESSAGES:", data);
   return data.getMessages;
 }
 

@@ -78,7 +78,6 @@ export default function GeneratedModelCard({
             modelId={modelId}
             disabled={{
               GENERATE_MODEL: true,
-              GENERATE_NFT: true,
             }}
           />
         </div>

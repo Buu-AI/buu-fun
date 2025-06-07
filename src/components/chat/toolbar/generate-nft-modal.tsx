@@ -26,6 +26,7 @@ import {
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 import { Textarea } from "../../ui/textarea";
+import { useRouter } from "next/navigation";
 
 const ModelViewer = dynamic(() => import("../../generation/model-viewer"), {
   ssr: false,
@@ -47,13 +48,13 @@ export default function GenerateNFTModal() {
   } = useForm<TCreateNftSchema>({
     resolver: zodResolver(createNftSchema),
   });
-  // const router = useRouter();
+  const router = useRouter();
   const query = useQueryClient();
   const confetti = useConfetti();
 
   const { mutate, isPending } = useMutation({
     mutationFn: generateNFT,
-    async onSuccess() {
+    async onSuccess(data) {
       await query.invalidateQueries({
         queryKey: ["get-sub-thread-requests"],
       });
@@ -61,8 +62,10 @@ export default function GenerateNFTModal() {
       setTimeout(() => {
         confetti.runConfetti({ duration: 5000 });
       }, 1000);
-      // NFT REDIRECRT
-      // router.push(`/app/nfts/${data.toolRequest.}`);
+      const redirectUrl = data?.toolRequest?.references?.[0];
+      if (redirectUrl) {
+        router.push(`/app/nfts/${redirectUrl}`);
+      }
       dispatch(
         setGenerateNFT({
           isGenNftOpen: false,

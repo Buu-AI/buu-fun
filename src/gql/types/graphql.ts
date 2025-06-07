@@ -194,6 +194,57 @@ export type GenerateCustomerPortalSessionOutput = {
   planKey: StripeSubscriptionPlanKeys;
 };
 
+export type GenerateModelsDetails = {
+  __typename?: "GenerateModelsDetails";
+  numberOfFaces?: Maybe<NumberOfFaces>;
+  numberOfModels?: Maybe<Scalars["Int"]["output"]>;
+  texture?: Maybe<TextureType>;
+};
+
+export type GenerateModelsFromEditDetails = {
+  __typename?: "GenerateModelsFromEditDetails";
+  edit?: Maybe<Scalars["String"]["output"]>;
+  model: Model;
+  numberOfFaces?: Maybe<NumberOfFaces>;
+  numberOfModels?: Maybe<Scalars["Int"]["output"]>;
+  texture?: Maybe<TextureType>;
+};
+
+export type GenerateModelsFromImageDetails = {
+  __typename?: "GenerateModelsFromImageDetails";
+  image: Media;
+  numberOfFaces?: Maybe<NumberOfFaces>;
+  numberOfModels?: Maybe<Scalars["Int"]["output"]>;
+  texture?: Maybe<TextureType>;
+};
+
+export type GenerateModelsFromPromptDetails = {
+  __typename?: "GenerateModelsFromPromptDetails";
+  numberOfFaces?: Maybe<NumberOfFaces>;
+  numberOfModels?: Maybe<Scalars["Int"]["output"]>;
+  prompt: Scalars["String"]["output"];
+  style?: Maybe<Style>;
+  texture?: Maybe<TextureType>;
+};
+
+export type GenerateModelsFromReferencesDetails = {
+  __typename?: "GenerateModelsFromReferencesDetails";
+  images: Array<Media>;
+  instructions?: Maybe<Scalars["String"]["output"]>;
+  numberOfFaces?: Maybe<NumberOfFaces>;
+  numberOfModels?: Maybe<Scalars["Int"]["output"]>;
+  texture?: Maybe<TextureType>;
+};
+
+export type GenerateNftDetails = {
+  __typename?: "GenerateNftDetails";
+  attributes?: Maybe<Array<NftAttribute>>;
+  description: Scalars["String"]["output"];
+  model: Model;
+  name: Scalars["String"]["output"];
+  symbol?: Maybe<Scalars["String"]["output"]>;
+};
+
 export type GeneratePresignedPostResult = HandledError | PresignedPost;
 
 export type GeneratePresignedUrl = {
@@ -537,11 +588,9 @@ export type Nft = {
   collectionRoyalties?: Maybe<Scalars["Float"]["output"]>;
   createdAt: Scalars["DateTimeISO"]["output"];
   creator?: Maybe<Scalars["String"]["output"]>;
-  genRequestId: Scalars["String"]["output"];
-  messageId: Scalars["String"]["output"];
   metadata: NftMetadata;
   mintAddress?: Maybe<Scalars["String"]["output"]>;
-  modelId: Scalars["String"]["output"];
+  modelId?: Maybe<Scalars["String"]["output"]>;
   status: ToolRequestStatus;
   teamId: Scalars["String"]["output"];
   tokenAddress?: Maybe<Scalars["String"]["output"]>;
@@ -1151,11 +1200,13 @@ export type ToolRequest = {
   _id: Scalars["String"]["output"];
   createdAt: Scalars["DateTimeISO"]["output"];
   credits: Scalars["Float"]["output"];
+  details?: Maybe<ToolRequestDetails>;
   message: Scalars["String"]["output"];
   messageId?: Maybe<Scalars["String"]["output"]>;
   payload: Scalars["String"]["output"];
   percentage: Scalars["Int"]["output"];
   priority: ToolRequestPriority;
+  references?: Maybe<Array<Scalars["String"]["output"]>>;
   sessionId?: Maybe<Scalars["String"]["output"]>;
   status: ToolRequestStatus;
   teamId: Scalars["String"]["output"];
@@ -1172,6 +1223,14 @@ export type ToolRequestConfirmation = {
 export type ToolRequestConfirmationResult =
   | HandledError
   | ToolRequestConfirmation;
+
+export type ToolRequestDetails =
+  | GenerateModelsDetails
+  | GenerateModelsFromEditDetails
+  | GenerateModelsFromImageDetails
+  | GenerateModelsFromPromptDetails
+  | GenerateModelsFromReferencesDetails
+  | GenerateNftDetails;
 
 /** The priority of the tool request */
 export enum ToolRequestPriority {
@@ -2221,9 +2280,7 @@ export type GetMessagesQuery = {
               __typename?: "Nft";
               _id: string;
               teamId: string;
-              genRequestId: string;
-              messageId: string;
-              modelId: string;
+              modelId?: string | null;
               status: ToolRequestStatus;
               mintAddress?: string | null;
               collectionAddress?: string | null;
@@ -2466,9 +2523,7 @@ export type GenerateModelFromImageMutation = {
               __typename?: "Nft";
               _id: string;
               teamId: string;
-              genRequestId: string;
-              messageId: string;
-              modelId: string;
+              modelId?: string | null;
               status: ToolRequestStatus;
               mintAddress?: string | null;
               collectionAddress?: string | null;
@@ -2693,9 +2748,7 @@ export type EditModelMutation = {
               __typename?: "Nft";
               _id: string;
               teamId: string;
-              genRequestId: string;
-              messageId: string;
-              modelId: string;
+              modelId?: string | null;
               status: ToolRequestStatus;
               mintAddress?: string | null;
               collectionAddress?: string | null;
@@ -2922,9 +2975,7 @@ export type SendMessageMutation = {
               __typename?: "Nft";
               _id: string;
               teamId: string;
-              genRequestId: string;
-              messageId: string;
-              modelId: string;
+              modelId?: string | null;
               status: ToolRequestStatus;
               mintAddress?: string | null;
               collectionAddress?: string | null;
@@ -3194,9 +3245,7 @@ export type GenerateNftMutation = {
               __typename?: "Nft";
               _id: string;
               teamId: string;
-              genRequestId: string;
-              messageId: string;
-              modelId: string;
+              modelId?: string | null;
               status: ToolRequestStatus;
               mintAddress?: string | null;
               collectionAddress?: string | null;
@@ -3215,11 +3264,6 @@ export type GenerateNftMutation = {
                 image?: string | null;
                 external_url?: string | null;
                 animation_url?: string | null;
-                attributes?: Array<{
-                  __typename?: "NftAttribute";
-                  trait_type: string;
-                  value: string;
-                }> | null;
                 properties?: {
                   __typename?: "NftProperties";
                   category: string;
@@ -3242,12 +3286,200 @@ export type GenerateNftMutation = {
             type: ToolRequestType;
             priority: ToolRequestPriority;
             payload: string;
+            references?: Array<string> | null;
             credits: number;
             status: ToolRequestStatus;
             createdAt: any;
             updatedAt: any;
             message: string;
             percentage: number;
+            details?:
+              | {
+                  __typename?: "GenerateModelsDetails";
+                  texture?: TextureType | null;
+                  numberOfFaces?: NumberOfFaces | null;
+                  numberOfModels?: number | null;
+                }
+              | {
+                  __typename?: "GenerateModelsFromEditDetails";
+                  texture?: TextureType | null;
+                  numberOfFaces?: NumberOfFaces | null;
+                  numberOfModels?: number | null;
+                  edit?: string | null;
+                  model: {
+                    __typename?: "Model";
+                    _id: string;
+                    teamId: string;
+                    sessionId?: string | null;
+                    messageId?: string | null;
+                    createdAt: any;
+                    updatedAt: any;
+                    prompt?: string | null;
+                    style?: Style | null;
+                    nftId?: string | null;
+                    mesh?: {
+                      __typename?: "Media";
+                      alt?: string | null;
+                      keyS3?: string | null;
+                      size?: number | null;
+                      type?: string | null;
+                      url?: string | null;
+                      _id: string;
+                      teamId?: string | null;
+                      sessionId?: string | null;
+                      messageId?: string | null;
+                      createdAt: any;
+                      updatedAt: any;
+                    } | null;
+                    optimizedMesh?: {
+                      __typename?: "Media";
+                      alt?: string | null;
+                      keyS3?: string | null;
+                      size?: number | null;
+                      type?: string | null;
+                      url?: string | null;
+                      _id: string;
+                      teamId?: string | null;
+                      sessionId?: string | null;
+                      messageId?: string | null;
+                      createdAt: any;
+                      updatedAt: any;
+                    } | null;
+                    multiview?: {
+                      __typename?: "Media";
+                      alt?: string | null;
+                      keyS3?: string | null;
+                      size?: number | null;
+                      type?: string | null;
+                      url?: string | null;
+                      _id: string;
+                      teamId?: string | null;
+                      sessionId?: string | null;
+                      messageId?: string | null;
+                      createdAt: any;
+                      updatedAt: any;
+                    } | null;
+                    views: Array<{
+                      __typename?: "Media";
+                      alt?: string | null;
+                      keyS3?: string | null;
+                      size?: number | null;
+                      type?: string | null;
+                      url?: string | null;
+                      _id: string;
+                      teamId?: string | null;
+                      sessionId?: string | null;
+                      messageId?: string | null;
+                      createdAt: any;
+                      updatedAt: any;
+                    }>;
+                    texturedMesh?: {
+                      __typename?: "Media";
+                      alt?: string | null;
+                      keyS3?: string | null;
+                      size?: number | null;
+                      type?: string | null;
+                      url?: string | null;
+                      _id: string;
+                      teamId?: string | null;
+                      sessionId?: string | null;
+                      messageId?: string | null;
+                      createdAt: any;
+                      updatedAt: any;
+                    } | null;
+                    texture?: {
+                      __typename?: "Media";
+                      alt?: string | null;
+                      keyS3?: string | null;
+                      size?: number | null;
+                      type?: string | null;
+                      url?: string | null;
+                      _id: string;
+                      teamId?: string | null;
+                      sessionId?: string | null;
+                      messageId?: string | null;
+                      createdAt: any;
+                      updatedAt: any;
+                    } | null;
+                    toolRequest: {
+                      __typename?: "ToolRequest";
+                      _id: string;
+                      teamId: string;
+                      sessionId?: string | null;
+                      messageId?: string | null;
+                      type: ToolRequestType;
+                      priority: ToolRequestPriority;
+                      payload: string;
+                      credits: number;
+                      status: ToolRequestStatus;
+                      createdAt: any;
+                      updatedAt: any;
+                      message: string;
+                      percentage: number;
+                    };
+                  };
+                }
+              | {
+                  __typename?: "GenerateModelsFromImageDetails";
+                  texture?: TextureType | null;
+                  numberOfFaces?: NumberOfFaces | null;
+                  numberOfModels?: number | null;
+                  image: {
+                    __typename?: "Media";
+                    alt?: string | null;
+                    keyS3?: string | null;
+                    size?: number | null;
+                    type?: string | null;
+                    url?: string | null;
+                    _id: string;
+                    teamId?: string | null;
+                    sessionId?: string | null;
+                    messageId?: string | null;
+                    createdAt: any;
+                    updatedAt: any;
+                  };
+                }
+              | {
+                  __typename?: "GenerateModelsFromPromptDetails";
+                  texture?: TextureType | null;
+                  numberOfFaces?: NumberOfFaces | null;
+                  numberOfModels?: number | null;
+                  prompt: string;
+                  style?: Style | null;
+                }
+              | {
+                  __typename?: "GenerateModelsFromReferencesDetails";
+                  texture?: TextureType | null;
+                  numberOfFaces?: NumberOfFaces | null;
+                  numberOfModels?: number | null;
+                  instructions?: string | null;
+                  images: Array<{
+                    __typename?: "Media";
+                    alt?: string | null;
+                    keyS3?: string | null;
+                    size?: number | null;
+                    type?: string | null;
+                    url?: string | null;
+                    _id: string;
+                    teamId?: string | null;
+                    sessionId?: string | null;
+                    messageId?: string | null;
+                    createdAt: any;
+                    updatedAt: any;
+                  }>;
+                }
+              | {
+                  __typename?: "GenerateNftDetails";
+                  name: string;
+                  description: string;
+                  symbol?: string | null;
+                  attributes?: Array<{
+                    __typename?: "NftAttribute";
+                    trait_type: string;
+                    value: string;
+                  }> | null;
+                }
+              | null;
           } | null;
         }>;
         toolRequest: {
@@ -3259,12 +3491,86 @@ export type GenerateNftMutation = {
           type: ToolRequestType;
           priority: ToolRequestPriority;
           payload: string;
+          references?: Array<string> | null;
           credits: number;
           status: ToolRequestStatus;
           createdAt: any;
           updatedAt: any;
           message: string;
           percentage: number;
+          details?:
+            | {
+                __typename?: "GenerateModelsDetails";
+                texture?: TextureType | null;
+                numberOfFaces?: NumberOfFaces | null;
+                numberOfModels?: number | null;
+              }
+            | {
+                __typename?: "GenerateModelsFromEditDetails";
+                texture?: TextureType | null;
+                numberOfFaces?: NumberOfFaces | null;
+                numberOfModels?: number | null;
+                edit?: string | null;
+                model: {
+                  __typename?: "Model";
+                  _id: string;
+                  teamId: string;
+                  sessionId?: string | null;
+                  messageId?: string | null;
+                  createdAt: any;
+                  updatedAt: any;
+                  prompt?: string | null;
+                  style?: Style | null;
+                  nftId?: string | null;
+                };
+              }
+            | {
+                __typename?: "GenerateModelsFromImageDetails";
+                texture?: TextureType | null;
+                numberOfFaces?: NumberOfFaces | null;
+                numberOfModels?: number | null;
+              }
+            | {
+                __typename?: "GenerateModelsFromPromptDetails";
+                texture?: TextureType | null;
+                numberOfFaces?: NumberOfFaces | null;
+                numberOfModels?: number | null;
+                prompt: string;
+                style?: Style | null;
+              }
+            | {
+                __typename?: "GenerateModelsFromReferencesDetails";
+                texture?: TextureType | null;
+                numberOfFaces?: NumberOfFaces | null;
+                numberOfModels?: number | null;
+                instructions?: string | null;
+                images: Array<{
+                  __typename?: "Media";
+                  alt?: string | null;
+                  keyS3?: string | null;
+                  size?: number | null;
+                  type?: string | null;
+                  url?: string | null;
+                  _id: string;
+                  teamId?: string | null;
+                  sessionId?: string | null;
+                  messageId?: string | null;
+                  createdAt: any;
+                  updatedAt: any;
+                }>;
+              }
+            | {
+                __typename?: "GenerateNftDetails";
+                name: string;
+                description: string;
+                symbol?: string | null;
+                attributes?: Array<{
+                  __typename?: "NftAttribute";
+                  trait_type: string;
+                  value: string;
+                }> | null;
+              }
+            | null;
         };
       };
 };
@@ -3284,9 +3590,7 @@ export type GetNftsQuery = {
           __typename?: "Nft";
           _id: string;
           teamId: string;
-          genRequestId: string;
-          messageId: string;
-          modelId: string;
+          modelId?: string | null;
           status: ToolRequestStatus;
           mintAddress?: string | null;
           collectionAddress?: string | null;
@@ -3348,9 +3652,7 @@ export type GetNftQuery = {
         __typename?: "Nft";
         _id: string;
         teamId: string;
-        genRequestId: string;
-        messageId: string;
-        modelId: string;
+        modelId?: string | null;
         status: ToolRequestStatus;
         mintAddress?: string | null;
         collectionAddress?: string | null;
@@ -8367,20 +8669,6 @@ export const GetMessagesDocument = {
                                           kind: "Field",
                                           name: {
                                             kind: "Name",
-                                            value: "genRequestId",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "messageId",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
                                             value: "modelId",
                                           },
                                         },
@@ -9749,20 +10037,6 @@ export const GenerateModelFromImageDocument = {
                                           kind: "Field",
                                           name: {
                                             kind: "Name",
-                                            value: "genRequestId",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "messageId",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
                                             value: "modelId",
                                           },
                                         },
@@ -11047,20 +11321,6 @@ export const EditModelDocument = {
                                           name: {
                                             kind: "Name",
                                             value: "teamId",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "genRequestId",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "messageId",
                                           },
                                         },
                                         {
@@ -12360,20 +12620,6 @@ export const SendMessageDocument = {
                                           name: {
                                             kind: "Name",
                                             value: "teamId",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "genRequestId",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "messageId",
                                           },
                                         },
                                         {
@@ -13946,20 +14192,6 @@ export const GenerateNftDocument = {
                                           kind: "Field",
                                           name: {
                                             kind: "Name",
-                                            value: "genRequestId",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "messageId",
-                                          },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
                                             value: "modelId",
                                           },
                                         },
@@ -14019,32 +14251,6 @@ export const GenerateNftDocument = {
                                                 name: {
                                                   kind: "Name",
                                                   value: "animation_url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "attributes",
-                                                },
-                                                selectionSet: {
-                                                  kind: "SelectionSet",
-                                                  selections: [
-                                                    {
-                                                      kind: "Field",
-                                                      name: {
-                                                        kind: "Name",
-                                                        value: "trait_type",
-                                                      },
-                                                    },
-                                                    {
-                                                      kind: "Field",
-                                                      name: {
-                                                        kind: "Name",
-                                                        value: "value",
-                                                      },
-                                                    },
-                                                  ],
                                                 },
                                               },
                                               {
@@ -14207,6 +14413,1212 @@ export const GenerateNftDocument = {
                                   },
                                   {
                                     kind: "Field",
+                                    name: { kind: "Name", value: "references" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "details" },
+                                    selectionSet: {
+                                      kind: "SelectionSet",
+                                      selections: [
+                                        {
+                                          kind: "InlineFragment",
+                                          typeCondition: {
+                                            kind: "NamedType",
+                                            name: {
+                                              kind: "Name",
+                                              value: "GenerateModelsDetails",
+                                            },
+                                          },
+                                          selectionSet: {
+                                            kind: "SelectionSet",
+                                            selections: [
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "texture",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "numberOfFaces",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "numberOfModels",
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                        {
+                                          kind: "InlineFragment",
+                                          typeCondition: {
+                                            kind: "NamedType",
+                                            name: {
+                                              kind: "Name",
+                                              value:
+                                                "GenerateModelsFromPromptDetails",
+                                            },
+                                          },
+                                          selectionSet: {
+                                            kind: "SelectionSet",
+                                            selections: [
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "texture",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "numberOfFaces",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "numberOfModels",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "prompt",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "style",
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                        {
+                                          kind: "InlineFragment",
+                                          typeCondition: {
+                                            kind: "NamedType",
+                                            name: {
+                                              kind: "Name",
+                                              value:
+                                                "GenerateModelsFromImageDetails",
+                                            },
+                                          },
+                                          selectionSet: {
+                                            kind: "SelectionSet",
+                                            selections: [
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "texture",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "numberOfFaces",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "numberOfModels",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "image",
+                                                },
+                                                selectionSet: {
+                                                  kind: "SelectionSet",
+                                                  selections: [
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "alt",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "keyS3",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "size",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "type",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "url",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "_id",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "teamId",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "sessionId",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "messageId",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "createdAt",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "updatedAt",
+                                                      },
+                                                    },
+                                                  ],
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                        {
+                                          kind: "InlineFragment",
+                                          typeCondition: {
+                                            kind: "NamedType",
+                                            name: {
+                                              kind: "Name",
+                                              value:
+                                                "GenerateModelsFromReferencesDetails",
+                                            },
+                                          },
+                                          selectionSet: {
+                                            kind: "SelectionSet",
+                                            selections: [
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "texture",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "numberOfFaces",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "numberOfModels",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "images",
+                                                },
+                                                selectionSet: {
+                                                  kind: "SelectionSet",
+                                                  selections: [
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "alt",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "keyS3",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "size",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "type",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "url",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "_id",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "teamId",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "sessionId",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "messageId",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "createdAt",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "updatedAt",
+                                                      },
+                                                    },
+                                                  ],
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "instructions",
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                        {
+                                          kind: "InlineFragment",
+                                          typeCondition: {
+                                            kind: "NamedType",
+                                            name: {
+                                              kind: "Name",
+                                              value:
+                                                "GenerateModelsFromEditDetails",
+                                            },
+                                          },
+                                          selectionSet: {
+                                            kind: "SelectionSet",
+                                            selections: [
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "texture",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "numberOfFaces",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "numberOfModels",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "edit",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "model",
+                                                },
+                                                selectionSet: {
+                                                  kind: "SelectionSet",
+                                                  selections: [
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "_id",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "teamId",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "sessionId",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "messageId",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "mesh",
+                                                      },
+                                                      selectionSet: {
+                                                        kind: "SelectionSet",
+                                                        selections: [
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "alt",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "keyS3",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "size",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "type",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "url",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "_id",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "teamId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "sessionId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "messageId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "createdAt",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "updatedAt",
+                                                            },
+                                                          },
+                                                        ],
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "optimizedMesh",
+                                                      },
+                                                      selectionSet: {
+                                                        kind: "SelectionSet",
+                                                        selections: [
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "alt",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "keyS3",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "size",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "type",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "url",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "_id",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "teamId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "sessionId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "messageId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "createdAt",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "updatedAt",
+                                                            },
+                                                          },
+                                                        ],
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "multiview",
+                                                      },
+                                                      selectionSet: {
+                                                        kind: "SelectionSet",
+                                                        selections: [
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "alt",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "keyS3",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "size",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "type",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "url",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "_id",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "teamId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "sessionId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "messageId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "createdAt",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "updatedAt",
+                                                            },
+                                                          },
+                                                        ],
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "views",
+                                                      },
+                                                      selectionSet: {
+                                                        kind: "SelectionSet",
+                                                        selections: [
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "alt",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "keyS3",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "size",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "type",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "url",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "_id",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "teamId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "sessionId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "messageId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "createdAt",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "updatedAt",
+                                                            },
+                                                          },
+                                                        ],
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "texturedMesh",
+                                                      },
+                                                      selectionSet: {
+                                                        kind: "SelectionSet",
+                                                        selections: [
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "alt",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "keyS3",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "size",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "type",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "url",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "_id",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "teamId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "sessionId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "messageId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "createdAt",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "updatedAt",
+                                                            },
+                                                          },
+                                                        ],
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "texture",
+                                                      },
+                                                      selectionSet: {
+                                                        kind: "SelectionSet",
+                                                        selections: [
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "alt",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "keyS3",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "size",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "type",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "url",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "_id",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "teamId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "sessionId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "messageId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "createdAt",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "updatedAt",
+                                                            },
+                                                          },
+                                                        ],
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "createdAt",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "updatedAt",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "prompt",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "style",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "nftId",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "toolRequest",
+                                                      },
+                                                      selectionSet: {
+                                                        kind: "SelectionSet",
+                                                        selections: [
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "_id",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "teamId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "sessionId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "messageId",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "type",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "priority",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "payload",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "credits",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "status",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "createdAt",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "updatedAt",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "message",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value:
+                                                                "percentage",
+                                                            },
+                                                          },
+                                                        ],
+                                                      },
+                                                    },
+                                                  ],
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                        {
+                                          kind: "InlineFragment",
+                                          typeCondition: {
+                                            kind: "NamedType",
+                                            name: {
+                                              kind: "Name",
+                                              value: "GenerateNftDetails",
+                                            },
+                                          },
+                                          selectionSet: {
+                                            kind: "SelectionSet",
+                                            selections: [
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "name",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "description",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "symbol",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "attributes",
+                                                },
+                                                selectionSet: {
+                                                  kind: "SelectionSet",
+                                                  selections: [
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "trait_type",
+                                                      },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: {
+                                                        kind: "Name",
+                                                        value: "value",
+                                                      },
+                                                    },
+                                                  ],
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                  {
+                                    kind: "Field",
                                     name: { kind: "Name", value: "credits" },
                                   },
                                   {
@@ -14268,6 +15680,449 @@ export const GenerateNftDocument = {
                             {
                               kind: "Field",
                               name: { kind: "Name", value: "payload" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "references" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "details" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "InlineFragment",
+                                    typeCondition: {
+                                      kind: "NamedType",
+                                      name: {
+                                        kind: "Name",
+                                        value: "GenerateModelsDetails",
+                                      },
+                                    },
+                                    selectionSet: {
+                                      kind: "SelectionSet",
+                                      selections: [
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "texture",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "numberOfFaces",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "numberOfModels",
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                  {
+                                    kind: "InlineFragment",
+                                    typeCondition: {
+                                      kind: "NamedType",
+                                      name: {
+                                        kind: "Name",
+                                        value:
+                                          "GenerateModelsFromPromptDetails",
+                                      },
+                                    },
+                                    selectionSet: {
+                                      kind: "SelectionSet",
+                                      selections: [
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "texture",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "numberOfFaces",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "numberOfModels",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "prompt",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "style",
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                  {
+                                    kind: "InlineFragment",
+                                    typeCondition: {
+                                      kind: "NamedType",
+                                      name: {
+                                        kind: "Name",
+                                        value: "GenerateModelsFromImageDetails",
+                                      },
+                                    },
+                                    selectionSet: {
+                                      kind: "SelectionSet",
+                                      selections: [
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "texture",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "numberOfFaces",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "numberOfModels",
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                  {
+                                    kind: "InlineFragment",
+                                    typeCondition: {
+                                      kind: "NamedType",
+                                      name: {
+                                        kind: "Name",
+                                        value:
+                                          "GenerateModelsFromReferencesDetails",
+                                      },
+                                    },
+                                    selectionSet: {
+                                      kind: "SelectionSet",
+                                      selections: [
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "texture",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "numberOfFaces",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "numberOfModels",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "images",
+                                          },
+                                          selectionSet: {
+                                            kind: "SelectionSet",
+                                            selections: [
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "alt",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "keyS3",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "size",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "type",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "url",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "_id",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "teamId",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "sessionId",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "messageId",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "createdAt",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "updatedAt",
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "instructions",
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                  {
+                                    kind: "InlineFragment",
+                                    typeCondition: {
+                                      kind: "NamedType",
+                                      name: {
+                                        kind: "Name",
+                                        value: "GenerateModelsFromEditDetails",
+                                      },
+                                    },
+                                    selectionSet: {
+                                      kind: "SelectionSet",
+                                      selections: [
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "texture",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "numberOfFaces",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "numberOfModels",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: { kind: "Name", value: "edit" },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "model",
+                                          },
+                                          selectionSet: {
+                                            kind: "SelectionSet",
+                                            selections: [
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "_id",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "teamId",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "sessionId",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "messageId",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "createdAt",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "updatedAt",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "prompt",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "style",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "nftId",
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                  {
+                                    kind: "InlineFragment",
+                                    typeCondition: {
+                                      kind: "NamedType",
+                                      name: {
+                                        kind: "Name",
+                                        value: "GenerateNftDetails",
+                                      },
+                                    },
+                                    selectionSet: {
+                                      kind: "SelectionSet",
+                                      selections: [
+                                        {
+                                          kind: "Field",
+                                          name: { kind: "Name", value: "name" },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "description",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "symbol",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "attributes",
+                                          },
+                                          selectionSet: {
+                                            kind: "SelectionSet",
+                                            selections: [
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "trait_type",
+                                                },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: {
+                                                  kind: "Name",
+                                                  value: "value",
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                ],
+                              },
                             },
                             {
                               kind: "Field",
@@ -14404,14 +16259,6 @@ export const GetNftsDocument = {
                             {
                               kind: "Field",
                               name: { kind: "Name", value: "teamId" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "genRequestId" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "messageId" },
                             },
                             {
                               kind: "Field",
@@ -14707,52 +16554,11 @@ export const GetNftDocument = {
                       },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "genRequestId" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "messageId" },
-                      },
-                      {
-                        kind: "Field",
                         name: { kind: "Name", value: "modelId" },
                       },
                       {
                         kind: "Field",
                         name: { kind: "Name", value: "status" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "mintAddress" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "collectionAddress" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "creator" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "tokenAddress" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "tokenStandard" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "collectionRoyalties" },
-                      },
-                      { kind: "Field", name: { kind: "Name", value: "chain" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "updatedAt" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "createdAt" },
                       },
                       {
                         kind: "Field",
@@ -14837,6 +16643,39 @@ export const GetNftDocument = {
                             },
                           ],
                         },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "mintAddress" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "collectionAddress" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "creator" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "tokenAddress" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "tokenStandard" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "collectionRoyalties" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "chain" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "updatedAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "createdAt" },
                       },
                     ],
                   },
