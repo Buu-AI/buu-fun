@@ -1,17 +1,12 @@
 // import { setRetryWithImage } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
+import { TChatMessage } from "@/types/chat/chat-types";
 import { AnimatePresence } from "framer-motion";
 import ImageRenderer from "../image-renderer";
-import { TMessageStatus } from "@/types/chat/chat-types";
-type TMessages = {
-  text?: string;
-  imageUrls?: string[];
-  messageId: string;
-  status: TMessageStatus;
-};
+type TMessages = {} & TChatMessage;
 export default function UserChatMessage({
-  text = "Create a 3D model of a cube",
-  imageUrls,
+  prompt,
+  medias,
   messageId,
   status,
 }: TMessages) {
@@ -22,16 +17,17 @@ export default function UserChatMessage({
           " max-w-max p-2  px-3 max-md:text-sm bg-user-chat-message text-white font-medium  md:w-1/2 rounded-lg",
         )}
       >
-        {text}
+        {prompt}
       </p>
       <AnimatePresence mode="popLayout">
-        {imageUrls && imageUrls.length > 0 ? (
+        {medias && medias.length > 0 ? (
           <ImageRenderer
             status={status}
             messageId={messageId}
             role="user"
-            imageUrls={imageUrls}
-            text={text}
+            // imageUrls={media}
+            medias={medias}
+            prompt={prompt ?? "-"}
           />
         ) : null}
       </AnimatePresence>

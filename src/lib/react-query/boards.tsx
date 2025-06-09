@@ -1,6 +1,6 @@
 import { TypedAppError } from "@/class/error";
 import { serverRequest } from "@/gql/client";
-import { CreateShareableBoardMutation } from "@/gql/documents/creative-engine";
+import { CreateShareableBoardMutation } from "@/gql/documents/boards";
 import {
   CreateShareableBoardMutationVariables,
   CreateShareableBoardMutation as TCreateShareableBoardMutation,
@@ -13,7 +13,7 @@ import {
   GetShareableBoardQuery,
   GetUserShareableBoardsQuery,
   UpdateShareableBoardVisibilityMutation,
-} from "@/gql/documents/creative-engine";
+} from "@/gql/documents/boards";
 import {
   DeleteShareableBoardMutationVariables,
   GetUserShareableBoardQuery,

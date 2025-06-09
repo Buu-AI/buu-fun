@@ -28,12 +28,12 @@ export default function ModelGenerationModal() {
     (state) => state.chat.genModelFromImage,
   );
 
-  const { imageUrl, isOpened } = generateModelModalState;
+  const { imageId, isOpened, imageUrl } = generateModelModalState;
   const dispatch = useAppDispatch();
   const sessionId = useAppSelector((state) => state.chat.sessionId);
 
   const { mutate, isPending } = useMutation({
-    mutationKey: [imageUrl, sessionId, "generate-model"],
+    mutationKey: [imageId, sessionId, "generate-model"],
     mutationFn: generateModelFromImageMutation,
     onMutate() {
       dispatch(
@@ -45,6 +45,7 @@ export default function ModelGenerationModal() {
       dispatch(
         setGenerateModel({
           isOpened: false,
+          imageId: null,
           imageUrl: null,
         }),
       );
@@ -85,13 +86,14 @@ export default function ModelGenerationModal() {
   }
   return (
     <Dialog
-      key={`${imageUrl}`}
+      key={`${imageId}`}
       open={isOpened}
       onOpenChange={(value) => {
         if (!value) {
           dispatch(
             setGenerateModel({
               isOpened: false,
+              imageId: null,
               imageUrl: null,
             }),
           );
@@ -108,12 +110,9 @@ export default function ModelGenerationModal() {
           </DialogDescription>
         </DialogHeader>
         <div
-          className={cn(
-            "flex overflow-hidden rounded-lg w-full  mx-auto max-w-[50%]",
-            {
-              hidden: !imageUrl,
-            },
-          )}
+          className={cn("flex overflow-hidden rounded-lg w-full  mx-auto", {
+            hidden: !imageId,
+          })}
         >
           {imageUrl ? (
             <Image
@@ -126,14 +125,15 @@ export default function ModelGenerationModal() {
             />
           ) : null}
         </div>
-        <div>
-          <div
-            onClick={() => {
-              handleModelGeneration();
-            }}
-            className="mt-4"
-          >
-            <Button disabled={isPending} className="h-[40px] w-full">
+        <div className="">
+          <div className="mt-4">
+            <Button
+              onClick={() => {
+                handleModelGeneration();
+              }}
+              disabled={isPending}
+              className="h-[40px] w-full"
+            >
               {isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />

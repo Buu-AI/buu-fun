@@ -1,15 +1,25 @@
 import { TMessageStatus } from "@/types/chat/chat-types";
 import Pill, { TPillVariant } from "../elements/pill";
+import {
+  isToolCallCanceled,
+  isToolCallPending,
+} from "@/lib/helpers/status-checker";
 
 type TStatusPillDetails = {
   text: string;
   variant: TPillVariant["variant"];
 };
 type TChatStatus = {
-  status: TMessageStatus;
+  status?: TMessageStatus;
 };
 export default function ChatStatus({ status }: TChatStatus) {
   const details = getPillDetails(status);
+  const isStatusPending = isToolCallPending(status);
+  const isStatusCanceled = isToolCallCanceled(status);
+  if (!details) return;
+  // Only pending is showing in the UI other cases are deprecated
+  if (!isStatusPending && !isStatusCanceled) return null;
+
   return (
     <Pill
       size={"md"}
@@ -20,7 +30,7 @@ export default function ChatStatus({ status }: TChatStatus) {
     </Pill>
   );
 }
-function getPillDetails(status: TMessageStatus): TStatusPillDetails {
+function getPillDetails(status?: TMessageStatus): TStatusPillDetails | null {
   switch (status) {
     case "FAILED": {
       return {
@@ -52,11 +62,14 @@ function getPillDetails(status: TMessageStatus): TStatusPillDetails {
         variant: "gray",
       };
     }
-    default: {
+    case "PENDING": {
       return {
         text: "Pending",
         variant: "darkYellow",
       };
+    }
+    default: {
+      return null;
     }
   }
 }

@@ -1,20 +1,18 @@
 import "@/app/globals.css";
-import NavigationalBar from "@/components/navbar/navigational-bar";
-import Topbar from "@/components/navbar/top-bar";
 import { constructMetadata } from "@/lib/construct-metadata";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
+import SubscriptionDialog from "@/components/subscriptions/subscription-dialog";
 import Providers from "@/providers/auth-provider";
+import { ConfettiProvider } from "@/providers/confetti-provider";
 import NextUIProviders from "@/providers/next-ui-provder";
 import ReactQueryProvider from "@/providers/react-query";
 import StoreProvider from "@/providers/redux";
 import type { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
-import { Toaster } from "react-hot-toast";
-import SubscriptionDialog from "@/components/subscriptions/subscription-dialog";
-import SplashCursorProvider from "./SplashCursorProvider";
 import Script from "next/script";
-import { ConfettiProvider } from "@/providers/confetti-provider";
+import { Toaster } from "react-hot-toast";
+import SplashCursorProvider from "./SplashCursorProvider";
 const BricolageGrotesque = Bricolage_Grotesque({
   variable: "--font-bricolage-grotesque",
   subsets: ["latin"],
@@ -76,24 +74,8 @@ export default function RootLayout({
             <NextUIProviders>
               <Providers>
                 <ConfettiProvider>
-                  <div className="h-[100dvh] min-h-[100dvh] overflow-hidden relative max-h-[100dvh]   w-full">
-                    <SplashCursorProvider />
-                    <div className=" w-[200px] h-[100px] bg-overlay-secondary  bg-[#69CCD5]  rounded-full right-[20%] absolute bottom-[-140px] -z-10 blur-[100px]  rotate-[-10deg]" />
-
-                    <div className="grid-container w-full h-full">
-                      <div className="main-body relative">
-                        <div className="w-[176px] h-[334px] violet-gradient left-[45%]  rounded-full  absolute top-[5%] -z-10   md:block hidden  rotate-[-10deg]" />
-                        {children}
-                      </div>
-                      <div className="top-bar ">
-                        <Topbar />
-                      </div>
-                      <div className="navigation ">
-                        <NavigationalBar />
-                      </div>
-                    </div>
-                  </div>
-
+                  <SplashCursorProvider />
+                  {children}
                   <div id="integrated-terminal" />
                   <SubscriptionDialog />
                 </ConfettiProvider>

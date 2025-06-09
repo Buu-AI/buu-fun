@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { TChatToolTips } from "./tool-bar-content";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
 import { ToolTips } from "../../generation/handle-tool-calls";
-import { buttonVariants } from "../../generation/tool-bar-tool-tips";
+import { buttonVariants } from "../../generation/tool-tip-button-variant";
 import { MaybeString } from "@/types";
 import { useRouter } from "next/navigation";
 
@@ -21,6 +21,7 @@ type TToolTipGenerateNFT = {
   modelUrl: MaybeString;
   nftId: MaybeString;
   tokenized?: boolean;
+  modelId: MaybeString;
 };
 
 export default function ToolTipGenerateNft({
@@ -31,6 +32,7 @@ export default function ToolTipGenerateNft({
   modelUrl,
   nftId,
   tokenized,
+  modelId,
 }: TToolTipGenerateNFT) {
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -43,7 +45,10 @@ export default function ToolTipGenerateNft({
             onClick={() => {
               if (tokenized) {
                 toast.success(`NFT has already been generated `);
-                if (nftId) router.push(`/nfts/${nftId}`);
+                if (nftId) {
+                  router.push(`/nfts/${nftId}`);
+                  return;
+                }
                 return;
               }
               if (!modelUrl) {
@@ -58,12 +63,19 @@ export default function ToolTipGenerateNft({
                 );
                 return;
               }
+              if (!modelId) {
+                toast.success(
+                  `NFT Generation requires it to be a valid Models`,
+                );
+                return;
+              }
               dispatch(
                 setGenerateNFT({
                   isGenNftOpen: true,
                   messageId,
                   imageUrl,
                   modelUrl,
+                  modelId,
                 }),
               );
             }}

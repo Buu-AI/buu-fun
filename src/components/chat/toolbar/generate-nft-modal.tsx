@@ -11,7 +11,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -27,6 +26,7 @@ import {
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 import { Textarea } from "../../ui/textarea";
+import { useRouter } from "next/navigation";
 
 const ModelViewer = dynamic(() => import("../../generation/model-viewer"), {
   ssr: false,
@@ -35,6 +35,7 @@ const ModelViewer = dynamic(() => import("../../generation/model-viewer"), {
 
 export default function GenerateNFTModal() {
   const { identityToken: accessToken, login } = useAuthentication();
+  const sessionId = useAppSelector((state) => state.chat.sessionId);
   const [checked, setChecked] = useState(false);
   const isOpen = useAppSelector((state) => state.chat.genNft.isGenNftModalOpen);
   const dispatch = useAppDispatch();
@@ -61,13 +62,17 @@ export default function GenerateNFTModal() {
       setTimeout(() => {
         confetti.runConfetti({ duration: 5000 });
       }, 1000);
-      router.push(`/app/nfts/${data._id}`);
+      const redirectUrl = data?.toolRequest?.references?.[0];
+      if (redirectUrl) {
+        router.push(`/app/nfts/${redirectUrl}`);
+      }
       dispatch(
         setGenerateNFT({
           isGenNftOpen: false,
           messageId: undefined,
           imageUrl: undefined,
           modelUrl: undefined,
+          modelId: undefined,
         }),
       );
       dispatch(
@@ -85,6 +90,8 @@ export default function GenerateNFTModal() {
   });
   function handleCreateNFTForm({ description, name }: TCreateNftSchema) {
     const messageId = GenNft.messageId;
+    const modelId = GenNft.modelId;
+
     if (!checked) {
       toast.error("Please acknowledge the credits used to generate NFT");
       return;
@@ -97,11 +104,17 @@ export default function GenerateNFTModal() {
       toast.error("invalid generation request");
       return;
     }
+    if (!modelId) {
+      toast.error("Failed to retrieve model");
+      return;
+    }
+
     mutate({
       name,
       description,
-      messageId,
+      modelId,
       accessToken,
+      sessionId,
     });
   }
   const modelUrl = GenNft.modelUrl;

@@ -9,11 +9,11 @@ import toast from "react-hot-toast";
 import { Button } from "../../ui/button";
 
 type TToolCallCancelButton = {
-  messageId: string;
+  requestId: string;
 };
 
 export default function ToolCallCancelButton({
-  messageId,
+  requestId,
 }: TToolCallCancelButton) {
   const { identityToken } = useAuthentication();
   const dispatch = useAppDispatch();
@@ -22,15 +22,16 @@ export default function ToolCallCancelButton({
     useMutation({
       mutationFn: cancelToolCall,
       async onSuccess(data) {
-        toast.loading("Canceling Generation", { duration: 8000 });
-        // dispatch(pushNewSubThreads(data));
         const sessionId = data.sessionId;
+        toast.dismiss();
         await queryClient.invalidateQueries({
           exact: false,
           queryKey: ["get-messages", sessionId],
         });
       },
       onError(error) {
+        toast.dismiss();
+
         if (error instanceof TypedAppError) {
           switch (error.code) {
             case "CREDIT_NOT_FOUND": {
@@ -50,7 +51,9 @@ export default function ToolCallCancelButton({
 
   function handleCancelMessage() {
     const accessToken = identityToken ?? "";
-    cancelToolMessage({ accessToken, messageId });
+    toast.loading("Canceling Generation", { duration: 3400 });
+
+    cancelToolMessage({ accessToken, requestId });
   }
   return (
     <Button

@@ -118,6 +118,11 @@ body {
   background-color: #31313115;
 }
 
+.scrollbar-thumb-white::-webkit-scrollbar-thumb {
+  --bg-opacity: 0.5;
+  background-color: white;
+}
+
 .scrollbar-thumb-orange::-webkit-scrollbar-thumb {
   --bg-opacity: 0.5;
   background-color: #26454d74;
@@ -271,7 +276,7 @@ body {
 
 .top-bar { grid-area: top-bar; } */
 
-.grid-container {
+ .grid-container {
   display: grid;
   grid-template-columns: 0.1fr 1.9fr;
   grid-template-rows: 0.1fr 1.9fr;
@@ -288,10 +293,24 @@ body {
 
 .top-bar {
   grid-area: top-bar;
-}
+} 
 
+.grid-container-without-topbar {
+  display: grid;
+  grid-template-columns: 0.1fr 1.9fr;
+  grid-template-rows: 0.1fr 1.9fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "navigation main-body"
+    "navigation main-body";
+}
 .navigation {
   grid-area: navigation;
+}
+
+.main-body {
+  grid-area: main-body;
 }
 
 @media (max-width: 768px) {
@@ -1012,4 +1031,66 @@ input[type="number"] {
 
 .bit-refill-image-border {
   border: 2px solid rgba(255, 255, 255, 0.349);
+}
+
+.bg-stage-navigation {
+  background: rgba(28, 32, 39, 0.4);
+}
+
+.bg-position-text {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.bg-stage-modal {
+  background: rgba(28, 32, 39, 0.4);
+}
+
+.white-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.white-slider::-webkit-slider-track {
+  background: #d1d5db;
+  height: 18px;
+  border-radius: 4px;
+}
+
+.white-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #d1d5db;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.white-slider::-moz-range-track {
+  background: #d1d5db;
+  height: 18px;
+  border-radius: 4px;
+  border: none;
+}
+
+.white-slider::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #d1d5db;
+  cursor: pointer;
+}
+
+.bg-visible-eye {
+  background: rgba(28, 32, 39, 0.8);
+}
+
+
+.bg-model-viewer {
+background: radial-gradient(138.3% 135.41% at 115.27% 105.13%, rgba(255, 120, 255, 0.20) 0%, rgba(28, 32, 39, 0.00) 100%), radial-gradient(93.48% 93.35% at 0% 3.1%, rgba(120, 219, 255, 0.50) 0%, rgba(28, 32, 39, 0.00) 100%), #1C2027;
 }
