@@ -106,6 +106,9 @@ export default function AssistantMessageShowDetailToolCall({
         <div ref={contentRef} className="px-5 py-5">
           {payloadKeys && payloadKeys.length
             ? payloadKeys.map((item, index) => {
+                const payloads = payload[item];
+                const isPayloadString = typeof payloads === "string";
+                if (!isPayloadString) return null;
                 return (
                   <div key={`plan-key-${item}-${index}`}>
                     <p className="text-muted-foreground/80 font-medium">
@@ -115,7 +118,7 @@ export default function AssistantMessageShowDetailToolCall({
                       <span className="text-sm">
                         <span></span>
                         {payload[item]}
-                        <span></span>
+                        <span>{payloads}</span>
                       </span>
                     </p>
                   </div>
