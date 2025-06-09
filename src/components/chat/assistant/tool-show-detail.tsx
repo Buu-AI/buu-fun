@@ -1,9 +1,9 @@
 "use client";
 import ChevronArrow from "@/assets/icons/chevron-arrow";
-import React, { useState, useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { capitalizeFirstLetter, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { PromptPayload } from "@/types/chat/chat-types";
+import { gsap } from "gsap";
+import { useEffect, useRef, useState } from "react";
 import JsonViewer from "./json-viewer";
 type TAssistantMessageShowDetailToolCall = {
   payload: PromptPayload;
