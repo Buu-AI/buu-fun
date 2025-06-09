@@ -14,7 +14,7 @@ export function getModelBasedOnPriority(item: Model) {
 }
 
 export function getModelMessagesAndPercentage(
-  toolRequest?: Maybe<ToolRequest>
+  toolRequest?: Maybe<ToolRequest>,
 ) {
   return {
     percentage: toolRequest?.percentage,

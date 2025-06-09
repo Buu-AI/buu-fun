@@ -1,8 +1,6 @@
 import { buttonVariants } from "@/components/ui/button";
 import { ONE_MINUTE_FORTY_FIVE_SECONDS } from "@/constants/time";
-import {
-  isToolCallGenerating
-} from "@/lib/helpers/status-checker";
+import { isToolCallGenerating } from "@/lib/helpers/status-checker";
 import { cn, hasDatePassedThreshold } from "@/lib/utils";
 import { TChatMessage } from "@/types/chat/chat-types";
 import { Loader2, X } from "lucide-react";
@@ -23,7 +21,7 @@ export default function AssistantMessage({
 }: TAssistantMessage) {
   const isTimedOut = hasDatePassedThreshold(
     createdAt,
-    ONE_MINUTE_FORTY_FIVE_SECONDS
+    ONE_MINUTE_FORTY_FIVE_SECONDS,
   );
   const isGenerating = isToolCallGenerating(status);
 

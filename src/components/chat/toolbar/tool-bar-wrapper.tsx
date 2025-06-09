@@ -26,7 +26,7 @@ type TToolBarWrapper = {
   imageId: MaybeString;
   disabled?: TDisabledToolbar;
   modelId: MaybeString;
-  isTexturedMesh?: boolean
+  isTexturedMesh?: boolean;
 };
 
 export default function ToolBarWrapper({
@@ -39,7 +39,7 @@ export default function ToolBarWrapper({
   disabled,
   modelId,
   imageId,
-  isTexturedMesh
+  isTexturedMesh,
 }: TToolBarWrapper) {
   return (
     <TooltipProvider>
