@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.1.69](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.68...buu-fun-v0.1.69) (2025-06-09)
+
+
+### ✨ Features
+
+* added new config for sentry and global-error.ts file ([b0cba84](https://github.com/Buu-AI/buu-fun/commit/b0cba841cc430e0f8b30413618b24806e3acecda))
+* added new payload parse confirmation ([7a88e07](https://github.com/Buu-AI/buu-fun/commit/7a88e077ca7b6848ddcb1b11f290fbafb04430fb))
+* added new payload viewer ([96f62fa](https://github.com/Buu-AI/buu-fun/commit/96f62fa095c0eec19904ad664191d715690749e8))
+* added new payload viewer ([8ab0c03](https://github.com/Buu-AI/buu-fun/commit/8ab0c0306e7730827bfcba1a94fb2fc8cd4815e8))
+* added sentry ([f6e6069](https://github.com/Buu-AI/buu-fun/commit/f6e606920d53a5abfa9ece239dbb0f160bd9a279))
+* added sentry ([ba96a05](https://github.com/Buu-AI/buu-fun/commit/ba96a05c2c11f5dbd73b1bfd94b8d67a15216e7d))
+
+
+### 🐛 Bugfixes
+
+* removed unused variables fro tool-show-detail ([00c78d8](https://github.com/Buu-AI/buu-fun/commit/00c78d8d2961a79a09dedcd65f51c998c68e46e0))
+
+
+### 👽 Miscellaneous
+
+* **lint:** linted and formatted the codebase ([fef00d4](https://github.com/Buu-AI/buu-fun/commit/fef00d4ae6323304a2949734fb31b45f5558647e))
+
 ## [0.1.68](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.67...buu-fun-v0.1.68) (2025-06-09)
 
 
