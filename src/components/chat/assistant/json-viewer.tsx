@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { ChevronDown, ChevronRight, Copy } from "lucide-react";
 
 interface JsonViewerProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
   maxHeight?: string;
   className?: string;
 }
 
 interface JsonValueProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any;
   keyName: string;
   path?: string;
@@ -37,6 +39,7 @@ export default function JsonViewer({
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getValueType = (val: any): ValueType => {
     if (val === null) return "null";
     if (Array.isArray(val)) return "array";
@@ -144,6 +147,7 @@ export default function JsonViewer({
     }
 
     if (valueType === "array") {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const arrayValue = value as any[];
 
       return (
@@ -167,6 +171,7 @@ export default function JsonViewer({
 
           {isExpanded && (
             <div className="border-l-2 border-border pl-4">
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
               {arrayValue.map((item: any, index: number) => (
                 <JsonValue
                   key={index}
@@ -183,6 +188,7 @@ export default function JsonViewer({
     }
 
     if (valueType === "object") {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const objectValue = value as Record<string, any>;
       const keys: string[] = Object.keys(objectValue);
 
