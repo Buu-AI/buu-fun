@@ -1,5 +1,67 @@
 # Changelog
 
+## [0.1.68](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.67...buu-fun-v0.1.68) (2025-06-09)
+
+
+### ✨ Features
+
+* added added updates and shadow to model viewer ([fd5ece2](https://github.com/Buu-AI/buu-fun/commit/fd5ece283ef639223b8c04546381022d568f7ff0))
+* added helpers to recieve models based on its priority ([a38e775](https://github.com/Buu-AI/buu-fun/commit/a38e775ba75c84b86286cb974a8d5c9ccc93de4b))
+* added model generation progression header ([4984785](https://github.com/Buu-AI/buu-fun/commit/49847850f59dde6a15094e32af1c2f5cf5e57fc5))
+* added model-updated and  tool-request-updated event hooks and redux state ([a7d812e](https://github.com/Buu-AI/buu-fun/commit/a7d812e5dba5254c1daa20ff01991b423d69bb19))
+* added new api to support boards ([878b378](https://github.com/Buu-AI/buu-fun/commit/878b37853aa93238843cc3d1ae958b6207faa6c7))
+* added new api variables to support NFT generation ([65ea31d](https://github.com/Buu-AI/buu-fun/commit/65ea31dc030dcdffd762ae291b27258b93de418a))
+* added new assets and styles, svgs for loaders and generations ([8e2d30c](https://github.com/Buu-AI/buu-fun/commit/8e2d30c4cf3614134a8860cb369385c3f8b7514e))
+* added new chat types to assistant tool and user messages ([6cfd9e2](https://github.com/Buu-AI/buu-fun/commit/6cfd9e2619ee8eeafcd1343ecf24920611657de5))
+* added new chat-form apis ([fa3f880](https://github.com/Buu-AI/buu-fun/commit/fa3f8805dfc25bbdaba03f59fcde48be6ba6a884))
+* added new chat-message mock data for testing ([2900b6d](https://github.com/Buu-AI/buu-fun/commit/2900b6d5c378531b672ca8071c6df89e3862f656))
+* added new chat-types and event source ([dfc5859](https://github.com/Buu-AI/buu-fun/commit/dfc5859079ffd094bf0d00073c224664ea77afe4))
+* added new gql message query and types ([c82049d](https://github.com/Buu-AI/buu-fun/commit/c82049dd8368d5f216748e15b489eb8b99d2a7ed))
+* added new gql query for nft and removed genRequestId ([1218e00](https://github.com/Buu-AI/buu-fun/commit/1218e0015f220420f300be6ca5763a653cd5ddf4))
+* added new image renderer and toolbars ([ed71810](https://github.com/Buu-AI/buu-fun/commit/ed718103d09a194916233633487947696a5888ca))
+* added new imageId for image to model generation tool call ([7696a5b](https://github.com/Buu-AI/buu-fun/commit/7696a5bf330ec24e7f6128949f028fdc37a8890e))
+* added new nft query and nft view component ([bbe24c1](https://github.com/Buu-AI/buu-fun/commit/bbe24c117e6a10eda4443c38c0df1baaee3b2bdc))
+* added new progress circle svg animation ([db542f3](https://github.com/Buu-AI/buu-fun/commit/db542f386ad5db34d402253fe5836e1553d56301))
+* added new tool call cancel and approve button ctx ([e28d839](https://github.com/Buu-AI/buu-fun/commit/e28d83947991c75c6727882c96c1adee2328c633))
+* added new tool generation status and model tool headers ([b65a64f](https://github.com/Buu-AI/buu-fun/commit/b65a64f1e8090c230f7997314a34ccf6cdeafb29))
+* added new tool message ([f4f6c5b](https://github.com/Buu-AI/buu-fun/commit/f4f6c5b3f3ef6278407744924e4e350c9116ee73))
+* added new toolbar tips for generations and maximize ([cb96bb5](https://github.com/Buu-AI/buu-fun/commit/cb96bb50e7781f407ad025e6dbe78d10159a12bd))
+* added new types for assistant message ([4e973cf](https://github.com/Buu-AI/buu-fun/commit/4e973cf9871b1f3a955d638bea45f14573008243))
+* added new v3 chat message prepare function and loader ([6a8cb6d](https://github.com/Buu-AI/buu-fun/commit/6a8cb6d566789c36c4f5865f700ab6f9834666bf))
+* added new v3 session apis ([6b9bd0b](https://github.com/Buu-AI/buu-fun/commit/6b9bd0bda7a76983cc3455342ca74474e1a26808))
+* added nft redirects and enable the button ([0cc734c](https://github.com/Buu-AI/buu-fun/commit/0cc734c9e066e22a0e8e1f39b9d2d77ecbb93f0e))
+* added scroll down to bottom hook and button ([a649516](https://github.com/Buu-AI/buu-fun/commit/a64951614eda324d1f295fb754d4bdcda5b63fd2))
+* added type utils function ([0c7e9e3](https://github.com/Buu-AI/buu-fun/commit/0c7e9e3a53ca4ae509ebca6ad05ba5076a6a7ece))
+* updated generated model rendering card ([ef6e726](https://github.com/Buu-AI/buu-fun/commit/ef6e726d45a2e95240ae92ad620bb7ad7cedfa83))
+* updated gql queries for new chat messages ([3c07739](https://github.com/Buu-AI/buu-fun/commit/3c0773955ff3012da63e7445ee1656478c9bca64))
+* updated the image renderer to accomodate new media types for renderingm ([66df6d6](https://github.com/Buu-AI/buu-fun/commit/66df6d60df57cece0e484c4ecac1d0f724f9b8dd))
+
+
+### 🐛 Bugfixes
+
+* added AI is thinking loader in chat screen ([04947b7](https://github.com/Buu-AI/buu-fun/commit/04947b7b9f25b4f55bf235c10c6ce105f9689e3d))
+* added smooth animation for magic want loader ([1f4500d](https://github.com/Buu-AI/buu-fun/commit/1f4500d1ca55757470b521a77e49ce2eaf8321f9))
+* change imageUrl from nft modelId ([c926f7c](https://github.com/Buu-AI/buu-fun/commit/c926f7c986b8e9c3abc356e7b5886f1469ca3ac5))
+* changed nft modal to support new api vars ([85d67e0](https://github.com/Buu-AI/buu-fun/commit/85d67e0b9912982e13cd194352f5ee03729f31c2))
+* disabled nft button if textured model is not presented ([759886a](https://github.com/Buu-AI/buu-fun/commit/759886ab90cdd2140bb09c7f6f8491481195b94d))
+* disabled nft button if textured model is not presented ([8ce2cbd](https://github.com/Buu-AI/buu-fun/commit/8ce2cbd3956095f3f25070a1ea62077b3a09fabc))
+* fixed new types for toolRequestStatus ([5d28ce4](https://github.com/Buu-AI/buu-fun/commit/5d28ce41fade8eeefe1080dff23e403fb57ff9ff))
+* migrated model.toolRequest to message.toolRequest ([65b6a39](https://github.com/Buu-AI/buu-fun/commit/65b6a3947cc9f6167ca02e9c634b7bdfb251b8a4))
+* removed deprecated utils for chat-messages redux ([f6ff701](https://github.com/Buu-AI/buu-fun/commit/f6ff70108c1729c150f433137fac36bffe4d2aa3))
+* removed staking information from portfolio page ([9b17436](https://github.com/Buu-AI/buu-fun/commit/9b17436678330f704976fdcd8ace0b074102837a))
+* removed tone mapping and lighting from the scene ([212fd19](https://github.com/Buu-AI/buu-fun/commit/212fd193b6626127a8d752fa14c9eaa5648f3c9c))
+* **typo:** changed persentage -&gt; percentage ([7c1d81a](https://github.com/Buu-AI/buu-fun/commit/7c1d81a8e5ab6be83371294812040ffccfddb60e))
+* updated import location for GQL function for user queries ([c48be62](https://github.com/Buu-AI/buu-fun/commit/c48be622ee9405b6068dacd1c375b049196bcef2))
+* updated to new type and model generation variables ([f7d58cf](https://github.com/Buu-AI/buu-fun/commit/f7d58cf546b494f8d68f10fefbd400ae80a30909))
+* updated to new type and model generation variables ([d6c2108](https://github.com/Buu-AI/buu-fun/commit/d6c2108d31f59811710b90f6b0d091cfdb514208))
+
+
+### 👽 Miscellaneous
+
+* **lint:** linted and formatted the codebase ([d78f789](https://github.com/Buu-AI/buu-fun/commit/d78f7899bceae650756be7655f975a2645b56252))
+* **lint:** linted and formatted the codebase ([f487991](https://github.com/Buu-AI/buu-fun/commit/f487991f7f8aa2072dd3a9098acc2d399cc7ef04))
+* **mock:** added mock data for testing and rendering ([fe0b8d8](https://github.com/Buu-AI/buu-fun/commit/fe0b8d8fa5f0018cefd31d394065e62c783f2e97))
+
 ## [0.1.67](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.66...buu-fun-v0.1.67) (2025-05-31)
 
 
