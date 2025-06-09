@@ -4,8 +4,9 @@ import { getEventSource } from "@/lib/fetcher/events/event-sourcer";
 import { handleEventSource } from "@/lib/helpers/eventsource/chat";
 import {
   appendAIChatMessage,
-  clearMessages,
   handleMessageUpdates,
+  updateMessageModel,
+  updateMessageToolRequest,
 } from "@/lib/redux/features/chat";
 import { parseJson } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
@@ -58,6 +59,17 @@ export default function ChatMessageEventProvider({
             ...data,
             message,
           });
+          return;
+        }
+        case "model-updated": {
+          const model = data.payload;
+          dispatch(updateMessageModel(model));
+          break;
+        }
+        case "tool-request-updated": {
+          const tool = data.payload;
+          dispatch(updateMessageToolRequest(tool));
+          break;
         }
       }
     };
@@ -68,7 +80,6 @@ export default function ChatMessageEventProvider({
     });
     return () => {
       eventSource.close();
-      dispatch(clearMessages());
     };
   }, [sessionId, accessToken, slug, dispatch, queryClient]);
   return null;

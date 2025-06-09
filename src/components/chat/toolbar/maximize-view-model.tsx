@@ -20,7 +20,7 @@ const ModelViewer = dynamic(() => import("../../generation/model-viewer"), {
 
 export default function MaximizeViewModel() {
   const maximizedContainer = useAppSelector(
-    (state) => state.chat.maximizedContainer,
+    (state) => state.chat.maximizedContainer
   );
   const { isOpened, data } = maximizedContainer;
 
@@ -35,7 +35,7 @@ export default function MaximizeViewModel() {
           dispatch(
             setMaximizedViewer({
               isOpened: false,
-            }),
+            })
           );
           return;
         }
@@ -53,7 +53,11 @@ export default function MaximizeViewModel() {
             This request will generate a 3D model from this image.
           </DialogDescription>
         </DialogHeader>
-        <div className={cn("flex   max-md:max-h-max   rounded-lg w-full h-full  mx-auto max-w-[100%]")}>
+        <div
+          className={cn(
+            "flex   max-md:max-h-max   rounded-lg w-full h-full  mx-auto max-w-[100%]"
+          )}
+        >
           {data?.type === "image" ? (
             <div className="h-full w-full max-h-[90dvh]">
               <Image
@@ -69,11 +73,14 @@ export default function MaximizeViewModel() {
                   className="w-full justify-center"
                   imageUrl={data.imageUrl}
                   messageId=""
+                  imageId={data.imageId}
                   // messageId={"messageId"}
                   modelUrl={data.modelUrl}
                   role={"assistant"}
                   disabled={{
                     MAXIMIZE_VIEW: true,
+                    EDIT_IMAGE: true,
+                    GENERATE_NFT: true,
                   }}
                 />
               </div>
@@ -92,11 +99,14 @@ export default function MaximizeViewModel() {
                   type="model"
                   imageUrl={data?.imageUrl}
                   modelUrl={data?.modelUrl}
+                  imageId={null}
+                  modelId={data.modelId}
                   messageId={data?.messageId ?? ""}
                   nftId={data?.nftId}
                   tokenized={data?.tokenized}
                   disabled={{
                     MAXIMIZE_VIEW: true,
+                    GENERATE_NFT: data.isTexturedMesh,
                   }}
                 />
               </div>

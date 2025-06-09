@@ -9,7 +9,7 @@ import {
   GetTokenHistoricalPriceQuery,
   GetTokenOverviewQuery,
   GetPrices,
-} from "@/gql/documents/creative-engine";
+} from "@/gql/documents/pricing";
 import { TBuuPricingTime } from "../redux/features/buu-pricing";
 
 export async function getHistoricalPricingResult({

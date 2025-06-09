@@ -1,10 +1,7 @@
 // import { GetMyCreditsQuery } from "@/gql/documents/creative-engine";
 
 import { serverRequest } from "@/gql/client";
-import {
-  GetMyCreditsQuery,
-  RedeemVoucherMutation,
-} from "@/gql/documents/creative-engine";
+import { GetMyCreditsQuery, RedeemVoucherMutation } from "@/gql/documents/user";
 
 import {
   GetMyCreditsQueryVariables,

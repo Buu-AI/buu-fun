@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { TMessageStatus } from "@/types/chat/chat-types";
 
 type TToolCallHeaderMessage = {
-  status: TMessageStatus;
+  status?: TMessageStatus;
   prompt?: string | null;
 };
 
@@ -11,6 +11,7 @@ export default function ToolCallHeaderMessage({
   prompt,
 }: TToolCallHeaderMessage) {
   const headerDetails = getToolMessage(status);
+  if (!headerDetails) return null;
   return (
     <p
       className={cn(
@@ -19,7 +20,7 @@ export default function ToolCallHeaderMessage({
           "text-buu-destructive": headerDetails?.isFailed,
           "text-white": headerDetails.isSuccess,
           "text-muted-foreground/70 animate-pulse": headerDetails.isPending,
-        }
+        },
       )}
     >
       {prompt ?? headerDetails?.text}
@@ -33,49 +34,46 @@ type TGetToolMessage = {
   isSuccess?: boolean;
   isPending?: boolean;
 };
-function getToolMessage(status: TMessageStatus): TGetToolMessage {
+function getToolMessage(status?: TMessageStatus): TGetToolMessage | null {
   switch (status) {
-    case "IN_QUEUE": {
-      return {
-        text: "The request is in queue",
-      };
-    }
+    // case "IN_QUEUE": {
+    //   return {
+    //     text: "The request is in queue",
+    //   };
+    // }
     case "PENDING": {
       return {
-        text: "I'm gonna generate a 3D Model",
-        isPending: true,
-      };
-    }
-    case "IN_PROGRESS": {
-      return {
         text: "Approve request to generate your model",
-        // change if there is specific use-case
         isPending: true,
       };
     }
-    case "FAILED": {
-      return {
-        // text: "The request for generating the 3D Model has been failed.",
-        text: "",
-        isFailed: true,
-      };
-    }
-    case "COMPLETED": {
-      return {
-        text: "3D model generated",
-        isSuccess: true,
-      };
-    }
-    case "CANCELLED": {
-      return {
-        text: "User has canceled the request",
-        isCanceled: true,
-      };
-    }
+    // case "IN_PROGRESS": {
+    //   return {
+    //     text: "I'm gonna generate a 3D Model",
+    //     isPending: true,
+    //   };
+    // }
+    // case "FAILED": {
+    //   return {
+    //     // text: "The request for generating the 3D Model has been failed.",
+    //     text: "",
+    //     isFailed: true,
+    //   };
+    // }
+    // case "COMPLETED": {
+    //   return {
+    //     text: "3D model generated",
+    //     isSuccess: true,
+    //   };
+    // }
+    // case "CANCELLED": {
+    //   return {
+    //     text: "User has canceled the request",
+    //     isCanceled: true,
+    //   };
+    // }
     default: {
-      return {
-        text: "I'm gonna generate a 3D Model",
-      };
+      return null;
     }
   }
 }

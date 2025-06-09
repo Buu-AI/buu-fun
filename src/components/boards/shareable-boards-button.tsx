@@ -213,9 +213,7 @@ export default function ShareableBoardsButton() {
               </>
             ) : (
               <>
-                {!isCreateNewBoardPending
-                  ? "Update & Copy Link"
-                  : "updating"}
+                {!isCreateNewBoardPending ? "Update & Copy Link" : "updating"}
               </>
             )}
           </Button>

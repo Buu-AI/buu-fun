@@ -2,7 +2,7 @@ export {};
 
 declare module "*.glb";
 declare module "*.png";
-
+declare module "*.hdr";
 declare module "meshline" {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   export const MeshLineGeometry: any;

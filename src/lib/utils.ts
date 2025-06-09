@@ -7,6 +7,7 @@ import {
 import { Plans } from "@/constants/subscription/subscription-plans";
 import { StripeSubscriptionPlanKeys } from "@/gql/types/graphql";
 import { TryCatch } from "@/types";
+import { TVector3, TVector3Positions } from "@/types/stage/objects";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { DataMuseError } from "./class/data-muse-error";
@@ -269,4 +270,44 @@ export function hasDatePassedThreshold(date: string, thresholdInMs: number) {
 export function getRandomElement<T>(arr: T[]): T {
   const randomIndex = Math.floor(Math.random() * arr.length);
   return arr[randomIndex];
+}
+
+export function isNumberRegex(value: string) {
+  if (/^-?\d*\.?\d*$/.test(value)) {
+    return true;
+  }
+  return false;
+}
+
+export function getX(value: TVector3) {
+  return value[0];
+}
+
+export function getY(value: TVector3) {
+  return value[1];
+}
+
+export function getZ(value: TVector3) {
+  return value[2];
+}
+
+export function getMappedPosition(
+  position: TVector3Positions,
+  value: TVector3,
+) {
+  switch (position) {
+    case "x": {
+      return getX(value);
+    }
+    case "y": {
+      return getY(value);
+    }
+    case "z": {
+      return getZ(value);
+    }
+  }
+}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isTypeNumber(value: any) {
+  return typeof value === "number";
 }

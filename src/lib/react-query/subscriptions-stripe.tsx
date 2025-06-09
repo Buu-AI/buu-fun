@@ -3,7 +3,7 @@ import { serverRequest } from "@/gql/client";
 import {
   GetSubscriptionPaymentLinkQuery,
   GenerateCustomPortalSessionQuery,
-} from "@/gql/documents/creative-engine";
+} from "@/gql/documents/stripe";
 import {
   GenerateSubscriptionPaymentLinkQuery,
   GenerateSubscriptionPaymentLinkQueryVariables,

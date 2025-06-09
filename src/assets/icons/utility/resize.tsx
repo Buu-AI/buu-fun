@@ -1,0 +1,48 @@
+export default function Resize() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+    >
+      <rect
+        x="0.275391"
+        y="0.137695"
+        width="17.7246"
+        height="17.7246"
+        rx="3.79813"
+        fill="currentColor"
+        fillOpacity="0.4"
+      />
+      <rect
+        x="0.604562"
+        y="0.466866"
+        width="17.0663"
+        height="17.0663"
+        rx="3.46896"
+        stroke="currentColor"
+        strokeOpacity="0.08"
+        strokeWidth="0.658342"
+      />
+      <rect
+        y="8.00879"
+        width="9.85263"
+        height="9.85263"
+        rx="2.11128"
+        fill="currentColor"
+      />
+      <rect
+        x="0.182977"
+        y="8.19177"
+        width="9.48668"
+        height="9.48668"
+        rx="1.9283"
+        stroke="currentColor"
+        strokeOpacity="0.08"
+        strokeWidth="0.365955"
+      />
+    </svg>
+  );
+}

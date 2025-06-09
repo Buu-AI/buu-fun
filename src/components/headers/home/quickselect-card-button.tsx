@@ -50,7 +50,7 @@ export default function HeaderQuickSelectButton() {
 
     onSuccess(data) {
       dispatch(clearInput());
-      const sessionId = data?.items[0].sessionId;
+      const sessionId = data?.messages?.[0]?.sessionId;
       router.push(`/app/chat/${sessionId}`);
     },
     onError(error) {

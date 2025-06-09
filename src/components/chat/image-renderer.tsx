@@ -1,7 +1,7 @@
 "use client";
 import { isToolCallInProgress } from "@/lib/helpers/status-checker";
 import { cn } from "@/lib/utils";
-import { TMessageStatus } from "@/types/chat/chat-types";
+import { TChatMessage, TMessageStatus } from "@/types/chat/chat-types";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import ImageToolbar from "./toolbar/user-tool-bar";
@@ -9,21 +9,21 @@ import { useAppDispatch } from "@/hooks/redux";
 import { setMaximizedViewer } from "@/lib/redux/features/chat";
 type TImageRenderer = {
   role: "user" | "assistant";
-  imageUrls: string[];
-  text?: string;
+  medias: TChatMessage["medias"];
+  prompt?: string;
   className?: string;
   messageId: string;
   containerClassName?: string;
-  status: TMessageStatus;
+  status?: TMessageStatus;
 };
 export default function ImageRenderer({
-  imageUrls,
-  text,
+  prompt,
   className,
   containerClassName,
   role = "user",
   messageId,
   status,
+  medias,
 }: TImageRenderer) {
   const isGenerating = isToolCallInProgress(status);
   const dispatch = useAppDispatch();
@@ -31,14 +31,14 @@ export default function ImageRenderer({
     <motion.div
       className={cn(
         "flex mt-2 justify-end gap-2 flex-wrap",
-        containerClassName
+        containerClassName,
       )}
     >
-      {imageUrls && imageUrls.length > 0
-        ? imageUrls.map((item, index) => {
+      {medias && medias.length > 0
+        ? medias.map((item, index) => {
             return (
               <motion.div
-                key={`${text}-${item}`}
+                key={`${prompt}-${item}`}
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{
                   scale: 1,
@@ -68,17 +68,18 @@ export default function ImageRenderer({
                         isOpened: true,
                         data: {
                           type: "image",
-                          imageUrl: item ?? "",
+                          imageUrl: item.url ?? "",
                           modelUrl: "",
+                          imageId: item._id,
                         },
-                      })
+                      }),
                     );
                   }}
                   className="rounded-md overflow-hidden gap-2"
                 >
                   <Image
-                    src={item}
-                    alt={`${text ?? ""}`}
+                    src={item.url ?? "/background.png"}
+                    alt={`${prompt ?? ""}`}
                     width={250}
                     height={250}
                     className={cn(
@@ -86,7 +87,7 @@ export default function ImageRenderer({
                       className,
                       {
                         "blur-md": isGenerating,
-                      }
+                      },
                     )}
                   />
                 </button>
@@ -113,9 +114,13 @@ export default function ImageRenderer({
                 >
                   {isToolCallInProgress(status) ? null : (
                     <ImageToolbar
-                      imageUrl={item}
+                      imageId={item._id}
+                      imageUrl={item.url}
                       messageId={messageId}
                       role={role}
+                      disabled={{
+                        EDIT_IMAGE: true,
+                      }}
                     />
                   )}
                 </motion.div>

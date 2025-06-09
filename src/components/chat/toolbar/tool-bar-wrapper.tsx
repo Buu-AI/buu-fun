@@ -23,7 +23,10 @@ type TToolBarWrapper = {
   tokenized?: boolean;
   type: "image" | "model";
   role?: "user" | "assistant";
+  imageId: MaybeString;
   disabled?: TDisabledToolbar;
+  modelId: MaybeString;
+  isTexturedMesh?: boolean
 };
 
 export default function ToolBarWrapper({
@@ -34,6 +37,9 @@ export default function ToolBarWrapper({
   imageUrl,
   type,
   disabled,
+  modelId,
+  imageId,
+  isTexturedMesh
 }: TToolBarWrapper) {
   return (
     <TooltipProvider>
@@ -52,12 +58,12 @@ export default function ToolBarWrapper({
               tool={item}
               url={type === "image" ? imageUrl : modelUrl}
               index={index}
-              key={`tool-tip-contents-${item.content.trim()}-${index}`}
+              key={`tool-tip-contents-${item.content.trim()}`}
             />
           );
         }
 
-        if (item.type === "GENERATE_NFT" && !disabled?.GENERATE_MODEL) {
+        if (item.type === "GENERATE_NFT" && !disabled?.GENERATE_NFT) {
           return (
             <ToolTipGenerateNft
               messageId={messageId}
@@ -66,9 +72,10 @@ export default function ToolBarWrapper({
               modelUrl={modelUrl}
               nftId={nftId}
               tokenized={tokenized}
+              modelId={modelId}
               imageUrl={imageUrl}
               index={index}
-              key={`tool-tip-contents-${item.content.trim()}-${index}`}
+              key={`tool-tip-contents-${item.content.trim()}`}
             />
           );
         }
@@ -79,19 +86,20 @@ export default function ToolBarWrapper({
               length={ChatToolTips.length}
               imageUrl={imageUrl}
               index={index}
-              key={`tool-tip-contents-${item.content.trim()}-${index}`}
+              key={`tool-tip-contents-${item.content.trim()}`}
             />
           );
         }
         if (item.type === "GENERATE_MODEL" && !disabled?.GENERATE_MODEL) {
           return (
             <ToolTipGenerateModel
+              imageId={imageId}
               length={ChatToolTips.length}
               toolTipData={item}
               modelUrl={modelUrl}
               imageUrl={imageUrl}
               index={index}
-              key={`tool-tip-contents-${item.content.trim()}-${index}`}
+              key={`tool-tip-contents-${item.content.trim()}`}
             />
           );
         }
@@ -100,14 +108,17 @@ export default function ToolBarWrapper({
             <ToolTipMaximize
               length={ChatToolTips.length}
               type={type}
+              imageId={imageId}
               index={index}
-              key={`tool-tip-contents-${item.content.trim()}-${index}`}
+              key={`tool-tip-contents-${item.content.trim()}`}
               imageUrl={imageUrl}
               messageId={messageId}
+              modelId={modelId}
               modelUrl={modelUrl}
               tool={item}
               nftId={nftId}
               tokenized={tokenized}
+              isTexturedMesh={isTexturedMesh}
             />
           );
         }
