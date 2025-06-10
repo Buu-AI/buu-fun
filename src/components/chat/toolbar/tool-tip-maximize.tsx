@@ -23,6 +23,7 @@ type TToolTipMaximize = {
   tokenized?: boolean;
   modelId: MaybeString;
   imageId: MaybeString;
+  isTexturedMesh?: boolean;
 };
 
 export default function ToolTipMaximize({
@@ -36,6 +37,7 @@ export default function ToolTipMaximize({
   tokenized = false,
   modelId,
   imageId,
+  isTexturedMesh,
 }: TToolTipMaximize) {
   const dispatch = useAppDispatch();
   return (
@@ -74,6 +76,7 @@ export default function ToolTipMaximize({
                       messageId: messageId ?? "",
                       modelUrl: modelUrl ?? "",
                       tokenized: tokenized,
+                      isTexturedMesh: isTexturedMesh ?? false,
                       modelId,
                     },
                   }),

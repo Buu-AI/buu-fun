@@ -154,8 +154,7 @@ export const GetMessages = gql`
             nfts {
               _id
               teamId
-              genRequestId
-              messageId
+
               modelId
               status
               metadata {
@@ -250,16 +249,14 @@ export const CancelToolRequest = gql`
 
 export const GenerateModelFromImageMutation = gql`
   mutation GenerateModelFromImage(
+    $imageUrl: String!
+    $options: Options
     $sessionId: String
-    $numberOfModels: Float
-    $imageId: String!
-    $texturized: Boolean
   ) {
     generateModelFromImage(
+      imageUrl: $imageUrl
+      options: $options
       sessionId: $sessionId
-      numberOfModels: $numberOfModels
-      imageId: $imageId
-      texturized: $texturized
     ) {
       ... on ToolRequestConfirmation {
         messages {
@@ -389,8 +386,6 @@ export const GenerateModelFromImageMutation = gql`
             nfts {
               _id
               teamId
-              genRequestId
-              messageId
               modelId
               status
               metadata {
@@ -468,16 +463,14 @@ export const EditModelMutation = gql`
   mutation EditModel(
     $modelId: String!
     $edit: String!
+    $options: Options
     $sessionId: String
-    $numberOfModels: Float
-    $texturized: Boolean
   ) {
     editModel(
       modelId: $modelId
       edit: $edit
+      options: $options
       sessionId: $sessionId
-      numberOfModels: $numberOfModels
-      texturized: $texturized
     ) {
       ... on ToolRequestConfirmation {
         messages {
@@ -607,8 +600,7 @@ export const EditModelMutation = gql`
             nfts {
               _id
               teamId
-              genRequestId
-              messageId
+
               modelId
               status
               metadata {
@@ -686,11 +678,13 @@ export const SendChatMessage = gql`
   mutation SendMessage(
     $sessionId: String!
     $content: String!
+    $options: Options
     $imageUrls: [String!]
   ) {
     sendMessage(
       sessionId: $sessionId
       content: $content
+      options: $options
       imageUrls: $imageUrls
     ) {
       ... on Messages {
@@ -821,8 +815,7 @@ export const SendChatMessage = gql`
             nfts {
               _id
               teamId
-              genRequestId
-              messageId
+
               modelId
               status
               metadata {

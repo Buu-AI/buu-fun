@@ -22,3 +22,8 @@ export function getModelMessagesAndPercentage(
     status: toolRequest?.status,
   };
 }
+
+export function isTexturedMeshReady(item: Model) {
+  if (item.texturedMesh?.url) return true;
+  return false;
+}

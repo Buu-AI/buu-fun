@@ -82,6 +82,7 @@ export default function ModelViewer({
         alt={alt}
         rotation-per-second="12deg"
         auto-rotate-delay={2}
+        tone-mapping="none"
         // shadow-intensity={5}
         loading="eager"
         // exposure={1}
@@ -91,7 +92,7 @@ export default function ModelViewer({
         interaction-prompt="none"
         ar
       >
-        <div className="lighting" slot="lighting">
+        {/* <div className="lighting" slot="lighting">
           <div
             className="lighting-point"
             // style="transform: translate3d(10m, 10m, 10m)"
@@ -113,7 +114,7 @@ export default function ModelViewer({
             }}
             // style="transform: translate3d(-10m, 10m, -10m)"
           ></div>
-        </div>
+        </div> */}
         {poster ? (
           <div
             id="lazy-load-poster"

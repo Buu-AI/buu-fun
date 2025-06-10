@@ -1,9 +1,10 @@
 "use client";
 import ChevronArrow from "@/assets/icons/chevron-arrow";
-import React, { useState, useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { capitalizeFirstLetter, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { PromptPayload } from "@/types/chat/chat-types";
+import { gsap } from "gsap";
+import { useEffect, useRef, useState } from "react";
+import JsonViewer from "./json-viewer";
 type TAssistantMessageShowDetailToolCall = {
   payload: PromptPayload;
 };
@@ -78,7 +79,6 @@ export default function AssistantMessageShowDetailToolCall({
   const toggleDetails = () => {
     setIsOpen(!isOpen);
   };
-  const payloadKeys = typeof payload === "object" ? Object.keys(payload) : [];
 
   return (
     <div className="">
@@ -104,46 +104,7 @@ export default function AssistantMessageShowDetailToolCall({
         }}
       >
         <div ref={contentRef} className="px-5 py-5">
-          {payloadKeys && payloadKeys.length
-            ? payloadKeys.map((item, index) => {
-                return (
-                  <div key={`plan-key-${item}-${index}`}>
-                    <p className="text-muted-foreground/80 font-medium">
-                      {capitalizeFirstLetter(item)}
-                    </p>
-                    <p className="">
-                      <span className="text-sm">
-                        <span></span>
-                        {payload[item]}
-                        <span></span>
-                      </span>
-                    </p>
-                  </div>
-                );
-              })
-            : null}
-          {/* <p className="text-muted-foreground/80 font-medium">Prompt</p>
-          <p className="">
-            <span className="">
-              <span>“</span>
-              {toolPrompt}
-              <span>”</span>
-            </span>
-          </p>
-          <div
-            className={cn({
-              hidden: !style || !style.length,
-            })}
-          >
-            <p className="text-muted-foreground/80 font-normal mt-4 leading-none">
-              Style:
-            </p>
-            <p>
-              {"“"}
-              {style}
-              {"”"}
-            </p>
-          </div> */}
+          <JsonViewer data={payload} maxHeight="30rem" />
         </div>
       </div>
     </div>

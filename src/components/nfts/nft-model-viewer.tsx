@@ -18,7 +18,7 @@ export default function NFTModelViewer({
 }: TNFTModelViewer) {
   return (
     <div className=" flex h-full basis-[60%]  items-center justify-center">
-      <div className="flex max-h-[calc(100vh-200px)]  w-full border rounded-2xl  aspect-[14/16] max-auto">
+      <div className="flex max-h-[calc(100vh-200px)] overflow-hidden w-full border rounded-2xl  aspect-[14/16] max-auto">
         <ModelViewer
           src={modelUrl ?? ""}
           alt={description ?? ""}

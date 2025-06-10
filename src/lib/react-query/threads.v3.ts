@@ -88,7 +88,6 @@ export async function getMessages({
   if ("code" in data.getMessages) {
     throw new Error("Failed to fetch data");
   }
-  console.log("GET:MESSAGES:", data);
   return data.getMessages;
 }
 
@@ -259,7 +258,7 @@ type TGenerateModelFromImageParams = GenerateModelFromImageMutationVariables &
 
 export async function generateModelFromImageMutation({
   accessToken,
-  imageId,
+  imageUrl,
   sessionId,
 }: TGenerateModelFromImageParams) {
   try {
@@ -269,7 +268,7 @@ export async function generateModelFromImageMutation({
     >(
       GenerateModelFromImageMutation,
       {
-        imageId,
+        imageUrl,
         sessionId,
         numberOfModels: 1,
       },

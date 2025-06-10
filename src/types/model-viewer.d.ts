@@ -180,7 +180,7 @@ declare module "@google/model-viewer" {
     /**
      * Selects the function that compresses the HDR rendering to an SDR image on your screen. ACES is a film industry standard that is commonly used, though it has serious color-accuracy problems. AgX is a new and improved tone mapper seeing broad adoption in film and games.Commerce is a function designed specifically for accurate color reproduction in e-commerce. Our current default is and has been ACES, but in v4.0 this default will change to Commerce.
      */
-    "tone-mapping"?: "aces" | "agx" | "commerce";
+    "tone-mapping"?: "aces" | "agx" | "commerce" | string;
     /**
      * Controls the opacity of the shadow. Set to 0 to turn off the shadow entirely.
      */

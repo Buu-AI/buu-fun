@@ -85,7 +85,7 @@ export default function ProfilePage() {
             <div className="text-2xl font-medium blue-text-clip">
               <p>
                 {!subscription
-                  ? "Free Plan"
+                  ? "Free"
                   : capitalizeFirstLetter(subscription.planKey)}
               </p>
             </div>

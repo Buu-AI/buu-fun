@@ -12,7 +12,6 @@ export function useChatMessage({
   limit?: number;
 }) {
   const { identityToken } = useAuthentication();
-  // const lastJobActiveTimestamp = useRef<number | null>(null);
 
   return useInfiniteQuery({
     queryKey: ["get-messages", sessionId, identityToken],

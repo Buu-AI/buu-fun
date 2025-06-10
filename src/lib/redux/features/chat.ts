@@ -67,7 +67,7 @@ const ChatSlice = createSlice({
       state.genNft.messageId = action.payload.messageId;
       state.genNft.modelUrl = action.payload.modelUrl;
       state.genNft.imageUrl = action.payload.imageUrl;
-      state.genNft.modelId = action.payload.imageUrl;
+      state.genNft.modelId = action.payload.modelId;
     },
     setInputFile(state, action: PayloadAction<TImageData>) {
       const fileLength = state.inputFile.length < 4;

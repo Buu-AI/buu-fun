@@ -22,14 +22,16 @@ export default function ToolCallCancelButton({
     useMutation({
       mutationFn: cancelToolCall,
       async onSuccess(data) {
-        toast.loading("Canceling Generation", { duration: 8000 });
         const sessionId = data.sessionId;
+        toast.dismiss();
         await queryClient.invalidateQueries({
           exact: false,
           queryKey: ["get-messages", sessionId],
         });
       },
       onError(error) {
+        toast.dismiss();
+
         if (error instanceof TypedAppError) {
           switch (error.code) {
             case "CREDIT_NOT_FOUND": {
@@ -49,6 +51,8 @@ export default function ToolCallCancelButton({
 
   function handleCancelMessage() {
     const accessToken = identityToken ?? "";
+    toast.loading("Canceling Generation", { duration: 3400 });
+
     cancelToolMessage({ accessToken, requestId });
   }
   return (

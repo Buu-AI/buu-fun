@@ -70,7 +70,7 @@ export default function ModelGenerationModal() {
       return;
     }
 
-    if (!imageId) {
+    if (!imageUrl) {
       toast.error("Please select a valid Image");
       return;
     }
@@ -81,7 +81,7 @@ export default function ModelGenerationModal() {
     mutate({
       accessToken,
       sessionId,
-      imageId,
+      imageUrl,
     });
   }
   return (
