@@ -1,3 +1,5 @@
+import { compareDate } from "@/lib/utils";
+import { MaybeString } from "@/types";
 import { TModelState } from "@/types/stage/objects";
 import { nanoid } from "@reduxjs/toolkit";
 
@@ -16,6 +18,7 @@ export const INITIAL_STAGING_MODELS: TModelState[] = [
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
     visible: true,
+    extraLights: true,
   },
   {
     type: "url",
@@ -26,6 +29,7 @@ export const INITIAL_STAGING_MODELS: TModelState[] = [
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
     visible: true,
+    extraLights: true,
   },
   {
     id: "1-2-31-44324",
@@ -36,6 +40,7 @@ export const INITIAL_STAGING_MODELS: TModelState[] = [
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
     visible: true,
+    extraLights: true,
   },
 ];
 
@@ -52,6 +57,7 @@ export const MOCK_HISTORY_MODELS: TModelState[] = [
     position: [5, 0, 5],
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
+    extraLights: true,
     visible: true,
   },
   {
@@ -65,6 +71,7 @@ export const MOCK_HISTORY_MODELS: TModelState[] = [
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
     visible: true,
+    extraLights: true,
   },
   {
     id: nanoid(),
@@ -77,6 +84,7 @@ export const MOCK_HISTORY_MODELS: TModelState[] = [
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
     visible: true,
+    extraLights: true,
   },
   {
     id: nanoid(),
@@ -89,6 +97,7 @@ export const MOCK_HISTORY_MODELS: TModelState[] = [
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
     visible: true,
+    extraLights: true,
   },
   {
     id: nanoid(),
@@ -101,5 +110,33 @@ export const MOCK_HISTORY_MODELS: TModelState[] = [
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
     visible: true,
+    extraLights: true,
   },
 ];
+const newModelReleaseDate = new Date("10-06-2025");
+export function getDefaultModelProps({
+  imageUrl,
+  modelUrl,
+  createdAt,
+}: {
+  imageUrl?: MaybeString;
+  modelUrl?: MaybeString;
+  createdAt: string;
+}): TModelState | null {
+  if (!modelUrl) return null;
+  const isBeforeRelease = compareDate(
+    createdAt,
+    newModelReleaseDate.toISOString(),
+  );
+  return {
+    id: nanoid(),
+    type: "url",
+    modelUrl,
+    imageUrl: imageUrl ?? "/logo.png",
+    position: [5, 0, 5],
+    rotation: [0, 0, 0],
+    scale: [1, 1, 1],
+    visible: true,
+    extraLights: isBeforeRelease,
+  };
+}
