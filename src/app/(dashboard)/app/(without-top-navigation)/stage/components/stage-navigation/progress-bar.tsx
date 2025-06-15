@@ -8,6 +8,8 @@ type TProgressBar = {
   onChange: (value: number) => void;
   className?: string;
   disabled?: boolean;
+  allowDecimals?: boolean; // New prop to enable decimal values
+  decimalPlaces?: number; // Number of decimal places (default: 1)
 };
 
 export default function ProgressBar({
@@ -17,8 +19,21 @@ export default function ProgressBar({
   value,
   className = "",
   disabled = false,
+  allowDecimals = false, // Default to false to maintain existing behavior
+  decimalPlaces = 1, // Default to 1 decimal place when decimals are enabled
 }: TProgressBar) {
   const trackRef = useRef<HTMLDivElement>(null);
+
+  // Helper function to format the value based on decimal settings
+  const formatValue = useCallback(
+    (val: number) => {
+      if (allowDecimals) {
+        return Number(val.toFixed(decimalPlaces));
+      }
+      return Math.round(val);
+    },
+    [allowDecimals, decimalPlaces],
+  );
 
   // Ensure value is within bounds
   const clampedValue = Math.min(Math.max(value, min), max);
@@ -37,10 +52,10 @@ export default function ProgressBar({
 
       // Use requestAnimationFrame for smoother updates during fast movement
       requestAnimationFrame(() => {
-        onChange(Math.round(newValue));
+        onChange(formatValue(newValue));
       });
     },
-    [min, max, onChange, disabled],
+    [min, max, onChange, disabled, formatValue],
   );
 
   const handleMouseDown = useCallback(
@@ -111,17 +126,21 @@ export default function ProgressBar({
     (e: React.KeyboardEvent) => {
       if (disabled) return;
 
-      const step = Math.max(1, (max - min) / 100); // At least 1 unit steps
+      // Adjust step size based on decimal settings
+      const baseStep = allowDecimals
+        ? Math.max(1 / Math.pow(10, decimalPlaces), (max - min) / 100)
+        : Math.max(1, (max - min) / 100);
+
       let newValue = clampedValue;
 
       switch (e.key) {
         case "ArrowRight":
         case "ArrowUp":
-          newValue = Math.min(clampedValue + step, max);
+          newValue = Math.min(clampedValue + baseStep, max);
           break;
         case "ArrowLeft":
         case "ArrowDown":
-          newValue = Math.max(clampedValue - step, min);
+          newValue = Math.max(clampedValue - baseStep, min);
           break;
         case "Home":
           newValue = min;
@@ -134,9 +153,18 @@ export default function ProgressBar({
       }
 
       e.preventDefault();
-      onChange(Math.round(newValue));
+      onChange(formatValue(newValue));
     },
-    [clampedValue, min, max, onChange, disabled],
+    [
+      clampedValue,
+      min,
+      max,
+      onChange,
+      disabled,
+      allowDecimals,
+      decimalPlaces,
+      formatValue,
+    ],
   );
 
   return (
@@ -193,7 +221,10 @@ export default function ProgressBar({
         min={min}
         max={max}
         value={clampedValue}
-        onChange={(e) => !disabled && onChange(Number(e.target.value))}
+        step={allowDecimals ? 1 / Math.pow(10, decimalPlaces) : 1}
+        onChange={(e) =>
+          !disabled && onChange(formatValue(Number(e.target.value)))
+        }
         className="sr-only"
         disabled={disabled}
         tabIndex={-1}

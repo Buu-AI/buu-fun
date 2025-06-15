@@ -1,28 +1,21 @@
-import { MESSAGE_QUERY_LIMIT } from "@/constants/infinity.config";
-import { getMessages } from "@/lib/react-query/threads.v3";
+import { MODEL_QUERY_LIMIT } from "@/constants/infinity.config";
+import { getModels } from "@/lib/react-query/model";
 import { useAuthentication } from "@/providers/account.context";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 export const GRACE_PERIOD_MS = 9500;
-export function useChatMessage({
-  sessionId,
-  limit = MESSAGE_QUERY_LIMIT,
-}: {
-  sessionId: string;
-  limit?: number;
-}) {
+export function useModels({ limit = MODEL_QUERY_LIMIT }: { limit?: number }) {
   const { identityToken } = useAuthentication();
 
   return useInfiniteQuery({
-    queryKey: ["get-messages", sessionId, identityToken],
+    queryKey: ["get-models", identityToken],
     enabled: () => {
       if (!identityToken) return false;
       return identityToken?.length > 0;
     },
     queryFn: ({ pageParam = 0 }) => {
-      return getMessages({
+      return getModels({
         accessToken: identityToken ?? "",
-        sessionId,
         pagination: {
           limit,
           offset: pageParam,

@@ -12,6 +12,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { DataMuseError } from "./class/data-muse-error";
 import { TDataMuseWord } from "./fetcher/query/query-suggestion-api";
+import { isBefore, parseISO } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -310,4 +311,8 @@ export function getMappedPosition(
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isTypeNumber(value: any) {
   return typeof value === "number";
+}
+
+export function compareDate(date: string, compareDate: string): boolean {
+  return isBefore(parseISO(date), parseISO(compareDate));
 }

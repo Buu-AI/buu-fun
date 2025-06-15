@@ -1,3 +1,5 @@
+import { compareDate } from "@/lib/utils";
+import { MaybeString } from "@/types";
 import { TModelState } from "@/types/stage/objects";
 import { nanoid } from "@reduxjs/toolkit";
 
@@ -8,7 +10,7 @@ export const modelUrls = [
 
 export const INITIAL_STAGING_MODELS: TModelState[] = [
   {
-    id: nanoid(),
+    id: "1-2-31-4",
     type: "url",
     modelUrl:
       "https://cdn.buu.fun/development/requests/5340d683-eb13-46c6-a7b0-9c42b470fd13/models/08b0d251-0689-4cab-b866-9613741df584.glb",
@@ -16,19 +18,21 @@ export const INITIAL_STAGING_MODELS: TModelState[] = [
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
     visible: true,
+    extraLights: true,
   },
   {
     type: "url",
-    id: nanoid(),
+    id: "1-2-31-44123",
     modelUrl:
       "https://cdn.buu.fun/development/requests/c12b5e8c-cf60-4b6f-9b4e-89aab219b56b/models/714ddc57-fcba-4bf4-b0c2-828dd6b0f147.glb",
     position: [0, 5, 0],
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
     visible: true,
+    extraLights: true,
   },
   {
-    id: nanoid(),
+    id: "1-2-31-44324",
     type: "url",
     modelUrl:
       "https://cdn.buu.fun/development/requests/5340d683-eb13-46c6-a7b0-9c42b470fd13/models/08b0d251-0689-4cab-b866-9613741df584.glb",
@@ -36,6 +40,7 @@ export const INITIAL_STAGING_MODELS: TModelState[] = [
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
     visible: true,
+    extraLights: true,
   },
 ];
 
@@ -52,6 +57,7 @@ export const MOCK_HISTORY_MODELS: TModelState[] = [
     position: [5, 0, 5],
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
+    extraLights: true,
     visible: true,
   },
   {
@@ -65,6 +71,7 @@ export const MOCK_HISTORY_MODELS: TModelState[] = [
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
     visible: true,
+    extraLights: true,
   },
   {
     id: nanoid(),
@@ -77,6 +84,7 @@ export const MOCK_HISTORY_MODELS: TModelState[] = [
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
     visible: true,
+    extraLights: true,
   },
   {
     id: nanoid(),
@@ -89,6 +97,7 @@ export const MOCK_HISTORY_MODELS: TModelState[] = [
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
     visible: true,
+    extraLights: true,
   },
   {
     id: nanoid(),
@@ -101,5 +110,33 @@ export const MOCK_HISTORY_MODELS: TModelState[] = [
     rotation: [0, 0, 0],
     scale: [1, 1, 1],
     visible: true,
+    extraLights: true,
   },
 ];
+const newModelReleaseDate = new Date("10-06-2025");
+export function getDefaultModelProps({
+  imageUrl,
+  modelUrl,
+  createdAt,
+}: {
+  imageUrl?: MaybeString;
+  modelUrl?: MaybeString;
+  createdAt: string;
+}): TModelState | null {
+  if (!modelUrl) return null;
+  const isBeforeRelease = compareDate(
+    createdAt,
+    newModelReleaseDate.toISOString(),
+  );
+  return {
+    id: nanoid(),
+    type: "url",
+    modelUrl,
+    imageUrl: imageUrl ?? "/logo.png",
+    position: [5, 0, 5],
+    rotation: [0, 0, 0],
+    scale: [1, 1, 1],
+    visible: true,
+    extraLights: isBeforeRelease,
+  };
+}

@@ -4,6 +4,7 @@ import { setSelectedModel } from "@/lib/redux/features/stage";
 import { cn } from "@/lib/utils";
 import toast from "react-hot-toast";
 import CameraAdjustButton from "./camera-adjust-button";
+import LightsPopover from "./lights-popover";
 
 type TAddPropertiesContainer = {};
 
@@ -45,18 +46,7 @@ export default function AddPropertiesContainer({}: TAddPropertiesContainer) {
           </div>
           <p>Object {models.length}</p>
         </button>
-        {/* <button className="flex items-center rounded-lg py-2 px-2.5 h-10 bg-white text-black">
-          <div className="text-[#515761]">
-            <CameraIcon />
-          </div>
-          <p>Camera</p>
-        </button> */}
-        {/* <button className="flex items-center rounded-lg py-2 px-2.5 h-10  text-">
-          <div className="text-white ">
-            <SelectObjectIcon />
-          </div>
-          <p>Lights</p>
-        </button> */}
+        <LightsPopover />
       </div>
     </div>
   );

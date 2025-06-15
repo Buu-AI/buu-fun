@@ -29,7 +29,7 @@ export default function Model({
   index: number;
 }) {
   const { scene } = useGLTF(url);
-  const meshRef = useRef<THREE.Mesh>(null);
+  const primitiveRef = useRef<THREE.Group>(null);
   const [polyCount, setPolyCount] = useState(0);
   const [clonedScene, setClonedScene] = useState<THREE.Group | null>(null);
   const dispatch = useAppDispatch();
@@ -61,41 +61,50 @@ export default function Model({
     500, // 500ms debounce delay
   );
 
-  // Effect to sync Redux position changes to the mesh (external updates)
+  // Effect to sync Redux position changes to the primitive (external updates)
   useEffect(() => {
-    if (!meshRef.current || !currentModel || isInternalUpdate.current) return;
+    if (!primitiveRef.current || !currentModel || isInternalUpdate.current)
+      return;
 
-    const mesh = meshRef.current;
+    const primitive = primitiveRef.current;
     const reduxPosition = currentModel.position;
     const reduxScale = currentModel.scale;
     const reduxRotation = currentModel.rotation;
 
     // Check if position needs to be updated
     if (
-      mesh.position.x !== reduxPosition[0] ||
-      mesh.position.y !== reduxPosition[1] ||
-      mesh.position.z !== reduxPosition[2]
+      primitive.position.x !== reduxPosition[0] ||
+      primitive.position.y !== reduxPosition[1] ||
+      primitive.position.z !== reduxPosition[2]
     ) {
-      mesh.position.set(reduxPosition[0], reduxPosition[1], reduxPosition[2]);
+      primitive.position.set(
+        reduxPosition[0],
+        reduxPosition[1],
+        reduxPosition[2],
+      );
     }
 
     // Check if scale needs to be updated
     if (
-      mesh.scale.x !== reduxScale[0] ||
-      mesh.scale.y !== reduxScale[1] ||
-      mesh.scale.z !== reduxScale[2]
+      primitive.scale.x !== reduxScale[0] ||
+      primitive.scale.y !== reduxScale[1] ||
+      primitive.scale.z !== reduxScale[2]
     ) {
-      mesh.scale.set(reduxScale[0], reduxScale[1], reduxScale[2]);
+      primitive.scale.set(reduxScale[0], reduxScale[1], reduxScale[2]);
     }
 
     // Check if rotation needs to be updated (if you have rotation in your model)
     if (
       reduxRotation &&
-      (mesh.rotation.x !== reduxRotation[0] ||
-        mesh.rotation.y !== reduxRotation[1] ||
-        mesh.rotation.z !== reduxRotation[2])
+      (primitive.rotation.x !== reduxRotation[0] ||
+        primitive.rotation.y !== reduxRotation[1] ||
+        primitive.rotation.z !== reduxRotation[2])
     ) {
-      mesh.rotation.set(reduxRotation[0], reduxRotation[1], reduxRotation[2]);
+      primitive.rotation.set(
+        reduxRotation[0],
+        reduxRotation[1],
+        reduxRotation[2],
+      );
     }
   }, [
     currentModel?.position,
@@ -106,23 +115,27 @@ export default function Model({
 
   // Function to handle position changes from transform controls
   const handleTransformChange = useCallback(() => {
-    if (!meshRef.current) return;
+    if (!primitiveRef.current) return;
 
-    const mesh = meshRef.current;
+    const primitive = primitiveRef.current;
     isInternalUpdate.current = true;
 
     const newPosition: TVector3 = [
-      mesh.position.x,
-      mesh.position.y,
-      mesh.position.z,
+      primitive.position.x,
+      primitive.position.y,
+      primitive.position.z,
     ];
 
-    const newScale: TVector3 = [mesh.scale.x, mesh.scale.y, mesh.scale.z];
+    const newScale: TVector3 = [
+      primitive.scale.x,
+      primitive.scale.y,
+      primitive.scale.z,
+    ];
 
     const newRotation: TVector3 = [
-      mesh.rotation.x,
-      mesh.rotation.y,
-      mesh.rotation.z,
+      primitive.rotation.x,
+      primitive.rotation.y,
+      primitive.rotation.z,
     ];
 
     // Debounced update to Redux
@@ -135,12 +148,6 @@ export default function Model({
     // Clone the scene to avoid sharing the same object between multiple instances
     const sceneClone = scene.clone();
     setClonedScene(sceneClone);
-
-    if (meshRef.current) {
-      // Clear any existing children first
-      meshRef.current.clear();
-      meshRef.current.add(sceneClone);
-    }
   }, [scene]);
 
   useEffect(() => {
@@ -187,9 +194,12 @@ export default function Model({
     setPolyCount(Math.floor(totalPolygons));
   }, [isSelected, clonedScene]);
 
+  if (!clonedScene) return null;
+
   return (
-    <mesh
-      ref={meshRef}
+    <primitive
+      ref={primitiveRef}
+      object={clonedScene}
       position={position}
       scale={scale}
       visible={visible}
@@ -198,10 +208,11 @@ export default function Model({
         id: id,
         onTransformChange: handleTransformChange,
       }}
-      onClick={(e) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onClick={(e: any) => {
         e.stopPropagation();
         onSelect({ id, polygonCount: polyCount });
       }}
-    ></mesh>
+    />
   );
 }
