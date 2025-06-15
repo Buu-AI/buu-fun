@@ -2,9 +2,10 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { setSelectedModel } from "@/lib/redux/features/stage";
 import { TransformControls } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Group } from "three";
 import Model from "./model";
+import Loader from "./model-loader";
 
 // Main Scene Component
 export default function ModelScene() {
@@ -125,22 +126,31 @@ export default function ModelScene() {
   return (
     <group ref={sceneRef} onClick={handleCanvasClick}>
       {/* Ambient light */}
-      <ambientLight intensity={3} />
-      <directionalLight position={[10, 10, 5]} intensity={5} />
+      {/* <ambientLight />
+      <directionalLight position={[10, 10, 5]} /> */}
+      <ambientLight intensity={0.7} />
+      <directionalLight position={[10, 10, 5]} intensity={1} />
+      <pointLight position={[-10, -10, -5]} intensity={0.7} color="#ff6b6b" />
+
       {/* Models */}
-      {models.map((model, index) => (
-        <Model
-          key={`model-maps-${model.id}-${model.modelUrl}`}
-          id={model.id}
-          url={model.modelUrl}
-          visible={model.visible}
-          position={model.position}
-          scale={model.scale}
-          onSelect={handleObjectSelect}
-          isSelected={selectedModel?.id === model.id}
-          index={index}
-        />
-      ))}
+      <Suspense fallback={<Loader />}>
+        {models.map((model, index) => {
+          return (
+            <Model
+              key={`model-maps-${model.id}_${model.modelUrl}  `}
+              id={model.id}
+              url={model.modelUrl}
+              visible={model.visible}
+              position={model.position}
+              scale={model.scale}
+              onSelect={handleObjectSelect}
+              isSelected={selectedModel?.id === model.id}
+              index={index}
+              // extraLights={model.extraLights}
+            />
+          );
+        })}
+      </Suspense>
 
       {/* Transform controls for selected objects */}
       {selectedObject && (
