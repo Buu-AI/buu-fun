@@ -1,4 +1,4 @@
-import { getX, getY, getZ } from "@/lib/utils";
+import { cn, getX, getY, getZ } from "@/lib/utils";
 import { TVector3, TVector3Positions } from "@/types/stage/objects";
 import Position from "./position";
 
@@ -8,6 +8,7 @@ type TPositionXYZ = {
   toFixed?: number;
   onChange: (value: TVector3) => void;
   revolve?: boolean;
+  className?: string;
 };
 
 export default function PositionXYZ({
@@ -15,9 +16,9 @@ export default function PositionXYZ({
   onChange,
   toFixed = 2,
   maxValue,
+  className,
   // revolve = true,
 }: TPositionXYZ) {
-  // const [localChange] = useState<TVector3>([]);
   const x = getX(value);
   const y = getY(value);
   const z = getZ(value);
@@ -34,7 +35,7 @@ export default function PositionXYZ({
   }
 
   return (
-    <div className="flex items-center justify-center gap-2">
+    <div className={cn("flex items-center  justify-center gap-2", className)}>
       <Position
         revolve
         maxValue={maxValue}
