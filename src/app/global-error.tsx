@@ -13,14 +13,13 @@ export default function GlobalError({
   reset: () => void;
 }) {
   useEffect(() => {
-    Sentry.captureException(error);
+    Sentry?.captureException(error);
   }, [error]);
   const router = useRouter();
   const handleGoHome = () => {
     router.push("/app");
-    // window.location.href = "/";
   };
-
+  console.log("GLOBAL-ERROR:", error);
   return (
     <html className="dark">
       <body className="min-h-screen bg-background text-foreground flex items-center justify-center p-4 relative overflow-hidden">
