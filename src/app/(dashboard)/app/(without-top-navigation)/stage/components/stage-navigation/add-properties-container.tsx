@@ -4,14 +4,13 @@ import { setSelectedModel } from "@/lib/redux/features/stage";
 import { cn } from "@/lib/utils";
 import toast from "react-hot-toast";
 import CameraAdjustButton from "./camera-adjust-button";
-import LightIcon from "@/assets/icons/light-icon";
 import LightsPopover from "./lights-popover";
 
 type TAddPropertiesContainer = {};
 
 export default function AddPropertiesContainer({}: TAddPropertiesContainer) {
   const isModelSelected = useAppSelector(
-    (state) => state.stage.present.selectedModel
+    (state) => state.stage.present.selectedModel,
   );
   const models = useAppSelector((state) => state.stage.present.models);
   const dispatch = useAppDispatch();
@@ -28,7 +27,7 @@ export default function AddPropertiesContainer({}: TAddPropertiesContainer) {
                 setSelectedModel({
                   id: lastModel.id,
                   transformModel: "translate",
-                })
+                }),
               );
             } else {
               toast.error("no models presented at the scene");

@@ -27,6 +27,7 @@ export default function OrbitController() {
 
   useEffect(() => {
     const controls = controlsRef.current;
+
     if (!controls) return;
 
     const handleChange = () => {
@@ -58,12 +59,13 @@ export default function OrbitController() {
       <COrbitControls
         ref={controlsRef}
         makeDefault
+        target={0}
         enablePan={true}
         enableZoom={true}
         enableRotate={true}
         maxDistance={50}
         maxPolarAngle={Math.PI / 2}
-        minDistance={0.1}
+        // minDistance={0.1}
       />
     </>
   );
