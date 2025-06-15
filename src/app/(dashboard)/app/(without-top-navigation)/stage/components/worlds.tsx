@@ -1,29 +1,97 @@
 "use client";
 import { Environment } from "@react-three/drei";
 import { useLoader } from "@react-three/fiber";
-import { memo, useRef } from "react";
+import { Suspense, useRef, useState } from "react";
 import * as THREE from "three";
 import { TextureLoader } from "three";
 
 export function Worlds() {
-  const textureUrl = "/background.jpg";
-  const hdrTexture = useLoader(TextureLoader, textureUrl);
-  // const envMap = useEnvironment({ files: textureUrl });
+  const [textureUrl] = useState<string>("/background.jpg");
   const sphereRef = useRef<THREE.Mesh>(null);
   const groundRef = useRef<THREE.Mesh>(null);
 
+  if (!textureUrl) return null;
+
+  return (
+    <Suspense
+      fallback={<BasicWorld sphereRef={sphereRef} groundRef={groundRef} />}
+    >
+      <WorldContent
+        textureUrl={textureUrl}
+        sphereRef={sphereRef}
+        groundRef={groundRef}
+      />
+    </Suspense>
+  );
+}
+
+function WorldContent({
+  textureUrl,
+  sphereRef,
+  groundRef,
+}: {
+  textureUrl: string;
+  sphereRef: React.RefObject<THREE.Mesh | null>;
+  groundRef: React.RefObject<THREE.Mesh | null>;
+}) {
+  try {
+    const hdrTexture = useLoader(TextureLoader, textureUrl);
+
+    return (
+      <>
+        {/* Environment for lighting */}
+        <Environment map={hdrTexture} />
+
+        {/* Large sphere with HDRI texture - this creates navigable geometry */}
+        <mesh ref={sphereRef} scale={[-100, 100, 100]}>
+          <sphereGeometry args={[1, 64, 32]} />
+          <meshBasicMaterial map={hdrTexture} side={THREE.BackSide} />
+        </mesh>
+
+        {/* Ground plane at y=0 */}
+        <mesh
+          ref={groundRef}
+          rotation={[-Math.PI / 2, 0, 0]}
+          position={[0, 0, 0]}
+          receiveShadow
+        >
+          <planeGeometry args={[200, 200]} />
+          <meshStandardMaterial
+            color="#888888"
+            transparent
+            opacity={0.3}
+            roughness={0.8}
+            metalness={0.1}
+          />
+        </mesh>
+      </>
+    );
+  } catch (error) {
+    console.error("Error loading texture:", error);
+    return <BasicWorld sphereRef={sphereRef} groundRef={groundRef} />;
+  }
+}
+
+// Fallback component without texture
+function BasicWorld({
+  sphereRef,
+  groundRef,
+}: {
+  sphereRef: React.RefObject<THREE.Mesh | null>;
+  groundRef: React.RefObject<THREE.Mesh | null>;
+}) {
   return (
     <>
-      {/* Environment for lighting */}
-      <Environment map={hdrTexture} />
+      {/* Basic environment */}
+      <Environment preset="sunset" />
 
-      {/* Large sphere with HDRI texture - this creates navigable geometry */}
+      {/* Simple colored sphere */}
       <mesh ref={sphereRef} scale={[-100, 100, 100]}>
         <sphereGeometry args={[1, 64, 32]} />
-        <meshBasicMaterial map={hdrTexture} side={THREE.BackSide} />
+        <meshBasicMaterial color="#4a90e2" side={THREE.BackSide} />
       </mesh>
 
-      {/* Ground plane at y=0 */}
+      {/* Ground plane */}
       <mesh
         ref={groundRef}
         rotation={[-Math.PI / 2, 0, 0]}
@@ -43,4 +111,4 @@ export function Worlds() {
   );
 }
 
-export default memo(Worlds);
+export default Worlds;
