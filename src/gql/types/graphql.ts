@@ -31,6 +31,8 @@ export type Scalars = {
   DateTimeISO: { input: any; output: any };
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: { input: any; output: any };
+  _Any: { input: any; output: any };
+  _FieldSet: { input: any; output: any };
 };
 
 export type ApiKey = {
@@ -749,6 +751,7 @@ export type PricesResult = HandledError | Prices;
 
 export type Query = {
   __typename?: "Query";
+  _service: _Service;
   generateCreditsPackagePaymentLink: UrlResult;
   generateCustomerPortalSession: GenerateCustomerPortalSessionOutput;
   generateSubscriptionPaymentLink: GenerateSubscriptionPaymentLinkResult;
@@ -1173,7 +1176,6 @@ export enum TextureType {
   Fast = "fast",
   Hd = "hd",
   None = "none",
-  TwoKey = "twoKey",
 }
 
 export type TokenMint = {
@@ -1217,6 +1219,8 @@ export type ToolRequest = {
 export type ToolRequestConfirmation = {
   __typename?: "ToolRequestConfirmation";
   messages: Array<Message>;
+  modelIds: Array<Scalars["String"]["output"]>;
+  nftIds: Array<Scalars["String"]["output"]>;
   toolRequest: ToolRequest;
 };
 
@@ -1271,6 +1275,11 @@ export type Url = {
 };
 
 export type UrlResult = HandledError | Url;
+
+export type _Service = {
+  __typename?: "_Service";
+  sdl?: Maybe<Scalars["String"]["output"]>;
+};
 
 export type CreateApiKeyMutationVariables = Exact<{
   name: Scalars["String"]["input"];

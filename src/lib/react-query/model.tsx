@@ -36,7 +36,7 @@ export async function getModels({
       },
       pagination,
     },
-    { Authorization: getAuthorization(accessToken) }
+    { Authorization: getAuthorization(accessToken) },
   );
 
   if (!data) {
