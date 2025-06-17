@@ -20,7 +20,7 @@ export type TLightConfig = {
   helper?: boolean; // Show visual helper
 };
 
-export type LightInteractionMode = "translate" | "rotate" | "scale" | "none";
+export type LightInteractionMode = "translate" | "rotate" | "scale" 
 
 export type TModelState = {
   id: string;

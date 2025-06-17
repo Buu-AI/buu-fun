@@ -21,10 +21,10 @@ import { LightInteractionMode } from "@/types/stage/objects";
 
 export default function StagePropertiesViewer() {
   const selectedLight = useAppSelector(
-    (state) => state.stage.present.selectedLights,
+    (state) => state.stage.present.selectedLights
   );
   const lightState = useAppSelector((state) =>
-    getSelectedLights(state, selectedLight?.id ?? ""),
+    getSelectedLights(state, selectedLight?.id ?? "")
   );
   const light = lightState?.light;
   const dispatch = useAppDispatch();
@@ -59,10 +59,50 @@ export default function StagePropertiesViewer() {
                   updateLights({
                     id: light.id,
                     position: value,
-                  }),
+                  })
                 );
               }}
               value={light.position}
+            />
+          </div>
+        </div>
+        <div className="pt-1">
+          <div className="mt-4">
+            <div className="flex justify-between items-center my-2">
+              <p className="text-xs font-semibold uppercase">Scale</p>
+            </div>
+            <PositionXYZ
+              className="w-full  justify-around "
+              maxValue={[50, 50, 50]}
+              onChange={(value) => {
+                dispatch(
+                  updateLights({
+                    id: light.id,
+                    scale: value,
+                  })
+                );
+              }}
+              value={light.scale}
+            />
+          </div>
+        </div>
+        <div className="pt-1">
+          <div className="mt-4">
+            <div className="flex justify-between items-center my-2">
+              <p className="text-xs font-semibold uppercase">Target</p>
+            </div>
+            <PositionXYZ
+              className="w-full  justify-around "
+              maxValue={[50, 50, 50]}
+              onChange={(value) => {
+                dispatch(
+                  updateLights({
+                    id: light.id,
+                    target: value,
+                  })
+                );
+              }}
+              value={light.target ?? [0, 0, 0]}
             />
           </div>
         </div>
@@ -87,7 +127,7 @@ export default function StagePropertiesViewer() {
                   setLightInteractionMode({
                     lightId: light.id,
                     mode: interactionMode,
-                  }),
+                  })
                 );
               }}
             >
@@ -129,7 +169,7 @@ export default function StagePropertiesViewer() {
                 updateLights({
                   id: light.id,
                   color: color,
-                }),
+                })
               );
             }}
           />
@@ -148,7 +188,7 @@ export default function StagePropertiesViewer() {
                   updateLights({
                     id: light.id,
                     intensity: value,
-                  }),
+                  })
                 );
               }}
               value={light.intensity}
@@ -172,7 +212,7 @@ export default function StagePropertiesViewer() {
                   updateLights({
                     id: light.id,
                     distance: value,
-                  }),
+                  })
                 );
               }}
               value={light.distance ?? 0}
@@ -194,7 +234,7 @@ export default function StagePropertiesViewer() {
                   updateLights({
                     id: light.id,
                     castShadow: value,
-                  }),
+                  })
                 );
               }}
             />
@@ -212,7 +252,7 @@ export default function StagePropertiesViewer() {
                   updateLights({
                     id: light.id,
                     helper: value,
-                  }),
+                  })
                 );
               }}
             />
