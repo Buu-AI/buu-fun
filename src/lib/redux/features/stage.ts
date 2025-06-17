@@ -70,7 +70,7 @@ const StageSlice = createSlice({
     },
     removeModel(state, action: PayloadAction<string>) {
       const index = state.models.findIndex(
-        (model) => model.id === action.payload,
+        (model) => model.id === action.payload
       );
       if (index !== -1) {
         state.models.splice(index, 1);
@@ -95,7 +95,7 @@ const StageSlice = createSlice({
         position?: TVector3;
         rotation?: TVector3;
         scale?: TVector3;
-      }>,
+      }>
     ) {
       const model = state.models.find((m) => m.id === action.payload.id);
       if (model) {
@@ -146,12 +146,15 @@ const StageSlice = createSlice({
         color?: string;
         castShadow?: boolean;
         helper?: boolean;
-      }>,
+      }>
     ) {
       const light = state.lights.find((l) => l.id === action.payload.id);
       if (light) {
         if (action.payload.position) {
           light.position = action.payload.position;
+        }
+        if (action.payload.rotation) {
+          light.rotation = action.payload.rotation;
         }
         if (action.payload.target) {
           light.target = action.payload.target;
@@ -161,6 +164,9 @@ const StageSlice = createSlice({
         }
         if (action.payload.penumbra !== undefined) {
           light.penumbra = Math.max(0, Math.min(1, action.payload.penumbra));
+        }
+        if (action.payload.scale !== undefined) {
+          light.scale = action.payload.scale;
         }
         if (action.payload.distance !== undefined) {
           light.distance = Math.max(0, action.payload.distance);
@@ -184,7 +190,7 @@ const StageSlice = createSlice({
     },
     removeLights(state, action: PayloadAction<string>) {
       const index = state.lights.findIndex(
-        (light) => light.id === action.payload,
+        (light) => light.id === action.payload
       );
       if (index !== -1) {
         state.lights.splice(index, 1);
@@ -202,7 +208,7 @@ const StageSlice = createSlice({
     },
     setLightInteractionMode(
       state,
-      action: PayloadAction<{ lightId: string; mode: LightInteractionMode }>,
+      action: PayloadAction<{ lightId: string; mode: LightInteractionMode }>
     ) {
       if (state.selectedLights?.id === action.payload.lightId) {
         state.selectedLights.interactionMode = action.payload.mode;
