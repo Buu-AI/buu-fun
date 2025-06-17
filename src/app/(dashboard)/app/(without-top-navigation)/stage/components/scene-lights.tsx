@@ -282,7 +282,7 @@ function DirectionalLight({
   );
 }
 
-function SpotLight({
+export function SpotLight({
   light,
   isSelected,
   onSelect,
@@ -845,15 +845,15 @@ export default function SceneLights() {
             onSelect={onSelect}
           />
         );
-      case "spot":
-        return (
-          <SpotLight
-            key={light.id}
-            light={light}
-            isSelected={isSelected}
-            onSelect={onSelect}
-          />
-        );
+      // case "spot":
+      //   return (
+      //     <SpotLight
+      //       key={light.id}
+      //       light={light}
+      //       isSelected={isSelected}
+      //       onSelect={onSelect}
+      //     />
+      //   );
       case "point":
         return (
           <PointLight

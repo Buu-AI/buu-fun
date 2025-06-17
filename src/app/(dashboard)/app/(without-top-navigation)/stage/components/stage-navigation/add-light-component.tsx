@@ -67,12 +67,12 @@ export default function AddLightComponent({}: TAddLightComponent) {
             >
               Directional Light
             </SelectItem>
-            <SelectItem
+            {/* <SelectItem
               className="border-none text-sm focus:bg-buu-secondary  pl-4 pr-4 text-center  mx-auto"
               value="spot"
             >
               Spot Light
-            </SelectItem>
+            </SelectItem> */}
           </SelectContent>
         </Select>{" "}
       </div>
