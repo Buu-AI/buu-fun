@@ -26,7 +26,7 @@ function DirectionalLight({
 
   // Get the current light data from Redux to detect external updates
   const currentLight = useAppSelector((state) =>
-    state.stage.present.lights.find((l) => l.id === light.id)
+    state.stage.present.lights.find((l) => l.id === light.id),
   );
 
   // Debounced functions to update Redux store
@@ -37,13 +37,13 @@ function DirectionalLight({
           updateLights({
             id: light.id,
             position: newPosition,
-          })
+          }),
         );
         isInternalUpdate.current = false;
       },
-      [dispatch, light.id]
+      [dispatch, light.id],
     ),
-    500
+    500,
   );
 
   const debouncedUpdateRotation = useDebounce(
@@ -53,13 +53,13 @@ function DirectionalLight({
           updateLights({
             id: light.id,
             rotation: rotation,
-          })
+          }),
         );
         isInternalUpdate.current = false;
       },
-      [dispatch, light.id]
+      [dispatch, light.id],
     ),
-    500
+    500,
   );
 
   const debouncedUpdateScale = useDebounce(
@@ -69,13 +69,13 @@ function DirectionalLight({
           updateLights({
             id: light.id,
             scale: scale,
-          })
+          }),
         );
         isInternalUpdate.current = false;
       },
-      [dispatch, light.id]
+      [dispatch, light.id],
     ),
-    500
+    500,
   );
 
   const debouncedUpdateTarget = useDebounce(
@@ -85,13 +85,13 @@ function DirectionalLight({
           updateLights({
             id: light.id,
             target: target,
-          })
+          }),
         );
         isInternalUpdate.current = false;
       },
-      [dispatch, light.id]
+      [dispatch, light.id],
     ),
-    500
+    500,
   );
 
   // Function to handle transform changes
@@ -133,7 +133,12 @@ function DirectionalLight({
       ];
       debouncedUpdateTarget(targetPosition);
     }
-  }, [debouncedUpdatePosition, debouncedUpdateRotation, debouncedUpdateScale, debouncedUpdateTarget]);
+  }, [
+    debouncedUpdatePosition,
+    debouncedUpdateRotation,
+    debouncedUpdateScale,
+    debouncedUpdateTarget,
+  ]);
 
   // Effect to sync Redux changes to the light (external updates)
   useEffect(() => {
@@ -151,7 +156,7 @@ function DirectionalLight({
       lightObject.position.set(
         reduxPosition[0],
         reduxPosition[1],
-        reduxPosition[2]
+        reduxPosition[2],
       );
     }
 
@@ -166,7 +171,7 @@ function DirectionalLight({
         lightObject.rotation.set(
           reduxRotation[0],
           reduxRotation[1],
-          reduxRotation[2]
+          reduxRotation[2],
         );
       }
     }
@@ -179,11 +184,7 @@ function DirectionalLight({
         lightObject.scale.y !== reduxScale[1] ||
         lightObject.scale.z !== reduxScale[2]
       ) {
-        lightObject.scale.set(
-          reduxScale[0],
-          reduxScale[1],
-          reduxScale[2]
-        );
+        lightObject.scale.set(reduxScale[0], reduxScale[1], reduxScale[2]);
       }
     }
 
@@ -198,7 +199,7 @@ function DirectionalLight({
         lightObject.target.position.set(
           reduxTarget[0],
           reduxTarget[1],
-          reduxTarget[2]
+          reduxTarget[2],
         );
       }
     }
@@ -207,7 +208,10 @@ function DirectionalLight({
     if (lightObject.intensity !== currentLight.intensity) {
       lightObject.intensity = currentLight.intensity;
     }
-    if (lightObject.color.getHex() !== new THREE.Color(currentLight.color).getHex()) {
+    if (
+      lightObject.color.getHex() !==
+      new THREE.Color(currentLight.color).getHex()
+    ) {
       lightObject.color.set(currentLight.color);
     }
     if (lightObject.visible !== currentLight.visible) {
@@ -223,7 +227,13 @@ function DirectionalLight({
     if (lightRef.current && helperRef.current) {
       helperRef.current.update();
     }
-  }, [light.position, light.rotation, light.intensity, light.color, light.target]);
+  }, [
+    light.position,
+    light.rotation,
+    light.intensity,
+    light.color,
+    light.target,
+  ]);
 
   // Set up light target
   useEffect(() => {
@@ -234,7 +244,7 @@ function DirectionalLight({
       targetRef.current.position.set(
         light.target[0],
         light.target[1],
-        light.target[2]
+        light.target[2],
       );
       lightRef.current.target = targetRef.current;
     }
@@ -275,9 +285,7 @@ function DirectionalLight({
           visible={light.visible}
         />
       )}
-      {targetRef.current && (
-        <primitive object={targetRef.current} />
-      )}
+      {targetRef.current && <primitive object={targetRef.current} />}
     </group>
   );
 }
@@ -300,7 +308,7 @@ export function SpotLight({
 
   // Get the current light data from Redux
   const currentLight = useAppSelector((state) =>
-    state.stage.present.lights.find((l) => l.id === light.id)
+    state.stage.present.lights.find((l) => l.id === light.id),
   );
 
   // Set default values for spot light
@@ -317,13 +325,13 @@ export function SpotLight({
           updateLights({
             id: light.id,
             position: newPosition,
-          })
+          }),
         );
         isInternalUpdate.current = false;
       },
-      [dispatch, light.id]
+      [dispatch, light.id],
     ),
-    500
+    500,
   );
 
   const debouncedUpdateRotation = useDebounce(
@@ -333,13 +341,13 @@ export function SpotLight({
           updateLights({
             id: light.id,
             rotation: rotation,
-          })
+          }),
         );
         isInternalUpdate.current = false;
       },
-      [dispatch, light.id]
+      [dispatch, light.id],
     ),
-    500
+    500,
   );
 
   const debouncedUpdateScale = useDebounce(
@@ -349,13 +357,13 @@ export function SpotLight({
           updateLights({
             id: light.id,
             scale: scale,
-          })
+          }),
         );
         isInternalUpdate.current = false;
       },
-      [dispatch, light.id]
+      [dispatch, light.id],
     ),
-    500
+    500,
   );
 
   // Function to handle transform changes
@@ -404,7 +412,7 @@ export function SpotLight({
       lightObject.position.set(
         reduxPosition[0],
         reduxPosition[1],
-        reduxPosition[2]
+        reduxPosition[2],
       );
     }
 
@@ -419,7 +427,7 @@ export function SpotLight({
         lightObject.rotation.set(
           reduxRotation[0],
           reduxRotation[1],
-          reduxRotation[2]
+          reduxRotation[2],
         );
       }
     }
@@ -432,11 +440,7 @@ export function SpotLight({
         lightObject.scale.y !== reduxScale[1] ||
         lightObject.scale.z !== reduxScale[2]
       ) {
-        lightObject.scale.set(
-          reduxScale[0],
-          reduxScale[1],
-          reduxScale[2]
-        );
+        lightObject.scale.set(reduxScale[0], reduxScale[1], reduxScale[2]);
       }
     }
 
@@ -463,7 +467,10 @@ export function SpotLight({
     if (lightObject.intensity !== currentLight.intensity) {
       lightObject.intensity = currentLight.intensity;
     }
-    if (lightObject.color.getHex() !== new THREE.Color(currentLight.color).getHex()) {
+    if (
+      lightObject.color.getHex() !==
+      new THREE.Color(currentLight.color).getHex()
+    ) {
       lightObject.color.set(currentLight.color);
     }
     if (lightObject.visible !== currentLight.visible) {
@@ -479,7 +486,15 @@ export function SpotLight({
     if (lightRef.current && helperRef.current) {
       helperRef.current.update();
     }
-  }, [light.position, light.rotation, light.intensity, light.color, angle, penumbra, distance]);
+  }, [
+    light.position,
+    light.rotation,
+    light.intensity,
+    light.color,
+    angle,
+    penumbra,
+    distance,
+  ]);
 
   // Add transform change handler to userData
   useEffect(() => {
@@ -542,7 +557,7 @@ function PointLight({
 
   // Get the current light data from Redux
   const currentLight = useAppSelector((state) =>
-    state.stage.present.lights.find((l) => l.id === light.id)
+    state.stage.present.lights.find((l) => l.id === light.id),
   );
 
   // Set default values for point light
@@ -557,13 +572,13 @@ function PointLight({
           updateLights({
             id: light.id,
             position: newPosition,
-          })
+          }),
         );
         isInternalUpdate.current = false;
       },
-      [dispatch, light.id]
+      [dispatch, light.id],
     ),
-    500
+    500,
   );
 
   const debouncedUpdateRotation = useDebounce(
@@ -573,13 +588,13 @@ function PointLight({
           updateLights({
             id: light.id,
             rotation: rotation,
-          })
+          }),
         );
         isInternalUpdate.current = false;
       },
-      [dispatch, light.id]
+      [dispatch, light.id],
     ),
-    500
+    500,
   );
 
   const debouncedUpdateScale = useDebounce(
@@ -589,13 +604,13 @@ function PointLight({
           updateLights({
             id: light.id,
             scale: scale,
-          })
+          }),
         );
         isInternalUpdate.current = false;
       },
-      [dispatch, light.id]
+      [dispatch, light.id],
     ),
-    500
+    500,
   );
 
   // Function to handle transform changes
@@ -644,7 +659,7 @@ function PointLight({
       lightObject.position.set(
         reduxPosition[0],
         reduxPosition[1],
-        reduxPosition[2]
+        reduxPosition[2],
       );
     }
 
@@ -659,7 +674,7 @@ function PointLight({
         lightObject.rotation.set(
           reduxRotation[0],
           reduxRotation[1],
-          reduxRotation[2]
+          reduxRotation[2],
         );
       }
     }
@@ -672,11 +687,7 @@ function PointLight({
         lightObject.scale.y !== reduxScale[1] ||
         lightObject.scale.z !== reduxScale[2]
       ) {
-        lightObject.scale.set(
-          reduxScale[0],
-          reduxScale[1],
-          reduxScale[2]
-        );
+        lightObject.scale.set(reduxScale[0], reduxScale[1], reduxScale[2]);
       }
     }
 
@@ -695,7 +706,10 @@ function PointLight({
     if (lightObject.intensity !== currentLight.intensity) {
       lightObject.intensity = currentLight.intensity;
     }
-    if (lightObject.color.getHex() !== new THREE.Color(currentLight.color).getHex()) {
+    if (
+      lightObject.color.getHex() !==
+      new THREE.Color(currentLight.color).getHex()
+    ) {
       lightObject.color.set(currentLight.color);
     }
     if (lightObject.visible !== currentLight.visible) {
@@ -758,7 +772,7 @@ export default function SceneLights() {
   const dispatch = useAppDispatch();
   const lights = useAppSelector((state) => state.stage.present.lights);
   const selectedLights = useAppSelector(
-    (state) => state.stage.present.selectedLights
+    (state) => state.stage.present.selectedLights,
   );
   const sceneRef = useRef<THREE.Group>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -780,7 +794,7 @@ export default function SceneLights() {
         setSelectedLights({
           id: lightId,
           interactionMode: "translate",
-        })
+        }),
       );
     }
   };

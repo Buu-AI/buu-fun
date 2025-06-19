@@ -1,9 +1,10 @@
-import { Message } from "@/gql/types/graphql";
+import { MessagesPage, Model } from "@/gql/types/graphql";
 import { isRoleAssistant } from "@/lib/helpers/status-checker";
 import { parseJson } from "@/lib/utils";
 import {
   PromptPayload,
   TChatMessage,
+  TMessage,
   TMessageQueryData,
   TToolRequest,
 } from "@/types/chat/chat-types";
@@ -38,20 +39,23 @@ export function TransformMessages({
     ...new Map(
       params.pages
         .flatMap((page) => {
-          return page.items.map((item) => TransformMessage(item));
+          return page.items.map((item) => {
+            return TransformMessage(item);
+          });
         })
         ?.map((item) => [item.messageId, item]),
     ).values(),
   ];
 }
 
-export function TransformMessage(item: Message) {
+export function TransformMessage(item: TMessage): TChatMessage {
   const { data: payload } = parseJson<PromptPayload>(
     item.toolRequest?.payload ?? "",
   );
+
   const toolRequest: TToolRequest | undefined = item?.toolRequest
     ? {
-        ...item?.toolRequest,
+        ...(item?.toolRequest as TToolRequest),
         payload: payload,
       }
     : undefined;
@@ -59,7 +63,7 @@ export function TransformMessage(item: Message) {
   const chatMessage: TChatMessage = {
     medias: item.content?.medias,
     isAssistantLastMessage: false,
-    models: item.content?.models ?? [],
+    models: (item.content?.models as Model[]) ?? [],
     messageId: item._id,
     sessionId: item.sessionId,
     createdAt: item.createdAt,

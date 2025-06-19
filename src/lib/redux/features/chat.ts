@@ -16,12 +16,19 @@ import {
   TGenerateModal,
   TImageData,
   TMaximize,
+  TViewModel,
 } from "./chat-types";
+import { isTypeUndefined } from "@/lib/utils";
 
 const initialState: ChatState = {
   inputQuery: "",
   inputImageUrl: "",
   inputFile: [],
+  viewModel: {
+    isOpen: false,
+    model: null,
+    toolRequest: null,
+  },
   genNft: {
     isGenNftModalOpen: false,
     messageId: "",
@@ -61,7 +68,7 @@ const ChatSlice = createSlice({
         modelUrl?: string | null;
         imageUrl?: string | null;
         modelId?: string | null;
-      }>,
+      }>
     ) {
       state.genNft.isGenNftModalOpen = action?.payload?.isGenNftOpen;
       state.genNft.messageId = action.payload.messageId;
@@ -75,9 +82,24 @@ const ChatSlice = createSlice({
         state.inputFile?.push(action.payload);
       }
     },
+    setModel(state, action: PayloadAction<Partial<TViewModel>>) {
+      const payload = action.payload;
+
+      if (!isTypeUndefined(payload.isOpen)) {
+        state.viewModel.isOpen = payload.isOpen;
+      }
+
+      if (!isTypeUndefined(payload.model)) {
+        state.viewModel.model = payload.model;
+      }
+
+      if (!isTypeUndefined(payload.toolRequest)) {
+        state.viewModel.toolRequest = payload.toolRequest;
+      }
+    },
     removeImage(state, action: PayloadAction<string>) {
       state.inputFile = state.inputFile.filter(
-        (item) => item.id !== action.payload,
+        (item) => item.id !== action.payload
       );
     },
     clearInputFile(state) {
@@ -142,7 +164,7 @@ const ChatSlice = createSlice({
     handleMessageUpdates: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId,
+          (item) => item.messageId === action.payload.messageId
         );
         if (!item) {
           state.messages.push(action.payload);
@@ -161,12 +183,12 @@ const ChatSlice = createSlice({
       const model = action.payload;
 
       const message = state.messages.find(
-        (fv) => fv.messageId === model.messageId,
+        (fv) => fv.messageId === model.messageId
       );
 
       if (message) {
         const modelIndex = message.models.findIndex(
-          (fv) => fv._id === model._id,
+          (fv) => fv._id === model._id
         );
 
         if (modelIndex !== -1) {
@@ -185,7 +207,7 @@ const ChatSlice = createSlice({
       const tool = action.payload;
 
       const message = state.messages.find(
-        (fv) => fv.messageId === tool.messageId,
+        (fv) => fv.messageId === tool.messageId
       );
 
       if (message) {
@@ -203,7 +225,7 @@ const ChatSlice = createSlice({
     appendAIChatMessage: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId,
+          (item) => item.messageId === action.payload.messageId
         );
         if (!item) {
           state.messages.push(action.payload);

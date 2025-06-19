@@ -1,6 +1,7 @@
 import { MaybeString } from "@/types";
-import { TChatMessage } from "@/types/chat/chat-types";
+import { TChatMessage, TToolRequest } from "@/types/chat/chat-types";
 import { TThreeDStyles } from "./settings";
+import { Model } from "@/gql/types/graphql";
 
 export type TMaximizeModelViewer = {
   type: "model";
@@ -44,6 +45,13 @@ export type TImageData = {
   size: number;
   type: string;
 };
+
+export type TViewModel = {
+  isOpen: boolean;
+  model: Model | null;
+  toolRequest: TToolRequest | null;
+};
+
 export type ChatState = {
   inputQuery: string;
   inputImageUrl: string | null;
@@ -62,6 +70,7 @@ export type ChatState = {
   genModelFromImage: TGenerateModal;
   sessionId: string;
   messages: TChatMessage[];
+  viewModel: TViewModel;
 };
 
 export type TErrorTypeName = { __typename?: "HandledError" };
