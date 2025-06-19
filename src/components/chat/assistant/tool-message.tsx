@@ -20,11 +20,12 @@ export default function AssistantToolMessage({
   toolRequest,
 }: TAssistantMessage) {
   return (
-    <div className="">
+    <div className="chat-pending-container max-w-md  lg:max-w-lg px-4 py-4">
       <AssistantToolCallContainer
         payload={payload}
         messageId={messageId}
         toolRequestId={toolRequest?._id}
+        toolRequest={toolRequest}
         prompt={prompt}
         status={status}
         credits={credits ?? 0}
@@ -42,30 +43,39 @@ export default function AssistantToolMessage({
           ) : null}
         </div>
       </div>
-      {models.map((item) => {
-        const modelUrl = getModelBasedOnPriority(item);
-        const { message, percentage, status } =
-          getModelMessagesAndPercentage(toolRequest);
-        const isTexturedMesh = isTexturedMeshReady(item);
-        return (
-          <GeneratedModelCard
-            isTexturedMesh={isTexturedMesh}
-            modelId={item._id}
-            message={message}
-            key={`${item._id}-${item.messageId}-${modelUrl}`}
-            messageId={messageId}
-            nftId={item.nftId}
-            tokenized={
-              item.nftId && typeof item.nftId === "string" ? true : false
-            }
-            modelUrl={modelUrl}
-            toolPercentage={percentage}
-            imageUrl={item.image.url}
-            status={status}
-            type={type}
-          />
-        );
-      })}
+      {/*  */}
+      {models.length ? (
+        <div className="h-0.5 w-full bg-white/10 rounded-full my-6 px-2" />
+      ) : null}
+      <div className="grid grid-cols-2  gap-4 justify-around flex-wrap w-full  ">
+        {models.map((item, index) => {
+          const modelUrl = getModelBasedOnPriority(item);
+          const { message, percentage, status } =
+            getModelMessagesAndPercentage(toolRequest);
+          const isTexturedMesh = isTexturedMeshReady(item);
+          return (
+            <GeneratedModelCard
+              model={item}
+              toolRequest={toolRequest}
+              index={index}
+              isTexturedMesh={isTexturedMesh}
+              modelId={item._id}
+              message={message}
+              key={`${item._id}-${item.messageId}-${modelUrl}`}
+              messageId={messageId}
+              nftId={item.nftId}
+              tokenized={
+                item.nftId && typeof item.nftId === "string" ? true : false
+              }
+              modelUrl={modelUrl}
+              toolPercentage={percentage}
+              imageUrl={item.image.url}
+              status={status}
+              type={type}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
