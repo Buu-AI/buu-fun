@@ -6,6 +6,7 @@ interface ModelViewerComponentProps {
   src: string;
   poster?: string | null;
   alt?: string;
+  enableAR?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
@@ -14,6 +15,7 @@ export default function ModelViewer({
   src,
   poster,
   alt = "A 3D model",
+  enableAR = true
 }: ModelViewerComponentProps) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -83,14 +85,11 @@ export default function ModelViewer({
         rotation-per-second="12deg"
         auto-rotate-delay={2}
         tone-mapping="none"
-        // shadow-intensity={5}
         loading="eager"
-        // exposure={1}
         camera-controls
         auto-rotate
-        // touch-action="pan-y"
         interaction-prompt="none"
-        ar
+        ar={enableAR}
       >
         {/* <div className="lighting" slot="lighting">
           <div
