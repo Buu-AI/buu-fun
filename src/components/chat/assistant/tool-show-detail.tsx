@@ -1,15 +1,19 @@
 "use client";
 import ChevronArrow from "@/assets/icons/chevron-arrow";
 import { cn } from "@/lib/utils";
-import { PromptPayload } from "@/types/chat/chat-types";
+import { PromptPayload, TToolRequest } from "@/types/chat/chat-types";
 import { gsap } from "gsap";
 import { useEffect, useRef, useState } from "react";
 import JsonViewer from "./json-viewer";
+import ToolCallDetails from "./tool-call-details";
+import { Maybe } from "@/types";
 type TAssistantMessageShowDetailToolCall = {
   payload: PromptPayload;
+  toolRequest: TToolRequest;
 };
 export default function AssistantMessageShowDetailToolCall({
   payload,
+  toolRequest,
 }: TAssistantMessageShowDetailToolCall) {
   const [isOpen, setIsOpen] = useState(false);
   const detailsRef = useRef<HTMLDivElement>(null);
@@ -81,9 +85,17 @@ export default function AssistantMessageShowDetailToolCall({
   };
 
   return (
-    <div className="">
+    <div className="my-4 show-hide-button rounded-lg">
       {/* button */}
-      <button className="flex items-center gap-1" onClick={toggleDetails}>
+      <button
+        className={cn(
+          "flex w-full justify-center px-5  rounded-md items-center gap-1 py-2 transition-all duration-500 ease-in-out",
+          {
+            "pt-5": isOpen,
+          },
+        )}
+        onClick={toggleDetails}
+      >
         <div
           className={cn(`w-4 h-4 transition-transform duration-300 rotate-0`, {
             "-rotate-180": isOpen,
@@ -96,7 +108,7 @@ export default function AssistantMessageShowDetailToolCall({
 
       <div
         ref={detailsRef}
-        className="bg-show-detailed-card w-full rounded-lg"
+        className="w-full rounded-lg"
         style={{
           height: 0,
           opacity: 0,
@@ -104,7 +116,9 @@ export default function AssistantMessageShowDetailToolCall({
         }}
       >
         <div ref={contentRef} className="px-5 py-5">
-          <JsonViewer data={payload} maxHeight="30rem" />
+          <div>
+            <ToolCallDetails toolRequest={toolRequest} />
+          </div>
         </div>
       </div>
     </div>
