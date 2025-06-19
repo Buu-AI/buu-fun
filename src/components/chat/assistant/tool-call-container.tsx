@@ -1,9 +1,13 @@
 import { isToolCallPending } from "@/lib/helpers/status-checker";
-import { PromptPayload, TMessageStatus } from "@/types/chat/chat-types";
+import {
+  PromptPayload,
+  TMessageStatus,
+  TToolRequest,
+} from "@/types/chat/chat-types";
 import ChatStatus from "../chat-status";
 import AssistantToolCall from "./tool-call";
 import ToolCallHeaderMessage from "./tool-call-header-message";
-import { MaybeString } from "@/types";
+import { Maybe, MaybeString } from "@/types";
 
 type TAssistantToolCallContainer = {
   prompt?: string | null;
@@ -12,6 +16,7 @@ type TAssistantToolCallContainer = {
   payload: PromptPayload;
   credits: number;
   toolRequestId: MaybeString;
+  toolRequest: Maybe<TToolRequest>;
 };
 
 export default function AssistantToolCallContainer({
@@ -21,20 +26,24 @@ export default function AssistantToolCallContainer({
   status,
   payload,
   toolRequestId,
+  toolRequest,
 }: TAssistantToolCallContainer) {
   const isPending = isToolCallPending(status);
   return (
     <div className="">
-      <ChatStatus status={status} />
-      <ToolCallHeaderMessage prompt={prompt} status={status} />
-      {isPending ? (
-        <AssistantToolCall
-          credits={credits}
-          payload={payload}
-          messageId={messageId}
-          toolRequestId={toolRequestId}
-        />
-      ) : null}
+      <ChatStatus
+        status={status}
+        progress={toolRequest?.percentage}
+        prompt={toolRequest?.message}
+      />
+      {/* <ToolCallHeaderMessage prompt={prompt} status={status} /> */}
+      <AssistantToolCall
+        credits={credits}
+        toolRequest={toolRequest}
+        payload={payload}
+        messageId={messageId}
+        toolRequestId={toolRequestId}
+      />
     </div>
   );
 }
