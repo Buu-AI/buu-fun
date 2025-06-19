@@ -1,5 +1,5 @@
 // @libs/redux/features/stage.ts
-import { INITIAL_STAGING_MODELS } from "@/app/(dashboard)/app/(without-top-navigation)/stage/modelUrls";
+import { INITIAL_STAGING_MODELS } from "@/app/(dashboard)/app/(without-top-navigation)/playground/modelUrls";
 import undoable from "redux-undo";
 import {
   LightInteractionMode,
