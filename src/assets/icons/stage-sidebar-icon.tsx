@@ -2,7 +2,7 @@ type TStageSidebarIcon = {
   className?: string;
 };
 
-export default function StageSidebarIcon({ className }: TStageSidebarIcon) {
+export default function StageSidebarIcon({}: TStageSidebarIcon) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
