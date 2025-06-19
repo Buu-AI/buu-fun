@@ -2,12 +2,11 @@ import { CoinStackIcon, SizePenIcon } from "@/assets/icons";
 import logo from "@/assets/icons/logo-no-gradient.png";
 import MagicPenIcon from "@/assets/icons/magicpen";
 import NFTSideBarIcon from "@/assets/icons/nft-sidebar-icon";
+import SelectObjectIcon from "@/assets/icons/select-object-icon";
 import Image from "next/image";
 import Link from "next/link";
 import KnowMorePopover from "./know-more-pop-over";
 import LocationKnownLink from "./location-known-link";
-import StageSidebarIcon from "@/assets/icons/stage-sidebar-icon";
-import SelectObjectIcon from "@/assets/icons/select-object-icon";
 export default function NavigationalBar() {
   return (
     <nav className="px-3 py-4  w-full h-full md:h-screen z-50 relative">
