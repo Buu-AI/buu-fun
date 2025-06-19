@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import KnowMorePopover from "./know-more-pop-over";
 import LocationKnownLink from "./location-known-link";
+import StageSidebarIcon from "@/assets/icons/stage-sidebar-icon";
+import SelectObjectIcon from "@/assets/icons/select-object-icon";
 export default function NavigationalBar() {
   return (
     <nav className="px-3 py-4  w-full h-full md:h-screen z-50 relative">
@@ -37,7 +39,6 @@ export default function NavigationalBar() {
               <SizePenIcon />
             </div>
           </Link> */}
-
           <LocationKnownLink
             LinkIn="boards"
             LinkTo="/app/boards"
@@ -65,6 +66,22 @@ export default function NavigationalBar() {
             // children={}
           >
             <NFTSideBarIcon />
+          </LocationKnownLink>
+          <div className="h-0.5 w-[80%] bg-gray-800 rounded-full" />
+          <LocationKnownLink
+            LinkIn="playground"
+            LinkTo="/app/playground"
+            className="w-8 h-8 "
+            // children={}
+          >
+            <div className="relative w-full h-full">
+              <SelectObjectIcon height={"100%"} width={"100%"} />
+              <div className="absolute bg-pill-card -bottom-2 left-0 right-0 max-w-max p-0.5 mx-auto">
+                <p className="text-[7px] leading-none font-bold text-white">
+                  NEW
+                </p>
+              </div>
+            </div>
           </LocationKnownLink>
           {/* <Link
             href={"/app"}
