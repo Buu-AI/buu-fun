@@ -1,12 +1,22 @@
+import apiKeySlice from "@/lib/redux/features/api-key";
+import boardSlice from "@/lib/redux/features/boards";
 import ChatSlice from "@/lib/redux/features/chat";
 import SettingsSlice from "@/lib/redux/features/settings";
 import SubscriptionSlice from "@/lib/redux/features/subscription";
-import boardSlice from "@/lib/redux/features/boards";
-import apiKeySlice from "@/lib/redux/features/api-key";
 
 import BuuPricingSlice from "@/lib/redux/features/buu-pricing";
 import StageSlice from "@/lib/redux/features/stage";
 import { configureStore } from "@reduxjs/toolkit";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+
+const persistedStageReducer = persistReducer(
+  {
+    key: "stage",
+    storage: storage,
+  },
+  StageSlice
+);
 
 export const makeStore = () => {
   return configureStore({
@@ -18,8 +28,14 @@ export const makeStore = () => {
       subscription: SubscriptionSlice,
       apiKey: apiKeySlice,
       BuuPricing: BuuPricingSlice,
-      stage: StageSlice,
+      stage: persistedStageReducer,
     },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+        },
+      }),
   });
 };
 

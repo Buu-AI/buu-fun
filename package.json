@@ -98,6 +98,7 @@
     "react-markdown": "^9.1.0",
     "react-redux": "^9.2.0",
     "recharts": "^2.15.1",
+    "redux-persist": "^6.0.0",
     "redux-undo": "^1.1.0",
     "remark-gfm": "^4.0.1",
     "tailwind-merge": "^3.0.1",
