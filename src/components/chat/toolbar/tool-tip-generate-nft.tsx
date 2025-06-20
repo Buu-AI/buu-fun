@@ -72,7 +72,6 @@ export default function ToolTipGenerateNft({
               dispatch(
                 setGenerateNFT({
                   isGenNftOpen: true,
-                  messageId,
                   imageUrl,
                   modelUrl,
                   modelId,

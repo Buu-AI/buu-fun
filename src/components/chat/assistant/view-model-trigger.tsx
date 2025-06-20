@@ -1,21 +1,35 @@
-import { Model } from "@/gql/types/graphql";
 import { useAppDispatch } from "@/hooks/redux";
+import { setViewModel } from "@/lib/redux/features/chat";
 import { Maybe } from "@/types";
-import { TToolRequest } from "@/types/chat/chat-types";
 import { ZoomIn } from "lucide-react";
 
 type TViewModelTrigger = {
-  model: Model;
-  toolRequest: Maybe<TToolRequest>;
+  modelId: string;
+  toolRequestId: Maybe<string>;
 };
 
 export default function ViewModelTrigger({
-  model,
-  toolRequest,
+  modelId,
+  toolRequestId,
 }: TViewModelTrigger) {
   const dispatch = useAppDispatch();
   return (
-    <button onClick={() => {}}>
+    <button
+      className="hover:text-white"
+      onClick={() => {
+        dispatch(
+          setViewModel({
+            isOpen: true,
+            model: {
+              id: modelId,
+            },
+            toolRequest: {
+              id: toolRequestId ?? "",
+            },
+          }),
+        );
+      }}
+    >
       <ZoomIn />{" "}
     </button>
   );

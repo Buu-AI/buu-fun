@@ -1,13 +1,11 @@
-import { TMessageStatus } from "@/types/chat/chat-types";
-import Pill, { TPillVariant } from "../elements/pill";
-import {
-  isToolCallCanceled,
-  isToolCallPending,
-} from "@/lib/helpers/status-checker";
-import { ReactNode } from "react";
-import ChatProgressIcon from "@/assets/icons/utility/chat-progress-icon";
-import ProgressCircle from "./assistant/tool-loader";
+import CrossFailed from "@/assets/icons/cross-failed";
 import GreenCompleted from "@/assets/icons/green-completed";
+import ChatProgressIcon from "@/assets/icons/utility/chat-progress-icon";
+import { isToolCallCanceled } from "@/lib/helpers/status-checker";
+import { TMessageStatus } from "@/types/chat/chat-types";
+import { ReactNode } from "react";
+import { TPillVariant } from "../elements/pill";
+import ProgressCircle from "./assistant/tool-loader";
 
 type TStatusPillDetails = {
   text: string;
@@ -25,25 +23,27 @@ type TChatStatus = {
 
 export default function ChatStatus({ status, prompt, progress }: TChatStatus) {
   const details = getPillDetails(status, progress);
-  const isStatusPending = isToolCallPending(status);
   const isStatusCanceled = isToolCallCanceled(status);
 
-  // if (!isStatusPending && !isStatusCanceled) return null;
+  if (isStatusCanceled) {
+    prompt = "Request has Canceled";
+  }
 
   return (
     <div className="flex gap-2 items-center">
-      <div className="w-5 h-5">{details?.icon}</div>
+      <div className="w-5 h-5 ">{details?.icon}</div>
       <p className="max-w-max font-medium text-sm">{prompt ?? details?.text}</p>
     </div>
   );
 }
 function getPillDetails(
   status?: TMessageStatus,
-  progress?: number
+  progress?: number,
 ): TStatusPillDetails | null {
   switch (status) {
     case "FAILED": {
       return {
+        icon: <CrossFailed />,
         text: "Failed",
         variant: "accent_destructive",
       };
@@ -74,7 +74,8 @@ function getPillDetails(
     }
     case "CANCELLED": {
       return {
-        text: "Cancelled",
+        icon: <CrossFailed stroke="#FFFA78" />,
+        text: "Request Cancelled",
         variant: "gray",
       };
     }

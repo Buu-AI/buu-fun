@@ -31,7 +31,7 @@ export default function LocationKnownLink({
           {
             "text-white": isCurrent,
           },
-          className
+          className,
         )}
       >
         {children}

@@ -1,12 +1,10 @@
-import InfoIcon from "@/assets/icons/info-icon";
 import { getPayloadInformation, isValidPayload } from "@/lib/helpers/chat/tool";
-import { cn } from "@/lib/utils";
+import { isToolCallPending } from "@/lib/helpers/status-checker";
 import { Maybe, MaybeString } from "@/types";
 import { PromptPayload, TToolRequest } from "@/types/chat/chat-types";
 import ToolCallApproveButton from "./tool-call-approve-button";
 import ToolCallCancelButton from "./tool-call-cancel-button";
 import AssistantMessageShowDetailToolCall from "./tool-show-detail";
-import { isToolCallPending } from "@/lib/helpers/status-checker";
 
 type TAssistantToolCall = {
   messageId: string;
@@ -18,7 +16,6 @@ type TAssistantToolCall = {
 
 export default function AssistantToolCall({
   payload,
-  credits,
   toolRequestId,
   toolRequest,
 }: TAssistantToolCall) {

@@ -1,20 +1,19 @@
-import ToolBarWrapper from "@/components/chat/toolbar/tool-bar-wrapper";
+import { Model } from "@/gql/types/graphql";
 import {
-  isToolCallCanceled,
   isToolCallGenerating,
   isToolCallPending,
 } from "@/lib/helpers/status-checker";
 import { cn } from "@/lib/utils";
 import { Maybe, MaybeString } from "@/types";
-import { TMessageStatus, TToolRequest, TToolType } from "@/types/chat/chat-types";
-import MagicLoaderWand from "../magic-loader-wand";
+import {
+  TMessageStatus,
+  TToolRequest,
+  TToolType,
+} from "@/types/chat/chat-types";
+import LoaderCircle from "../Loader-circle";
 import ImageViewLoader from "./generation-card/image-view-loader";
 import ModelViewWrapper from "./generation-card/model-view-wrapper";
-import ModelToolHeader from "./model-tool-header";
-import LoaderCircle from "../Loader-circle";
-import { Search, ZoomIn } from "lucide-react";
 import ViewModelTrigger from "./view-model-trigger";
-import { Model } from "@/gql/types/graphql";
 type TGeneratedModelCard = {
   imageUrl: MaybeString;
   modelUrl: MaybeString;
@@ -25,7 +24,7 @@ type TGeneratedModelCard = {
   type?: TToolType;
   message: MaybeString;
   toolPercentage?: number;
-  modelId: MaybeString;
+  modelId: string;
   isTexturedMesh: boolean;
   index?: number;
   model: Model;
@@ -33,32 +32,30 @@ type TGeneratedModelCard = {
 };
 
 export default function GeneratedModelCard({
-  imageUrl,
   modelUrl,
   status,
-  messageId,
-  nftId,
-  tokenized,
-  message,
-  toolPercentage,
   modelId,
-  isTexturedMesh,
   index,
+  toolRequest,
 }: TGeneratedModelCard) {
   const isGenerating = isToolCallGenerating(status);
   const isPending = isToolCallPending(status);
-  const isCanceledMessage = isToolCallCanceled(status);
   return (
     <div className=" w-full aspect-square overflow-hidden rounded-2xl  relative justify-center">
       <div className="w-6 h-6 text-gray-400 absolute top-2 z-20 right-2">
-        <ViewModelTrigger />{" "}
+        {modelUrl ? (
+          <ViewModelTrigger
+            modelId={modelId}
+            toolRequestId={toolRequest?._id}
+          />
+        ) : null}
       </div>
       <div
         className={cn(
           " w-full h-full   image-model-generation transition-all duration-300 ease-in-out  absolute top-0 left-0 ",
           {
             "image-loader": isPending,
-          }
+          },
         )}
       />
       {!modelUrl ? (

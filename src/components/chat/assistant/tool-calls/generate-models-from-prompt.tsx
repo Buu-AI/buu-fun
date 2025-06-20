@@ -28,22 +28,26 @@ export default function GenerateModelsFromPrompt({
               </div>{" "}
             </div>
           ) : null}
-          <div>
-            <p className="text-xs font-medium ml-2 text-muted-foreground/60">
-              Texture
-            </p>
-            <div className="mt-1 chat-prompt-bg">
-              <p className="py-3   px-4 text-sm uppercase">{texture}</p>
-            </div>{" "}
-          </div>
-          <div>
-            <p className="text-xs font-medium ml-2 text-muted-foreground/60">
-              Number of models
-            </p>
-            <div className="mt-1 chat-prompt-bg">
-              <p className="py-3   px-4 text-sm ">{numberOfModels}</p>
-            </div>{" "}
-          </div>
+          {texture ? (
+            <div>
+              <p className="text-xs font-medium ml-2 text-muted-foreground/60">
+                Texture
+              </p>
+              <div className="mt-1 chat-prompt-bg">
+                <p className="py-3   px-4 text-sm uppercase">{texture}</p>
+              </div>{" "}
+            </div>
+          ) : null}
+          {numberOfModels ? (
+            <div>
+              <p className="text-xs font-medium ml-2 text-muted-foreground/60">
+                Number of models
+              </p>
+              <div className="mt-1 chat-prompt-bg">
+                <p className="py-3   px-4 text-sm ">{numberOfModels}</p>
+              </div>{" "}
+            </div>
+          ) : null}
           {numberOfFaces ? (
             <div>
               <p className="text-xs font-medium ml-2 text-muted-foreground/60">

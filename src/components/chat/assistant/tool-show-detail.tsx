@@ -4,15 +4,12 @@ import { cn } from "@/lib/utils";
 import { PromptPayload, TToolRequest } from "@/types/chat/chat-types";
 import { gsap } from "gsap";
 import { useEffect, useRef, useState } from "react";
-import JsonViewer from "./json-viewer";
 import ToolCallDetails from "./tool-call-details";
-import { Maybe } from "@/types";
 type TAssistantMessageShowDetailToolCall = {
   payload: PromptPayload;
   toolRequest: TToolRequest;
 };
 export default function AssistantMessageShowDetailToolCall({
-  payload,
   toolRequest,
 }: TAssistantMessageShowDetailToolCall) {
   const [isOpen, setIsOpen] = useState(false);

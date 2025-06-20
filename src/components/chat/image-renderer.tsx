@@ -38,7 +38,7 @@ export default function ImageRenderer({
         ? medias.map((item, index) => {
             return (
               <motion.div
-                key={`${prompt}-${item}`}
+                key={`${prompt}-${item._id}`}
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{
                   scale: 1,

@@ -14,7 +14,7 @@ export default function LoaderCircle({ index = 0 }: TLoaderCircle) {
     const ctx = gsap.context(() => {
       // Generate random values for more varied animation
       const randomDuration = 3; // Random duration between 1-3 seconds
-      const randomDirection = index / 2  === 0 ?  -360 : 360; // Random direction
+      const randomDirection = index / 2 === 0 ? -360 : 360; // Random direction
       const randomDelay = Math.random() * index * 0.5; // Random start delay up to 1 second
 
       gsap.to(svgRef.current, {
@@ -28,7 +28,8 @@ export default function LoaderCircle({ index = 0 }: TLoaderCircle) {
     }, svgRef);
 
     return () => ctx.revert();
-  }, []); // Remove index from dependency array since we're using random values
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <svg
