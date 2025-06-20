@@ -17,7 +17,7 @@ export default function ModelViewWrapper({
 }: TModelViewWrapper) {
   if (!modelUrl) return null;
   return (
-    <div className="w-full h-full relative">
+    <div key={modelUrl} className="w-full h-full relative">
       <div className="bg-balance-card w-full h-full absolute top-0 left-0" />
       <div className="w-full h-full  backdrop-blur-xl overflow-hidden relative rounded-b-3xl">
         <ModelViewer

@@ -1,16 +1,21 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { useEffect, useRef } from "react";
 
 type TLoaderCircle = {
   index?: number;
+  disableSpin?: boolean;
 };
 
-export default function LoaderCircle({ index = 0 }: TLoaderCircle) {
+export default function LoaderCircle({
+  index = 0,
+  disableSpin = false,
+}: TLoaderCircle) {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
+    if (disableSpin) return;
     const ctx = gsap.context(() => {
       // Generate random values for more varied animation
       const randomDuration = 3; // Random duration between 1-3 seconds

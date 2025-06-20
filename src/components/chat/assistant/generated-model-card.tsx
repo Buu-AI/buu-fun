@@ -3,7 +3,7 @@ import {
   isToolCallGenerating,
   isToolCallPending,
 } from "@/lib/helpers/status-checker";
-import { cn } from "@/lib/utils";
+import { cn, isPastInMinutes } from "@/lib/utils";
 import { Maybe, MaybeString } from "@/types";
 import {
   TMessageStatus,
@@ -28,6 +28,7 @@ type TGeneratedModelCard = {
   isTexturedMesh: boolean;
   index?: number;
   model: Model;
+  updatedAt?: any;
   toolRequest: Maybe<TToolRequest>;
 };
 
@@ -40,6 +41,7 @@ export default function GeneratedModelCard({
 }: TGeneratedModelCard) {
   const isGenerating = isToolCallGenerating(status);
   const isPending = isToolCallPending(status);
+  const isPastFourMinute = isPastInMinutes(toolRequest?.updatedAt);
   return (
     <div className=" w-full aspect-square overflow-hidden rounded-2xl  relative justify-center">
       <div className="w-6 h-6 text-gray-400 absolute top-2 z-20 right-2">
@@ -55,29 +57,34 @@ export default function GeneratedModelCard({
           " w-full h-full   image-model-generation transition-all duration-300 ease-in-out  absolute top-0 left-0 ",
           {
             "image-loader": isPending,
-          },
+          }
         )}
       />
       {!modelUrl ? (
-        <div className="w-full h-full  absolute top-0 left-0 z-20">
-          <div className="flex items-center justify-center w-full h-full  ">
+        <div className="w-full h-full absolute top-0 left-0 z-20">
+          <div className="flex items-center justify-center w-full h-full">
             {isPending ? (
-              <p className="text-2xl text-center ">
+              <p className="text-2xl text-center">
                 Approval
                 <br />
                 Pending
               </p>
             ) : (
-              <div className="h-32 w-32 ">
-                <LoaderCircle index={index} />
+              <div className="h-32 w-32">
+                <LoaderCircle disableSpin={isPastFourMinute} index={index} />
               </div>
             )}
+            {/* (
+              <div className="h-32 w-32">
+                <FailedCross />
+              </div>
+            ) */}
           </div>
         </div>
       ) : null}
       <ImageViewLoader imageUrl={null} isGenerating={isGenerating} />
 
-      <ModelViewWrapper imageUrl={null} modelUrl={modelUrl} />
+      <ModelViewWrapper key={modelUrl} imageUrl={null} modelUrl={modelUrl} />
     </div>
   );
 }

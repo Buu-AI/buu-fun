@@ -61,6 +61,7 @@ export default function AssistantToolMessage({
               return (
                 <GeneratedModelCard
                   model={item}
+                  updatedAt={item.updatedAt}
                   toolRequest={toolRequest}
                   index={index}
                   isTexturedMesh={isTexturedMesh}
