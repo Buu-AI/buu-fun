@@ -30,6 +30,7 @@ type TGeneratedModelCard = {
   isTexturedMesh: boolean;
   index?: number;
   model: Model;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   updatedAt?: any;
   toolRequest: Maybe<TToolRequest>;
 };
@@ -60,7 +61,7 @@ export default function GeneratedModelCard({
           " w-full h-full   image-model-generation transition-all duration-300 ease-in-out  absolute top-0 left-0 ",
           {
             "image-loader": isPending,
-          }
+          },
         )}
       />
       {!modelUrl ? (

@@ -29,19 +29,19 @@ export function isLocalMode() {
 export function pluralize(
   num: number,
   word: string,
-  plural: (value: string) => string = simplePlural
+  plural: (value: string) => string = simplePlural,
 ) {
   return isPlural(num) ? plural(word) : word;
 }
 
 export async function handleResponse(
-  response: Response
+  response: Response,
 ): Promise<TDataMuseWord[]> {
   if (!response.ok) {
     // add other generic messages later for api backends.
     throw new DataMuseError(
       `API request failed: ${response.statusText}`,
-      response.status
+      response.status,
     );
   }
   return response.json();
@@ -88,7 +88,7 @@ export function isImageUrl(value: string | null | undefined) {
 
 export async function blobUrlToFile(
   blobUrl: string,
-  fileName: string
+  fileName: string,
 ): Promise<File | null> {
   try {
     const response = await fetch(blobUrl);
@@ -109,7 +109,7 @@ export function getAllowedContentTypeMaps(key: string) {
 export function truncateString(
   value: string,
   startEnd: number = 4,
-  endStartAt: number = 4
+  endStartAt: number = 4,
 ): string {
   if (value.length <= startEnd + endStartAt) {
     return value;
@@ -250,7 +250,7 @@ export function parseJson<T>(
   data: any,
   showLogs = false,
   messageKey = "ERROR-PARSE-JSON",
-  errorMsg = "Failed to retrieve data"
+  errorMsg = "Failed to retrieve data",
 ): TryCatch<T> {
   try {
     const parsedData = JSON.parse(data);
@@ -294,7 +294,7 @@ export function getZ(value: TVector3) {
 
 export function getMappedPosition(
   position: TVector3Positions,
-  value: TVector3
+  value: TVector3,
 ) {
   switch (position) {
     case "x": {
@@ -324,7 +324,7 @@ export function isTypeUndefined(value: unknown): value is undefined {
 
 export function isPastInMinutes(updatedAt: string, minute = 4) {
   if (typeof updatedAt !== "string") {
-    return true
+    return true;
   }
   const updatedDate = parseISO(updatedAt); // Converts ISO 8601 string to Date
   const fourMinutesAgo = subMinutes(new Date(), minute);
