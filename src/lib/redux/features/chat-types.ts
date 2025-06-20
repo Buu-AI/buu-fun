@@ -1,7 +1,6 @@
 import { MaybeString } from "@/types";
-import { TChatMessage, TToolRequest } from "@/types/chat/chat-types";
+import { TChatMessage } from "@/types/chat/chat-types";
 import { TThreeDStyles } from "./settings";
-import { Model } from "@/gql/types/graphql";
 
 export type TMaximizeModelViewer = {
   type: "model";
@@ -48,8 +47,12 @@ export type TImageData = {
 
 export type TViewModel = {
   isOpen: boolean;
-  model: Model | null;
-  toolRequest: TToolRequest | null;
+  model: {
+    id: string;
+  } | null;
+  toolRequest: {
+    id: string;
+  } | null;
 };
 
 export type ChatState = {
