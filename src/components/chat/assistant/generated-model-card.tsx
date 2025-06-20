@@ -1,5 +1,6 @@
 import { Model } from "@/gql/types/graphql";
 import {
+  isToolCallFailed,
   isToolCallGenerating,
   isToolCallPending,
 } from "@/lib/helpers/status-checker";
@@ -14,6 +15,7 @@ import LoaderCircle from "../Loader-circle";
 import ImageViewLoader from "./generation-card/image-view-loader";
 import ModelViewWrapper from "./generation-card/model-view-wrapper";
 import ViewModelTrigger from "./view-model-trigger";
+import FailedCross from "@/assets/icons/failed-cross";
 type TGeneratedModelCard = {
   imageUrl: MaybeString;
   modelUrl: MaybeString;
@@ -41,6 +43,7 @@ export default function GeneratedModelCard({
 }: TGeneratedModelCard) {
   const isGenerating = isToolCallGenerating(status);
   const isPending = isToolCallPending(status);
+  const isFailed = isToolCallFailed(status);
   const isPastFourMinute = isPastInMinutes(toolRequest?.updatedAt);
   return (
     <div className=" w-full aspect-square overflow-hidden rounded-2xl  relative justify-center">
@@ -69,16 +72,15 @@ export default function GeneratedModelCard({
                 <br />
                 Pending
               </p>
+            ) : isFailed ? (
+              <div className="h-32 w-32">
+                <FailedCross />
+              </div>
             ) : (
               <div className="h-32 w-32">
                 <LoaderCircle disableSpin={isPastFourMinute} index={index} />
               </div>
             )}
-            {/* (
-              <div className="h-32 w-32">
-                <FailedCross />
-              </div>
-            ) */}
           </div>
         </div>
       ) : null}
