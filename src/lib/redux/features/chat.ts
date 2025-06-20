@@ -64,14 +64,12 @@ const ChatSlice = createSlice({
       state,
       action: PayloadAction<{
         isGenNftOpen: boolean;
-        messageId?: string;
         modelUrl?: string | null;
         imageUrl?: string | null;
         modelId?: string | null;
-      }>
+      }>,
     ) {
       state.genNft.isGenNftModalOpen = action?.payload?.isGenNftOpen;
-      state.genNft.messageId = action.payload.messageId;
       state.genNft.modelUrl = action.payload.modelUrl;
       state.genNft.imageUrl = action.payload.imageUrl;
       state.genNft.modelId = action.payload.modelId;
@@ -82,7 +80,7 @@ const ChatSlice = createSlice({
         state.inputFile?.push(action.payload);
       }
     },
-    setModel(state, action: PayloadAction<Partial<TViewModel>>) {
+    setViewModel(state, action: PayloadAction<Partial<TViewModel>>) {
       const payload = action.payload;
 
       if (!isTypeUndefined(payload.isOpen)) {
@@ -99,7 +97,7 @@ const ChatSlice = createSlice({
     },
     removeImage(state, action: PayloadAction<string>) {
       state.inputFile = state.inputFile.filter(
-        (item) => item.id !== action.payload
+        (item) => item.id !== action.payload,
       );
     },
     clearInputFile(state) {
@@ -164,7 +162,7 @@ const ChatSlice = createSlice({
     handleMessageUpdates: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId
+          (item) => item.messageId === action.payload.messageId,
         );
         if (!item) {
           state.messages.push(action.payload);
@@ -183,12 +181,12 @@ const ChatSlice = createSlice({
       const model = action.payload;
 
       const message = state.messages.find(
-        (fv) => fv.messageId === model.messageId
+        (fv) => fv.messageId === model.messageId,
       );
 
       if (message) {
         const modelIndex = message.models.findIndex(
-          (fv) => fv._id === model._id
+          (fv) => fv._id === model._id,
         );
 
         if (modelIndex !== -1) {
@@ -207,7 +205,7 @@ const ChatSlice = createSlice({
       const tool = action.payload;
 
       const message = state.messages.find(
-        (fv) => fv.messageId === tool.messageId
+        (fv) => fv.messageId === tool.messageId,
       );
 
       if (message) {
@@ -225,7 +223,7 @@ const ChatSlice = createSlice({
     appendAIChatMessage: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId
+          (item) => item.messageId === action.payload.messageId,
         );
         if (!item) {
           state.messages.push(action.payload);
@@ -268,6 +266,8 @@ export const {
   setMessages,
   setNewSession,
   removeImage,
+  clearMessages,
+  setViewModel,
   setEditImage,
   setGenerateModel,
   setMaximizedViewer,
@@ -276,7 +276,6 @@ export const {
   handleMessageUpdates,
   updateMessageModel,
   updateMessageToolRequest,
-  clearMessages,
 } = ChatSlice.actions;
 
 export default ChatSlice.reducer;

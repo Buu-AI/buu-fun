@@ -1,4 +1,4 @@
-import { MessagesPage, Model } from "@/gql/types/graphql";
+import { Model } from "@/gql/types/graphql";
 import { isRoleAssistant } from "@/lib/helpers/status-checker";
 import { parseJson } from "@/lib/utils";
 import {
