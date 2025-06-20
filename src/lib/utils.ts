@@ -316,3 +316,8 @@ export function isTypeNumber(value: any) {
 export function compareDate(date: string, compareDate: string): boolean {
   return isBefore(parseISO(date), parseISO(compareDate));
 }
+
+export function isTypeUndefined(value: unknown): value is undefined {
+  if (typeof value === "undefined" || value === undefined) return true;
+  return false;
+}

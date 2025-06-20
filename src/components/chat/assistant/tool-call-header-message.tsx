@@ -41,12 +41,12 @@ function getToolMessage(status?: TMessageStatus): TGetToolMessage | null {
     //     text: "The request is in queue",
     //   };
     // }
-    case "PENDING": {
-      return {
-        text: "Approve request to generate your model",
-        isPending: true,
-      };
-    }
+    // case "PENDING": {
+    //   return {
+    //     text: "Approve request to generate your model",
+    //     isPending: true,
+    //   };
+    // }
     // case "IN_PROGRESS": {
     //   return {
     //     text: "I'm gonna generate a 3D Model",

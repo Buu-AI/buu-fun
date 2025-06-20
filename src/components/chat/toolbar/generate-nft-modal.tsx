@@ -69,7 +69,6 @@ export default function GenerateNFTModal() {
       dispatch(
         setGenerateNFT({
           isGenNftOpen: false,
-          messageId: undefined,
           imageUrl: undefined,
           modelUrl: undefined,
           modelId: undefined,
@@ -89,9 +88,7 @@ export default function GenerateNFTModal() {
     },
   });
   function handleCreateNFTForm({ description, name }: TCreateNftSchema) {
-    const messageId = GenNft.messageId;
     const modelId = GenNft.modelId;
-
     if (!checked) {
       toast.error("Please acknowledge the credits used to generate NFT");
       return;
@@ -100,10 +97,7 @@ export default function GenerateNFTModal() {
       login();
       return;
     }
-    if (!messageId) {
-      toast.error("invalid generation request");
-      return;
-    }
+
     if (!modelId) {
       toast.error("Failed to retrieve model");
       return;
@@ -128,7 +122,6 @@ export default function GenerateNFTModal() {
           dispatch(
             setGenerateNFT({
               isGenNftOpen: value,
-              messageId: undefined,
               imageUrl: undefined,
               modelUrl: undefined,
             }),

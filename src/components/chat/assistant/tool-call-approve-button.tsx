@@ -52,10 +52,10 @@ export default function ToolCallApproveButton({
       onClick={() => {
         handleApproveMessage();
       }}
-      size={"buu"}
-      className="px-5 py-1.5 "
+      size={"special"}
+      className="px-5 py-1.5 w-full font-medium"
     >
-      Approve
+      Confirm
     </Button>
   );
 }

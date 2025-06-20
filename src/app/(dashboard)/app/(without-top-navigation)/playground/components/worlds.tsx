@@ -13,9 +13,7 @@ export function Worlds() {
   if (!textureUrl) return null;
 
   return (
-    <Suspense
-      fallback={<BasicWorld sphereRef={sphereRef} groundRef={groundRef} />}
-    >
+    <Suspense fallback={null}>
       <WorldContent
         textureUrl={textureUrl}
         sphereRef={sphereRef}
@@ -68,12 +66,12 @@ function WorldContent({
     );
   } catch (error) {
     console.error("Error loading texture:", error);
-    return <BasicWorld sphereRef={sphereRef} groundRef={groundRef} />;
+    return null;
   }
 }
 
 // Fallback component without texture
-function BasicWorld({
+export function BasicWorld({
   sphereRef,
   groundRef,
 }: {
@@ -88,7 +86,7 @@ function BasicWorld({
       {/* Simple colored sphere */}
       <mesh ref={sphereRef} scale={[-100, 100, 100]}>
         <sphereGeometry args={[1, 64, 32]} />
-        <meshBasicMaterial color="#4a90e2" side={THREE.BackSide} />
+        <meshBasicMaterial color="#595959" side={THREE.BackSide} />
       </mesh>
 
       {/* Ground plane */}

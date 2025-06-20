@@ -7,7 +7,7 @@ type TLogger = {};
 export default function Logger({}: TLogger) {
   const lights = useAppSelector((state) => state.stage.present.selectedLights);
   const currentLight = useAppSelector((state) =>
-    getSelectedLights(state, lights?.id ?? "")
+    getSelectedLights(state, lights?.id ?? ""),
   );
   const light = currentLight?.light;
   return (
@@ -15,7 +15,9 @@ export default function Logger({}: TLogger) {
       <div className=" w-full h-full border-2 bg-buu">
         {light?.id ? "Light Selected:" : null}
         {lights?.interactionMode ? `${lights?.interactionMode}` : null}
-        {light?.scale ? `x:${getX(light.scale)} \n Z:${getY(light.scale)} \n Z:${getZ(light.scale)}` : null}
+        {light?.scale
+          ? `x:${getX(light.scale)} \n Z:${getY(light.scale)} \n Z:${getZ(light.scale)}`
+          : null}
       </div>
     </div>
   );

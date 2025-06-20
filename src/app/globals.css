@@ -931,6 +931,10 @@ input[type="number"] {
   background: rgba(15, 17, 22, 0.5);
 }
 
+.bg-buu-view-modal-footer {
+  background: rgba(28, 32, 39, 1);
+}
+
 .bg-roi-shadow {
   background: rgba(45, 50, 60, 0.7);
   box-shadow: 0px 0px 30.2px 3px rgba(52, 59, 66, 0.8) inset;
@@ -1112,3 +1116,63 @@ input[type="number"] {
   box-shadow: 0px 0px 2.215px 0px #78dbff;
 }
 
+.chat-pending-container {
+  border-radius: 10px;
+  background: rgba(28, 32, 39, 0.38);
+}
+
+.chat-prompt-bg {
+  border-radius: 10px;
+  background: rgba(28, 32, 39, 0.36);
+}
+
+.show-hide-button {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(28, 32, 39, 0.36);
+}
+
+.image-loader {
+  border-radius: 13.2px;
+  opacity: 0.5;
+  background:
+    radial-gradient(
+      138.3% 135.41% at 115.27% 105.13%,
+      rgba(255, 120, 255, 0.1) 0%,
+      rgba(28, 32, 39, 0) 100%
+    ),
+    radial-gradient(
+      93.48% 93.35% at 0% 3.1%,
+      rgba(120, 219, 255, 0.25) 0%,
+      rgba(28, 32, 39, 0) 100%
+    ),
+    #1c2027;
+}
+
+.image-model-generation {
+  border-radius: 13.2px;
+  background:
+    radial-gradient(
+      138.3% 135.41% at 115.27% 105.13%,
+      rgba(255, 120, 255, 0.2) 0%,
+      rgba(28, 32, 39, 0) 100%
+    ),
+    radial-gradient(
+      93.48% 93.35% at 0% 3.1%,
+      rgba(120, 219, 255, 0.5) 0%,
+      rgba(28, 32, 39, 0) 100%
+    ),
+    #1c2027;
+}
+
+.nft-tokenized-button {
+  border-radius: 3.383px;
+  border: 1.012px solid #b7dce6;
+  background:
+    radial-gradient(
+      236.46% 132.71% at 112.73% 136.38%,
+      rgba(120, 219, 255, 0.38) 0%,
+      rgba(28, 32, 39, 0) 100%
+    ),
+    rgba(28, 32, 39, 0.38);
+}

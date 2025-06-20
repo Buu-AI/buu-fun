@@ -15,7 +15,7 @@ const persistedStageReducer = persistReducer(
     key: "stage",
     storage: storage,
   },
-  StageSlice
+  StageSlice,
 );
 
 export const makeStore = () => {
