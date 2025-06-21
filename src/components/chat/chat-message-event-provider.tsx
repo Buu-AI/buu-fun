@@ -8,7 +8,7 @@ import {
   updateMessageModel,
   updateMessageToolRequest,
 } from "@/lib/redux/features/chat";
-import { parseJson } from "@/lib/utils";
+import { getAuthorization, parseJson } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
 import { ChatEvents } from "@/types/chat/event-source";
 import { useQueryClient } from "@tanstack/react-query";
@@ -26,13 +26,18 @@ export default function ChatMessageEventProvider({
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
   useEffect(() => {
+    if (!accessToken) return;
     function invalidatorMessage() {
       queryClient.invalidateQueries({
         exact: false,
         queryKey: ["get-messages", sessionId, accessToken],
       });
     }
-    const eventSource = getEventSource(slug);
+
+    const eventSource = getEventSource(
+      { slug },
+      { accessToken: getAuthorization(accessToken) },
+    );
     eventSource.addEventListener("open", () => {});
     let message = "";
 

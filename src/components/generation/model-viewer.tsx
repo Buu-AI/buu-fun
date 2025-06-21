@@ -1,11 +1,13 @@
 import "@google/model-viewer";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 
 interface ModelViewerComponentProps {
   src: string;
   poster?: string | null;
   alt?: string;
+  enableAR?: boolean;
+  modelRef?: RefObject<HTMLElement | null>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
@@ -14,6 +16,8 @@ export default function ModelViewer({
   src,
   poster,
   alt = "A 3D model",
+  enableAR = true,
+  modelRef,
 }: ModelViewerComponentProps) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -64,6 +68,7 @@ export default function ModelViewer({
     >
       <model-viewer
         auto-play
+        ref={modelRef}
         style={
           {
             width: "100%",
@@ -76,21 +81,20 @@ export default function ModelViewer({
             pointerEvents: "auto",
           } as React.CSSProperties
         }
+        field-of-view={"90"}
         src={src}
         ios-src=""
         poster={poster ?? ""}
         alt={alt}
         rotation-per-second="12deg"
         auto-rotate-delay={2}
-        tone-mapping="none"
-        // shadow-intensity={5}
         loading="eager"
-        // exposure={1}
-        camera-controls
+        camera-controls={true}
+        min-camera-orbit="auto auto 200%"
+        max-camera-orbit="auto auto 200%"
         auto-rotate
-        // touch-action="pan-y"
         interaction-prompt="none"
-        ar
+        ar={enableAR}
       >
         {/* <div className="lighting" slot="lighting">
           <div

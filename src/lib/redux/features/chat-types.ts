@@ -44,6 +44,17 @@ export type TImageData = {
   size: number;
   type: string;
 };
+
+export type TViewModel = {
+  isOpen: boolean;
+  model: {
+    id: string;
+  } | null;
+  toolRequest: {
+    id: string;
+  } | null;
+};
+
 export type ChatState = {
   inputQuery: string;
   inputImageUrl: string | null;
@@ -62,6 +73,7 @@ export type ChatState = {
   genModelFromImage: TGenerateModal;
   sessionId: string;
   messages: TChatMessage[];
+  viewModel: TViewModel;
 };
 
 export type TErrorTypeName = { __typename?: "HandledError" };

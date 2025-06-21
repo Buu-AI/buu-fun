@@ -8,10 +8,12 @@ export default function LocationKnownLink({
   LinkTo,
   LinkIn,
   children,
+  className,
 }: {
   LinkTo: string;
   LinkIn: string;
   children: ReactNode;
+  className?: string;
 }) {
   const pathname = usePathname();
 
@@ -25,10 +27,11 @@ export default function LocationKnownLink({
     >
       <div
         className={cn(
-          "w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-gray-500",
+          "w-6 h-6  group-hover:text-white  group-hover:fill-text-white text-gray-500",
           {
             "text-white": isCurrent,
           },
+          className,
         )}
       >
         {children}

@@ -59,9 +59,9 @@ export default function ToolCallCancelButton({
     <Button
       disabled={isExistingChatPending}
       onClick={() => handleCancelMessage()}
-      size={"buu"}
+      size={"special"}
       variant={"muted_button"}
-      className="px-5 py-1.5 "
+      className="px-5 py-1.5 w-full font-medium"
     >
       Cancel
     </Button>

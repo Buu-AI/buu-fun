@@ -9,6 +9,7 @@ import { StripeSubscriptionPlanKeys } from "@/gql/types/graphql";
 import { TryCatch } from "@/types";
 import { TVector3, TVector3Positions } from "@/types/stage/objects";
 import { clsx, type ClassValue } from "clsx";
+import { isBefore, parseISO, subMinutes } from "date-fns";
 import { twMerge } from "tailwind-merge";
 import { DataMuseError } from "./class/data-muse-error";
 import { TDataMuseWord } from "./fetcher/query/query-suggestion-api";
@@ -310,4 +311,22 @@ export function getMappedPosition(
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isTypeNumber(value: any) {
   return typeof value === "number";
+}
+
+export function compareDate(date: string, compareDate: string): boolean {
+  return isBefore(parseISO(date), parseISO(compareDate));
+}
+
+export function isTypeUndefined(value: unknown): value is undefined {
+  if (typeof value === "undefined" || value === undefined) return true;
+  return false;
+}
+
+export function isPastInMinutes(updatedAt: string, minute = 4) {
+  if (typeof updatedAt !== "string") {
+    return true;
+  }
+  const updatedDate = parseISO(updatedAt); // Converts ISO 8601 string to Date
+  const fourMinutesAgo = subMinutes(new Date(), minute);
+  return isBefore(updatedDate, fourMinutesAgo); // true if updatedDate < 4 minutes ago
 }

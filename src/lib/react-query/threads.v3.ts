@@ -65,7 +65,7 @@ export async function getMessages({
     orderBy: "createdAt",
   },
 }: TGetMessages) {
-  // return await getChatMessages()
+  // const mockData =  getChatMessages();
   const data = await serverRequest<
     TGetMessagesQuery,
     TGetMessagesQueryVariables

@@ -1,8 +1,7 @@
-import InfoIcon from "@/assets/icons/info-icon";
 import { getPayloadInformation, isValidPayload } from "@/lib/helpers/chat/tool";
-import { cn } from "@/lib/utils";
-import { MaybeString } from "@/types";
-import { PromptPayload } from "@/types/chat/chat-types";
+import { isToolCallPending } from "@/lib/helpers/status-checker";
+import { Maybe, MaybeString } from "@/types";
+import { PromptPayload, TToolRequest } from "@/types/chat/chat-types";
 import ToolCallApproveButton from "./tool-call-approve-button";
 import ToolCallCancelButton from "./tool-call-cancel-button";
 import AssistantMessageShowDetailToolCall from "./tool-show-detail";
@@ -12,47 +11,37 @@ type TAssistantToolCall = {
   payload?: PromptPayload | string;
   credits?: number;
   toolRequestId: MaybeString;
+  toolRequest: Maybe<TToolRequest>;
 };
 
 export default function AssistantToolCall({
   payload,
-  credits,
   toolRequestId,
+  toolRequest,
 }: TAssistantToolCall) {
   const parsedPayload = getPayloadInformation(payload);
+  const shouldDisplayDetails = isValidPayload(parsedPayload) || toolRequest;
 
-  const shouldDisplayDetails = isValidPayload(parsedPayload);
-  if (!toolRequestId) return;
+  const isToolPending = isToolCallPending(toolRequest?.status);
+
+  if (!toolRequestId || !toolRequest) return;
+
   return (
-    <div>
+    <div className="">
       {shouldDisplayDetails ? (
-        <AssistantMessageShowDetailToolCall payload={parsedPayload} />
+        <AssistantMessageShowDetailToolCall
+          toolRequest={toolRequest}
+          payload={parsedPayload}
+        />
       ) : null}
-      <div>
-        <div className="mt-3">
-          <div
-            className={cn("flex gap-1 items-center", {
-              hidden: !credits,
-            })}
-          >
-            <div className="w-3 h-3">
-              <InfoIcon />
-            </div>
-
-            <p
-              className={cn(
-                "text-xs font-bold uppercase text-muted-foreground/60",
-              )}
-            >
-              This request will cost {credits} credits
-            </p>
+      {isToolPending ? (
+        <div>
+          <div className="mt-3 flex w-full gap-4">
+            <ToolCallCancelButton requestId={toolRequestId} />
+            <ToolCallApproveButton requestId={toolRequestId} />
           </div>
         </div>
-        <div className="mt-3 flex gap-4">
-          <ToolCallApproveButton requestId={toolRequestId} />
-          <ToolCallCancelButton requestId={toolRequestId} />
-        </div>
-      </div>
+      ) : null}
     </div>
   );
 }

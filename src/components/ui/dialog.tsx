@@ -34,10 +34,18 @@ const DialogContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
     overlayClassName?: string;
     closeButtonContainer?: string;
+    closeIconContainer?: string;
   }
 >(
   (
-    { className, children, closeButtonContainer, overlayClassName, ...props },
+    {
+      className,
+      children,
+      closeButtonContainer,
+      closeIconContainer,
+      overlayClassName,
+      ...props
+    },
     ref,
   ) => (
     <DialogPortal>
@@ -59,7 +67,7 @@ const DialogContent = React.forwardRef<
             closeButtonContainer,
           )}
         >
-          <X className="h-4 w-4 " />
+          <X className={cn("h-4 w-4", closeIconContainer)} />
           <span className="sr-only">Close</span>
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>

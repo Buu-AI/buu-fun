@@ -1,4 +1,5 @@
 import { isToolCallGeneratingOrPending } from "@/lib/helpers/status-checker";
+import { MaybeString } from "@/types";
 import { RootState } from "@/types/reduxStore";
 import { createSelector } from "@reduxjs/toolkit";
 
@@ -9,3 +10,31 @@ export const isChatGenerating = createSelector([Messages], (messages) => {
     return isToolCallGeneratingOrPending(message.status);
   });
 });
+
+export const getModelById = createSelector(
+  [Messages, (_, id?: MaybeString) => id],
+  (messages, id) => {
+    if (!id) return null;
+    for (const message of messages) {
+      for (const model of message.models) {
+        if (model._id === id) {
+          return model; // Return immediately when found
+        }
+      }
+    }
+    return null; // Return null if not found
+  },
+);
+
+export const getToolById = createSelector(
+  [Messages, (_, id?: MaybeString) => id],
+  (messages, id) => {
+    if (!id) return null;
+    for (const message of messages) {
+      if (message.toolRequest?._id === id) {
+        return message.toolRequest;
+      }
+    }
+    return null;
+  },
+);
