@@ -23,7 +23,7 @@ export default function HistoryModels() {
       <PopoverTrigger asChild>
         <Button size={"special"} className="bg-stage-modal text-white">
           <StagingHistoryIcon />
-          History
+          Library
         </Button>
       </PopoverTrigger>
       <PopoverContent
@@ -33,7 +33,7 @@ export default function HistoryModels() {
       >
         <div className="">
           <p className="uppercase text-sm font-semibold text-muted-foreground/90">
-            History
+            Library
           </p>
           <div className="flex gap-2 max-h-[500px] flex-wrap mt-3  px-2 overflow-y-scroll scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-white scrollbar-thumb-rounded">
             {data?.pages.map((page) => {
