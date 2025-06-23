@@ -1,3 +1,4 @@
+import FlashIcon from "@/assets/icons/flash-icon";
 import {
   getModelBasedOnPriority,
   getModelMessagesAndPercentage,
@@ -22,7 +23,7 @@ export default function AssistantToolMessage({
 }: TAssistantMessage) {
   const isCanceled = isToolCallCanceled(toolRequest?.status);
   return (
-    <div className="chat-pending-container max-w-md  lg:max-w-lg px-4 py-4">
+    <div className="chat-pending-container max-w-md  lg:max-w-md px-4 pt-4">
       <AssistantToolCallContainer
         payload={payload}
         messageId={messageId}
@@ -46,17 +47,15 @@ export default function AssistantToolMessage({
         </div>
       </div>
       {/*  */}
-      {!isCanceled && models.length ? (
+      {!isCanceled && models.length > 0 ? (
         <div className="h-0.5 w-full bg-white/10 rounded-full my-6 px-2" />
       ) : null}
       <div className="grid grid-cols-2  gap-4 justify-around flex-wrap w-full  ">
         {!isCanceled
           ? models.map((item, index) => {
               const modelUrl = getModelBasedOnPriority(item);
-
               const { message, percentage, status } =
                 getModelMessagesAndPercentage(toolRequest);
-
               const isTexturedMesh = isTexturedMeshReady(item);
               return (
                 <GeneratedModelCard
@@ -82,6 +81,20 @@ export default function AssistantToolMessage({
               );
             })
           : null}
+      </div>
+      <div>
+        {credits && !isCanceled ? (
+          <div className="flex items-center py-2  ">
+            <div className="flex items-center justify-center gap-1">
+              <div className="w-5 h-5 flex">
+                <FlashIcon />
+              </div>
+              <p className="uppercase mt-[1px] text-xs font-semibold leading-none  text-muted-foreground/60">
+                {credits} Credits
+              </p>
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );
