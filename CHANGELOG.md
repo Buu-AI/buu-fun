@@ -1,5 +1,67 @@
 # Changelog
 
+## [0.1.70](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.69...buu-fun-v0.1.70) (2025-06-23)
+
+
+### ✨ Features
+
+* add light compoenent to add in directional, point and spot lights ([e12e29a](https://github.com/Buu-AI/buu-fun/commit/e12e29a7f7c08a91c306a2e62d5676a8dc610391))
+* added details for generate model from prompt ([2e5bc0b](https://github.com/Buu-AI/buu-fun/commit/2e5bc0b317f697a5c114f486d0aac2e20a093a73))
+* added dsn into a config file ([f6d4d4a](https://github.com/Buu-AI/buu-fun/commit/f6d4d4a74280764fda90985de5c065e84ff155ed))
+* added failed state into the loader ([b104e60](https://github.com/Buu-AI/buu-fun/commit/b104e603e87909266a26875d22aefd8f47313cb7))
+* added generate model from prompt detail component ([5451af2](https://github.com/Buu-AI/buu-fun/commit/5451af255efc8bb384985765bb0ce00403a2a2ab))
+* added icons and assets for new v3 Chat-UI ([4f2563e](https://github.com/Buu-AI/buu-fun/commit/4f2563ec30cd39af832af2d2e0fda501a3a74c11))
+* added light properties to be customized in editor ([899a8d6](https://github.com/Buu-AI/buu-fun/commit/899a8d66e34923cc0be3640531833f4ad4a9894b))
+* added local-storage persist for stage ([7622d55](https://github.com/Buu-AI/buu-fun/commit/7622d551cdf5574544a11a133d49cbab7c84e8fa))
+* added local-storage persist for stage ([6eb4c5a](https://github.com/Buu-AI/buu-fun/commit/6eb4c5ac333562b84fb3af647345f23a7c1b77fb))
+* added model query and model configs ([7cca86d](https://github.com/Buu-AI/buu-fun/commit/7cca86da2b9cce480013b70656f87feef0281ca7))
+* added model styles and share icon ([25468d3](https://github.com/Buu-AI/buu-fun/commit/25468d3ee9e98fd8b86ebd97cfb8dc4cf15a6f8d))
+* added new event source polyfill ([7ed248d](https://github.com/Buu-AI/buu-fun/commit/7ed248d74ebf64958ac9cce5091ee6da78aa9a96))
+* added new event type and redux state ([4202ec2](https://github.com/Buu-AI/buu-fun/commit/4202ec27b88c7d871c4afbca625898ecb2b80ce0))
+* added new fallback loader for model-scene ([8312156](https://github.com/Buu-AI/buu-fun/commit/8312156af50c0bd0f8567b5af08ef56a86781073))
+* added new generate tool details display ([710aa3a](https://github.com/Buu-AI/buu-fun/commit/710aa3a7a0db15e070017ffe568d81f51cc917ae))
+* added new generated model viewer ([061a86d](https://github.com/Buu-AI/buu-fun/commit/061a86d0fa950f1f5eb7b374abf340ccff5316aa))
+* added new gql type and redux type and states for the UI ([0973840](https://github.com/Buu-AI/buu-fun/commit/097384043ccbe045f5ce37a1487d25a3261a9d3d))
+* added new hook for toolbar ([3bfdf52](https://github.com/Buu-AI/buu-fun/commit/3bfdf523da562d24cda6bcb56d074bc1e283bce9))
+* added new icon and loader svgs ([47c4b4e](https://github.com/Buu-AI/buu-fun/commit/47c4b4e3fdf880b5f3bd062bf9f8247709ba8036))
+* added new light viewer component with editor ([c7315f5](https://github.com/Buu-AI/buu-fun/commit/c7315f5f1bc8072ecf56e8bf10a1c516f1c397e7))
+* added new loader card for generated model ([bc0a4d3](https://github.com/Buu-AI/buu-fun/commit/bc0a4d322e0d16308c28d0c3b7c10b221205b338))
+* added new logic to tool-call header message ([7ea41bf](https://github.com/Buu-AI/buu-fun/commit/7ea41bf96b367cfbcc04fa01e92366ce6e4c3b95))
+* added new show details and hide details tool component ([e2c2c7e](https://github.com/Buu-AI/buu-fun/commit/e2c2c7e277f5fcb6b18b1d3a0f96d83f8bcf3b26))
+* added new status header UI ([4dbc312](https://github.com/Buu-AI/buu-fun/commit/4dbc31250c9119becfff61dab36b35f37411e03e))
+* added new utils and reducers for lights ([5742429](https://github.com/Buu-AI/buu-fun/commit/574242993e67be4b28539825434e1dd165133016))
+* added new view model modal ([122b499](https://github.com/Buu-AI/buu-fun/commit/122b499178cf53b1389be3a32a652755cf7e7331))
+* added rendered model viewer and controller ([02984db](https://github.com/Buu-AI/buu-fun/commit/02984db2ce347a6144435ed90bcedb8a6d7c1894))
+* added rotation and scaling for the lights ([0576668](https://github.com/Buu-AI/buu-fun/commit/0576668a85f7d857034aeceec8baa1d3d6f5d155))
+* added routing icon ([0169fb7](https://github.com/Buu-AI/buu-fun/commit/0169fb72aba1ed3c2a24ecf5aa76359d8df26c1f))
+* added scene light renderer ([8b97ab9](https://github.com/Buu-AI/buu-fun/commit/8b97ab9c8cba9cd10ac814f4ff24896734edddae))
+* added stage and lights integrated to canvas ([ec17df5](https://github.com/Buu-AI/buu-fun/commit/ec17df59faf214978ecfb85928af5cca96a6f829))
+* added support for className for positionXYZ component ([0e6e412](https://github.com/Buu-AI/buu-fun/commit/0e6e412a84eb898df7fcdd934ed68c183e85aab9))
+* added support for decimals in ProgressBar component ([1d87735](https://github.com/Buu-AI/buu-fun/commit/1d87735ca32d43cc6fbfe66afb0d4de3bde81623))
+* added zooming capabilities for model-viewer ([319a8fd](https://github.com/Buu-AI/buu-fun/commit/319a8fd86cada424e2cf5b138e6aed9c3c7bd7bb))
+* disabled ar view for the preview container ([0b4025f](https://github.com/Buu-AI/buu-fun/commit/0b4025fe60e5eebcc195e02267167d72516a49e6))
+* removed file anotation for sentry ([c7fbc18](https://github.com/Buu-AI/buu-fun/commit/c7fbc18c684e67f610f644704dc09850bf7af4cc))
+* resized and renamed tool action buttons ([26d10d7](https://github.com/Buu-AI/buu-fun/commit/26d10d773494acc758a531ce20bb7604c8b5b737))
+
+
+### 🐛 Bugfixes
+
+* change history keyword to library ([6babe55](https://github.com/Buu-AI/buu-fun/commit/6babe552876f15f0f43703198886cfaca8bce820))
+* change history keyword to library ([fdc8a9f](https://github.com/Buu-AI/buu-fun/commit/fdc8a9f507c4850d7008a023d610e024e515b0a8))
+* downloaded textured errored when loading failed ([b7cbadb](https://github.com/Buu-AI/buu-fun/commit/b7cbadbf00f2c8a20ca669fa77d2c760c4b70872))
+* fixed the issue where the loader doesn't stop spining when failed. ([2dcf13d](https://github.com/Buu-AI/buu-fun/commit/2dcf13da1402268c4d19e6e7ae91768a58c48d42))
+* linting issue where no explicit any typing ([22508e2](https://github.com/Buu-AI/buu-fun/commit/22508e2f5661294f5ff880a3101f8209f1ed9b7a))
+* removed className from sidebar icon ([d314371](https://github.com/Buu-AI/buu-fun/commit/d3143712773f42ceeadff6535c2eb59581f289c8))
+* removed spot-light from the scene ([0f1260f](https://github.com/Buu-AI/buu-fun/commit/0f1260faab0638b1e94c0a2ee39355aac02d7d1f))
+* removed unused variable from the navigation bar ([7fb5ffe](https://github.com/Buu-AI/buu-fun/commit/7fb5ffee21b33a0df75245645d912b5105fbc4b3))
+* tooldetails not rendering according to the _type ([62e5c16](https://github.com/Buu-AI/buu-fun/commit/62e5c1617fef16421cafda3a20198ae69c79616d))
+* tooldetails not rendering according to the _type ([ff313f0](https://github.com/Buu-AI/buu-fun/commit/ff313f066673c8668fe3c87d942c40a509d44a76))
+
+
+### 👽 Miscellaneous
+
+* **lint:** linted and formatted the codebase ([4e55440](https://github.com/Buu-AI/buu-fun/commit/4e554404e12a6062c8b0abaab3f40a1e8424bb43))
+
 ## [0.1.69](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.68...buu-fun-v0.1.69) (2025-06-09)
 
 
