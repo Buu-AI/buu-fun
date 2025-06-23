@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.71](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.70...buu-fun-v0.1.71) (2025-06-23)
+
+
+### ✨ Features
+
+* added loader circle changing colors and credits used ([b42a92d](https://github.com/Buu-AI/buu-fun/commit/b42a92d6e37ff9c988a19c6e1ce1a2310504b441))
+* added loader circle changing colors and credits used ([f73ee7d](https://github.com/Buu-AI/buu-fun/commit/f73ee7d7d404f0ff468015c8905da037f3e30be4))
+
 ## [0.1.70](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.69...buu-fun-v0.1.70) (2025-06-23)
 
 
