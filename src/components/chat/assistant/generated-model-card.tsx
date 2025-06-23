@@ -61,7 +61,7 @@ export default function GeneratedModelCard({
           " w-full h-full   image-model-generation transition-all duration-300 ease-in-out  absolute top-0 left-0 ",
           {
             "image-loader": isPending,
-          },
+          }
         )}
       />
       {!modelUrl ? (
@@ -74,12 +74,12 @@ export default function GeneratedModelCard({
                 Pending
               </p>
             ) : isFailed ? (
-              <div className="h-32 w-32">
+              <div className="h-32 w-32 ">
                 <FailedCross />
               </div>
             ) : (
-              <div className="h-32 w-32">
-                <LoaderCircle disableSpin={isPastFourMinute} index={index} />
+              <div className="h-32 w-32 flex items-center justify-center p-1">
+                <LoaderCircle disableSpin={!isPastFourMinute} index={index} />
               </div>
             )}
           </div>

@@ -8,39 +8,55 @@ type TLoaderCircle = {
   disableSpin?: boolean;
 };
 
-export default function LoaderCircle({
-  index = 0,
-  disableSpin = false,
-}: TLoaderCircle) {
+export default function LoaderCircle({ disableSpin = false }: TLoaderCircle) {
   const svgRef = useRef<SVGSVGElement>(null);
+  const pathRefs = useRef<NodeListOf<SVGPathElement>>(null);
 
   useEffect(() => {
     if (disableSpin) return;
-    const ctx = gsap.context(() => {
-      // Generate random values for more varied animation
-      const randomDuration = 3; // Random duration between 1-3 seconds
-      const randomDirection = index / 2 === 0 ? -360 : 360; // Random direction
-      const randomDelay = Math.random() * index * 0.5; // Random start delay up to 1 second
+    const svgElement = svgRef.current;
+    if (!svgElement) return;
 
-      gsap.to(svgRef.current, {
-        rotate: randomDirection,
+    // Get all path elements
+    pathRefs.current = svgElement.querySelectorAll("path");
+    if (!pathRefs.current.length) return;
+
+    const ctx = gsap.context(() => {
+      const colors = ["#78DBFF", "#A378FF", "#EB78FF", "#A378FF", "#78DBFF"];
+
+      // Rotation animation
+      gsap.to(svgElement, {
+        rotate: 360,
         transformOrigin: "center center",
         repeat: -1,
         ease: "none",
-        duration: randomDuration,
-        delay: randomDelay,
+        duration: 3,
       });
-    }, svgRef);
 
-    return () => ctx.revert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      // Color transition animation - target the path elements
+      const colorTimeline = gsap.timeline({ repeat: -1 });
+
+      colors.forEach((color, i) => {
+        if (i === 0) return; // Skip first color as it's the starting color
+
+        colorTimeline.to(pathRefs.current, {
+          stroke: color,
+          duration: 3 / (colors.length - 1), // Divide duration evenly
+          ease: "sine.inOut",
+        });
+      });
+    }, svgElement);
+
+    return () => {
+      ctx.revert();
+    };
+  }, [disableSpin]);
 
   return (
     <svg
       ref={svgRef}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 124 124"
+      viewBox="0 0 123 123"
       fill="none"
       style={{ width: 124, height: 124 }}
     >
