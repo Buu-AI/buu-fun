@@ -1,4 +1,5 @@
-import { Message, Model, ToolRequest } from "@/gql/types/graphql";
+import { Model, ToolRequest } from "@/gql/types/graphql";
+import { TMessage } from "./chat-types";
 
 type BaseEvent = {
   sessionId: string;
@@ -16,7 +17,7 @@ type MessageNewTokenEvent = BaseEvent & {
 
 export type MessageUpdatedEvent = BaseEvent & {
   type: "message-updated";
-  payload: Message;
+  payload: TMessage;
 };
 
 export type MessageModelUpdatedEvent = BaseEvent & {

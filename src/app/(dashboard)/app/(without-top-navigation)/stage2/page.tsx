@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import React from "react";
 
 // Import the LightingManager with no SSR since it uses browser APIs
-const Scene = dynamic(() => import("../stage/lights"), {
+const Scene = dynamic(() => import("../playground/lights"), {
   ssr: false,
 });
 

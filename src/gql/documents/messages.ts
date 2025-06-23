@@ -39,21 +39,6 @@ export const GetMessages = gql`
                 createdAt
                 updatedAt
               }
-              toolRequest {
-                _id
-                teamId
-                sessionId
-                messageId
-                type
-                priority
-                payload
-                credits
-                status
-                createdAt
-                updatedAt
-                message
-                percentage
-              }
               mesh {
                 alt
                 keyS3
@@ -154,7 +139,6 @@ export const GetMessages = gql`
             nfts {
               _id
               teamId
-
               modelId
               status
               metadata {
@@ -196,7 +180,441 @@ export const GetMessages = gql`
             type
             priority
             payload
+            details {
+              ... on GenerateModelsDetails {
+                __typename
+                texture
+                numberOfFaces
+                numberOfModels
+              }
+              ... on GenerateModelsFromPromptDetails {
+                __typename
+                texture
+                numberOfFaces
+                numberOfModels
+                prompt
+                style
+              }
+              ... on GenerateModelsFromImageDetails {
+                __typename
+                texture
+                numberOfFaces
+                numberOfModels
+                image {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+              }
+              ... on GenerateModelsFromReferencesDetails {
+                __typename
+                texture
+                numberOfFaces
+                numberOfModels
+                images {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+                instructions
+              }
+              ... on GenerateModelsFromEditDetails {
+                __typename
+                texture
+                numberOfFaces
+                numberOfModels
+                edit
+                model {
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                  prompt
+                  style
+                  nftId
+                  image {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  mesh {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  optimizedMesh {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  multiview {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  views {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  texturedMesh {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  texture {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  toolRequest {
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    type
+                    priority
+                    payload
+                    details {
+                      ... on GenerateModelsDetails {
+                        __typename
+                        texture
+                        numberOfFaces
+                        numberOfModels
+                      }
+                      ... on GenerateModelsFromPromptDetails {
+                        __typename
+                        texture
+                        numberOfFaces
+                        numberOfModels
+                        prompt
+                        style
+                      }
+                      ... on GenerateModelsFromImageDetails {
+                        __typename
+                        texture
+                        numberOfFaces
+                        numberOfModels
+                      }
+                      ... on GenerateModelsFromReferencesDetails {
+                        __typename
+                        texture
+                        numberOfFaces
+                        numberOfModels
+                        images {
+                          alt
+                          keyS3
+                          size
+                          type
+                          url
+                          _id
+                          teamId
+                          sessionId
+                          messageId
+                          createdAt
+                          updatedAt
+                        }
+                        instructions
+                      }
+                      ... on GenerateModelsFromEditDetails {
+                        __typename
+                        texture
+                        numberOfFaces
+                        numberOfModels
+                        edit
+                        model {
+                          _id
+                          teamId
+                          sessionId
+                          messageId
+                          createdAt
+                          updatedAt
+                          prompt
+                          style
+                          nftId
+                        }
+                      }
+                      ... on GenerateNftDetails {
+                        __typename
+                        name
+                        description
+                        symbol
+                        attributes {
+                          trait_type
+                          value
+                        }
+                      }
+                    }
+                    credits
+                    references
+                    status
+                    createdAt
+                    updatedAt
+                    message
+                    percentage
+                  }
+                }
+              }
+              ... on GenerateNftDetails {
+                __typename
+                name
+                description
+                symbol
+                model {
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  image {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  mesh {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  optimizedMesh {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  multiview {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  views {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  texturedMesh {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  texture {
+                    alt
+                    keyS3
+                    size
+                    type
+                    url
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    createdAt
+                    updatedAt
+                  }
+                  createdAt
+                  updatedAt
+                  prompt
+                  style
+                  nftId
+                  toolRequest {
+                    _id
+                    teamId
+                    sessionId
+                    messageId
+                    type
+                    priority
+                    payload
+                    details {
+                      ... on GenerateModelsDetails {
+                        __typename
+                        texture
+                        numberOfFaces
+                        numberOfModels
+                      }
+                      ... on GenerateModelsFromPromptDetails {
+                        __typename
+                        texture
+                        numberOfFaces
+                        numberOfModels
+                        prompt
+                        style
+                      }
+                      ... on GenerateModelsFromImageDetails {
+                        __typename
+                        texture
+                        numberOfFaces
+                        numberOfModels
+                      }
+                      ... on GenerateModelsFromReferencesDetails {
+                        __typename
+                        texture
+                        numberOfFaces
+                        numberOfModels
+                        images {
+                          alt
+                          keyS3
+                          size
+                          type
+                          url
+                          _id
+                          teamId
+                          sessionId
+                          messageId
+                          createdAt
+                          updatedAt
+                        }
+                        instructions
+                      }
+                      ... on GenerateModelsFromEditDetails {
+                        __typename
+                        texture
+                        numberOfFaces
+                        numberOfModels
+                        edit
+                      }
+                      ... on GenerateNftDetails {
+                        __typename
+                        name
+                        description
+                        symbol
+                      }
+                    }
+                    credits
+                    references
+                    status
+                    createdAt
+                    updatedAt
+                    message
+                    percentage
+                  }
+                }
+                attributes {
+                  trait_type
+                  value
+                }
+              }
+            }
             credits
+            references
             status
             createdAt
             updatedAt
@@ -921,6 +1339,146 @@ export const ConfirmToolRequest = gql`
         updatedAt
         message
         percentage
+      }
+      ... on HandledError {
+        code
+        message
+      }
+    }
+  }
+`;
+
+export const GetModels = gql`
+  query GetModels($pagination: Pagination, $filters: ModelFilter) {
+    getModels(pagination: $pagination, filters: $filters) {
+      ... on ModelPage {
+        items {
+          _id
+          teamId
+          sessionId
+          messageId
+          image {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          mesh {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          optimizedMesh {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          multiview {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          views {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          texturedMesh {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          texture {
+            alt
+            keyS3
+            size
+            type
+            url
+            _id
+            teamId
+            sessionId
+            messageId
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+          prompt
+          style
+          nftId
+          toolRequest {
+            _id
+            teamId
+            sessionId
+            messageId
+            type
+            priority
+            payload
+            credits
+            status
+            createdAt
+            updatedAt
+            message
+            percentage
+          }
+        }
+        metadata {
+          limit
+          offset
+          orderBy
+          orderDirection
+          numElements
+          total
+          page
+          pages
+        }
       }
       ... on HandledError {
         code

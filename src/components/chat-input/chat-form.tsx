@@ -55,7 +55,6 @@ export default function ChatForm({ action }: TBottomBarContainer) {
       dispatch(clearInput());
       router.push(`/app/chat/${sessionId}`);
     },
-
     onSuccess(data) {
       dispatch(clearInput());
       const sessionId = data.messages?.[0]?.sessionId;

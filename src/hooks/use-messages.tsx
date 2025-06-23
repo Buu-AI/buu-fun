@@ -31,7 +31,6 @@ export function useChatMessage({
         },
       });
     },
-
     getNextPageParam: (lastPage) => {
       const { metadata } = lastPage;
       const totalItems = metadata.numElements ?? 1;
@@ -47,30 +46,5 @@ export function useChatMessage({
       return nextOffset;
     },
     initialPageParam: 0,
-    // refetchInterval({ state }) {
-    //   const currentTime = Date.now();
-
-    //   // Check if we have any active jobs
-    //   const hasActiveJob = state.data?.pages.some((page) =>
-    //     page.items.some((item) => isToolCallGenerating(item.status)),
-    //   );
-
-    //   if (hasActiveJob) {
-    //     // If we have an active job, update the timestamp
-    //     lastJobActiveTimestamp.current = currentTime;
-    //     return 5000;
-    //   }
-
-    //   // If no active jobs, check if we're within the grace period
-    //   if (
-    //     lastJobActiveTimestamp.current &&
-    //     currentTime - lastJobActiveTimestamp.current < GRACE_PERIOD_MS
-    //   ) {
-    //     return 3000; // Stay at 5 second intervals during grace period
-    //   }
-
-    //   // If we're outside the grace period, revert to slower interval
-    //   return 15000;
-    // },
   });
 }
