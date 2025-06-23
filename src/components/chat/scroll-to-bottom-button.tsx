@@ -20,9 +20,7 @@ export default function ScrollToBottomButton({
 
   useEffect(() => {
     if (!buttonRef.current) return;
-
     const button = buttonRef.current;
-
     if (isScrollDownAvailable) {
       // Animate in
       gsap.to(button, {
