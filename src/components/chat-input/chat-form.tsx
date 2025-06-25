@@ -1,10 +1,8 @@
 "use client";
 import { ArrowUp, ImageIcon } from "@/assets/icons";
+import { TypedAppError } from "@/class/error";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { getPresignedUrl } from "@/lib/react-query/image-upload";
-import { motion } from "framer-motion";
-// import { generateSubThreads } from "@/lib/react-query/threads";
-import { TypedAppError } from "@/class/error";
 import { sendChatMessage } from "@/lib/react-query/threads.v3";
 import {
   clearInput,
@@ -22,7 +20,7 @@ import { blobUrlToFile, cn, getAllowedContentTypeMaps } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
 import { nanoid } from "@reduxjs/toolkit";
 import { useMutation } from "@tanstack/react-query";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -79,7 +77,13 @@ export default function ChatForm({ action }: TBottomBarContainer) {
   });
 
   const fileCount = useAppSelector((state) => state.chat.inputFile.length);
-
+  const {
+    faces,
+    ThreeDStyle,
+    textureType,
+    numberOfModels,
+    numberOfModelsMode,
+  } = useAppSelector((state) => state.settings);
   // const queryClient = useQueryClient();
   // mutation for existing chat
   const { mutate: createExistingChat, isPending: isExistingChatPending } =
@@ -128,7 +132,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
 
   const handleImageUploadUrl = async (
     ImageData: TImageData,
-    accessToken: string,
+    accessToken: string
   ) => {
     try {
       const file = await blobUrlToFile(ImageData.url, ImageData.name);
@@ -204,7 +208,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
 
       if (inputFile && inputFile?.length > 0) {
         const inputFileRequests = inputFile.map((item) =>
-          handleImageUploadUrl(item, identityToken),
+          handleImageUploadUrl(item, identityToken)
         );
         toast.loading("Preparing image for uploading", { duration: 1200 });
 
@@ -229,7 +233,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
           return;
         }
       }
-
+    
       // Handle based on action type
       if (action === "new_chat") {
         const sessionId = uuid();
@@ -237,16 +241,28 @@ export default function ChatForm({ action }: TBottomBarContainer) {
           sessionId,
           accessToken: identityToken ?? "",
           prompt: prompt,
-          style: style,
           imageUrls,
+          options: {
+            numberOfFaces: faces,
+            style: ThreeDStyle,
+            texture: textureType,
+            numberOfModels:
+              numberOfModelsMode !== "definedByAI" ? numberOfModels : null,
+          },
         });
       } else if (typeof action !== "string") {
         createExistingChat({
           accessToken: identityToken ?? "",
           prompt,
-          style,
           sessionId: action.sessionId,
           imageUrls,
+          options: {
+            numberOfFaces: faces,
+            numberOfModels:
+              numberOfModelsMode !== "definedByAI" ? numberOfModels : null,
+            style: ThreeDStyle,
+            texture: textureType,
+          },
         });
       }
     } catch (error) {
@@ -271,7 +287,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         "relative flex-col gap-1 flex items-start w-full p-4  mb-2  rounded-[20px]  shadow-buu-inner bg-buu",
         {
           // "p-0": !inputFile?.url.length
-        },
+        }
       )}
     >
       <AnimatePresence mode="popLayout">
