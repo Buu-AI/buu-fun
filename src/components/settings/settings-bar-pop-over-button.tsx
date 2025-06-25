@@ -25,7 +25,9 @@ export default function SettingsBarPopOver() {
   return (
     <div className="">
       <Popover
-        onOpenChange={(value) => dispatch(setSettingsPopoverChange(value))}
+        onOpenChange={(value) => {
+          dispatch(setSettingsPopoverChange(value));
+        }}
         open={isSettingsPopoverOpen.isPopoverOpen}
       >
         <PopoverTrigger asChild className="">
