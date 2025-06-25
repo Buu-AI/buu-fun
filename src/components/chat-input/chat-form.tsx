@@ -38,7 +38,6 @@ export default function ChatForm({ action }: TBottomBarContainer) {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const prompt = useAppSelector((state) => state.chat.inputQuery);
-  const style = useAppSelector((state) => state.settings.ThreeDStyle);
   const inputFile = useAppSelector((state) => state.chat.inputFile);
 
   const isChatPending = useAppSelector(isChatGenerating);
