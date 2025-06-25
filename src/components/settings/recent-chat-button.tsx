@@ -1,9 +1,8 @@
 "use client";
-import { HistoryIcon } from "lucide-react";
-import React from "react";
-import { Button } from "../ui/button";
 import { useAppDispatch } from "@/hooks/redux";
 import { setHistoryModel } from "@/lib/redux/features/settings";
+import { HistoryIcon } from "lucide-react";
+import { Button } from "../ui/button";
 
 export default function RecentChatButton() {
   const dispatch = useAppDispatch();
@@ -16,10 +15,10 @@ export default function RecentChatButton() {
             dispatch(setHistoryModel(true));
           }}
           variant={"outline"}
-          className="px-3 flex items-center hover:bg-buu-button justify-center gap-1 text-base h-[40px] group  py-2 bg-buu shadow-buu-secondary border-buu rounded-[10px]"
+          className="px-3 flex items-center hover:bg-buu-button justify-center gap-1 text-base h-[55px] w-[55px] group  py-2 bg-buu shadow-buu-secondary border-buu rounded-[10px]"
         >
-          <HistoryIcon className="w-4 h-4  " />
-          <span className="">History</span>
+          <HistoryIcon className="w-8 h-8  " />
+          {/* <span className="">History</span> */}
         </Button>
       </div>
     </div>

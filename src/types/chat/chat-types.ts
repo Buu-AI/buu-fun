@@ -3,6 +3,9 @@ import {
   Media,
   MessageRole,
   Model,
+  NumberOfFaces,
+  Style,
+  TextureType,
   ToolRequest,
   ToolRequestStatus,
   ToolRequestType,
@@ -52,3 +55,7 @@ export type TChatMessage = {
   credits?: TToolRequest["credits"];
   type?: TToolRequest["type"];
 };
+
+export type TNumberOfFaces = `${NumberOfFaces}`;
+export type TStyle = `${Style}`;
+export type TTextureType = `${TextureType}`;
