@@ -25,7 +25,7 @@ export type TValue = {
 };
 
 export const iconByTitle: Record<TKey, TValue> = {
-  Cute: {
+  cute: {
     Icon: (
       <Image
         src={cuteIcon.src}
@@ -36,9 +36,9 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Cute",
-    value: "Cute",
+    value: "cute",
   },
-  Environment: {
+  environment: {
     Icon: (
       <Image
         src={EnvironmentIcon.src}
@@ -49,9 +49,9 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Environment",
-    value: "Environment",
+    value: "environment",
   },
-  Realistic: {
+  realistic: {
     Icon: (
       <Image
         src={RealisticIcon.src}
@@ -62,11 +62,11 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Realistic",
-    value: "Realistic",
+    value: "realistic",
   },
-  LowPoly: {
+  lowPoly: {
     displayName: "Low Poly",
-    value: "LowPoly",
+    value: "lowPoly",
     Icon: (
       <Image
         src={LowPolyIcon.src}
@@ -77,7 +77,7 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
   },
-  Voxel: {
+  voxel: {
     Icon: (
       <Image
         src={VoxelIcon.src}
@@ -88,9 +88,9 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Voxel",
-    value: "Voxel",
+    value: "voxel",
   },
-  Stylized: {
+  stylized: {
     Icon: (
       <Image
         src={StylizedIcon.src}
@@ -101,9 +101,9 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Stylized",
-    value: "Stylized",
+    value: "stylized",
   },
-  Toon: {
+  toon: {
     Icon: (
       <Image
         src={ToonIcon.src}
@@ -114,9 +114,9 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Toon",
-    value: "Toon",
+    value: "toon",
   },
-  SciFi: {
+  sciFi: {
     Icon: (
       <Image
         src={SciFiIcon.src}
@@ -127,10 +127,9 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Sci-Fi",
-    value: "SciFi",
+    value: "sciFi",
   },
-
-  Fantasy: {
+  fantasy: {
     Icon: (
       <Image
         src={FantasyIcon.src}
@@ -141,9 +140,9 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Fantasy",
-    value: "Fantasy",
+    value: "fantasy",
   },
-  Weapons: {
+  weapons: {
     Icon: (
       <Image
         src={GunsIcon.src}
@@ -154,7 +153,7 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Guns",
-    value: "Weapons",
+    value: "weapons",
   },
   // Metallic: {
   //   displayName: "Metallic",
