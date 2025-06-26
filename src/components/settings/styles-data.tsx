@@ -14,10 +14,7 @@ import {
 import { SettingsState } from "@/lib/redux/features/settings";
 import Image from "next/image";
 import { ReactNode } from "react";
-export type TKey = Exclude<
-  SettingsState["ThreeDStyle"] | "no_style",
-  undefined
->;
+export type TKey = Exclude<SettingsState["ThreeDStyle"], undefined>;
 export type TValue = {
   value: TKey;
   displayName: string;
@@ -25,6 +22,11 @@ export type TValue = {
 };
 
 export const iconByTitle: Record<TKey, TValue> = {
+  definedByAI: {
+    Icon: <div className="bg-[#2D323C] w-4 h-4 rounded-full" />,
+    displayName: "Defined By AI",
+    value: "definedByAI",
+  },
   cute: {
     Icon: (
       <Image
@@ -181,9 +183,4 @@ export const iconByTitle: Record<TKey, TValue> = {
   //   displayName: "Clay",
   //   value: "Clay",
   // },
-  no_style: {
-    Icon: <div className="bg-[#2D323C] w-4 h-4 rounded-full" />,
-    displayName: "No Style",
-    value: "no_style",
-  },
 } as Record<TKey, TValue>;

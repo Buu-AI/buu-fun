@@ -56,6 +56,8 @@ export type TChatMessage = {
   type?: TToolRequest["type"];
 };
 
-export type TNumberOfFaces = `${NumberOfFaces}`;
-export type TStyle = `${Style}`;
-export type TTextureType = `${TextureType}`;
+export type TNumberOfFaces = `${NumberOfFaces}` | "definedByAI";
+export type TStyle = `${Style}` | "definedByAI";
+
+export type TTextureType = `${TextureType}` | "definedByAI";
+

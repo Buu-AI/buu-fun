@@ -8,7 +8,6 @@ export default function PopoverHiddenTrigger() {
   if (isSettingsPopoverOpen.isPopoverOpen) return;
   return (
     <button
-      // disabled={isSettingsPopoverOpen.isPopoverOpen}
       onClick={() => {
         dispatch(setSettingsPopoverChange(true));
       }}

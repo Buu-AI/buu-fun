@@ -15,13 +15,6 @@ export default function SettingsBarPopOver() {
 
   const dispatch = useAppDispatch();
 
-  // const ref = useClickOutside(() => {
-  //   if (isSettingsPopoverOpen.isStyleBoxOpen) {
-  //     return;
-  //   }
-  //   dispatch(setSettingsPopoverChange(false));
-  // });
-
   return (
     <div className="">
       <Popover
