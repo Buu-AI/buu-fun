@@ -47,7 +47,7 @@ export type SettingsState = {
   modes: "three_d_object" | "rigging" | "animation";
   numberOfModels: number;
   numberOfModelsMode: "definedByAI" | "custom";
-  faces: TNumberOfFaces;
+  faces: TNumberOfFaces 
   textureType: TTextureType;
 };
 
@@ -55,7 +55,7 @@ const initialState: SettingsState = {
   isRecentChatOpen: false,
   isStyleBoxOpen: false,
   isPopoverOpen: false,
-  ThreeDStyle: "cute",
+  ThreeDStyle: "definedByAI",
   modes: "three_d_object",
   numberOfModels: 4,
   numberOfModelsMode: "definedByAI",

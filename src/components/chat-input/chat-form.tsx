@@ -232,7 +232,11 @@ export default function ChatForm({ action }: TBottomBarContainer) {
           return;
         }
       }
-    
+      const texture = textureType !== "definedByAI" ? textureType : undefined;
+      const style = ThreeDStyle !== "definedByAI" ? ThreeDStyle : undefined;
+      const numberOfFaces = faces !== "definedByAI" ? faces : undefined;
+      const numberOfModel =
+        numberOfModelsMode !== "definedByAI" ? numberOfModels : undefined;
       // Handle based on action type
       if (action === "new_chat") {
         const sessionId = uuid();
@@ -242,11 +246,10 @@ export default function ChatForm({ action }: TBottomBarContainer) {
           prompt: prompt,
           imageUrls,
           options: {
-            numberOfFaces: faces,
-            style: ThreeDStyle,
-            texture: textureType,
-            numberOfModels:
-              numberOfModelsMode !== "definedByAI" ? numberOfModels : null,
+            numberOfFaces,
+            style,
+            texture,
+            numberOfModels: numberOfModel,
           },
         });
       } else if (typeof action !== "string") {
@@ -256,11 +259,10 @@ export default function ChatForm({ action }: TBottomBarContainer) {
           sessionId: action.sessionId,
           imageUrls,
           options: {
-            numberOfFaces: faces,
-            numberOfModels:
-              numberOfModelsMode !== "definedByAI" ? numberOfModels : null,
-            style: ThreeDStyle,
-            texture: textureType,
+            numberOfFaces,
+            numberOfModels: numberOfModel,
+            style,
+            texture,
           },
         });
       }

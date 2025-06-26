@@ -25,6 +25,7 @@ export default function ThreeDSelectBox() {
         onOpenChange={(value) => {
           dispatch(setStyleSelectChange(value));
         }}
+        defaultValue="definedByAI"
         value={selected.ThreeDStyle}
         // This is disabled because it could be any value also added defensive statement to check whether the value is right one.
         onValueChange={(value: TThreeDStyles) => {
@@ -39,8 +40,8 @@ export default function ThreeDSelectBox() {
           <SelectValue
             placeholder={
               <div className="flex items-center justify-center gap-2 ">
-                <div className="bg-[#2D323C] w-4 h-4 rounded-full" />
-                <span>No Style</span>
+                <div className="bg-[#80c6ff] w-4 h-4 rounded-full" />{" "}
+                <span>Defined By AI</span>
               </div>
             }
           />
