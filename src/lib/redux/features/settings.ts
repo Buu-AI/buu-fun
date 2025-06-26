@@ -59,8 +59,8 @@ const initialState: SettingsState = {
   modes: "three_d_object",
   numberOfModels: 4,
   numberOfModelsMode: "definedByAI",
-  faces: "tenKey",
-  textureType: "none",
+  faces: "definedByAI",
+  textureType: "definedByAI",
 };
 
 const SettingsSlice = createSlice({
