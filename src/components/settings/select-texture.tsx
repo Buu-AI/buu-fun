@@ -9,15 +9,12 @@ import {
   SelectValue,
 } from "../ui/select";
 import { textureDetailData, TTextureKey } from "./options-data";
-import { isPaidUser, useUserSubscription } from "@/hooks/use-credits";
 
 type TSelectTexture = {};
 
 export default function SelectTexture({}: TSelectTexture) {
   const selected = useAppSelector((state) => state.settings.textureType);
   const dispatch = useAppDispatch();
-  const { data } = useUserSubscription();
-  const isPaid = isPaidUser(data?.planKey);
 
   return (
     <div className="w-full">
@@ -46,7 +43,6 @@ export default function SelectTexture({}: TSelectTexture) {
           {Object.values(textureDetailData).map(
             ({ displayName, value, pro }) => (
               <SelectItem
-                disabled={pro && !isPaid}
                 key={`${displayName}-${value}-styles-selector`}
                 className="focus:bg-[#252931] pl-4 border-none backdrop-blur-10   py-3"
                 value={value}
