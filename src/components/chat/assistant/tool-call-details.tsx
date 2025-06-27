@@ -34,7 +34,7 @@ export default function ToolCallDetails({ toolRequest }: TToolCallDetails) {
     : null;
 
   const isImage = details?.image && "url" in details.image;
-  
+
   return (
     <div>
       <div>

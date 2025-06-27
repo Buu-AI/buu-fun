@@ -23,7 +23,7 @@ export default function SelectFaces({}: TSelectFaces) {
           const faceValue: TFacesKey = facesDetailData[value]?.value
             ? facesDetailData[value].value
             : "tenKey";
-            
+
           dispatch(changeFaces(faceValue));
         }}
         value={faceState ?? undefined}

@@ -1,6 +1,5 @@
 import FailedCross from "@/assets/icons/failed-cross";
 import { Model } from "@/gql/types/graphql";
-import LottieLoader from "lottie-react";
 import {
   isToolCallFailed,
   isToolCallGenerating,
@@ -13,7 +12,7 @@ import {
   TToolRequest,
   TToolType,
 } from "@/types/chat/chat-types";
-import LoaderCircle from "../Loader-circle";
+import LottieLoader from "lottie-react";
 import ImageViewLoader from "./generation-card/image-view-loader";
 import ModelViewWrapper from "./generation-card/model-view-wrapper";
 import ViewModelTrigger from "./view-model-trigger";
@@ -42,7 +41,6 @@ export default function GeneratedModelCard({
   modelUrl,
   status,
   modelId,
-  index,
   toolRequest,
 }: TGeneratedModelCard) {
   const isGenerating = isToolCallGenerating(status);
@@ -66,7 +64,7 @@ export default function GeneratedModelCard({
           " w-full h-full   image-model-generation transition-all duration-300 ease-in-out  absolute top-0 left-0 ",
           {
             "image-loader": isPending,
-          }
+          },
         )}
       />
       {!modelUrl ? (

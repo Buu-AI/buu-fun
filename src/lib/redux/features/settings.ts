@@ -47,7 +47,7 @@ export type SettingsState = {
   modes: "three_d_object" | "rigging" | "animation";
   numberOfModels: number;
   numberOfModelsMode: "definedByAI" | "custom";
-  faces: TNumberOfFaces 
+  faces: TNumberOfFaces;
   textureType: TTextureType;
 };
 
@@ -85,13 +85,13 @@ const SettingsSlice = createSlice({
     },
     changeThreeDStyles(
       state,
-      action: PayloadAction<SettingsState["ThreeDStyle"] | undefined>
+      action: PayloadAction<SettingsState["ThreeDStyle"] | undefined>,
     ) {
       state.ThreeDStyle = action.payload;
     },
     changeNumberOfModelMode(
       state,
-      action: PayloadAction<"custom" | "definedByAI">
+      action: PayloadAction<"custom" | "definedByAI">,
     ) {
       const payload = action.payload;
       if (payload === "custom") {
@@ -104,7 +104,7 @@ const SettingsSlice = createSlice({
     },
     changeNumberOfModel(
       state,
-      action: PayloadAction<"increment" | "decrement">
+      action: PayloadAction<"increment" | "decrement">,
     ) {
       const current = state.numberOfModels;
       const payload = action.payload;

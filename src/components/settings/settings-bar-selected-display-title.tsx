@@ -31,15 +31,19 @@ export default function SettingsBarDisplayTitle() {
 
   const selectedFaces = useAppSelector((state) => state.settings.faces);
 
-  const { displayName: faces, pro: facesPro,value: facesValue } = selectedStyle
+  const {
+    displayName: faces,
+    pro: facesPro,
+    value: facesValue,
+  } = selectedStyle
     ? facesDetailData[selectedFaces]
     : facesDetailData["tenKey"];
-    
+
   const numberOfModelsMode = useAppSelector(
-    (state) => state.settings.numberOfModelsMode
+    (state) => state.settings.numberOfModelsMode,
   );
   const numberOfModel = useAppSelector(
-    (state) => state.settings.numberOfModels
+    (state) => state.settings.numberOfModels,
   );
   return (
     <div className="flex gap-1 items-center">
