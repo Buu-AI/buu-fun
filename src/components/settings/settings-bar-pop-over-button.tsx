@@ -30,7 +30,7 @@ export default function SettingsBarPopOver() {
                 "-rotate-180 transition-transform duration-300 ease-in-out",
                 {
                   "rotate-0 rotate": isSettingsPopoverOpen.isPopoverOpen,
-                }
+                },
               )}
             />
           </button>

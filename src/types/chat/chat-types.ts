@@ -60,4 +60,3 @@ export type TNumberOfFaces = `${NumberOfFaces}` | "definedByAI";
 export type TStyle = `${Style}` | "definedByAI";
 
 export type TTextureType = `${TextureType}` | "definedByAI";
-

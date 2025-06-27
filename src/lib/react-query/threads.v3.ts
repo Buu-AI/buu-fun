@@ -79,7 +79,7 @@ export async function getMessages({
       sessionId,
       pagination,
     },
-    { Authorization: getAuthorization(accessToken) }
+    { Authorization: getAuthorization(accessToken) },
   );
 
   if (!data) {
@@ -108,7 +108,7 @@ export async function getSessions({ accessToken }: { accessToken: string }) {
         orderDirection: OrderDirection.Desc,
       },
     },
-    { Authorization: getAuthorization(accessToken) }
+    { Authorization: getAuthorization(accessToken) },
   );
   if (!data) {
     throw new Error("Internal server error");
@@ -163,7 +163,7 @@ export async function sendChatMessage({
       },
       {
         Authorization: getAuthorization(accessToken),
-      }
+      },
     );
     if (!data) {
       TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
@@ -172,7 +172,7 @@ export async function sendChatMessage({
     if ("code" in data.sendMessage) {
       TypedAppError.throw(
         data.sendMessage.message,
-        TypedAppError.mapErrorCode(data.sendMessage.code)
+        TypedAppError.mapErrorCode(data.sendMessage.code),
       );
     }
 
@@ -184,7 +184,7 @@ export async function sendChatMessage({
     // Otherwise, convert to our custom error
     throw TypedAppError.fromExternalError(
       "An unexpected error occurred",
-      error
+      error,
     );
   }
 }
@@ -205,7 +205,7 @@ export async function approveTool({ requestId, accessToken }: TToolParams) {
       },
       {
         Authorization: getAuthorization(accessToken),
-      }
+      },
     );
     if (!data) {
       TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
@@ -214,7 +214,7 @@ export async function approveTool({ requestId, accessToken }: TToolParams) {
     if ("code" in data.confirmToolRequest) {
       TypedAppError.throw(
         data.confirmToolRequest.message,
-        TypedAppError.mapErrorCode(data.confirmToolRequest.code)
+        TypedAppError.mapErrorCode(data.confirmToolRequest.code),
       );
     }
 
@@ -226,7 +226,7 @@ export async function approveTool({ requestId, accessToken }: TToolParams) {
     // Otherwise, convert to our custom error
     throw TypedAppError.fromExternalError(
       "An unexpected error occurred",
-      error
+      error,
     );
   }
 }
@@ -243,7 +243,7 @@ export async function cancelToolCall({ requestId, accessToken }: TToolParams) {
       },
       {
         Authorization: getAuthorization(accessToken),
-      }
+      },
     );
     if (!data) {
       TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
@@ -252,7 +252,7 @@ export async function cancelToolCall({ requestId, accessToken }: TToolParams) {
     if ("code" in data.cancelToolRequest) {
       TypedAppError.throw(
         data.cancelToolRequest.message,
-        TypedAppError.mapErrorCode(data.cancelToolRequest.code)
+        TypedAppError.mapErrorCode(data.cancelToolRequest.code),
       );
     }
 
@@ -264,7 +264,7 @@ export async function cancelToolCall({ requestId, accessToken }: TToolParams) {
     // Otherwise, convert to our custom error
     throw TypedAppError.fromExternalError(
       "An unexpected error occurred",
-      error
+      error,
     );
   }
 }
@@ -289,7 +289,7 @@ export async function generateModelFromImageMutation({
       },
       {
         Authorization: getAuthorization(accessToken),
-      }
+      },
     );
     if (!data) {
       TypedAppError.throw("Internal server error", "INTERNAL_SERVER_ERROR");
@@ -298,7 +298,7 @@ export async function generateModelFromImageMutation({
     if ("code" in data.generateModelFromImage) {
       TypedAppError.throw(
         data.generateModelFromImage.message,
-        TypedAppError.mapErrorCode(data.generateModelFromImage.code)
+        TypedAppError.mapErrorCode(data.generateModelFromImage.code),
       );
     }
 
@@ -310,7 +310,7 @@ export async function generateModelFromImageMutation({
     // Otherwise, convert to our custom error
     throw TypedAppError.fromExternalError(
       "An unexpected error occurred",
-      error
+      error,
     );
   }
 }

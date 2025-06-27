@@ -47,7 +47,7 @@ export default function ThreeDSelectBox() {
           />
         </SelectTrigger>
         <SelectContent className="bg-[#1C2129] border-none relative z-[101] shadow-buu-muted border-buu  ">
-          {Object.values(iconByTitle).map(({ displayName, value, Icon }) => (
+          {Object.values(iconByTitle).map(({ displayName, value, Icon, }) => (
             <SelectItem
               key={`${displayName}-${value}-styles-selector`}
               className="focus:bg-[#252931] pl-4 border-none backdrop-blur-10   py-3"
