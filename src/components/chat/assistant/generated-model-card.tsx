@@ -1,10 +1,12 @@
+import FailedCross from "@/assets/icons/failed-cross";
 import { Model } from "@/gql/types/graphql";
+import LottieLoader from "lottie-react";
 import {
   isToolCallFailed,
   isToolCallGenerating,
   isToolCallPending,
 } from "@/lib/helpers/status-checker";
-import { cn, isPastInMinutes } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Maybe, MaybeString } from "@/types";
 import {
   TMessageStatus,
@@ -15,7 +17,8 @@ import LoaderCircle from "../Loader-circle";
 import ImageViewLoader from "./generation-card/image-view-loader";
 import ModelViewWrapper from "./generation-card/model-view-wrapper";
 import ViewModelTrigger from "./view-model-trigger";
-import FailedCross from "@/assets/icons/failed-cross";
+// import CatLoader from "@/assets/icons/cat-loader";
+import data from "./cat-loader.json";
 type TGeneratedModelCard = {
   imageUrl: MaybeString;
   modelUrl: MaybeString;
@@ -45,7 +48,9 @@ export default function GeneratedModelCard({
   const isGenerating = isToolCallGenerating(status);
   const isPending = isToolCallPending(status);
   const isFailed = isToolCallFailed(status);
-  const isPastFourMinute = isPastInMinutes(toolRequest?.updatedAt);
+
+  // const isPastFourMinute = isPastInMinutes(toolRequest?.updatedAt);
+
   return (
     <div className=" w-full aspect-square overflow-hidden rounded-2xl  relative justify-center">
       <div className="w-6 h-6 text-gray-400 absolute top-2 z-20 right-2">
@@ -79,7 +84,7 @@ export default function GeneratedModelCard({
               </div>
             ) : (
               <div className="h-32 w-32 flex items-center justify-center p-1">
-                <LoaderCircle disableSpin={!isPastFourMinute} index={index} />
+                <LottieLoader animationData={data} loop autoplay />
               </div>
             )}
           </div>
