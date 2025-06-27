@@ -9,15 +9,12 @@ import {
   SelectValue,
 } from "../ui/select";
 import { facesDetailData, TFacesKey } from "./options-data";
-import { isPaidUser, useUserSubscription } from "@/hooks/use-credits";
 
 type TSelectFaces = {};
 
 export default function SelectFaces({}: TSelectFaces) {
   const dispatch = useAppDispatch();
   const faceState = useAppSelector((state) => state.settings.faces);
-  const { data } = useUserSubscription();
-  const isPaid = isPaidUser(data?.planKey);
 
   return (
     <div className="w-full">
@@ -49,7 +46,6 @@ export default function SelectFaces({}: TSelectFaces) {
         >
           {Object.values(facesDetailData).map(({ displayName, value, pro }) => (
             <SelectItem
-              disabled={pro && !isPaid}
               key={`${displayName}-${value}-styles-selector`}
               className="focus:bg-[#252931] pl-4 border-none backdrop-blur-10   py-3"
               value={value}
