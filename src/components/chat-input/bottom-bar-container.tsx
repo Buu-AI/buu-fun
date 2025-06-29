@@ -12,7 +12,7 @@ export default function BottomBarContainer({ action }: TBottomBarContainer) {
         <div className="  w-full bg-buu-secondary h-full  backdrop-blur-3xl rounded-b-2xl   " />
       </div> */}
       <div className=" relative ">
-        <PersistProvider>
+        <PersistProvider Loader={null}>
           <SettingsBar />
         </PersistProvider>
       </div>
