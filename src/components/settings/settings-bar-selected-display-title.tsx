@@ -40,20 +40,20 @@ export default function SettingsBarDisplayTitle() {
     : facesDetailData["tenKey"];
 
   const numberOfModelsMode = useAppSelector(
-    (state) => state.settings.numberOfModelsMode,
+    (state) => state.settings.numberOfModelsMode
   );
   const numberOfModel = useAppSelector(
-    (state) => state.settings.numberOfModels,
+    (state) => state.settings.numberOfModels
   );
   return (
     <div className="flex gap-1 items-center">
       <div className="px-2.5 py-1.5 gap-2 shadow-buu-inner bg-buu rounded-lg flex items-center  justify-center">
         <SelectedStyles />
-        <p className="hidden sm:block">{displayName}</p>
+        <p className="hidden sm:block text-sm">{displayName}</p>
       </div>
       {facesValue !== "definedByAI" ? (
         <div className="px-2.5 py-1.5 gap-1 shadow-buu-inner bg-buu rounded-lg flex items-center  justify-center">
-          <p>{faces}</p>
+          <p className="text-sm">{faces}</p>
           {facesPro ? (
             <div className="hidden md:block w-4 h-4">
               <PaidFeature />
@@ -63,7 +63,7 @@ export default function SettingsBarDisplayTitle() {
       ) : null}
       {textureValue !== "definedByAI" ? (
         <div className="px-2.5 py-1.5 gap-1 shadow-buu-inner bg-buu rounded-lg flex items-center  justify-center">
-          <p>{texture}</p>
+          <p className=" text-ellipsis line-clamp-1 text-sm ">{texture}</p>
           {texturePro ? (
             <div className="hidden md:block w-4 h-4">
               <PaidFeature />
@@ -73,7 +73,9 @@ export default function SettingsBarDisplayTitle() {
       ) : null}
 
       <div className="px-2.5 py-1.5 gap-2 min-w-10 shadow-buu-inner bg-buu rounded-lg flex items-center  justify-center">
-        {numberOfModelsMode === "definedByAI" ? "AI" : numberOfModel}
+        <p className="text-sm">
+          {numberOfModelsMode === "definedByAI" ? "AI" : numberOfModel}
+        </p>
       </div>
     </div>
   );

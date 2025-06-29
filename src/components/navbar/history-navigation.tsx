@@ -1,7 +1,7 @@
 import { SheetClose } from "@/components/ui/sheet";
 import { useAppDispatch } from "@/hooks/redux";
 import { getSessions } from "@/lib/react-query/threads.v3";
-import { setHistoryModel } from "@/lib/redux/features/settings";
+import { setHistoryModel } from "@/lib/redux/features/chat";
 import { useAuthentication } from "@/providers/account.context";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
@@ -59,6 +59,7 @@ export default function HistoryNavigation() {
       </div>
     );
   }
+
   return (
     <motion.div
       className="flex flex-col max-h-[90%] gap-2 mt-4 overflow-y-scroll scrollbar-w-hidden scrollbar-track-orange-lighter scrollbar-thumb-rounded"
@@ -67,9 +68,6 @@ export default function HistoryNavigation() {
       variants={containerVariants}
     >
       {data?.items.map((item) => {
-        // const styleColor = (item. ?? "no_style") as TKey;
-
-        // const IconData = iconByTitle[styleColor];
         return (
           <SheetClose key={item._id} asChild>
             <motion.div
