@@ -14,10 +14,7 @@ import {
 import { SettingsState } from "@/lib/redux/features/settings";
 import Image from "next/image";
 import { ReactNode } from "react";
-export type TKey = Exclude<
-  SettingsState["ThreeDStyle"] | "no_style",
-  undefined
->;
+export type TKey = Exclude<SettingsState["ThreeDStyle"], undefined>;
 export type TValue = {
   value: TKey;
   displayName: string;
@@ -25,7 +22,12 @@ export type TValue = {
 };
 
 export const iconByTitle: Record<TKey, TValue> = {
-  Cute: {
+  definedByAI: {
+    Icon: <div className="bg-[#2D323C] w-4 h-4 rounded-full" />,
+    displayName: "Defined By AI",
+    value: "definedByAI",
+  },
+  cute: {
     Icon: (
       <Image
         src={cuteIcon.src}
@@ -36,9 +38,9 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Cute",
-    value: "Cute",
+    value: "cute",
   },
-  Environment: {
+  environment: {
     Icon: (
       <Image
         src={EnvironmentIcon.src}
@@ -49,9 +51,9 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Environment",
-    value: "Environment",
+    value: "environment",
   },
-  Realistic: {
+  realistic: {
     Icon: (
       <Image
         src={RealisticIcon.src}
@@ -62,11 +64,11 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Realistic",
-    value: "Realistic",
+    value: "realistic",
   },
-  LowPoly: {
+  lowPoly: {
     displayName: "Low Poly",
-    value: "LowPoly",
+    value: "lowPoly",
     Icon: (
       <Image
         src={LowPolyIcon.src}
@@ -77,7 +79,7 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
   },
-  Voxel: {
+  voxel: {
     Icon: (
       <Image
         src={VoxelIcon.src}
@@ -88,9 +90,9 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Voxel",
-    value: "Voxel",
+    value: "voxel",
   },
-  Stylized: {
+  stylized: {
     Icon: (
       <Image
         src={StylizedIcon.src}
@@ -101,9 +103,9 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Stylized",
-    value: "Stylized",
+    value: "stylized",
   },
-  Toon: {
+  toon: {
     Icon: (
       <Image
         src={ToonIcon.src}
@@ -114,9 +116,9 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Toon",
-    value: "Toon",
+    value: "toon",
   },
-  SciFi: {
+  sciFi: {
     Icon: (
       <Image
         src={SciFiIcon.src}
@@ -127,10 +129,9 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Sci-Fi",
-    value: "SciFi",
+    value: "sciFi",
   },
-
-  Fantasy: {
+  fantasy: {
     Icon: (
       <Image
         src={FantasyIcon.src}
@@ -141,9 +142,9 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Fantasy",
-    value: "Fantasy",
+    value: "fantasy",
   },
-  Weapons: {
+  weapons: {
     Icon: (
       <Image
         src={GunsIcon.src}
@@ -154,7 +155,7 @@ export const iconByTitle: Record<TKey, TValue> = {
       />
     ),
     displayName: "Guns",
-    value: "Weapons",
+    value: "weapons",
   },
   // Metallic: {
   //   displayName: "Metallic",
@@ -182,9 +183,4 @@ export const iconByTitle: Record<TKey, TValue> = {
   //   displayName: "Clay",
   //   value: "Clay",
   // },
-  no_style: {
-    Icon: <div className="bg-[#2D323C] w-4 h-4 rounded-full" />,
-    displayName: "No Style",
-    value: "no_style",
-  },
 } as Record<TKey, TValue>;

@@ -74,7 +74,7 @@ export default function MobileMockCard({ showModel }: { showModel: boolean }) {
                 />
                 <div className="px-1 py-1 shadow-buu-inner bg-buu rounded-lg flex items-center  justify-center">
                   <div className="w-4 h-4 flex items-center justify-center p-0.5 shadow-buu-inner rounded-none bg-buu  ">
-                    {iconByTitle["Cute"].Icon}
+                    {iconByTitle["cute"].Icon}
                   </div>
                 </div>
                 <div className="flex items-center  justify-center">

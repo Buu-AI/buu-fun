@@ -14,14 +14,14 @@ export default async function HomePage({ searchParams }: THomePage) {
       {/* Background blur effect that stays at bottom nearby chat */}
 
       {/* Centered main content with Help cards */}
-      <div className="flex-1 flex items-center justify-center mr-[0.15vw] flex-col">
-        <HeroHeader />
-        <HeaderQuickSelectCard />
-      </div>
-
-      {/* Bottom input section */}
-      <div className="lg:mr-[0.15vw]">
-        <BottomBarContainer action={"new_chat"} />
+      <div className="flex-1  flex item-center pt-[10%] mr-[0.15vw] flex-col">
+        <div className="">
+          <HeroHeader />
+          <HeaderQuickSelectCard />
+        </div>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl z-[50]    lg:mr-[0.15vw]">
+          <BottomBarContainer action={"new_chat"} />
+        </div>
       </div>
     </main>
   );

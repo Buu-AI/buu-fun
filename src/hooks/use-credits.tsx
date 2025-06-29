@@ -1,3 +1,4 @@
+import { StripeSubscriptionPlanKeys } from "@/gql/types/graphql";
 import { manageUserSubscription } from "@/lib/react-query/subscriptions-stripe";
 import { getUserCredits } from "@/lib/react-query/user";
 import { useAuthentication } from "@/providers/account.context";
@@ -33,4 +34,10 @@ export function useUserSubscription() {
     },
     refetchInterval: 150_000,
   });
+}
+
+export function isPaidUser(planKey: `${StripeSubscriptionPlanKeys}` = "FREE") {
+  if (planKey === "FREE") return false;
+
+  return true;
 }

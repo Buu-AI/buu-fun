@@ -27,11 +27,12 @@ import {
   GetSessionsQuery as TGetSessionsQuery,
 } from "@/gql/types/graphql";
 import { QueryFunction } from "@tanstack/react-query";
-import { TThreeDStyles } from "../redux/features/settings";
 import { getAuthorization } from "../utils";
 import { AccessToken } from "./user";
 
 import { GetMessages } from "@/gql/documents/messages";
+import { Maybe } from "@/types";
+import { TNumberOfFaces, TStyle, TTextureType } from "@/types/chat/chat-types";
 
 export type TGetMessages = {
   sessionId: string;
@@ -120,31 +121,45 @@ export async function getSessions({ accessToken }: { accessToken: string }) {
   return data.getSessions;
 }
 
+type TOptions = {
+  numberOfFaces?: Maybe<TNumberOfFaces>;
+  numberOfModels?: Maybe<number>;
+  style?: Maybe<TStyle>;
+  texture?: Maybe<TTextureType>;
+};
 type TSendChatMessage = {
   prompt: string;
-  style?: TThreeDStyles;
   sessionId: string;
   accessToken: string;
   imageUrls?: SendMessageMutationVariables["imageUrls"];
+  options?: TOptions;
 };
 
+type TSendMessageMutationVariables = Omit<
+  SendMessageMutationVariables,
+  "options"
+> & {
+  options: Maybe<TOptions>;
+};
 export async function sendChatMessage({
   prompt,
   // style,
   sessionId,
   accessToken,
   imageUrls,
+  options,
 }: TSendChatMessage) {
   try {
     const data = await serverRequest<
       SendMessageMutation,
-      SendMessageMutationVariables
+      TSendMessageMutationVariables
     >(
       SendChatMessage,
       {
         sessionId,
         content: prompt,
         imageUrls,
+        options,
       },
       {
         Authorization: getAuthorization(accessToken),

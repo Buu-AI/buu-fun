@@ -49,11 +49,16 @@ const initialState: ChatState = {
     isOpened: false,
     imageUrl: null,
   },
+
+  isRecentChatOpen: false,
 };
 const ChatSlice = createSlice({
   name: "Chat",
   initialState,
   reducers: {
+    setHistoryModel(state, action: PayloadAction<boolean>) {
+      state.isRecentChatOpen = action.payload;
+    },
     clearMessages: (state) => {
       state.messages = [];
     },
@@ -67,7 +72,7 @@ const ChatSlice = createSlice({
         modelUrl?: string | null;
         imageUrl?: string | null;
         modelId?: string | null;
-      }>,
+      }>
     ) {
       state.genNft.isGenNftModalOpen = action?.payload?.isGenNftOpen;
       state.genNft.modelUrl = action.payload.modelUrl;
@@ -97,7 +102,7 @@ const ChatSlice = createSlice({
     },
     removeImage(state, action: PayloadAction<string>) {
       state.inputFile = state.inputFile.filter(
-        (item) => item.id !== action.payload,
+        (item) => item.id !== action.payload
       );
     },
     clearInputFile(state) {
@@ -162,7 +167,7 @@ const ChatSlice = createSlice({
     handleMessageUpdates: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId,
+          (item) => item.messageId === action.payload.messageId
         );
         if (!item) {
           state.messages.push(action.payload);
@@ -181,12 +186,12 @@ const ChatSlice = createSlice({
       const model = action.payload;
 
       const message = state.messages.find(
-        (fv) => fv.messageId === model.messageId,
+        (fv) => fv.messageId === model.messageId
       );
 
       if (message) {
         const modelIndex = message.models.findIndex(
-          (fv) => fv._id === model._id,
+          (fv) => fv._id === model._id
         );
 
         if (modelIndex !== -1) {
@@ -205,7 +210,7 @@ const ChatSlice = createSlice({
       const tool = action.payload;
 
       const message = state.messages.find(
-        (fv) => fv.messageId === tool.messageId,
+        (fv) => fv.messageId === tool.messageId
       );
 
       if (message) {
@@ -223,7 +228,7 @@ const ChatSlice = createSlice({
     appendAIChatMessage: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId,
+          (item) => item.messageId === action.payload.messageId
         );
         if (!item) {
           state.messages.push(action.payload);
@@ -276,6 +281,7 @@ export const {
   handleMessageUpdates,
   updateMessageModel,
   updateMessageToolRequest,
+  setHistoryModel
 } = ChatSlice.actions;
 
 export default ChatSlice.reducer;
