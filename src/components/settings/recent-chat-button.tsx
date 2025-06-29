@@ -1,6 +1,6 @@
 "use client";
 import { useAppDispatch } from "@/hooks/redux";
-import { setHistoryModel } from "@/lib/redux/features/settings";
+import { setHistoryModel } from "@/lib/redux/features/chat";
 import { HistoryIcon } from "lucide-react";
 import { Button } from "../ui/button";
 

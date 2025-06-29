@@ -1,3 +1,4 @@
+import { PersistProvider } from "@/providers/redux";
 import SettingsBar from "../settings/settings-bar";
 import ChatForm from "./chat-form";
 // import SettingsBar from "../settings/settings-bar";
@@ -11,7 +12,9 @@ export default function BottomBarContainer({ action }: TBottomBarContainer) {
         <div className="  w-full bg-buu-secondary h-full  backdrop-blur-3xl rounded-b-2xl   " />
       </div> */}
       <div className=" relative ">
-        <SettingsBar />
+        <PersistProvider>
+          <SettingsBar />
+        </PersistProvider>
       </div>
       <div className=" relative  border-white">
         <ChatForm action={action} />

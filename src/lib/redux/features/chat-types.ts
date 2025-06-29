@@ -56,6 +56,7 @@ export type TViewModel = {
 };
 
 export type ChatState = {
+  isRecentChatOpen: boolean;
   inputQuery: string;
   inputImageUrl: string | null;
   inputFile: TImageData[];
