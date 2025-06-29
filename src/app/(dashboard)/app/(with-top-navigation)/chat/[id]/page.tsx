@@ -1,12 +1,12 @@
 import ShareableBoardsButton from "@/components/boards/shareable-boards-button";
 import BottomBarContainer from "@/components/chat-input/bottom-bar-container";
+import ViewModelModal from "@/components/chat/assistant/view-model-modal";
 import ChatContainer from "@/components/chat/chat-container";
 import ChatMessageInitializer from "@/components/chat/chat-initializer";
 import ChatMessageEventProvider from "@/components/chat/chat-message-event-provider";
 import GenerateNFTModal from "@/components/chat/toolbar/generate-nft-modal";
 import MaximizeViewModel from "@/components/chat/toolbar/maximize-view-model";
 import ModelGenerationModal from "@/components/chat/toolbar/model-generation-modal";
-import ViewModelModal from "@/components/chat/assistant/view-model-modal";
 // import RetryImageModal from "@/components/chat/toolbar/retry-image-modal";
 import { DndKitProvider } from "@/providers/dnd-kit-provider";
 
@@ -20,14 +20,14 @@ export default async function ChatPage({ params }: TChatPage) {
 
   return (
     <DndKitProvider>
-      <main className="flex flex-col relative h-full w-full   max-h-[calc(100vh-100px)]  overflow-hidden">
+      <main className="flex flex-col relative h-full w-full   max-h-[calc(100dvh-80px)]  overflow-hidden">
         <ChatMessageInitializer sessionId={sessionId} />
 
         <ChatMessageEventProvider sessionId={sessionId} />
 
         <ChatContainer sessionId={sessionId} />
 
-        <div className="lg:mr-[0.15vw]">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl z-[50]    lg:mr-[0.15vw]">
           <BottomBarContainer action={{ sessionId }} />
         </div>
       </main>

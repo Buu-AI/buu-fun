@@ -18,12 +18,21 @@ const persistedStageReducer = persistReducer(
   StageSlice,
 );
 
+
+const persistedSettingsReducer = persistReducer(
+  {
+    key: "settings",
+    storage: storage,
+  },
+  SettingsSlice,
+);
+
 export const makeStore = () => {
   return configureStore({
     devTools: true,
     reducer: {
       boards: boardSlice,
-      settings: SettingsSlice,
+      settings: persistedSettingsReducer,
       chat: ChatSlice,
       subscription: SubscriptionSlice,
       apiKey: apiKeySlice,

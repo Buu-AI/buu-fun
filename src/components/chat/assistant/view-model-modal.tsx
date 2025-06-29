@@ -102,7 +102,7 @@ export default function ViewModelModal() {
         className="w-full p-0  overflow-hidden sm:rounded-none rounded-none  h-full bg-model-viewer max-w-[99%] md:max-w-[90%] max-h-[90%]"
       >
         <div className="w-full h-full relative">
-          <div className="absolute top-2 left-5 z-[999999] ">
+          <div className="absolute top-2 left-5 z-[100] ">
             <div className="flex gap-4">
               <div className="flex items-center flex-col justify-center gap-3">
                 {meshUrl ? (
@@ -146,7 +146,7 @@ export default function ViewModelModal() {
             </div>
           </div>
           {!isLoaded ? (
-            <div className="absolute bg-buu inset-0 flex items-center justify-center z-[99999]">
+            <div className="absolute bg-buu inset-0 flex items-center justify-center z-[99]">
               <div className="h-32 w-32 relative flex items-center justify-center">
                 <LoaderCircle />
                 <p className="absolute inset-0 flex items-center justify-center z-50 text-white font-semibold">
@@ -165,7 +165,7 @@ export default function ViewModelModal() {
               />
             ) : null}
           </div>
-          <div className="absolute  bottom-[5rem] right-6  z-[9999999] ">
+          <div className="absolute  bottom-[5rem] right-6  z-[99] ">
             <NftTokenButton nftId={model?.nftId} />
           </div>
           <div className="absolute bottom-0 w-full h-16 bg-buu-view-modal-footer">

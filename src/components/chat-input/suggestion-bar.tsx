@@ -1,9 +1,9 @@
 "use client";
-import React, { useCallback, useEffect } from "react";
-import { Button } from "../ui/button";
-import { useWordSuggestions } from "@/hooks/use-datamuse";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { useWordSuggestions } from "@/hooks/use-datamuse";
 import { addWords } from "@/lib/redux/features/chat";
+import { useCallback, useEffect } from "react";
+import { Button } from "../ui/button";
 
 export default function SuggestionBar() {
   const search = useAppSelector((state) => state.chat.inputQuery);
@@ -36,15 +36,15 @@ export default function SuggestionBar() {
   }, [handleKeyDown]);
 
   return (
-    <div className="hidden h-[42px] md:flex gap-2 items-center max-w-sm overflow-hidden">
+    <div className="hidden h-[45px] md:flex gap-2 items-center  overflow-x-scroll max-w-xs scrollbar-w-hidden rounded-2xl overflow-hidden">
       {suggestions?.map((item, index) => (
         <Button
           onClick={() => {
             dispatch(addWords(item.word));
           }}
           key={`-${item.word}${item.score}-${index}`}
-          variant={"outline"}
-          className="rounded-xl"
+          variant={"special"}
+          className="rounded-xl h-[45px]"
         >
           {item.word}
         </Button>

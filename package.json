@@ -79,6 +79,7 @@
     "gsap": "^3.13.0",
     "lenis": "^1.2.1",
     "leva": "^0.10.0",
+    "lottie-react": "^2.4.1",
     "lucide-react": "^0.475.0",
     "luxon": "^3.6.1",
     "meshline": "^3.3.1",

@@ -12,10 +12,10 @@ import { Button } from "../ui/button";
 import { HistoryIcon } from "lucide-react";
 import HistoryNavigation from "./history-navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { setHistoryModel } from "@/lib/redux/features/settings";
+import { setHistoryModel } from "@/lib/redux/features/chat";
 
 export default function RecentChats() {
-  const isOpen = useAppSelector((state) => state.settings.isRecentChatOpen);
+  const isOpen = useAppSelector((state) => state.chat.isRecentChatOpen);
   const dispatch = useAppDispatch();
 
   return (

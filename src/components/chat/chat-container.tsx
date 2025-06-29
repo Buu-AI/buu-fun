@@ -79,7 +79,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
   });
 
   return (
-    <div className="flex-1 overflow-x-hidden overflow-y-hidden  max-w-4xl mx-auto w-full  relative h-full   scroll-smooth">
+    <div className="flex-1 overflow-x-hidden   overflow-y-hidden px-2 max-w-3xl mx-auto w-full  relative h-full   scroll-smooth">
       <ScrollToBottomButton
         isScrollDownAvailable={isScrollDownAvailable}
         scrollToBottom={scrollToBottom}
@@ -89,7 +89,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
         id="chat-window"
         ref={chatContainerRef}
         className={cn(
-          "overflow-y-scroll overflow-x-hidden snap-y px-2   scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-white scrollbar-thumb-rounded w-full h-full relative",
+          "overflow-y-scroll overflow-x-hidden snap-y px-2    scrollbar-w-hidden scrollbar-track-orange-lighter scrollbar-thumb-white scrollbar-thumb-rounded w-full h-full relative",
         )}
       >
         <div ref={topObserverRef} className="absolute top-6 w-full h-3" />
@@ -99,7 +99,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
             animate={{ opacity: 1 }}
             className="w-full flex justify-center py-4"
           >
-            <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-300 rounded-full animate-spin"></div>
+            <div className="w-6 h-6  border-gray-300 border-t-blue-300 rounded-full animate-spin"></div>
           </motion.div>
         )}
         <div className="flex gap-5 flex-col w-full mt-2 pb-2">
@@ -122,6 +122,7 @@ export default function ChatContainer({ sessionId }: { sessionId: string }) {
               </div>
             );
           })}
+          <div className="h-52 w-2" />
         </div>
       </div>
     </div>

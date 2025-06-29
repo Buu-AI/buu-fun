@@ -1,10 +1,8 @@
 "use client";
 import { ArrowUp, ImageIcon } from "@/assets/icons";
+import { TypedAppError } from "@/class/error";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { getPresignedUrl } from "@/lib/react-query/image-upload";
-import { motion } from "framer-motion";
-// import { generateSubThreads } from "@/lib/react-query/threads";
-import { TypedAppError } from "@/class/error";
 import { sendChatMessage } from "@/lib/react-query/threads.v3";
 import {
   clearInput,
@@ -22,7 +20,7 @@ import { blobUrlToFile, cn, getAllowedContentTypeMaps } from "@/lib/utils";
 import { useAuthentication } from "@/providers/account.context";
 import { nanoid } from "@reduxjs/toolkit";
 import { useMutation } from "@tanstack/react-query";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -40,7 +38,6 @@ export default function ChatForm({ action }: TBottomBarContainer) {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const prompt = useAppSelector((state) => state.chat.inputQuery);
-  const style = useAppSelector((state) => state.settings.ThreeDStyle);
   const inputFile = useAppSelector((state) => state.chat.inputFile);
 
   const isChatPending = useAppSelector(isChatGenerating);
@@ -79,7 +76,13 @@ export default function ChatForm({ action }: TBottomBarContainer) {
   });
 
   const fileCount = useAppSelector((state) => state.chat.inputFile.length);
-
+  const {
+    faces,
+    ThreeDStyle,
+    textureType,
+    numberOfModels,
+    numberOfModelsMode,
+  } = useAppSelector((state) => state.settings);
   // const queryClient = useQueryClient();
   // mutation for existing chat
   const { mutate: createExistingChat, isPending: isExistingChatPending } =
@@ -229,7 +232,11 @@ export default function ChatForm({ action }: TBottomBarContainer) {
           return;
         }
       }
-
+      const texture = textureType !== "definedByAI" ? textureType : undefined;
+      const style = ThreeDStyle !== "definedByAI" ? ThreeDStyle : undefined;
+      const numberOfFaces = faces !== "definedByAI" ? faces : undefined;
+      const numberOfModel =
+        numberOfModelsMode !== "definedByAI" ? numberOfModels : undefined;
       // Handle based on action type
       if (action === "new_chat") {
         const sessionId = uuid();
@@ -237,16 +244,26 @@ export default function ChatForm({ action }: TBottomBarContainer) {
           sessionId,
           accessToken: identityToken ?? "",
           prompt: prompt,
-          style: style,
           imageUrls,
+          options: {
+            numberOfFaces,
+            style,
+            texture,
+            numberOfModels: numberOfModel,
+          },
         });
       } else if (typeof action !== "string") {
         createExistingChat({
           accessToken: identityToken ?? "",
           prompt,
-          style,
           sessionId: action.sessionId,
           imageUrls,
+          options: {
+            numberOfFaces,
+            numberOfModels: numberOfModel,
+            style,
+            texture,
+          },
         });
       }
     } catch (error) {
