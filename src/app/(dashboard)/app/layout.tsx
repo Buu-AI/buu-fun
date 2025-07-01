@@ -5,7 +5,6 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import SubscriptionDialog from "@/components/subscriptions/subscription-dialog";
 import Providers from "@/providers/auth-provider";
 import { ConfettiProvider } from "@/providers/confetti-provider";
-import NextUIProviders from "@/providers/next-ui-provder";
 import ReactQueryProvider from "@/providers/react-query";
 import StoreProvider from "@/providers/redux";
 import type { Metadata } from "next";
@@ -71,16 +70,14 @@ export default function RootLayout({
 
         <ReactQueryProvider>
           <StoreProvider>
-            <NextUIProviders>
-              <Providers>
-                <ConfettiProvider>
-                  <SplashCursorProvider />
-                  {children}
-                  <div id="integrated-terminal" />
-                  <SubscriptionDialog />
-                </ConfettiProvider>
-              </Providers>
-            </NextUIProviders>
+            <Providers>
+              <ConfettiProvider>
+                <SplashCursorProvider />
+                {children}
+                <div id="integrated-terminal" />
+                <SubscriptionDialog />
+              </ConfettiProvider>
+            </Providers>
           </StoreProvider>
         </ReactQueryProvider>
       </body>

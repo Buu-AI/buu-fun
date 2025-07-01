@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { iconByTitle } from "./styles-data";
+import AnimatedCircle from "./defined-by-ai-style";
 
 export default function ThreeDSelectBox() {
   const dispatch = useAppDispatch();
@@ -40,14 +41,14 @@ export default function ThreeDSelectBox() {
           <SelectValue
             placeholder={
               <div className="flex items-center justify-center gap-2 ">
-                <div className="bg-[#80c6ff] w-4 h-4 rounded-full" />{" "}
-                <span>Defined By AI</span>
+                <AnimatedCircle />
+                <span>Default</span>
               </div>
             }
           />
         </SelectTrigger>
         <SelectContent className="bg-[#1C2129] border-none relative z-[101] shadow-buu-muted border-buu  ">
-          {Object.values(iconByTitle).map(({ displayName, value, Icon, }) => (
+          {Object.values(iconByTitle).map(({ displayName, value, Icon }) => (
             <SelectItem
               key={`${displayName}-${value}-styles-selector`}
               className="focus:bg-[#252931] pl-4 border-none backdrop-blur-10   py-3"

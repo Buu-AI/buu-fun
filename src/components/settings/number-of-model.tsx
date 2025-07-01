@@ -44,7 +44,7 @@ export default function NumberOfModel({}: TNumberOfModel) {
               placeholder={
                 <div className="flex items-center justify-center gap-2 ">
                   <div className="bg-[#2D323C] w-4 h-4 rounded-full" />
-                  <span>Defined By AI</span>
+                  <span>Default</span>
                 </div>
               }
             />
@@ -55,7 +55,7 @@ export default function NumberOfModel({}: TNumberOfModel) {
               className="focus:bg-[#252931] pl-4 border-none backdrop-blur-10   py-3"
             >
               <div className="flex items-center justify-center gap-2 ">
-                <span>Defined By AI</span>
+                <span>Default</span>
               </div>
             </SelectItem>{" "}
             <SelectItem

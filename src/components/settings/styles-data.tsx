@@ -14,6 +14,7 @@ import {
 import { SettingsState } from "@/lib/redux/features/settings";
 import Image from "next/image";
 import { ReactNode } from "react";
+import AnimatedCircle from "./defined-by-ai-style";
 export type TKey = Exclude<SettingsState["ThreeDStyle"], undefined>;
 export type TValue = {
   value: TKey;
@@ -23,8 +24,8 @@ export type TValue = {
 
 export const iconByTitle: Record<TKey, TValue> = {
   definedByAI: {
-    Icon: <div className="bg-[#2D323C] w-4 h-4 rounded-full" />,
-    displayName: "Defined By AI",
+    Icon: <AnimatedCircle />,
+    displayName: "Default",
     value: "definedByAI",
   },
   cute: {
