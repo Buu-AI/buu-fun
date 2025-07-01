@@ -8,7 +8,7 @@ export default function LocationKnownLink({
   LinkTo,
   LinkIn,
   children,
-  className,
+  className = '',
 }: {
   LinkTo: string;
   LinkIn: string;
@@ -23,7 +23,7 @@ export default function LocationKnownLink({
   return (
     <Link
       href={LinkTo}
-      className="w-10 flex  items-center group   justify-center    h-10 "
+      className="w-10 flex items-center group justify-center    h-10 "
     >
       <div
         className={cn(
@@ -31,7 +31,7 @@ export default function LocationKnownLink({
           {
             "text-white": isCurrent,
           },
-          className,
+          className
         )}
       >
         {children}
