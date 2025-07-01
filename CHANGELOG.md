@@ -1,5 +1,44 @@
 # Changelog
 
+## [0.1.72](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.71...buu-fun-v0.1.72) (2025-07-01)
+
+
+### ✨ Features
+
+* added advanced settings to pro users only ([e3c3ad2](https://github.com/Buu-AI/buu-fun/commit/e3c3ad235cc971a6308b9431d8d9c350e4c281d7))
+* added assets for style icon ([c0cb687](https://github.com/Buu-AI/buu-fun/commit/c0cb6875bb6be46f10318ccf23794a4f002ef11f))
+* added default by ai for states ([5965713](https://github.com/Buu-AI/buu-fun/commit/59657131802fda177b5ebe76f44289bf10432f5d))
+* added default by ai for states ([0ff3cfc](https://github.com/Buu-AI/buu-fun/commit/0ff3cfcbb99cdccc91767cfc83445f580ce0833e))
+* added defined by ai animated round gradient ([170088f](https://github.com/Buu-AI/buu-fun/commit/170088fccdb374bfa117d6e6c9177cb19e0925e7))
+* added defined by AI settings in caht ([b8e127f](https://github.com/Buu-AI/buu-fun/commit/b8e127f7db7d893d6265dc078a3825de82739272))
+* added defined by AI settings in chat ([7c6f60f](https://github.com/Buu-AI/buu-fun/commit/7c6f60f5105e16627a727fc8381015fc7ae0e23e))
+* added lottie cat loader ([2949343](https://github.com/Buu-AI/buu-fun/commit/2949343797711b11ba2a0fef1a5f49ca681dd26d))
+* added new chat option settings styles and contents ([30f89a1](https://github.com/Buu-AI/buu-fun/commit/30f89a134e4ec27b63245832f643a504012a1d42))
+* added new chat types and settings ([f57e777](https://github.com/Buu-AI/buu-fun/commit/f57e77783b7727efdc3e4e3b432e03f0412fed64))
+* added new settings bar icon and data ([a57dcf4](https://github.com/Buu-AI/buu-fun/commit/a57dcf4529b468512aaa95cf67872b5504996911))
+* added option bar selection settings ([4db57a2](https://github.com/Buu-AI/buu-fun/commit/4db57a2dbccb348b962951a7cbb9fccdea9279e4))
+* added persistant store for chat settings ([4cd5aa0](https://github.com/Buu-AI/buu-fun/commit/4cd5aa0c1c656ba6734cd2c4c26d57a6d63eaf0f))
+* added settings card components ([61c770c](https://github.com/Buu-AI/buu-fun/commit/61c770cfaa7b92289d7ecf8a207a4dd206c8bf1b))
+
+
+### 🐛 Bugfixes
+
+* fixed loader state when chat state is loading from local storage ([0ede079](https://github.com/Buu-AI/buu-fun/commit/0ede0792aeb91a41e163eca8ab9fd9e5b08ff58f))
+* fixed minor issues ([55c8023](https://github.com/Buu-AI/buu-fun/commit/55c802391fdaae1ad7a43cc29591571ab44e2f8a))
+* fixed the icon data to be used in mock mobile card ([aa0805a](https://github.com/Buu-AI/buu-fun/commit/aa0805acfdf8f8482c77f6f929fac0871f768820))
+* fixed the text-clamping when suggestion word is large ([a57595f](https://github.com/Buu-AI/buu-fun/commit/a57595f6dc8f77495fbb23880a59c796c3de52e9))
+* fixed unused styles for the chat ([55a05c2](https://github.com/Buu-AI/buu-fun/commit/55a05c2ce06ea78aea7f1d59a0f824ce66a08b1a))
+* made the settings bar fit to the content ([63a4fe4](https://github.com/Buu-AI/buu-fun/commit/63a4fe4bc209edb551e21ac166fef9b776c5a357))
+* made the settings bar fit to the content ([0502781](https://github.com/Buu-AI/buu-fun/commit/0502781f5fb41fef19b275ca5d957181026f81be))
+* removed pro only settings ([1224fa8](https://github.com/Buu-AI/buu-fun/commit/1224fa8e81f0f709b03e7cfbc87e9cdead6c1d01))
+* removed pro only settings ([1320ad2](https://github.com/Buu-AI/buu-fun/commit/1320ad219fd62e77a96331990e2463af50190117))
+* toggling between the popover being opened multiple times. ([5755195](https://github.com/Buu-AI/buu-fun/commit/5755195f4ff7fbf88a2af464750291b06d86fca5))
+
+
+### 👽 Miscellaneous
+
+* **lint:** linted and formatted the codebase ([985fa77](https://github.com/Buu-AI/buu-fun/commit/985fa770c0263d79aa71d7209d710b55c4822477))
+
 ## [0.1.71](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.70...buu-fun-v0.1.71) (2025-06-23)
 
 

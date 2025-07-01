@@ -1,6 +1,6 @@
 {
   "name": "buu-fun",
-  "version": "0.1.71",
+  "version": "0.1.72",
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='--max-old-space-size=4096' next dev",
