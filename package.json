@@ -24,9 +24,8 @@
     "@mantine/hooks": "^7.17.0",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
-    "@next/mdx": "15.3.1",
-    "@next/third-parties": "15.3.1",
-    "@nextui-org/react": "^2.6.11",
+    "@next/mdx": "15.3.4",
+    "@next/third-parties": "15.3.4",
     "@privy-io/react-auth": "^2.4.5",
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-checkbox": "^1.1.4",
@@ -78,14 +77,13 @@
     "graphql-request": "^7.1.2",
     "gsap": "^3.13.0",
     "lenis": "^1.2.1",
-    "leva": "^0.10.0",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.475.0",
     "luxon": "^3.6.1",
     "meshline": "^3.3.1",
     "motion": "^12.4.5",
     "nanoid": "^5.1.5",
-    "next": "15.3.1",
+    "next": "15.3.4",
     "p-queue": "^8.1.0",
     "pretty-ms": "^9.2.0",
     "react": "19.1.0",
@@ -119,10 +117,10 @@
     "@types/event-source-polyfill": "^1.0.5",
     "@types/luxon": "^3.6.2",
     "@types/node": "^20",
-    "@types/react": "19.1.2",
-    "@types/react-dom": "19.1.2",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.0",
     "eslint": "^9",
-    "eslint-config-next": "15.3.1",
+    "eslint-config-next": "15.3.4",
     "postcss": "^8",
     "prettier": "3.5.1",
     "tailwindcss": "^3.4.1",
@@ -131,7 +129,9 @@
   "overrides": {
     "react": "$react",
     "react-dom": "$react-dom",
-    "react-is": "^19.0.0-rc-69d4b800-20241021"
+    "react-is": "19.1.0",
+    "bs58": "^6.0.0",
+    "ws": "^8.18.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
@@ -146,8 +146,8 @@
       "utf-8-validate"
     ],
     "overrides": {
-      "@types/react": "19.1.2",
-      "@types/react-dom": "19.1.2"
+      "@types/react": "19.1.0",
+      "@types/react-dom": "19.1.0"
     }
   }
 }

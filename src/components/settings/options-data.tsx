@@ -9,7 +9,7 @@ export type TFacesValue = {
 
 export const facesDetailData: Record<TFacesKey, TFacesValue> = {
   definedByAI: {
-    displayName: "Defined By AI",
+    displayName: "Default",
     value: "definedByAI",
     pro: false,
   },
@@ -45,7 +45,7 @@ export type TTextureValue = {
 
 export const textureDetailData: Record<TTextureKey, TTextureValue> = {
   definedByAI: {
-    displayName: "Defined By AI",
+    displayName: "Default",
     value: "definedByAI",
     pro: false,
   },

@@ -38,40 +38,23 @@ export default function NavigationalBar() {
               <SizePenIcon />
             </div>
           </Link> */}
-          <LocationKnownLink
-            LinkIn="boards"
-            LinkTo="/app/boards"
-            // children={}
-          >
+          <LocationKnownLink LinkIn="boards" LinkTo="/app/boards">
             <SizePenIcon />
           </LocationKnownLink>
-          <LocationKnownLink
-            LinkIn=""
-            LinkTo="/app"
-            // children={}
-          >
+          <LocationKnownLink LinkIn="" LinkTo="/app">
             <MagicPenIcon className="fill-current" />
           </LocationKnownLink>
-          <LocationKnownLink
-            LinkIn="portfolio"
-            LinkTo="/app/portfolio"
-            // children={}
-          >
+          <LocationKnownLink LinkIn="portfolio" LinkTo="/app/portfolio">
             <CoinStackIcon />
           </LocationKnownLink>
-          <LocationKnownLink
-            LinkIn="nfts"
-            LinkTo="/app/nfts"
-            // children={}
-          >
+          <LocationKnownLink LinkIn="nfts" LinkTo="/app/nfts">
             <NFTSideBarIcon />
           </LocationKnownLink>
           <div className="h-0.5 w-[80%] bg-gray-800 rounded-full" />
           <LocationKnownLink
             LinkIn="playground"
             LinkTo="/app/playground"
-            className="w-8 h-8 "
-            // children={}
+            className="w-8 h-8"
           >
             <div className="relative w-full h-full">
               <SelectObjectIcon height={"100%"} width={"100%"} />
