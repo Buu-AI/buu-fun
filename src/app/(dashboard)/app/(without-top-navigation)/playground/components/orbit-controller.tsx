@@ -1,13 +1,15 @@
+import { useAppDispatch } from "@/hooks/redux";
 import { updateCamera, updateFov } from "@/lib/redux/features/stage";
 import { TVector3 } from "@/types/stage/objects";
-import { OrbitControls as COrbitControls } from "@react-three/drei";
+import { OrbitControls as ControlOrbit } from "@react-three/drei";
 import { useCallback, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { Event } from "three";
 import { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
 export default function OrbitController() {
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const debouncedDispatch = useCallback(
@@ -20,43 +22,37 @@ export default function OrbitController() {
       debounceTimeoutRef.current = setTimeout(() => {
         dispatch(updateCamera({ position }));
         dispatch(updateFov(fov));
-      }, 100);
+      }, 400);
     },
-    [dispatch],
+    [dispatch]
   );
-
   useEffect(() => {
     const controls = controlsRef.current;
-
     if (!controls) return;
 
-    const handleChange = () => {
-      const camera = controls.object;
+    function handleOrbit(e: Event<"change", OrbitControlsImpl>) {
+      const object = e.target.object;
 
-      const fov = "fov" in camera ? camera.fov : 60;
+      const fov = "fov" in object ? object.fov : 60;
 
       const position: TVector3 = [
-        camera.position.x,
-        camera.position.y,
-        camera.position.z,
+        object.position.x,
+        object.position.y,
+        object.position.z,
       ];
 
       debouncedDispatch(position, fov);
-    };
+    }
 
-    controls.addEventListener("change", handleChange);
-
+    controls.addEventListener("change", handleOrbit);
     return () => {
-      controls.removeEventListener("change", handleChange);
-      if (debounceTimeoutRef.current) {
-        clearTimeout(debounceTimeoutRef.current);
-      }
+      controls.removeEventListener("change", handleOrbit);
     };
-  }, [debouncedDispatch]);
+  });
 
   return (
     <>
-      <COrbitControls
+      <ControlOrbit
         ref={controlsRef}
         makeDefault
         target={0}
