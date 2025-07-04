@@ -19,30 +19,30 @@ type TTooltipWrapper = {
   onClickCallback: (e: MouseEvent<HTMLButtonElement>) => void;
   content: ReactNode;
   align?: "center" | "start" | "end" | undefined;
+  side?: "right" | "top" | "bottom" | "left" | undefined;
 };
 
-export default function TooltipWrapper({
+export default function ChangeModelToolTip({
   buttonProps,
   btnClassName,
   buttonIcon,
   onClickCallback,
-  hoverState,
   content,
   align,
   IconClassName,
+  side = "right",
 }: TTooltipWrapper) {
   const tokenized = true;
   return (
-    <TooltipProvider delayDuration={100}>
-      <Tooltip>
+    <TooltipProvider 
+
+    delayDuration={100}>
+      <Tooltip defaultOpen={false}>
         <TooltipTrigger  asChild>
           <button
             onClick={onClickCallback}
             className={cn(
-              "group bg-svg-button pointer-events-auto  group p-1 aspect-square   min-w-[32px] rounded-[4px] border-buu  flex items-center justify-center",
-              {
-                "hover:bg-white hover:shadow-none": !hoverState,
-              },
+              "w-12 h-12 bg-buu  group flex items-center justify-center rounded-lg",
               btnClassName
             )}
             {...buttonProps}
@@ -58,7 +58,9 @@ export default function TooltipWrapper({
             </div>
           </button>
         </TooltipTrigger>
-        <TooltipContent align={align}>{content}</TooltipContent>
+        <TooltipContent side={side} align={align}>
+          {content}
+        </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

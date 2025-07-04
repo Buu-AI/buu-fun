@@ -42,7 +42,7 @@ export default function ToolBarWrapper({
   isTexturedMesh,
 }: TToolBarWrapper) {
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={300}>
       {ChatToolTips.map((item, index) => {
         if (type === "image") {
           if (!isToolbarImage(item.type)) return null;

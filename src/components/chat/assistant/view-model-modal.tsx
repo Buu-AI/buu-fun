@@ -20,6 +20,7 @@ import LoaderCircle from "../Loader-circle";
 import ViewModelToolbar from "../toolbar/view-model-toolbar";
 import NftTokenButton from "./nft-token-button";
 import useModelAnalysis from "@/hooks/use-model-analysis";
+import ChangeModelToolTip from "./change-model-tool-tip";
 
 const ModelViewer = dynamic(
   () => import("@/components/generation/model-viewer"),
@@ -85,6 +86,7 @@ export default function ViewModelModal() {
   const texturedMesh = model?.texturedMesh?.url;
   return (
     <Dialog
+      modal
       open={isOpen}
       onOpenChange={(value) => {
         dispatch(
@@ -106,44 +108,48 @@ export default function ViewModelModal() {
         className="w-full p-0  overflow-hidden  rounded-lg  h-full bg-model-viewer max-w-[99%] md:max-w-[90%] max-h-[90%]"
       >
         <div className="w-full h-full relative">
+          <button />
           <div className="absolute top-2 left-5 z-[100] ">
             <div className="flex gap-4">
               <div className="flex items-center flex-col justify-center gap-3">
                 {meshUrl ? (
-                  <button
-                    onClick={() => {
+                  <ChangeModelToolTip
+                    content="Mesh"
+                    onClickCallback={() => {
                       setModelUrl(meshUrl);
                     }}
-                    className="w-12 h-12 bg-buu  group flex items-center justify-center rounded-lg"
-                  >
-                    <div className="w-6 h-6 text-gray-100 group-hover:text-gray-300">
-                      <MeshIcon />
-                    </div>
-                  </button>
+                    buttonIcon={
+                      <div className="w-6 h-6 text-gray-100 group-hover:text-gray-300">
+                        <MeshIcon />
+                      </div>
+                    }
+                  />
                 ) : null}
                 {optimizedMesh ? (
-                  <button
-                    onClick={() => {
+                  <ChangeModelToolTip
+                    content="Optimized mesh"
+                    onClickCallback={() => {
                       setModelUrl(optimizedMesh);
                     }}
-                    className="w-12 h-12 bg-buu  group flex items-center justify-center rounded-lg"
-                  >
-                    <div className="w-6 h-6 text-gray-100 group-hover:text-gray-300">
-                      <CubeTexture />
-                    </div>
-                  </button>
+                    buttonIcon={
+                      <div className="w-6 h-6 text-gray-100 group-hover:text-gray-300">
+                        <CubeTexture />
+                      </div>
+                    }
+                  />
                 ) : null}
                 {texturedMesh ? (
-                  <button
-                    onClick={() => {
+                  <ChangeModelToolTip
+                    content="Textured mesh"
+                    onClickCallback={() => {
                       setModelUrl(texturedMesh);
                     }}
-                    className="w-12 h-12 bg-buu  group flex items-center justify-center rounded-lg"
-                  >
-                    <div className="w-6 h-6 text-gray-100 group-hover:text-gray-300">
-                      <TexturedMesh />
-                    </div>
-                  </button>
+                    buttonIcon={
+                      <div className="w-6 h-6 text-gray-100 group-hover:text-gray-300">
+                        <TexturedMesh />
+                      </div>
+                    }
+                  />
                 ) : null}
               </div>
               <div></div>
