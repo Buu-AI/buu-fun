@@ -103,7 +103,7 @@ export default function ViewModelModal() {
       <DialogContent
         closeIconContainer="w-5 h-5"
         closeButtonContainer="bg-white p-0.5 rounded-full opacity-100 text-black"
-        className="w-full p-0  overflow-hidden sm:rounded-none rounded-none  h-full bg-model-viewer max-w-[99%] md:max-w-[90%] max-h-[90%]"
+        className="w-full p-0  overflow-hidden  rounded-lg  h-full bg-model-viewer max-w-[99%] md:max-w-[90%] max-h-[90%]"
       >
         <div className="w-full h-full relative">
           <div className="absolute top-2 left-5 z-[100] ">
