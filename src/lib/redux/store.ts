@@ -15,16 +15,15 @@ const persistedStageReducer = persistReducer(
     key: "stage",
     storage: storage,
   },
-  StageSlice,
+  StageSlice
 );
-
 
 const persistedSettingsReducer = persistReducer(
   {
     key: "settings",
     storage: storage,
   },
-  SettingsSlice,
+  SettingsSlice
 );
 
 export const makeStore = () => {

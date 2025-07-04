@@ -1,7 +1,11 @@
 "use client";
+import { getDefaultModelProps } from "@/app/(dashboard)/app/(without-top-navigation)/playground/modelUrls";
+import { getModelBasedOnPriority } from "@/lib/helpers/chat/model";
 import { setGenerateNFT, setViewModel } from "@/lib/redux/features/chat";
+import { addModels } from "@/lib/redux/features/stage";
 import { getModelById } from "@/lib/redux/selectors/chatMessages";
 import { MaybeString } from "@/types";
+import { nanoid } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "./redux";
 
@@ -27,7 +31,7 @@ export default function useToolBar({ modelId, selectedModelUrl }: TUseToolBar) {
     dispatch(
       setViewModel({
         isOpen: false,
-      }),
+      })
     );
     dispatch(
       setGenerateNFT({
@@ -35,8 +39,29 @@ export default function useToolBar({ modelId, selectedModelUrl }: TUseToolBar) {
         imageUrl: undefined,
         modelUrl: model?.texturedMesh?.url,
         modelId: modelId,
-      }),
+      })
     );
+  }
+
+  function addModelToPlayground() {
+    if (!model) {
+      toast.error("Invalid model");
+      return;
+    }
+    const texturedModel = getModelBasedOnPriority(model);
+    const defaultModelParams = getDefaultModelProps({
+      modelUrl: texturedModel,
+      imageUrl: model.image.url,
+      createdAt: new Date(model.createdAt).toISOString(),
+    });
+    if (!model.texturedMesh || !defaultModelParams) return null;
+    dispatch(
+      addModels({
+        ...defaultModelParams,
+        id: nanoid(),
+      })
+    );
+    toast.success("Added to playground");
   }
 
   function downloadModel() {
@@ -60,5 +85,5 @@ export default function useToolBar({ modelId, selectedModelUrl }: TUseToolBar) {
       });
   }
 
-  return { downloadModel, shareModel, handleGenerateNFT };
+  return { downloadModel, shareModel, handleGenerateNFT, addModelToPlayground };
 }
