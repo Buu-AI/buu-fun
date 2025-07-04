@@ -19,12 +19,13 @@ import {
 import LoaderCircle from "../Loader-circle";
 import ViewModelToolbar from "../toolbar/view-model-toolbar";
 import NftTokenButton from "./nft-token-button";
+import useModelAnalysis from "@/hooks/use-model-analysis";
 
 const ModelViewer = dynamic(
   () => import("@/components/generation/model-viewer"),
   {
     ssr: false,
-  },
+  }
 );
 
 export default function ViewModelModal() {
@@ -32,7 +33,7 @@ export default function ViewModelModal() {
   const dispatch = useAppDispatch();
   const modelId = useAppSelector((state) => state.chat.viewModel.model?.id);
   const toolCallId = useAppSelector(
-    (state) => state.chat.viewModel.toolRequest?.id,
+    (state) => state.chat.viewModel.toolRequest?.id
   );
   const model = useAppSelector((state) => getModelById(state, modelId));
 
@@ -42,6 +43,9 @@ export default function ViewModelModal() {
   const [modelUrl, setModelUrl] = useState<string | null>(null);
   const [progress, setLoadingProgress] = useState(0);
   const [isLoaded, setIsLoaded] = useState(true);
+  const modelAnalysis = useModelAnalysis(modelUrl);
+  const faces = modelAnalysis.geometry?.faces;
+  const vertices = modelAnalysis.geometry?.vertices;
   useEffect(() => {
     if (model) {
       const modelUrl = getModelBasedOnPriority(model);
@@ -86,7 +90,7 @@ export default function ViewModelModal() {
         dispatch(
           setViewModel({
             isOpen: value,
-          }),
+          })
         );
       }}
     >
@@ -167,6 +171,16 @@ export default function ViewModelModal() {
           </div>
           <div className="absolute  bottom-[5rem] right-6  z-[99] ">
             <NftTokenButton nftId={model?.nftId} />
+          </div>
+          <div className="bottom-[5rem] left-6 absolute">
+            <p className="uppercase font-medium  text-xs">
+              <span className="text-muted-foreground/60">VERTEX:</span>
+              <span className="tracking-wide"> {vertices ?? 0}</span>
+            </p>
+            <p className="uppercase font-medium  text-xs">
+              <span className="text-muted-foreground/60">Faces:</span>
+              <span className="tracking-wide"> {faces ?? 0}</span>
+            </p>{" "}
           </div>
           <div className="absolute bottom-0 w-full h-16 bg-buu-view-modal-footer">
             <ViewModelToolbar

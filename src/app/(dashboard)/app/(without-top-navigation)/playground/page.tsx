@@ -3,6 +3,7 @@ import { PersistProvider } from "@/providers/redux";
 import CanvasContainer from "./components/canvas-container";
 import ObjectsInScene from "./components/objects-in-scene";
 import StageNavigationTopbar from "./components/stage-navigation/stage-navigation-top-bar";
+// import InformationViewer from "./components/information-viewer";
 
 // Main App Component
 export default function StagingPage() {
@@ -12,6 +13,7 @@ export default function StagingPage() {
         <StageNavigationTopbar />
         <CanvasContainer />
         <ObjectsInScene />
+        {/* <InformationViewer /> */}
       </PersistProvider>
     </div>
   );

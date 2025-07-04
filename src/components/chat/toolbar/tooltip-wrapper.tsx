@@ -13,6 +13,7 @@ export interface ButtonProps
 type TTooltipWrapper = {
   buttonProps?: Partial<Omit<ButtonProps, "ref">>;
   btnClassName?: string;
+  IconClassName?: string;
   buttonIcon: ReactNode;
   hoverState?: boolean;
   onClickCallback: (e: MouseEvent<HTMLButtonElement>) => void;
@@ -28,6 +29,7 @@ export default function TooltipWrapper({
   hoverState,
   content,
   align,
+  IconClassName,
 }: TTooltipWrapper) {
   const tokenized = true;
   return (
@@ -41,7 +43,7 @@ export default function TooltipWrapper({
               {
                 "hover:bg-white hover:shadow-none": !hoverState,
               },
-              btnClassName,
+              btnClassName
             )}
             {...buttonProps}
           >
@@ -49,6 +51,7 @@ export default function TooltipWrapper({
               className={cn("w-full flex items-center justify-center h-full", {
                 "group-hover:text-black group-hover:fill-black group-hover:stroke-black":
                   !tokenized,
+                IconClassName,
               })}
             >
               {buttonIcon}
