@@ -1,17 +1,16 @@
+import { getDefaultModelProps } from "@/app/(dashboard)/app/(without-top-navigation)/playground/modelUrls";
+import { useAppDispatch } from "@/hooks/redux";
+import { addModels } from "@/lib/redux/features/stage";
 import { cn } from "@/lib/utils";
+import { nanoid } from "@reduxjs/toolkit";
 import { motion } from "framer-motion";
-import { Loader2 } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { buttonVariants } from "./board-tool-tip-delete";
+import toast from "react-hot-toast";
 import {
   BoardToolTips,
   TBoardToolTipData,
 } from "../generation/handle-tool-calls";
-import { useAppDispatch } from "@/hooks/redux";
-import { addModels } from "@/lib/redux/features/stage";
-import { getDefaultModelProps } from "@/app/(dashboard)/app/(without-top-navigation)/playground/modelUrls";
-import toast from "react-hot-toast";
-import { nanoid } from "@reduxjs/toolkit";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { buttonVariants } from "./board-tool-tip-delete";
 
 type TToolTipPlayGround = {
   subThreadId?: string;
@@ -27,7 +26,6 @@ export default function ToolTipPlayGround({
   modelUrl,
   toolTipData,
   index,
-  open,
   imageUrl,
 }: TToolTipPlayGround) {
   const dispatch = useAppDispatch();
