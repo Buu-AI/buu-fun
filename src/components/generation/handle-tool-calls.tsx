@@ -3,6 +3,7 @@ import {
   DownloadIcon,
 } from "@/assets/icons";
 import CreateNFTIcon from "@/assets/icons/create-nft-icon";
+import SelectObjectIcon from "@/assets/icons/select-object-icon";
 import ShareIcon from "@/assets/icons/share-icon";
 import { Eye, Trash2 } from "lucide-react";
 
@@ -38,7 +39,15 @@ export const BoardToolTips = [
     Icon: <ShareIcon />,
     content: "Share",
   },
-
+  {
+    type: "PLAYGROUND" as const,
+    Icon: (
+      <div className="w-7 flex h-7">
+        <SelectObjectIcon height={"100%"} width={"100%"} />
+      </div>
+    ),
+    content: "Add To Playground",
+  },
   {
     type: "DOWNLOAD" as const,
     Icon: <DownloadIcon />,

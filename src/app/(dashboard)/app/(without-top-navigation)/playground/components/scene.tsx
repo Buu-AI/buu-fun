@@ -125,13 +125,9 @@ export default function ModelScene() {
 
   return (
     <group ref={sceneRef} onClick={handleCanvasClick}>
-      {/* Ambient light */}
-      {/* <ambientLight />
-      <directionalLight position={[10, 10, 5]} /> */}
       <ambientLight intensity={0.7} />
       <directionalLight position={[10, 10, 5]} intensity={1} />
       <pointLight position={[-10, -10, -5]} intensity={0.7} color="#ff6b6b" />
-
       {/* Models */}
       <Suspense fallback={<Loader />}>
         {models.map((model, index) => {
@@ -142,11 +138,11 @@ export default function ModelScene() {
               url={model.modelUrl}
               visible={model.visible}
               position={model.position}
+              rotation={model.rotation}
               scale={model.scale}
               onSelect={handleObjectSelect}
               isSelected={selectedModel?.id === model.id}
               index={index}
-              // extraLights={model.extraLights}
             />
           );
         })}

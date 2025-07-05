@@ -13,5 +13,19 @@ export const getSelectedLights = createSelector(
       index: selectedLight,
       light: state[selectedLight],
     };
-  },
+  }
+);
+
+const Models = (state: RootState) => state.stage.present.models;
+export const getStageModel = createSelector(
+  [Models, (_, id?: string) => id],
+  (state, id) => {
+    if (!id) return null;
+    const selectedModel = state.findIndex((item) => item.id === id);
+    if (selectedModel === -1) return null;
+    return {
+      index: selectedModel,
+      model: state[selectedModel],
+    };
+  }
 );
