@@ -39,20 +39,62 @@ export default function NavigationalBar() {
               <SizePenIcon />
             </div>
           </Link> */}
-          <LocationKnownLink LinkIn="boards" LinkTo="/app/boards">
+          <LocationKnownLink
+            toolTip={{
+              content: "Boards",
+              enabled: true,
+              delayDuration: 100,
+              side: "right",
+            }}
+            LinkIn="boards"
+            LinkTo="/app/boards"
+          >
             <SizePenIcon />
           </LocationKnownLink>
-          <LocationKnownLink LinkIn="" LinkTo="/app">
+          <LocationKnownLink
+            toolTip={{
+              content: "Home",
+              enabled: true,
+              delayDuration: 100,
+              side: "right",
+            }}
+            LinkIn=""
+            LinkTo="/app"
+          >
             <MagicPenIcon className="fill-current" />
           </LocationKnownLink>
-          <LocationKnownLink LinkIn="portfolio" LinkTo="/app/portfolio">
+          <LocationKnownLink
+            toolTip={{
+              content: "$Buu Token",
+              enabled: true,
+              delayDuration: 100,
+              side: "right",
+            }}
+            LinkIn="portfolio"
+            LinkTo="/app/portfolio"
+          >
             <CoinStackIcon />
           </LocationKnownLink>
-          <LocationKnownLink LinkIn="nfts" LinkTo="/app/nfts">
+          <LocationKnownLink
+            toolTip={{
+              content: "NFT",
+              enabled: true,
+              delayDuration: 100,
+              side: "right",
+            }}
+            LinkIn="nfts"
+            LinkTo="/app/nfts"
+          >
             <NFTSideBarIcon />
           </LocationKnownLink>
           <div className="h-0.5 w-[80%] bg-gray-800 rounded-full" />
           <LocationKnownLink
+            toolTip={{
+              content: "Playground",
+              enabled: true,
+              delayDuration: 100,
+              side: "right",
+            }}
             LinkIn="playground"
             LinkTo="/app/playground"
             className="w-8 h-8"
@@ -68,6 +110,12 @@ export default function NavigationalBar() {
           </LocationKnownLink>
           <LocationKnownLink
             LinkIn="editor"
+            toolTip={{
+              content: "Editor",
+              enabled: true,
+              delayDuration: 100,
+              side: "right",
+            }}
             LinkTo="/app/editor"
             className="w-8 h-8"
           >
