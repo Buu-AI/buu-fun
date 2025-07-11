@@ -2,6 +2,10 @@ import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
 import APIKeyTable from "@/components/api-key/api-key-table";
 import CreateAPIDialog from "@/components/api-key/create-api-dialog";
 import CreateAPIKeyButton from "@/components/api-key/create-api-key-button";
+import { constructMetadata } from "@/lib/construct-metadata";
+
+export const metadata = constructMetadata({});
+
 export default function ApiKeyPage() {
   return (
     <div>

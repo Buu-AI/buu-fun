@@ -2,6 +2,9 @@ import NFTSideBarHeader from "@/assets/icons/nft-sidebar-header";
 import HeroHeader from "@/components/headers/boards/hero-header";
 import NftButtonWrapper from "@/components/nfts/nft-button-wrapper";
 import NFTCardsWrapper from "@/components/nfts/nft-cards-wrapper";
+import { constructMetadata } from "@/lib/construct-metadata";
+export const metadata = constructMetadata({});
+
 export default function NftsPagePage() {
   return (
     <main className="flex flex-col max-h-[calc(100dvh-110px)]  overflow-y-scroll  relative h-full w-full scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-orange scrollbar-thumb-rounded">

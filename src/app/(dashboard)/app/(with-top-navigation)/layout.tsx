@@ -1,6 +1,9 @@
 import NavigationalBar from "@/components/navbar/navigational-bar";
 import Topbar from "@/components/navbar/top-bar";
+import { constructMetadata } from "@/lib/construct-metadata";
 import React from "react";
+
+export const metadata = constructMetadata({});
 
 export default function layout({
   children,
