@@ -2,9 +2,12 @@ import BottomBarContainer from "@/components/chat-input/bottom-bar-container";
 import HeroHeader from "@/components/headers/boards/hero-header";
 import HeaderQuickSelectCard from "@/components/headers/home/quickselect-card-button";
 import ReferralVerifierHook from "@/components/referral/referral-verifier-hook";
+import { constructMetadata } from "@/lib/construct-metadata";
 export type THomePage = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
+export const metadata = constructMetadata({});
+
 export default async function HomePage({ searchParams }: THomePage) {
   const search = await searchParams;
 

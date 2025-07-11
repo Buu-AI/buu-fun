@@ -1,4 +1,5 @@
 import ViewBoardContainer from "@/components/boards/view-board-container";
+import { constructMetadata } from "@/lib/construct-metadata";
 import { getUserSharableBoardQuery } from "@/lib/react-query/boards";
 import { Ghost } from "lucide-react";
 import { cookies } from "next/headers";
@@ -8,6 +9,39 @@ type TBoardsPage = {
     id: string;
   }>;
 };
+
+export async function metadata({ params }: TBoardsPage) {
+  const boardId = (await params).id;
+  const cookie = await cookies();
+
+  const accessToken = cookie.get("privy-id-token")?.value;
+  if (!accessToken) {
+    redirect("/");
+    return;
+  }
+
+  try {
+    const board = await getUserSharableBoardQuery({
+      _id: boardId,
+      accessToken,
+      count: 1,
+    });
+    const index = 0;
+
+    const boardItem = board.items[index];
+    if (!boardItem) {
+      return constructMetadata({});
+    }
+    return constructMetadata({
+      title: boardItem.title,
+      
+    });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (err) {
+    return null;
+  }
+}
+
 export default async function BoardsPage({ params }: TBoardsPage) {
   const boardId = (await params).id;
   const cookie = await cookies();

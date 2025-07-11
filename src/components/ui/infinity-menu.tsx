@@ -1462,7 +1462,7 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
             </div>
           </div>
           {/* Title */}
-          <div className="absolute md:left-[1rem] max-md:hidden top-[10%] md:top-1/2 transform md:translate-x-[20%] transition-all  md:-translate-y-1/2">
+          <div className="absolute  md:left-[1rem] max-md:hidden top-[10%] md:top-1/2 transform lg:translate-x-[20%] transition-all  md:-translate-y-1/2">
             <div
               className={cn("mx-auto flex items-center justify-center", {
                 "opacity-0 pointer-events-none duration-[500ms] translate-x-[-60%] -translate-y-1/2":
@@ -1505,7 +1505,7 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
               {
                 "opacity-0 pointer-events-none duration-[100ms] translate-x-[-60%] -translate-y-1/2":
                   isMoving,
-                "opacity-100 pointer-events-auto duration-[500ms] md:translate-x-[-90%] md:-translate-y-1/2":
+                "opacity-100 pointer-events-auto duration-[500ms] lg:translate-x-[-90%] md:-translate-y-1/2":
                   !isMoving,
               }
             )}
