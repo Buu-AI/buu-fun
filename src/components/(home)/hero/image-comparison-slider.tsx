@@ -141,7 +141,7 @@ export default function ImageComparisonSlider() {
                 // Calculate which feature index we should be on (starting from index 1)
                 const mappedIndex = Math.min(
                   features.length - 1,
-                  Math.floor(adjustedProgress / segmentSize),
+                  Math.floor(adjustedProgress / segmentSize)
                 );
 
                 // Only update state if index is actually changing
@@ -162,7 +162,7 @@ export default function ImageComparisonSlider() {
         ctx.revert();
       };
     },
-    { dependencies: [is650], revertOnUpdate: true },
+    { dependencies: [is650], revertOnUpdate: true }
   );
 
   // Set up responsive positioning that works with any aspect ratio
@@ -328,7 +328,15 @@ export default function ImageComparisonSlider() {
           </div>
         </div>
         <div className="max-md:hidden" ref={ReactCompareSliderRef}>
-          <ReactCompareSlider
+          <Image
+            src={MutantAlien.src}
+            alt="Alien Image"
+            width={1920}
+            height={1080}
+            className="z-0 relative object-contain w-full h-full"
+            priority
+          />
+          {/* <ReactCompareSlider
             className="w-full h-full z-[20] overflow-visible"
             style={{
               overflow: "visible",
@@ -354,7 +362,7 @@ export default function ImageComparisonSlider() {
                 className="w-full h-full relative "
               />
             }
-          />
+          /> */}
         </div>
       </section>
 

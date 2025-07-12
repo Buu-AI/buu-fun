@@ -25,7 +25,7 @@ export default function HomePage() {
         </HeroLoadingWrapper>
       </div>
       <BringYourIdeasSection />
-      <JamCard />
+      {/* <JamCard /> */}
       <section id="how-it-works" className="w-full h-full">
         <div className="w-full h-full ">
           <HowToContainer />
