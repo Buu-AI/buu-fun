@@ -35,7 +35,7 @@ export default function TooltipWrapper({
   return (
     <TooltipProvider delayDuration={100}>
       <Tooltip>
-        <TooltipTrigger  asChild>
+        <TooltipTrigger asChild>
           <button
             onClick={onClickCallback}
             className={cn(
@@ -43,7 +43,7 @@ export default function TooltipWrapper({
               {
                 "hover:bg-white hover:shadow-none": !hoverState,
               },
-              btnClassName
+              btnClassName,
             )}
             {...buttonProps}
           >

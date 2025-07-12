@@ -56,7 +56,7 @@ export default function SelectTexture({}: TSelectTexture) {
                   ) : null}
                 </div>
               </SelectItem>
-            )
+            ),
           )}
         </SelectContent>
       </Select>{" "}

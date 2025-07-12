@@ -24,7 +24,7 @@ export default function OrbitController() {
         dispatch(updateFov(fov));
       }, 400);
     },
-    [dispatch]
+    [dispatch],
   );
   useEffect(() => {
     const controls = controlsRef.current;

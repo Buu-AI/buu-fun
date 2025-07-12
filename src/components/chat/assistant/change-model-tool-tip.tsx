@@ -34,16 +34,14 @@ export default function ChangeModelToolTip({
 }: TTooltipWrapper) {
   const tokenized = true;
   return (
-    <TooltipProvider 
-
-    delayDuration={100}>
+    <TooltipProvider delayDuration={100}>
       <Tooltip defaultOpen={false}>
-        <TooltipTrigger  asChild>
+        <TooltipTrigger asChild>
           <button
             onClick={onClickCallback}
             className={cn(
               "w-12 h-12 bg-buu  group flex items-center justify-center rounded-lg",
-              btnClassName
+              btnClassName,
             )}
             {...buttonProps}
           >

@@ -66,7 +66,6 @@ const SettingsSlice = createSlice({
   initialState,
 
   reducers: {
-    
     setSettingsPopoverChange(state, action: PayloadAction<boolean>) {
       state.isPopoverOpen = action.payload;
     },

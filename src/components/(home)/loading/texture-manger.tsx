@@ -38,7 +38,7 @@ export class TextureManager {
         (error) => {
           this.loadingPromises.delete(url);
           reject(error);
-        }
+        },
       );
     });
 

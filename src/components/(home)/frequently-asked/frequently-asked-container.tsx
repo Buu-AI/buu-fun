@@ -35,11 +35,11 @@ export default function FrequentlyAskedContainer() {
           opacity: 1,
           scale: 1,
           ease: "power4.inOut",
-          duration: 1,
+          duration: 0.5,
           scrollTrigger: {
             trigger: ".faq-trigger",
-            start: "top 60%",
-            end: "bottom 60%",
+            start: "top 80%",
+            end: "bottom 70%",
             toggleActions: "play reverse play reverse", // Ensures it reverses properly
           },
         },
@@ -83,7 +83,7 @@ export default function FrequentlyAskedContainer() {
     <div ref={triggerRef} className="w-full relative faq-trigger py-32">
       <div
         ref={colorPurpleRef}
-        className="w-[176px] h-[334px] violet-gradient top-[25%]   -left-[70px]   rounded-full  absolute  -z-10  md:block hidden  rotate-[-10deg]"
+        className="w-[176px] h-[334px] violet-gradient top-[25%]  blur-[100px]  bg-[#6b69d5]  -left-[70px]   rounded-full  absolute  -z-10  md:block hidden  rotate-[-10deg]"
       />
       <Bounded className="max-w-screen-2xl w-full h-full  flex items-center  justify-between flex-col md:flex-row">
         <div className="flex flex-col  gap-6 w-full">
