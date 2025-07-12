@@ -38,7 +38,7 @@ export default function Model({
 
   // Get the current model data from Redux to detect external updates
   const currentModel = useAppSelector((state) =>
-    state.stage.present.models.find((m) => m.id === id)
+    state.stage.present.models.find((m) => m.id === id),
   );
 
   // Track if position is being updated internally (from transform controls)
@@ -54,13 +54,13 @@ export default function Model({
             position: newPosition,
             rotation: newRotation,
             scale: newScale,
-          })
+          }),
         );
         isInternalUpdate.current = false;
       },
-      [dispatch, id]
+      [dispatch, id],
     ),
-    500 // 500ms debounce delay
+    500, // 500ms debounce delay
   );
 
   // Effect to sync Redux position changes to the primitive (external updates)
@@ -82,7 +82,7 @@ export default function Model({
       primitive.position.set(
         reduxPosition[0],
         reduxPosition[1],
-        reduxPosition[2]
+        reduxPosition[2],
       );
     }
 
@@ -105,7 +105,7 @@ export default function Model({
       primitive.rotation.set(
         reduxRotation[0],
         reduxRotation[1],
-        reduxRotation[2]
+        reduxRotation[2],
       );
     }
   }, [

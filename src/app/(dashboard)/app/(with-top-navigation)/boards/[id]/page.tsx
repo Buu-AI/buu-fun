@@ -34,7 +34,6 @@ export async function metadata({ params }: TBoardsPage) {
     }
     return constructMetadata({
       title: boardItem.title,
-      
     });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {

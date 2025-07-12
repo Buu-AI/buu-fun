@@ -41,7 +41,7 @@ function WorldContent({
     (error) => {
       console.error("Error loading texture:", error);
       throw error; // Re-throw to trigger error boundary
-    }
+    },
   );
 
   return (
@@ -108,7 +108,7 @@ function WorldContentManual({
         console.error("Error loading texture:", err);
         setError(true);
         setLoading(false);
-      }
+      },
     );
   }, [textureUrl]);
 

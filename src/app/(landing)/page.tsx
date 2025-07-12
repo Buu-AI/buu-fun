@@ -4,7 +4,7 @@ import FooterContainer from "@/components/(home)/footer/footer-container";
 import FrequentlyAskedContainer from "@/components/(home)/frequently-asked/frequently-asked-container";
 import BringYourIdeasSection from "@/components/(home)/hero/hero-section-content";
 import HowToContainer from "@/components/(home)/how-to-section/how-to-container";
-import JamCard from "@/components/(home)/jam-card/jam-card";
+// import JamCard from "@/components/(home)/jam-card/jam-card";
 import HomeNavigationBar from "@/components/(home)/navigation/home-navigation-bar";
 import TopNavigationBar from "@/components/(home)/navigation/top-navigation-bar";
 import HomePagePricingContainer from "@/components/(home)/pricing/pricing-container";

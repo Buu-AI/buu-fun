@@ -117,7 +117,7 @@ export class PositionGenerator {
   static generateSpherePosition(
     index: number,
     total: number,
-    radius: number
+    radius: number,
   ): Position3D {
     const phi = Math.acos(-1 + (2 * index) / total);
     const theta = Math.sqrt(total * Math.PI) * phi;

@@ -23,11 +23,11 @@ export default function AnimatedCircle({
 
     const gradients = [
       "linear-gradient(45deg, #78DBFF, #A378FF)",
-      "linear-gradient(45deg, #A378FF, #EB78FF)", 
+      "linear-gradient(45deg, #A378FF, #EB78FF)",
       "linear-gradient(45deg, #EB78FF, #FF6B9D)",
       "linear-gradient(45deg, #FF6B9D, #F093FB)",
       "linear-gradient(45deg, #F093FB, #4FACFE)",
-      "linear-gradient(45deg, #A378FF, #78DBFF)"
+      "linear-gradient(45deg, #A378FF, #78DBFF)",
     ];
 
     gsap.to(circle, {

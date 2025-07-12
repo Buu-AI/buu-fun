@@ -1,4 +1,8 @@
-import { GLOBE_CONFIG, Position3D, PositionGenerator } from "@/components/(home)/loading/position-generator";
+import {
+  GLOBE_CONFIG,
+  Position3D,
+  PositionGenerator,
+} from "@/components/(home)/loading/position-generator";
 import { useGSAP } from "@gsap/react";
 import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
@@ -9,12 +13,12 @@ export const useCardAnimations = (
   meshRef: RefObject<Mesh | null>,
   finishedLoading: boolean,
   index: number,
-  initialPosition: Position3D
+  initialPosition: Position3D,
 ) => {
   // Continuous rotation during loading
   useFrame(() => {
     if (!meshRef.current || finishedLoading) return;
-    
+
     const { rotation } = GLOBE_CONFIG.animationSpeed;
     meshRef.current.rotation.x += rotation.x;
     meshRef.current.rotation.y += rotation.y;
@@ -50,7 +54,7 @@ export const useCardAnimations = (
         duration: animation.duration,
         ease: animation.ease,
       },
-      "<"
+      "<",
     );
 
     tl.to(
@@ -62,7 +66,7 @@ export const useCardAnimations = (
         duration: animation.duration,
         ease: animation.ease,
       },
-      "<"
+      "<",
     );
 
     return () => {

@@ -10,10 +10,14 @@ interface ImageGlobeProps {
   config?: Partial<typeof GLOBE_CONFIG>;
 }
 
-export const ImageGlobe = ({ finishedLoading, imageUrls, config }: ImageGlobeProps) => {
+export const ImageGlobe = ({
+  finishedLoading,
+  imageUrls,
+  config,
+}: ImageGlobeProps) => {
   const groupRef = useRef<Group>(null);
   const currentConfig = { ...GLOBE_CONFIG, ...config };
-  
+
   useGlobeAnimations(groupRef, finishedLoading);
 
   const imageCards = useMemo(() => {
@@ -21,7 +25,7 @@ export const ImageGlobe = ({ finishedLoading, imageUrls, config }: ImageGlobePro
       const initialPosition = PositionGenerator.generateSpherePosition(
         index,
         imageUrls.length,
-        currentConfig.radius
+        currentConfig.radius,
       );
 
       return (

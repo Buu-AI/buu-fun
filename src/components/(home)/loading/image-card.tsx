@@ -12,38 +12,40 @@ interface ImageCardProps {
   initialPosition: Position3D;
 }
 
-export const ImageCard = memo<ImageCardProps>(({
-  imageUrl,
-  index,
-  finishedLoading,
-  initialPosition,
-}) => {
-  const meshRef = useRef<Mesh>(null);
-  const { texture } = useTexture(imageUrl);
-  
-  useCardAnimations(meshRef, finishedLoading, index, initialPosition);
+export const ImageCard = memo<ImageCardProps>(
+  ({ imageUrl, index, finishedLoading, initialPosition }) => {
+    const meshRef = useRef<Mesh>(null);
+    const { texture } = useTexture(imageUrl);
 
-  const { size, material } = GLOBE_CONFIG.cards;
+    useCardAnimations(meshRef, finishedLoading, index, initialPosition);
 
-  if (!texture) return null;
+    const { size, material } = GLOBE_CONFIG.cards;
 
-  return (
-    <mesh
-      ref={meshRef}
-      position={[initialPosition.x, initialPosition.y, initialPosition.z]}
-      geometry={RectangleRounded(size.width, size.height, size.cornerRadius, size.segments)}
-      lookAt={[0, 0, 0]}
-    >
-      <meshStandardMaterial
-        map={texture}
-        side={DoubleSide}
-        transparent
-        opacity={material.opacity}
-        emissive={material.emissive}
-        emissiveIntensity={material.emissiveIntensity}
-      />
-    </mesh>
-  );
-});
+    if (!texture) return null;
+
+    return (
+      <mesh
+        ref={meshRef}
+        position={[initialPosition.x, initialPosition.y, initialPosition.z]}
+        geometry={RectangleRounded(
+          size.width,
+          size.height,
+          size.cornerRadius,
+          size.segments,
+        )}
+        lookAt={[0, 0, 0]}
+      >
+        <meshStandardMaterial
+          map={texture}
+          side={DoubleSide}
+          transparent
+          opacity={material.opacity}
+          emissive={material.emissive}
+          emissiveIntensity={material.emissiveIntensity}
+        />
+      </mesh>
+    );
+  },
+);
 
 ImageCard.displayName = "ImageCard";

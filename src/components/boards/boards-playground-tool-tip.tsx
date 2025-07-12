@@ -48,7 +48,7 @@ export default function ToolTipPlayGround({
               addModels({
                 ...defaultModelParams,
                 id: nanoid(),
-              })
+              }),
             );
             toast.success("Added to playground");
           }}

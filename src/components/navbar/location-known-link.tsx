@@ -21,7 +21,7 @@ export default function LocationKnownLink({
   LinkTo,
   LinkIn,
   children,
-  className = "", 
+  className = "",
   toolTip,
 }: {
   LinkTo: string;
@@ -46,7 +46,7 @@ export default function LocationKnownLink({
           {
             "text-white": isCurrent,
           },
-          className
+          className,
         )}
       >
         {children}
@@ -59,9 +59,7 @@ export default function LocationKnownLink({
     return (
       <TooltipProvider>
         <Tooltip delayDuration={toolTip.delayDuration || 300}>
-          <TooltipTrigger asChild>
-            {linkContent}
-          </TooltipTrigger>
+          <TooltipTrigger asChild>{linkContent}</TooltipTrigger>
           <TooltipContent side={toolTip.side || "right"}>
             <p>{toolTip.content}</p>
           </TooltipContent>

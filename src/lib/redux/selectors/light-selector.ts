@@ -13,7 +13,7 @@ export const getSelectedLights = createSelector(
       index: selectedLight,
       light: state[selectedLight],
     };
-  }
+  },
 );
 
 const Models = (state: RootState) => state.stage.present.models;
@@ -27,5 +27,5 @@ export const getStageModel = createSelector(
       index: selectedModel,
       model: state[selectedModel],
     };
-  }
+  },
 );

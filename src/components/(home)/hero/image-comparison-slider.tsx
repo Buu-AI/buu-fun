@@ -1,5 +1,5 @@
 "use client";
-import { MutantAlien, MutantAlienWireFrame } from "@/assets/Image";
+import { MutantAlien } from "@/assets/Image";
 import MutantMesh from "@/assets/Image/home/mutant-mesh";
 import { useGSAP } from "@gsap/react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
@@ -7,10 +7,6 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { createRef, useRef, useState } from "react";
-import {
-  ReactCompareSlider,
-  ReactCompareSliderImage,
-} from "react-compare-slider";
 import { ArchGradient } from "../feature/arch-gradient";
 import { features } from "../feature/feature-data";
 import {
@@ -18,7 +14,6 @@ import {
   ScanningOverlay,
 } from "../feature/feature-top-bar";
 import { AnimatedBringYourIdeas } from "./bring-ideas";
-import SliderHandle from "./slider-handle";
 // import FeatureTextSlider from "@/app/(landing)/(navigated)/test/feature-arch";
 import useResponsivePositioning, {
   DesignConfig,
@@ -31,7 +26,7 @@ gsap.registerPlugin(useGSAP);
 // Distance from center for the circular text slider
 
 export default function ImageComparisonSlider() {
-  const [position, setPosition] = useState(40);
+  // const [position, setPosition] = useState(40);
   const [sliderInView, setSliderInView] = useState(false);
   const sliderInViewRef = useRef(false);
   const is650 = useMediaQuery("(min-width: 650px)");
@@ -68,9 +63,9 @@ export default function ImageComparisonSlider() {
           duration: 2,
           ease: "power2.inOut",
           stagger: 0.5,
-          onUpdate: function () {
-            setPosition((this.progress() + 0.4) * 100);
-          },
+          // onUpdate: function () {
+          //   setPosition((this.progress() + 0.4) * 100);
+          // },
           scrollTrigger: {
             end: featureWidth * features.length + window.innerWidth * 2,
             pin: true,
@@ -141,7 +136,7 @@ export default function ImageComparisonSlider() {
                 // Calculate which feature index we should be on (starting from index 1)
                 const mappedIndex = Math.min(
                   features.length - 1,
-                  Math.floor(adjustedProgress / segmentSize)
+                  Math.floor(adjustedProgress / segmentSize),
                 );
 
                 // Only update state if index is actually changing
@@ -162,7 +157,7 @@ export default function ImageComparisonSlider() {
         ctx.revert();
       };
     },
-    { dependencies: [is650], revertOnUpdate: true }
+    { dependencies: [is650], revertOnUpdate: true },
   );
 
   // Set up responsive positioning that works with any aspect ratio

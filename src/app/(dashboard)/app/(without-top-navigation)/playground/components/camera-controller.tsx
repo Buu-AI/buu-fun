@@ -9,7 +9,7 @@ import * as THREE from "three";
 export default function CameraController() {
   const { camera } = useThree();
   const { position, fov } = useAppSelector(
-    (state) => state.stage.present.camera
+    (state) => state.stage.present.camera,
   );
 
   // Keep track of animation timeline

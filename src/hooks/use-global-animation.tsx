@@ -7,14 +7,14 @@ import { Group } from "three";
 
 export const useGlobeAnimations = (
   groupRef: RefObject<Group | null>,
-  finishedLoading: boolean
+  finishedLoading: boolean,
 ) => {
   const { camera } = useThree();
   const isAnimationRan = useRef(false);
 
   useGSAP(() => {
     if (!finishedLoading || isAnimationRan.current || !groupRef.current) return;
-    
+
     isAnimationRan.current = true;
     const tl = gsap.timeline();
 
@@ -35,7 +35,7 @@ export const useGlobeAnimations = (
         duration: 3.5,
         ease: "power3.out",
       },
-      "<"
+      "<",
     );
 
     return () => {

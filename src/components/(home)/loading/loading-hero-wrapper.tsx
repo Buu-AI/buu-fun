@@ -33,7 +33,7 @@ export const HeroLoadingWrapper = ({
 }: HeroLoadingWrapperProps) => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const progressRef = useRef(
-    loadingConfig.startProgress || DEFAULT_LOADING_CONFIG.startProgress
+    loadingConfig.startProgress || DEFAULT_LOADING_CONFIG.startProgress,
   );
   const [finishedLoading, setFinishedLoading] = useState(false);
 

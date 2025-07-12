@@ -9,7 +9,7 @@ export const useTexture = (url: string) => {
 
   useEffect(() => {
     const textureManager = TextureManager.getInstance();
-    
+
     // Check if texture is already cached
     const cachedTexture = textureManager.getTexture(url);
     if (cachedTexture) {

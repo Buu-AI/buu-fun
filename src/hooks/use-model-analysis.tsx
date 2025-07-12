@@ -31,7 +31,7 @@ export interface UseModelAnalysisResult {
 
 const useModelAnalysis = (
   url: string | null,
-  options: UseModelAnalysisOptions = {}
+  options: UseModelAnalysisOptions = {},
 ): UseModelAnalysisResult => {
   const { enabled = true } = options;
 
@@ -118,7 +118,7 @@ const useModelAnalysis = (
         analyzedAt: Date.now(),
       };
     },
-    []
+    [],
   );
 
   const loadModel = useCallback(
@@ -141,7 +141,7 @@ const useModelAnalysis = (
         loader.load(modelUrl, onLoad, undefined, onError);
       });
     },
-    [getFileExtension, createLoader]
+    [getFileExtension, createLoader],
   );
 
   const analyzeModel = useCallback(
@@ -212,7 +212,7 @@ const useModelAnalysis = (
         }
       }
     },
-    [enabled, loadModel, analyzeGeometry]
+    [enabled, loadModel, analyzeGeometry],
   );
 
   const refresh = useCallback(() => {
