@@ -13,7 +13,6 @@ export default function StagingPage() {
         <StageNavigationTopbar />
         <CanvasContainer />
         <ObjectsInScene />
-        {/* <InformationViewer /> */}
       </PersistProvider>
     </div>
   );
