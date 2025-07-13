@@ -13,4 +13,5 @@ export const LINKS = {
   BUY_BUU_JUPITER_AG:
     "https://jup.ag/swap/SOL-88n8pBT6doB5rHP7WcAaG8TuVY1baWazzxAS7Bm8virt",
   BUU_MONTHLY_JAM: "https://ln.onl/jam",
+  API_REFERENCE: "https://api-docs.buu.fun/api/models",
 };

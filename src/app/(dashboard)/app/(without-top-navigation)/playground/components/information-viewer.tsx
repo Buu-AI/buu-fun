@@ -7,7 +7,9 @@ export default function InformationViewer() {
   const selectedModel = useAppSelector(
     (state) => state.stage.present.selectedModel,
   );
-  const model = useAppSelector(state=> getStageModel(state, selectedModel?.id))
+  const model = useAppSelector((state) =>
+    getStageModel(state, selectedModel?.id),
+  );
   const dispatch = useAppDispatch();
   return (
     <div className="absolute flex gap-2 bottom-4 left-4 bg-roi-shadow p-2 rounded">

@@ -4,18 +4,20 @@ import FooterContainer from "@/components/(home)/footer/footer-container";
 import FrequentlyAskedContainer from "@/components/(home)/frequently-asked/frequently-asked-container";
 import BringYourIdeasSection from "@/components/(home)/hero/hero-section-content";
 import HowToContainer from "@/components/(home)/how-to-section/how-to-container";
-import JamCard from "@/components/(home)/jam-card/jam-card";
-import HeroLoadingWrapper from "@/components/(home)/loading/loading-hero-wrapper";
+// import JamCard from "@/components/(home)/jam-card/jam-card";
 import HomeNavigationBar from "@/components/(home)/navigation/home-navigation-bar";
 import TopNavigationBar from "@/components/(home)/navigation/top-navigation-bar";
 import HomePagePricingContainer from "@/components/(home)/pricing/pricing-container";
 import TestimonialsContainer from "@/components/(home)/testimonials/testimonials-container";
 import OverlayColor from "./overlay";
+import { HeroLoadingWrapper } from "@/components/(home)/loading/loading-hero-wrapper";
+import { imageUrls } from "@/components/(home)/loading/image-data";
+
 export default function HomePage() {
   return (
     <main className="relative max-w-screen overflow-hidden smooth-scroll ">
       <div className="w-full  relative ">
-        <HeroLoadingWrapper>
+        <HeroLoadingWrapper imageUrls={imageUrls}>
           <>
             <TopNavigationBar />
             <HomeNavigationBar />
@@ -23,7 +25,7 @@ export default function HomePage() {
         </HeroLoadingWrapper>
       </div>
       <BringYourIdeasSection />
-      <JamCard />
+      {/* <JamCard /> */}
       <section id="how-it-works" className="w-full h-full">
         <div className="w-full h-full ">
           <HowToContainer />

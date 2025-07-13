@@ -1,5 +1,6 @@
 "use client";
 import { DiscordIcon } from "@/assets/icons";
+import CodeIcon from "@/assets/icons/code-icon";
 import DocumentationIcon from "@/assets/icons/documenation-icon";
 import MailIcon from "@/assets/icons/mail-icon";
 import TelegramIconWhite from "@/assets/icons/Telegram-icon-white";
@@ -16,36 +17,48 @@ export default function KnowMoreContent() {
         <Link
           href={LINKS.DOCS}
           target="_blank"
-          className="flex items-center w-full gap-2 group"
+          className="flex items-center w-full gap-2 group/link"
         >
           <div className="w-5 h-5 ">
             <DocumentationIcon />
           </div>
-          <p className="leading-none text-gray-400 group-hover:text-white font-medium">
+          <p className="leading-none text-gray-400 group-hover/link:text-white font-medium">
             Documentation
+          </p>
+        </Link>
+        <Link
+          href={LINKS.API_REFERENCE}
+          target="_blank"
+          className="flex items-center w-full gap-2 group/link"
+        >
+          <div className="w-5 h-5 ">
+            <CodeIcon />
+          </div>{" "}
+          <p className="leading-none text-gray-400 group-hover/link:text-white font-medium">
+            API Reference
           </p>
         </Link>
         <Link
           href={LINKS.YT_TUTORIALS}
           target="_blank"
-          className="flex items-center w-full gap-2 group"
+          className="flex items-center w-full gap-2 group/link"
         >
           <div className="w-5 h-5 ">
             <YoutubePlayIcon />
           </div>{" "}
-          <p className="leading-none text-gray-400 group-hover:text-white font-medium">
+          <p className="leading-none text-gray-400 group-hover/link:text-white font-medium">
             Video Tutorial
           </p>
         </Link>
         <Link
           href={LINKS.CONTACT_SUPPORT_MAIL}
           target="_blank"
-          className="flex items-center w-full gap-2 group"
+          className="flex items-center w-full gap-2 group/link"
         >
           <div className="w-5 h-5 ">
             <MailIcon />
           </div>
-          <p className="leading-none text-gray-400 group-hover:text-white font-medium">
+          <p className="leading-none text-gray-400 group-hover/link:text-white font-medium">
             Contact Support
           </p>
         </Link>
@@ -56,36 +69,36 @@ export default function KnowMoreContent() {
         <Link
           href={LINKS.DISCORD}
           target="_blank"
-          className="flex items-center w-full gap-2 group"
+          className="flex items-center w-full gap-2 group/link"
         >
           <div className="w-5 h-5 ">
             <DiscordIcon />
           </div>
-          <p className="leading-none text-gray-400 group-hover:text-white font-medium">
+          <p className="leading-none text-gray-400 group-hover/link:text-white font-medium">
             Discord
           </p>
         </Link>
         <Link
           href={LINKS.TWITTER}
           target="_blank"
-          className="flex items-center w-full gap-2 group"
+          className="flex items-center w-full gap-2 group/link"
         >
           <div className="w-5 h-5 ">
             <TwitterIcon />
           </div>{" "}
-          <p className="leading-none text-gray-400 group-hover:text-white font-medium">
+          <p className="leading-none text-gray-400 group-hover/link:text-white font-medium">
             X
           </p>
         </Link>
         <Link
           href={LINKS.TELEGRAM}
           target="_blank"
-          className="flex items-center w-full gap-2 group"
+          className="flex items-center w-full gap-2 group/link"
         >
           <div className="w-5 h-5 ">
             <TelegramIconWhite />
           </div>
-          <p className="leading-none text-gray-400 group-hover:text-white font-medium">
+          <p className="leading-none text-gray-400 group-hover/link:text-white font-medium">
             Telegram
           </p>
         </Link>
@@ -97,7 +110,7 @@ export default function KnowMoreContent() {
           <div className="w-5 h-5 ">
             <TikTokIcon />
           </div>
-          <p className="leading-none text-gray-400 group-hover:text-white font-medium">
+          <p className="leading-none text-gray-400 group-hover/link:text-white font-medium">
             TikTok
           </p>
         </Link> */}

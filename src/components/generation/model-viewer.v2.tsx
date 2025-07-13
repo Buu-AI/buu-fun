@@ -467,7 +467,7 @@ export default function ThreeJSModelViewer({
       });
     } else {
       alert(
-        "WebXR not available. AR functionality requires a compatible browser and device."
+        "WebXR not available. AR functionality requires a compatible browser and device.",
       );
     }
   }, []);
@@ -515,7 +515,7 @@ export default function ThreeJSModelViewer({
       near: 0.1,
       far: 1000,
     }),
-    [fieldOfView]
+    [fieldOfView],
   );
 
   if (!src) {

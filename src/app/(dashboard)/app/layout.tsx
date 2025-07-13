@@ -28,10 +28,10 @@ export const metadata: Metadata = constructMetadata({
       "Turn prompts or images into rigged 3D assets and animations with Buu's AI. Visit buu.fun for creators and designers!",
     players: [
       {
-        playerUrl: "https://www.buu.fun/videos/buu-ai-demo-player.html",
+        playerUrl: "https://dkl5j4dbh1gr3.cloudfront.net/video/Kinetic_buu.mp4",
         width: 1280,
         height: 720,
-        streamUrl: "https://www.buu.fun/videos/buu-ai-demo.mp4",
+        streamUrl: "https://dkl5j4dbh1gr3.cloudfront.net/video/Kinetic_buu.mp4",
       },
     ],
   },
@@ -44,7 +44,7 @@ export const metadata: Metadata = constructMetadata({
   },
   authors: [{ name: "Buu" }],
   other: {
-    video: "https://www.buu.fun/videos/buu-ai-demo.mp4",
+    video: "https://dkl5j4dbh1gr3.cloudfront.net/video/Kinetic_buu.mp4",
     video_type: "video/mp4",
   },
 });

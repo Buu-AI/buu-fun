@@ -38,7 +38,6 @@ export default function BoardsToolTip({
               <BoardToolTipShare
                 key={`tool-tip-contents-${item.content.trim()}-${index}`}
                 modelUrl={boards?.board[current - 1]?.modelUrl}
-                
                 boardId={boards?.boardId ?? ""}
                 index={index}
                 length={BoardToolTips.length}

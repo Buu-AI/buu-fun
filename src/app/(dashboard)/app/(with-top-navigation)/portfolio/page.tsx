@@ -8,6 +8,8 @@ import TokenStatistics from "@/components/portfolio/token-statistics";
 import RoiStakingDialog from "@/components/portfolio/your-earning-new/roi-staking-dialog";
 import YourEarnings from "@/components/portfolio/your-earning-new/your-earnings";
 import Bounded from "@/components/ui/Bounded";
+import { constructMetadata } from "@/lib/construct-metadata";
+export const metadata = constructMetadata({});
 
 export default function PortfolioPage() {
   return (
