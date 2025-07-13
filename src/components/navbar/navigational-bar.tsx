@@ -25,9 +25,6 @@ export default function NavigationalBar() {
               alt="Bunn.fun logo"
             />
           </Link>
-          {/* <Link href={"/app/nfts"} className="mt-4 w-6 h-6 hidden md:block">
-            <GenerateNft />
-          </Link> */}
         </div>
         <div className="hidden md:flex flex-col gap-4 items-center justify-center">
           <LocationKnownLink
