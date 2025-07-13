@@ -8,6 +8,7 @@ import { MaybeString } from "@/types";
 import { nanoid } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "./redux";
+import { useRouter } from "next/navigation";
 
 type TUseToolBar = {
   modelId: MaybeString;
@@ -17,8 +18,9 @@ type TUseToolBar = {
 
 export default function useToolBar({ modelId, selectedModelUrl }: TUseToolBar) {
   const model = useAppSelector((state) => getModelById(state, modelId));
-  const dispatch = useAppDispatch();
 
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   function handleGenerateNFT() {
     if (model?.nftId) {
       toast.error("NFT has been already generated");
@@ -31,7 +33,7 @@ export default function useToolBar({ modelId, selectedModelUrl }: TUseToolBar) {
     dispatch(
       setViewModel({
         isOpen: false,
-      }),
+      })
     );
     dispatch(
       setGenerateNFT({
@@ -39,7 +41,7 @@ export default function useToolBar({ modelId, selectedModelUrl }: TUseToolBar) {
         imageUrl: undefined,
         modelUrl: model?.texturedMesh?.url,
         modelId: modelId,
-      }),
+      })
     );
   }
 
@@ -59,9 +61,10 @@ export default function useToolBar({ modelId, selectedModelUrl }: TUseToolBar) {
       addModels({
         ...defaultModelParams,
         id: nanoid(),
-      }),
+      })
     );
     toast.success("Added to playground");
+    router.push("/app/playground");
   }
 
   function downloadModel() {
@@ -85,5 +88,5 @@ export default function useToolBar({ modelId, selectedModelUrl }: TUseToolBar) {
       });
   }
 
-  return { downloadModel, shareModel, handleGenerateNFT, addModelToPlayground };
+  return { downloadModel, shareModel, handleGenerateNFT, addModelToPlayground, tokenized: !!model?.nftId };
 }

@@ -22,33 +22,26 @@ export default function ViewModelToolbar({
   selectedModelUrl,
   toolCallId,
 }: TViewModelToolbar) {
-  const tokenized = true;
-  const { downloadModel, shareModel, handleGenerateNFT, addModelToPlayground } =
-    useToolBar({
-      modelId,
-      selectedModelUrl,
-      toolCallId,
-    });
+  const {
+    downloadModel,
+    shareModel,
+    handleGenerateNFT,
+    addModelToPlayground,
+    tokenized,
+  } = useToolBar({
+    modelId,
+    selectedModelUrl,
+    toolCallId,
+  });
   return (
     <div className="flex items-center justify-between gap-3  px-4 md:px-6 w-full h-full">
       <div className="flex gap-3 items-center">
-        {/* 
-        <TooltipWrapper
-          align="start"
-          content="Edit Mesh"
-          buttonIcon={<EditMeshIcon />}
-          btnClassName="p-0.5"
-          hoverState={tokenized}
-          onClickCallback={() => {
-            toast.success("hello");
-          }}
-        /> */}
-
         <TooltipWrapper
           align="start"
           content="Generate Collectible"
           buttonIcon={<CreateNFTIcon />}
           hoverState={tokenized}
+          disabled={tokenized}
           onClickCallback={handleGenerateNFT}
         />
         <TooltipWrapper
@@ -60,8 +53,8 @@ export default function ViewModelToolbar({
               <SelectObjectIcon height={"100%"} width={"100%"} />
             </div>
           }
-          btnClassName="p-0.5"
-          hoverState={tokenized}
+          btnClassName="p-0.5 hidden md:flex"
+          hoverState={false}
           onClickCallback={() => {
             addModelToPlayground();
           }}
@@ -72,14 +65,14 @@ export default function ViewModelToolbar({
           align="center"
           content="Download"
           buttonIcon={<DownloadIcon />}
-          hoverState={tokenized}
+          hoverState={false}
           onClickCallback={downloadModel}
         />
         <TooltipWrapper
           align="end"
           content="Share"
           buttonIcon={<ShareIcon />}
-          hoverState={tokenized}
+          hoverState={false}
           onClickCallback={shareModel}
         />
       </div>
