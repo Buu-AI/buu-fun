@@ -25,32 +25,8 @@ export default function NavigationalBar() {
               alt="Bunn.fun logo"
             />
           </Link>
-          {/* <Link href={"/app/nfts"} className="mt-4 w-6 h-6 hidden md:block">
-            <GenerateNft />
-          </Link> */}
         </div>
         <div className="hidden md:flex flex-col gap-4 items-center justify-center">
-          {/* <Link
-            href={"/app/boards"}
-            // group bg-buu-button  hover:bg-white hover:shadow-none  group shadow-buu-button min-w-[30px]  rounded-md flex items-center justify-center p-1.5
-            className="w-10 flex  items-center group   justify-center    h-10  text-black"
-          >
-            <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-gray-500">
-              <SizePenIcon />
-            </div>
-          </Link> */}
-          <LocationKnownLink
-            toolTip={{
-              content: "Boards",
-              enabled: true,
-              delayDuration: 100,
-              side: "right",
-            }}
-            LinkIn="boards"
-            LinkTo="/app/boards"
-          >
-            <SizePenIcon />
-          </LocationKnownLink>
           <LocationKnownLink
             toolTip={{
               content: "Home",
@@ -62,6 +38,18 @@ export default function NavigationalBar() {
             LinkTo="/app"
           >
             <MagicPenIcon className="fill-current" />
+          </LocationKnownLink>
+          <LocationKnownLink
+            toolTip={{
+              content: "Boards",
+              enabled: true,
+              delayDuration: 100,
+              side: "right",
+            }}
+            LinkIn="boards"
+            LinkTo="/app/boards"
+          >
+            <SizePenIcon />
           </LocationKnownLink>
           <LocationKnownLink
             toolTip={{

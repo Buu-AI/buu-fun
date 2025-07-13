@@ -1,6 +1,6 @@
 export default function ShareIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
       <path
         opacity="0.4"
         d="M9.13382 6.27734H4.77785C4.34826 6.27734 4 6.6256 4 7.0552V19.6564C4 20.086 4.34826 20.4342 4.77785 20.4342H17.379C17.8086 20.4342 18.1569 20.086 18.1569 19.6564V13.0447"
