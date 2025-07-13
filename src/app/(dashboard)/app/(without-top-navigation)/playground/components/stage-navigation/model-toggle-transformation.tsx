@@ -23,17 +23,17 @@ export default function ModelToggleTransformation({}: TModelToggleTransformation
 
   const transformationButtons = [
     {
-      type: "translate",
+      type: "translate" as const,
       icon: <Translate />,
       tooltip: "Translate",
     },
     {
-      type: "rotate",
+      type: "rotate" as const,
       icon: <Rotate />,
       tooltip: "Rotate",
     },
     {
-      type: "scale",
+      type: "scale" as const,
       icon: <Resize />,
       tooltip: "Scale",
     },
@@ -47,7 +47,7 @@ export default function ModelToggleTransformation({}: TModelToggleTransformation
             <TooltipTrigger asChild>
               <button
                 onClick={() => {
-                  dispatch(setTransformation(type as any));
+                  dispatch(setTransformation(type));
                 }}
                 className={cn(
                   "p-2 border border-white transition-all duration-300 ease-in-out rounded-md flex items-center justify-center",
