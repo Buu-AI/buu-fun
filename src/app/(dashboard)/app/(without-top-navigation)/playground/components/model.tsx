@@ -18,6 +18,7 @@ export default function Model({
   id,
   scale,
   visible,
+  rotation,
 }: {
   id: string;
   url: string;
@@ -27,6 +28,7 @@ export default function Model({
   visible: boolean;
   onSelect: (data: { id: string; polygonCount: number }) => void;
   index: number;
+  rotation: TVector3;
 }) {
   const { scene } = useGLTF(url);
   const primitiveRef = useRef<THREE.Group>(null);
@@ -201,6 +203,7 @@ export default function Model({
       ref={primitiveRef}
       object={clonedScene}
       position={position}
+      rotation={rotation}
       scale={scale}
       visible={visible}
       userData={{

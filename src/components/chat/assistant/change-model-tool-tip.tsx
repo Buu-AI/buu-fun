@@ -19,40 +19,36 @@ type TTooltipWrapper = {
   onClickCallback: (e: MouseEvent<HTMLButtonElement>) => void;
   content: ReactNode;
   align?: "center" | "start" | "end" | undefined;
-  disabled?: boolean;
+  side?: "right" | "top" | "bottom" | "left" | undefined;
 };
 
-export default function TooltipWrapper({
+export default function ChangeModelToolTip({
   buttonProps,
   btnClassName,
   buttonIcon,
   onClickCallback,
-  hoverState,
   content,
   align,
   IconClassName,
-  disabled = false,
+  side = "right",
 }: TTooltipWrapper) {
+  const tokenized = true;
   return (
     <TooltipProvider delayDuration={100}>
-      <Tooltip>
+      <Tooltip defaultOpen={false}>
         <TooltipTrigger asChild>
           <button
-            disabled={disabled}
             onClick={onClickCallback}
             className={cn(
-              "group bg-svg-button pointer-events-auto  group p-1 aspect-square   min-w-[32px] rounded-[4px] border-buu  flex items-center justify-center",
-              {
-                "hover:bg-white hover:shadow-none": !hoverState,
-              },
-              btnClassName
+              "w-12 h-12 bg-buu  group flex items-center justify-center rounded-lg",
+              btnClassName,
             )}
             {...buttonProps}
           >
             <div
               className={cn("w-full flex items-center justify-center h-full", {
-                "group-hover:text-gray-700 group-hover:fill-text-gray-700 group-hover:stroke-text-gray-700":
-                  !disabled,
+                "group-hover:text-black group-hover:fill-black group-hover:stroke-black":
+                  !tokenized,
                 IconClassName,
               })}
             >
@@ -60,7 +56,9 @@ export default function TooltipWrapper({
             </div>
           </button>
         </TooltipTrigger>
-        <TooltipContent align={align}>{content}</TooltipContent>
+        <TooltipContent side={side} align={align}>
+          {content}
+        </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

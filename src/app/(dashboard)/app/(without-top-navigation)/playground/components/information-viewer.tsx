@@ -1,10 +1,14 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { updateCamera } from "@/lib/redux/features/stage";
+import { getStageModel } from "@/lib/redux/selectors/light-selector";
 import { Info } from "lucide-react";
 
 export default function InformationViewer() {
-  const selectedPolyCount = useAppSelector(
-    (state) => state.stage.present.camera.position,
+  const selectedModel = useAppSelector(
+    (state) => state.stage.present.selectedModel,
+  );
+  const model = useAppSelector((state) =>
+    getStageModel(state, selectedModel?.id),
   );
   const dispatch = useAppDispatch();
   return (
@@ -33,9 +37,9 @@ export default function InformationViewer() {
           update camera
         </button>
         <div className="flex items-center justify-center gap-4">
-          <p>x: {selectedPolyCount[0].toFixed(2)}</p>
-          <p>y: {selectedPolyCount[0].toFixed(2)}</p>
-          <p>z: {selectedPolyCount[0].toFixed(2)}</p>
+          <p>x: {model?.model.rotation?.[0].toFixed(2)}</p>
+          <p>y: {model?.model.rotation?.[1].toFixed(2)}</p>
+          <p>z: {model?.model.rotation?.[2].toFixed(2)}</p>
         </div>
         {/* {true === true ? (
           <div className="flex items-center  gap-1">

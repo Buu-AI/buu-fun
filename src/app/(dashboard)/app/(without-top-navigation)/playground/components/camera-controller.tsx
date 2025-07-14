@@ -1,4 +1,5 @@
 import { useAppSelector } from "@/hooks/redux";
+import { getX, getY, getZ } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import { useThree } from "@react-three/fiber";
 import { gsap } from "gsap";
@@ -23,32 +24,28 @@ export default function CameraController() {
     timelineRef.current = gsap.timeline();
 
     // Animate camera position
-    timelineRef.current.to(camera.position, {
-      x: position[0],
-      y: position[1],
-      z: position[2],
-      duration: 0.4,
-      ease: "power2.inOut",
-      onUpdate: () => {
-        // Ensure camera matrix is updated during animation
-        camera.updateMatrixWorld();
-      },
-    });
+    camera.position.x = getX(position);
+    camera.position.y = getY(position);
+    camera.position.z = getZ(position);
+    camera.updateProjectionMatrix();
 
     // Animate FOV if the camera is a PerspectiveCamera
     if (camera instanceof THREE.PerspectiveCamera) {
-      timelineRef.current.to(
-        camera,
-        {
-          fov: fov,
-          duration: 1.2,
-          ease: "power2.inOut",
-          onUpdate: () => {
-            camera.updateProjectionMatrix();
-          },
-        },
-        0.1,
-      ); // Start at the same time as position animation
+      camera.fov = fov;
+      camera.updateProjectionMatrix();
+
+      // timelineRef.current.to(
+      //   camera,
+      //   {
+      //     fov: fov,
+      //     duration: 1.2,
+      //     ease: "power2.inOut",
+      //     onUpdate: () => {
+      //       camera.updateProjectionMatrix();
+      //     },
+      //   },
+      //   0
+      // ); // Start at the same time as position animation
     }
 
     // Cleanup function

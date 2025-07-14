@@ -86,7 +86,7 @@ export default function MobileProfileNavigation() {
                   <ExportSolanaWallet className="w-full" />
                 </DrawerClose>
               </div>
-              <div className="flex flex-col gap-2 px-1 w-full ">
+              <div className="flex flex-col gap-2 px-1 w-full max-h-[70dvh] overflow-y-scroll scrollbar-w-hidden">
                 <div className="flex border-b w-full ">
                   <Link
                     href={"/app"}

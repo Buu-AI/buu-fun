@@ -6,6 +6,7 @@ import ToolTipDownload from "../generation/tool-tip-download";
 import BoardToolTipDelete from "./board-tool-tip-delete";
 import BoardToolTipUpdateVisibility from "./board-tool-tip-update-visibility";
 import BoardToolTipShare from "./tool-tip-share";
+import ToolTipPlayGround from "./boards-playground-tool-tip";
 
 export default function BoardsToolTip({
   currentUser,
@@ -45,6 +46,18 @@ export default function BoardsToolTip({
             );
           }
 
+          if (item.type === "PLAYGROUND") {
+            return (
+              <ToolTipPlayGround
+                key={`tool-tip-contents-${item.content.trim()}-${index}`}
+                modelUrl={boards?.board[current - 1]?.modelUrl}
+                imageUrl={boards?.board[current - 1]?.ImageUrl}
+                index={index}
+                length={BoardToolTips.length}
+                toolTipData={item}
+              />
+            );
+          }
           if (item.type === "DELETE" && currentUser) {
             return (
               <BoardToolTipDelete

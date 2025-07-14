@@ -56,9 +56,6 @@ export default function ImageGlobeV3({
     // Apply continuous rotation only when not finished loading
     groupRef.current.rotation.x += 0.003;
     groupRef.current.rotation.y += 0.008;
-    // Uncomment if you want z-rotation too
-    // groupRef.current.rotation.z += 0.005;
-    // groupRef.current.rotation.z = Math.sin(Date.now() * 0.001) * 0.006;
   });
 
   const images = useMemo(

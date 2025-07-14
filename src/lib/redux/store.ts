@@ -18,7 +18,6 @@ const persistedStageReducer = persistReducer(
   StageSlice,
 );
 
-
 const persistedSettingsReducer = persistReducer(
   {
     key: "settings",

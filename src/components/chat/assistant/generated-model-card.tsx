@@ -18,7 +18,7 @@ import ModelViewWrapper from "./generation-card/model-view-wrapper";
 import ViewModelTrigger from "./view-model-trigger";
 // import CatLoader from "@/assets/icons/cat-loader";
 
-import data from "./cat-loader.json";
+import data from "./buu-loader.json";
 
 type TGeneratedModelCard = {
   imageUrl: MaybeString;

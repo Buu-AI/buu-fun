@@ -663,12 +663,17 @@ body {
 }
 
 .violet-gradient {
-  border-radius: 334px;
-  opacity: 0.4;
-  background: linear-gradient(180deg, #6a69d5 0%, #d4d4ff 100%);
-  filter: blur(200px);
-}
+  /* border-radius: 200px; */
+  opacity: 1;
+  /* D4FFFE */
+  /* background: "#6A69D5"; */
+  background: -moz-linear-gradient(180deg, "#6A69D5" 0%, "#D4D4FF" 100%);
+  background: -webkit-linear-gradient(180deg, "#6A69D5" 0%, "#D4D4FF" 100%);
+  background: linear-gradient(180deg, "#6A69D5" 0%, "#D4D4FF" 100%);
 
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#6a69d5",endColorstr="#d4d4ff",GradientType=1);
+  /* filter: blur(300px); */
+}
 .footer-gradient {
   border-radius: 2053px;
   background: linear-gradient(180deg, #0e111a 74.16%, rgba(14, 17, 26, 0) 100%);

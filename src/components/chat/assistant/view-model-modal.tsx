@@ -19,6 +19,8 @@ import {
 import LoaderCircle from "../Loader-circle";
 import ViewModelToolbar from "../toolbar/view-model-toolbar";
 import NftTokenButton from "./nft-token-button";
+import useModelAnalysis from "@/hooks/use-model-analysis";
+import ChangeModelToolTip from "./change-model-tool-tip";
 
 const ModelViewer = dynamic(
   () => import("@/components/generation/model-viewer"),
@@ -42,6 +44,9 @@ export default function ViewModelModal() {
   const [modelUrl, setModelUrl] = useState<string | null>(null);
   const [progress, setLoadingProgress] = useState(0);
   const [isLoaded, setIsLoaded] = useState(true);
+  const modelAnalysis = useModelAnalysis(modelUrl);
+  const faces = modelAnalysis.geometry?.faces;
+  const vertices = modelAnalysis.geometry?.vertices;
   useEffect(() => {
     if (model) {
       const modelUrl = getModelBasedOnPriority(model);
@@ -81,6 +86,7 @@ export default function ViewModelModal() {
   const texturedMesh = model?.texturedMesh?.url;
   return (
     <Dialog
+      modal
       open={isOpen}
       onOpenChange={(value) => {
         dispatch(
@@ -99,47 +105,51 @@ export default function ViewModelModal() {
       <DialogContent
         closeIconContainer="w-5 h-5"
         closeButtonContainer="bg-white p-0.5 rounded-full opacity-100 text-black"
-        className="w-full p-0  overflow-hidden sm:rounded-none rounded-none  h-full bg-model-viewer max-w-[99%] md:max-w-[90%] max-h-[90%]"
+        className="w-full p-0  overflow-hidden  rounded-lg  h-full bg-model-viewer max-w-[99%] md:max-w-[90%] max-h-[90%]"
       >
         <div className="w-full h-full relative">
+          <button />
           <div className="absolute top-2 left-5 z-[100] ">
             <div className="flex gap-4">
               <div className="flex items-center flex-col justify-center gap-3">
                 {meshUrl ? (
-                  <button
-                    onClick={() => {
+                  <ChangeModelToolTip
+                    content="Mesh"
+                    onClickCallback={() => {
                       setModelUrl(meshUrl);
                     }}
-                    className="w-12 h-12 bg-buu  group flex items-center justify-center rounded-lg"
-                  >
-                    <div className="w-6 h-6 text-gray-100 group-hover:text-gray-300">
-                      <MeshIcon />
-                    </div>
-                  </button>
+                    buttonIcon={
+                      <div className="w-6 h-6 text-gray-100 group-hover:text-gray-300">
+                        <MeshIcon />
+                      </div>
+                    }
+                  />
                 ) : null}
                 {optimizedMesh ? (
-                  <button
-                    onClick={() => {
+                  <ChangeModelToolTip
+                    content="Optimized mesh"
+                    onClickCallback={() => {
                       setModelUrl(optimizedMesh);
                     }}
-                    className="w-12 h-12 bg-buu  group flex items-center justify-center rounded-lg"
-                  >
-                    <div className="w-6 h-6 text-gray-100 group-hover:text-gray-300">
-                      <CubeTexture />
-                    </div>
-                  </button>
+                    buttonIcon={
+                      <div className="w-6 h-6 text-gray-100 group-hover:text-gray-300">
+                        <CubeTexture />
+                      </div>
+                    }
+                  />
                 ) : null}
                 {texturedMesh ? (
-                  <button
-                    onClick={() => {
+                  <ChangeModelToolTip
+                    content="Textured mesh"
+                    onClickCallback={() => {
                       setModelUrl(texturedMesh);
                     }}
-                    className="w-12 h-12 bg-buu  group flex items-center justify-center rounded-lg"
-                  >
-                    <div className="w-6 h-6 text-gray-100 group-hover:text-gray-300">
-                      <TexturedMesh />
-                    </div>
-                  </button>
+                    buttonIcon={
+                      <div className="w-6 h-6 text-gray-100 group-hover:text-gray-300">
+                        <TexturedMesh />
+                      </div>
+                    }
+                  />
                 ) : null}
               </div>
               <div></div>
@@ -167,6 +177,16 @@ export default function ViewModelModal() {
           </div>
           <div className="absolute  bottom-[5rem] right-6  z-[99] ">
             <NftTokenButton nftId={model?.nftId} />
+          </div>
+          <div className="bottom-[5rem] left-6 absolute">
+            <p className="uppercase font-medium  text-xs">
+              <span className="text-muted-foreground/60">VERTEX:</span>
+              <span className="tracking-wide"> {vertices ?? 0}</span>
+            </p>
+            <p className="uppercase font-medium  text-xs">
+              <span className="text-muted-foreground/60">Faces:</span>
+              <span className="tracking-wide"> {faces ?? 0}</span>
+            </p>{" "}
           </div>
           <div className="absolute bottom-0 w-full h-16 bg-buu-view-modal-footer">
             <ViewModelToolbar
