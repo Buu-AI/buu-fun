@@ -8,6 +8,7 @@ import Link from "next/link";
 import KnowMorePopover from "./know-more-pop-over";
 import LocationKnownLink from "./location-known-link";
 import Pen from "@/assets/icons/utility/pen";
+import Animator from "@/assets/icons/utility/animator";
 export default function NavigationalBar() {
   return (
     <nav className="px-3 py-4  w-full h-full md:h-screen z-50 relative">
@@ -107,9 +108,31 @@ export default function NavigationalBar() {
             LinkTo="/app/editor"
             className="w-8 h-8"
           >
-            <div className="relative w-full h-full">
+            <div className="relative  w-full h-full">
               <div className="w-8 h-8 p-1.5">
                 <Pen />
+              </div>
+              <div className="absolute bg-pill-card -bottom-2 left-0 right-0 max-w-max p-0.5 mx-auto">
+                <p className="text-[7px] leading-none font-bold text-white">
+                  NEW
+                </p>
+              </div>
+            </div>
+          </LocationKnownLink>
+          <LocationKnownLink
+            toolTip={{
+              content: "Animator",
+              enabled: true,
+              delayDuration: 100,
+              side: "right",
+            }}
+            LinkIn="animator"
+            LinkTo="/app/animator"
+            className="w-8 h-8"
+          >
+            <div className="relative w-full h-full">
+              <div className="w-8 h-8 p-1.5">
+                <Animator />
               </div>
               <div className="absolute bg-pill-card -bottom-2 left-0 right-0 max-w-max p-0.5 mx-auto">
                 <p className="text-[7px] leading-none font-bold text-white">
