@@ -59,8 +59,12 @@ export default function ModelToggleTransformation({}: TModelToggleTransformation
                 <div className="w-6 aspect-square flex items-center justify-center">
                   <div
                     className={cn("text-white", {
-                      "text-black": selectedModel.transformModel === type && type !== "scale",
-                      "text-gray-700": selectedModel.transformModel === type && type === "scale",
+                      "text-black":
+                        selectedModel.transformModel === type &&
+                        type !== "scale",
+                      "text-gray-700":
+                        selectedModel.transformModel === type &&
+                        type === "scale",
                     })}
                   >
                     {icon}
