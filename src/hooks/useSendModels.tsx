@@ -81,20 +81,24 @@ export default function useSendModels({ iframeRef }: TUseSendModels) {
 
   const loadObjFromUrl = useCallback(
     (url: string) => {
-      if (!iframeRef?.current?.contentWindow || typedPath !== "editor") {
-        console.error("Iframe not ready");
-        return;
-      }
+      try {
+        if (!iframeRef?.current?.contentWindow || typedPath !== "editor") {
+          console.error("Iframe not ready");
+          return;
+        }
 
-      setIsLoading(true);
-      // Send message to the iframe to load the OBJ
-      iframeRef.current.contentWindow.postMessage(
-        {
-          type: "LOAD_OBJ_FROM_URL",
-          url: url,
-        },
-        "*"
-      );
+        setIsLoading(true);
+        // Send message to the iframe to load the OBJ
+        iframeRef.current.contentWindow.postMessage(
+          {
+            type: "LOAD_OBJ_FROM_URL",
+            url: url,
+          },
+          "*"
+        );
+      } catch (error) {
+        toast.error("Failed to load the model");
+      }
     },
     [iframeRef, typedPath]
   );

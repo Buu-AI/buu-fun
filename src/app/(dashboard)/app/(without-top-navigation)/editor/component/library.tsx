@@ -8,8 +8,10 @@ import {
 import { useModels } from "@/hooks/use-models";
 import { TModel } from "@/lib/react-query/model";
 import { MaybeString } from "@/types";
+import { useClickOutside } from "@mantine/hooks";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 export default function LibraryModels({
@@ -23,6 +25,13 @@ export default function LibraryModels({
     limit: 15,
   });
 
+  // Control popover state manually
+  const [isOpen, setIsOpen] = useState(false);
+  const popoverRef = useRef<HTMLDivElement>(null);
+
+  // Use click outside hook to close popover
+  useClickOutside(() => setIsOpen(false), null, [popoverRef.current]);
+
   const { ref: observerRef } = useInView({
     threshold: 0,
     rootMargin: `0px 150px`,
@@ -34,14 +43,20 @@ export default function LibraryModels({
   });
 
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button size={"special"} variant={'special'} className=" text-white">
+        <Button 
+          size={"special"} 
+          variant={"special"} 
+          className=" text-white"
+          onClick={() => setIsOpen(true)}
+        >
           <StagingHistoryIcon />
           Library
         </Button>
       </PopoverTrigger>
       <PopoverContent
+        ref={popoverRef}
         align="start"
         side="top"
         className="bg-stage-modal border-none border-0 w-[300px]"
@@ -57,7 +72,10 @@ export default function LibraryModels({
                 return (
                   <LibraryCards
                     modelId={model._id}
-                    callBack={loaderCallback}
+                    callBack={(modelUrl, modelId) => {
+                      loaderCallback(modelUrl, modelId);
+                      setIsOpen(false); // Close popover when model is selected
+                    }}
                     imageUrl={model.image.url}
                     modelUrl={
                       modelChooser
