@@ -8,7 +8,6 @@ import {
 import { useModels } from "@/hooks/use-models";
 import { TModel } from "@/lib/react-query/model";
 import { MaybeString } from "@/types";
-import { useClickOutside } from "@mantine/hooks";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRef, useState } from "react";
@@ -30,7 +29,6 @@ export default function LibraryModels({
   const popoverRef = useRef<HTMLDivElement>(null);
 
   // Use click outside hook to close popover
-  useClickOutside(() => setIsOpen(false), null, [popoverRef.current]);
 
   const { ref: observerRef } = useInView({
     threshold: 0,
@@ -45,11 +43,11 @@ export default function LibraryModels({
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button 
-          size={"special"} 
-          variant={"special"} 
+        <Button
+          size={"special"}
+          variant={"special"}
           className=" text-white"
-          onClick={() => setIsOpen(true)}
+          onClick={() => setIsOpen((prev) => !prev)}
         >
           <StagingHistoryIcon />
           Library
