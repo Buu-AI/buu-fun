@@ -90,11 +90,7 @@ export default function NavigationalBar() {
           >
             <div className="relative w-full h-full">
               <SelectObjectIcon height={"100%"} width={"100%"} />
-              <div className="absolute bg-pill-card -bottom-2 left-0 right-0 max-w-max p-0.5 mx-auto">
-                <p className="text-[7px] leading-none font-bold text-white">
-                  NEW
-                </p>
-              </div>
+            
             </div>
           </LocationKnownLink>
           <LocationKnownLink
