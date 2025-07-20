@@ -39,6 +39,40 @@ export const GetMessages = gql`
                 createdAt
                 updatedAt
               }
+              obj {
+                mesh {
+                  _id
+                  createdAt
+                  alt
+                  messageId
+                  sessionId
+                  url
+                }
+                optimizedMesh {
+                  _id
+                  createdAt
+                  alt
+                  messageId
+                  sessionId
+                  url
+                }
+                texture {
+                  _id
+                  createdAt
+                  alt
+                  messageId
+                  sessionId
+                  url
+                }
+                texturedMesh {
+                  _id
+                  createdAt
+                  alt
+                  messageId
+                  sessionId
+                  url
+                }
+              }
               mesh {
                 alt
                 keyS3
@@ -240,373 +274,12 @@ export const GetMessages = gql`
                 numberOfFaces
                 numberOfModels
                 edit
-                model {
-                  _id
-                  teamId
-                  sessionId
-                  messageId
-                  createdAt
-                  updatedAt
-                  prompt
-                  style
-                  nftId
-                  image {
-                    alt
-                    keyS3
-                    size
-                    type
-                    url
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    createdAt
-                    updatedAt
-                  }
-                  mesh {
-                    alt
-                    keyS3
-                    size
-                    type
-                    url
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    createdAt
-                    updatedAt
-                  }
-                  optimizedMesh {
-                    alt
-                    keyS3
-                    size
-                    type
-                    url
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    createdAt
-                    updatedAt
-                  }
-                  multiview {
-                    alt
-                    keyS3
-                    size
-                    type
-                    url
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    createdAt
-                    updatedAt
-                  }
-                  views {
-                    alt
-                    keyS3
-                    size
-                    type
-                    url
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    createdAt
-                    updatedAt
-                  }
-                  texturedMesh {
-                    alt
-                    keyS3
-                    size
-                    type
-                    url
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    createdAt
-                    updatedAt
-                  }
-                  texture {
-                    alt
-                    keyS3
-                    size
-                    type
-                    url
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    createdAt
-                    updatedAt
-                  }
-                  toolRequest {
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    type
-                    priority
-                    payload
-                    details {
-                      ... on GenerateModelsDetails {
-                        __typename
-                        texture
-                        numberOfFaces
-                        numberOfModels
-                      }
-                      ... on GenerateModelsFromPromptDetails {
-                        __typename
-                        texture
-                        numberOfFaces
-                        numberOfModels
-                        prompt
-                        style
-                      }
-                      ... on GenerateModelsFromImageDetails {
-                        __typename
-                        texture
-                        numberOfFaces
-                        numberOfModels
-                      }
-                      ... on GenerateModelsFromReferencesDetails {
-                        __typename
-                        texture
-                        numberOfFaces
-                        numberOfModels
-                        images {
-                          alt
-                          keyS3
-                          size
-                          type
-                          url
-                          _id
-                          teamId
-                          sessionId
-                          messageId
-                          createdAt
-                          updatedAt
-                        }
-                        instructions
-                      }
-                      ... on GenerateModelsFromEditDetails {
-                        __typename
-                        texture
-                        numberOfFaces
-                        numberOfModels
-                        edit
-                        model {
-                          _id
-                          teamId
-                          sessionId
-                          messageId
-                          createdAt
-                          updatedAt
-                          prompt
-                          style
-                          nftId
-                        }
-                      }
-                      ... on GenerateNftDetails {
-                        __typename
-                        name
-                        description
-                        symbol
-                        attributes {
-                          trait_type
-                          value
-                        }
-                      }
-                    }
-                    credits
-                    references
-                    status
-                    createdAt
-                    updatedAt
-                    message
-                    percentage
-                  }
-                }
               }
               ... on GenerateNftDetails {
                 __typename
                 name
                 description
                 symbol
-                model {
-                  _id
-                  teamId
-                  sessionId
-                  messageId
-                  image {
-                    alt
-                    keyS3
-                    size
-                    type
-                    url
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    createdAt
-                    updatedAt
-                  }
-                  mesh {
-                    alt
-                    keyS3
-                    size
-                    type
-                    url
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    createdAt
-                    updatedAt
-                  }
-                  optimizedMesh {
-                    alt
-                    keyS3
-                    size
-                    type
-                    url
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    createdAt
-                    updatedAt
-                  }
-                  multiview {
-                    alt
-                    keyS3
-                    size
-                    type
-                    url
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    createdAt
-                    updatedAt
-                  }
-                  views {
-                    alt
-                    keyS3
-                    size
-                    type
-                    url
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    createdAt
-                    updatedAt
-                  }
-                  texturedMesh {
-                    alt
-                    keyS3
-                    size
-                    type
-                    url
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    createdAt
-                    updatedAt
-                  }
-                  texture {
-                    alt
-                    keyS3
-                    size
-                    type
-                    url
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    createdAt
-                    updatedAt
-                  }
-                  createdAt
-                  updatedAt
-                  prompt
-                  style
-                  nftId
-                  toolRequest {
-                    _id
-                    teamId
-                    sessionId
-                    messageId
-                    type
-                    priority
-                    payload
-                    details {
-                      ... on GenerateModelsDetails {
-                        __typename
-                        texture
-                        numberOfFaces
-                        numberOfModels
-                      }
-                      ... on GenerateModelsFromPromptDetails {
-                        __typename
-                        texture
-                        numberOfFaces
-                        numberOfModels
-                        prompt
-                        style
-                      }
-                      ... on GenerateModelsFromImageDetails {
-                        __typename
-                        texture
-                        numberOfFaces
-                        numberOfModels
-                      }
-                      ... on GenerateModelsFromReferencesDetails {
-                        __typename
-                        texture
-                        numberOfFaces
-                        numberOfModels
-                        images {
-                          alt
-                          keyS3
-                          size
-                          type
-                          url
-                          _id
-                          teamId
-                          sessionId
-                          messageId
-                          createdAt
-                          updatedAt
-                        }
-                        instructions
-                      }
-                      ... on GenerateModelsFromEditDetails {
-                        __typename
-                        texture
-                        numberOfFaces
-                        numberOfModels
-                        edit
-                      }
-                      ... on GenerateNftDetails {
-                        __typename
-                        name
-                        description
-                        symbol
-                      }
-                    }
-                    credits
-                    references
-                    status
-                    createdAt
-                    updatedAt
-                    message
-                    percentage
-                  }
-                }
                 attributes {
                   trait_type
                   value
@@ -1357,6 +1030,40 @@ export const GetModels = gql`
           teamId
           sessionId
           messageId
+          obj {
+            mesh {
+              _id
+              createdAt
+              alt
+              messageId
+              sessionId
+              url
+            }
+            optimizedMesh {
+              _id
+              createdAt
+              alt
+              messageId
+              sessionId
+              url
+            }
+            texture {
+              _id
+              createdAt
+              alt
+              messageId
+              sessionId
+              url
+            }
+            texturedMesh {
+              _id
+              createdAt
+              alt
+              messageId
+              sessionId
+              url
+            }
+          }
           image {
             alt
             keyS3
