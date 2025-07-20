@@ -97,6 +97,7 @@ export default function useSendModels({ iframeRef }: TUseSendModels) {
           "*"
         );
       } catch (error) {
+        console.log("[ERROR_LOAD_OBJ]:", error);
         toast.error("Failed to load the model");
       }
     },
