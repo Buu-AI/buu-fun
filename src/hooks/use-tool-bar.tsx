@@ -33,7 +33,7 @@ export default function useToolBar({ modelId, selectedModelUrl }: TUseToolBar) {
     dispatch(
       setViewModel({
         isOpen: false,
-      })
+      }),
     );
     dispatch(
       setGenerateNFT({
@@ -41,7 +41,7 @@ export default function useToolBar({ modelId, selectedModelUrl }: TUseToolBar) {
         imageUrl: undefined,
         modelUrl: model?.texturedMesh?.url,
         modelId: modelId,
-      })
+      }),
     );
   }
 
@@ -61,7 +61,7 @@ export default function useToolBar({ modelId, selectedModelUrl }: TUseToolBar) {
       addModels({
         ...defaultModelParams,
         id: nanoid(),
-      })
+      }),
     );
     toast.success("Added to playground");
     router.push("/app/playground");
@@ -88,5 +88,11 @@ export default function useToolBar({ modelId, selectedModelUrl }: TUseToolBar) {
       });
   }
 
-  return { downloadModel, shareModel, handleGenerateNFT, addModelToPlayground, tokenized: !!model?.nftId };
+  return {
+    downloadModel,
+    shareModel,
+    handleGenerateNFT,
+    addModelToPlayground,
+    tokenized: !!model?.nftId,
+  };
 }
