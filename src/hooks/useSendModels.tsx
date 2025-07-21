@@ -1,3 +1,4 @@
+import { LINKS } from "@/constants/social-links";
 import { convertModel } from "@/lib/react-query/model";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -60,7 +61,11 @@ export default function useSendModels({ iframeRef }: TUseSendModels) {
     },
   });
   const handleMessage = useCallback((event: MessageEvent) => {
-    if (event.data && event.data.type === "CANVAS_LOADED" && !isModelLoadedRef.current) {
+    if (
+      event.data &&
+      event.data.type === "CANVAS_LOADED" &&
+      !isModelLoadedRef.current
+    ) {
       // you can now start to send message to the apps
       if (loadModelObj) {
         loadObjFromUrl(loadModelObj);
@@ -68,6 +73,12 @@ export default function useSendModels({ iframeRef }: TUseSendModels) {
       } else if (loadModelGlb) {
         loadGLB(loadModelGlb);
         isModelLoadedRef.current = true;
+      } else {
+        if (typedPath === "editor") {
+          loadObjFromUrl(LINKS.DEFAULT_BUU_MODEL.OBJ);
+          isModelLoadedRef.current = true;
+        }
+        // https://cdn.buu.fun/699458c5.obj
       }
     }
     if (event.data && event.data.type === "MODEL_LOADING_STATUS") {
