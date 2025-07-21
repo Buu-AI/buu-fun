@@ -18,7 +18,7 @@ export default function ModelToggleTransformation({}: TModelToggleTransformation
     (state) => state.stage.present.selectedModel,
   );
   const dispatch = useAppDispatch();
-  
+
   if (!selectedModel) return;
 
   const transformationButtons = [

@@ -8,7 +8,7 @@ import {
   GetModelsQuery,
   ModelFilter,
   Pagination,
-  GetModelsQueryVariables as TGetModelsQueryVariables
+  GetModelsQueryVariables as TGetModelsQueryVariables,
 } from "@/gql/types/graphql";
 import { TErrorTypeName } from "../redux/features/chat-types";
 import { getAuthorization } from "../utils";
@@ -43,7 +43,7 @@ export async function getModels({
       },
       pagination,
     },
-    { Authorization: getAuthorization(accessToken) }
+    { Authorization: getAuthorization(accessToken) },
   );
 
   if (!data) {
@@ -73,7 +73,7 @@ export async function convertModel({
     {
       ...opts,
     },
-    { Authorization: getAuthorization(accessToken) }
+    { Authorization: getAuthorization(accessToken) },
   );
 
   if (!data) {

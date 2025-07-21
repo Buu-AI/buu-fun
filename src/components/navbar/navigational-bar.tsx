@@ -90,7 +90,6 @@ export default function NavigationalBar() {
           >
             <div className="relative w-full h-full">
               <SelectObjectIcon height={"100%"} width={"100%"} />
-            
             </div>
           </LocationKnownLink>
           <LocationKnownLink

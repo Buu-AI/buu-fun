@@ -75,10 +75,9 @@ export default function useSendModels({ iframeRef }: TUseSendModels) {
         isModelLoadedRef.current = true;
       } else {
         if (typedPath === "editor") {
-          loadObjFromUrl(LINKS.DEFAULT_BUU_MODEL.OBJ);
           isModelLoadedRef.current = true;
+          loadObjFromUrl(LINKS.DEFAULT_BUU_MODEL.OBJ);
         }
-        // https://cdn.buu.fun/699458c5.obj
       }
     }
     if (event.data && event.data.type === "MODEL_LOADING_STATUS") {
@@ -118,14 +117,14 @@ export default function useSendModels({ iframeRef }: TUseSendModels) {
             type: "LOAD_OBJ_FROM_URL",
             url: url,
           },
-          "*"
+          "*",
         );
       } catch (error) {
         console.log("[ERROR_LOAD_OBJ]:", error);
         toast.error("Failed to load the model");
       }
     },
-    [iframeRef, typedPath]
+    [iframeRef, typedPath],
   );
 
   const loadGLB = useCallback(
@@ -145,10 +144,10 @@ export default function useSendModels({ iframeRef }: TUseSendModels) {
             fileExtension: "glb",
           },
         },
-        "*"
+        "*",
       );
     },
-    [iframeRef, typedPath]
+    [iframeRef, typedPath],
   );
 
   return {
@@ -169,7 +168,7 @@ const path = {
 } as const;
 
 export function whichPath(
-  value: string
+  value: string,
 ): (typeof path)[keyof typeof path] | undefined {
   return path[value as keyof typeof path];
 }

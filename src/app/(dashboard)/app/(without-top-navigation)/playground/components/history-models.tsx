@@ -21,8 +21,11 @@ export default function HistoryModels() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button size={"special"} className="bg-stage-modal hover:bg-buu-secondary
-         text-white">
+        <Button
+          size={"special"}
+          className="bg-stage-modal hover:bg-buu-secondary
+         text-white"
+        >
           <StagingHistoryIcon />
           Library
         </Button>
