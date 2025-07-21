@@ -13,11 +13,11 @@ export const metadata = constructMetadata({});
 
 export default function PortfolioPage() {
   return (
-    <Bounded className="h-full  max-w-screen-2xl px-0">
+    <Bounded className="h-full max-w-full    px-0">
       {/* <StakingDataProvider
       > */}
-      <div className="grid overflow-hidden h-full   relative 2xl:grid-cols-[65%_35%]   max-h-[calc(100dvh-90px)] overflow-y-scroll  scrollbar-w-2 scrollbar-track-orange-lighter scrollbar-thumb-orange scrollbar-thumb-rounded px-1 lg:px-24 lg:mt-9 pb-12">
-        <div className="pb-12">
+      <div className="grid  overflow-hidden h-full relative gap-2 xl:grid-cols-[65%_35%]   max-h-[calc(100dvh-90px)] overflow-y-scroll  scrollbar-w-2 w-full scrollbar-track-orange-lighter scrollbar-thumb-orange scrollbar-thumb-rounded px-1  lg:mt-9 pb-12">
+        <div className="pb-12 max-w-3xl  2xl:justify-self-end">
           <HeaderLogo />
           <TokenStatistics />
           <TokenBalance />
@@ -25,7 +25,7 @@ export default function PortfolioPage() {
 
           <BitRefillSheet />
         </div>
-        <div className="2xl:px-8 py-8 2xl:py-0">
+        <div className="2xl:px-8 py-8 2xl:py-0 lg:max-w-md">
           <div className="sticky top-[0px] w-full ">
             <OverviewContainer />
           </div>
