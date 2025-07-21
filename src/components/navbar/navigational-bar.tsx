@@ -66,7 +66,7 @@ export default function NavigationalBar() {
           </LocationKnownLink>
           <LocationKnownLink
             toolTip={{
-              content: "NFT",
+              content: "Collectibles",
               enabled: true,
               delayDuration: 100,
               side: "right",
