@@ -12,6 +12,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import buuLoadedData from "@/components/chat/assistant/buu-loader.json";
+import LottieLoader from "lottie-react";
 
 export default function LibraryModels({
   loaderCallback,
@@ -87,13 +89,11 @@ export default function LibraryModels({
             })}
             <div ref={observerRef} className="h-4 w-full " />
             {isFetchingNextPage && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="w-full flex justify-center py-4 items-center "
-              >
-                <div className="w-6 h-6 border-2 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
-              </motion.div>
+              <div className="w-full flex items-center justify-center">
+                <div className="h-14 w-14 flex items-center justify-center p-1">
+                  <LottieLoader animationData={buuLoadedData} loop autoplay />
+                </div>
+              </div>
             )}
           </div>
         </div>
