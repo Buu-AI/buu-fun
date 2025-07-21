@@ -107,7 +107,7 @@ const ChatSlice = createSlice({
     },
     removeImage(state, action: PayloadAction<string>) {
       state.inputFile = state.inputFile.filter(
-        (item) => item.id !== action.payload
+        (item) => item.id !== action.payload,
       );
     },
     clearInputFile(state) {
@@ -172,7 +172,7 @@ const ChatSlice = createSlice({
     handleMessageUpdates: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId
+          (item) => item.messageId === action.payload.messageId,
         );
         if (!item) {
           state.messages.push(action.payload);
@@ -191,12 +191,12 @@ const ChatSlice = createSlice({
       const model = action.payload;
 
       const message = state.messages.find(
-        (fv) => fv.messageId === model.messageId
+        (fv) => fv.messageId === model.messageId,
       );
 
       if (message) {
         const modelIndex = message.models.findIndex(
-          (fv) => fv._id === model._id
+          (fv) => fv._id === model._id,
         );
 
         if (modelIndex !== -1) {
@@ -215,7 +215,7 @@ const ChatSlice = createSlice({
       const tool = action.payload;
 
       const message = state.messages.find(
-        (fv) => fv.messageId === tool.messageId
+        (fv) => fv.messageId === tool.messageId,
       );
 
       if (message) {
@@ -233,7 +233,7 @@ const ChatSlice = createSlice({
     appendAIChatMessage: {
       reducer: (state, action: PayloadAction<TChatMessage>) => {
         const item = state.messages.find(
-          (item) => item.messageId === action.payload.messageId
+          (item) => item.messageId === action.payload.messageId,
         );
         if (!item) {
           state.messages.push(action.payload);

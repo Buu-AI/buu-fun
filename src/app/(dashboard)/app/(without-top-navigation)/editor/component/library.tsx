@@ -1,4 +1,5 @@
 import StagingHistoryIcon from "@/assets/icons/staging-history-icon";
+import buuLoadedData from "@/components/chat/assistant/buu-loader.json";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -8,12 +9,10 @@ import {
 import { useModels } from "@/hooks/use-models";
 import { TModel } from "@/lib/react-query/model";
 import { MaybeString } from "@/types";
-import { motion } from "framer-motion";
+import LottieLoader from "lottie-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import buuLoadedData from "@/components/chat/assistant/buu-loader.json";
-import LottieLoader from "lottie-react";
 
 export default function LibraryModels({
   loaderCallback,
