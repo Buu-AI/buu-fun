@@ -7,7 +7,7 @@ const SERVER_URL = NEXT_PUBLIC_SERVER_URL;
 const EDITOR_URL =
   process.env.NEXT_PUBLIC_EDITOR_URL ?? "http://localhost:1234";
 const ANIMATOR_URL =
-  process.env.NEXT_PUBLIC_ANIMATOR_URL ?? "http://localhost:1234";
+  process.env.NEXT_PUBLIC_ANIMATOR_URL ?? "http://localhost:5173";
 
 const PRIVY_APP_ID = NEXT_PUBLIC_PRIVY_APP_ID;
 

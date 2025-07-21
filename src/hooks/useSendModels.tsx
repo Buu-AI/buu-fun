@@ -1,7 +1,7 @@
 import { convertModel } from "@/lib/react-query/model";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { usePathname } from "next/navigation";
-import { RefObject, useCallback, useEffect, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 type TUseSendModels = {
@@ -25,13 +25,16 @@ export default function useSendModels({ iframeRef }: TUseSendModels) {
   });
   // const isLoadedViaParam = useRef(false);
   const path = usePathname();
-  // const param = useSearchParams();
-
+  const param = useSearchParams();
+  const isModelLoadedRef = useRef(false);
   const typedPath = whichPath(path);
 
-  // const loadModelUrl = param.get("modelGlbUrl");
+  const loadModelGlb = param.get("modelUrl");
+  const loadModelObj = param.get("modelObjUrl");
+  // console.log("MODEL_URL", { loadModelGlb, loadModelObj });
 
   const [loadStatus, setLoadStatus] = useState("");
+
   const convertAndLoadModel = useMutation({
     mutationFn: convertModel,
     onMutate: () => {
@@ -57,6 +60,16 @@ export default function useSendModels({ iframeRef }: TUseSendModels) {
     },
   });
   const handleMessage = useCallback((event: MessageEvent) => {
+    if (event.data && event.data.type === "CANVAS_LOADED" && !isModelLoadedRef.current) {
+      // you can now start to send message to the apps
+      if (loadModelObj) {
+        loadObjFromUrl(loadModelObj);
+        isModelLoadedRef.current = true;
+      } else if (loadModelGlb) {
+        loadGLB(loadModelGlb);
+        isModelLoadedRef.current = true;
+      }
+    }
     if (event.data && event.data.type === "MODEL_LOADING_STATUS") {
       const { status, message, modelInfo } = event.data.payload;
       setModelStatus({ status, message, modelInfo });
@@ -126,8 +139,6 @@ export default function useSendModels({ iframeRef }: TUseSendModels) {
     },
     [iframeRef, typedPath]
   );
-
-  // useEffect(() => {}, [param, iframeRef?.current, loadModelUrl]);
 
   return {
     loadObjFromUrl,
