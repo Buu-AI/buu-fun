@@ -8,6 +8,8 @@ import useToolBar from "@/hooks/use-tool-bar";
 import { Maybe, MaybeString } from "@/types";
 import { TToolRequest } from "@/types/chat/chat-types";
 import TooltipWrapper from "./tooltip-wrapper";
+import Pen from "@/assets/icons/utility/pen";
+import Animator from "@/assets/icons/utility/animator";
 
 type TViewModelToolbar = {
   modelId: MaybeString;
@@ -28,6 +30,8 @@ export default function ViewModelToolbar({
     handleGenerateNFT,
     addModelToPlayground,
     tokenized,
+    addToAnimator,
+    addToEditor,
   } = useToolBar({
     modelId,
     selectedModelUrl,
@@ -57,6 +61,36 @@ export default function ViewModelToolbar({
           hoverState={false}
           onClickCallback={() => {
             addModelToPlayground();
+          }}
+        />
+        <TooltipWrapper
+          align="start"
+          content="Add to Animator"
+          IconClassName="w-7 h-7"
+          buttonIcon={
+            <div className="w-7 h-7 p-1">
+              <Animator />
+            </div>
+          }
+          btnClassName="p-0.5 hidden md:flex"
+          hoverState={false}
+          onClickCallback={() => {
+            addToAnimator();
+          }}
+        />
+        <TooltipWrapper
+          align="start"
+          content="Add to Editor"
+          IconClassName="w-7 h-7"
+          buttonIcon={
+            <div className="w-7 h-7 p-1">
+              <Pen />
+            </div>
+          }
+          btnClassName="p-0.5 hidden md:flex"
+          hoverState={false}
+          onClickCallback={() => {
+            addToEditor();
           }}
         />
       </div>

@@ -85,6 +85,11 @@ const ChatSlice = createSlice({
         state.inputFile?.push(action.payload);
       }
     },
+    clearViewModel(state) {
+      state.viewModel.isOpen = false;
+      state.viewModel.model = null;
+      state.viewModel.toolRequest = null;
+    },
     setViewModel(state, action: PayloadAction<Partial<TViewModel>>) {
       const payload = action.payload;
 
@@ -282,6 +287,7 @@ export const {
   updateMessageModel,
   updateMessageToolRequest,
   setHistoryModel,
+  clearViewModel,
 } = ChatSlice.actions;
 
 export default ChatSlice.reducer;

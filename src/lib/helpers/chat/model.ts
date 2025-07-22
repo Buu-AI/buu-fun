@@ -1,7 +1,8 @@
 import { Model, ToolRequest } from "@/gql/types/graphql";
+import { TModel } from "@/lib/react-query/model";
 import { Maybe } from "@/types";
 
-export function getModelBasedOnPriority(item: Model) {
+export function getModelBasedOnPriority(item: Model | TModel) {
   const texturedModel = item.texturedMesh?.url;
   const optimizedModel = item.optimizedMesh?.url;
   const basicMesh = item.mesh?.url;
