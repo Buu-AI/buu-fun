@@ -17,7 +17,7 @@ export default function Page() {
         />
       </div>
       <Suspense fallback={null}>
-        <LibraryWrapper iframeRef={iframeRef} />
+        <LibraryWrapper modelType="obj" iframeRef={iframeRef} />
       </Suspense>
     </main>
   );
