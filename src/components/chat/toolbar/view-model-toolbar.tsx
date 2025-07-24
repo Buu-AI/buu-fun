@@ -2,28 +2,24 @@ import CreateNFTIcon from "@/assets/icons/create-nft-icon";
 
 import { DownloadIcon } from "@/assets/icons";
 import SelectObjectIcon from "@/assets/icons/select-object-icon";
-import ShareIcon from "@/assets/icons/utility/share-icon";
-import { Model } from "@/gql/types/graphql";
-import useToolBar from "@/hooks/use-tool-bar";
-import { Maybe, MaybeString } from "@/types";
-import { TToolRequest } from "@/types/chat/chat-types";
-import TooltipWrapper from "./tooltip-wrapper";
-import Pen from "@/assets/icons/utility/pen";
 import Animator from "@/assets/icons/utility/animator";
+import Pen from "@/assets/icons/utility/pen";
+import ShareIcon from "@/assets/icons/utility/share-icon";
+import useToolBar from "@/hooks/use-tool-bar";
+import { MaybeString } from "@/types";
+import TooltipWrapper from "./tooltip-wrapper";
 
 type TViewModelToolbar = {
   modelId: MaybeString;
   toolCallId: MaybeString;
   selectedModelUrl: MaybeString;
-  model: Maybe<Model>;
-  toolCall: Maybe<TToolRequest>;
 };
 
 export default function ViewModelToolbar({
   modelId,
   selectedModelUrl,
   toolCallId,
-}: TViewModelToolbar) {
+}: Readonly<TViewModelToolbar>) {
   const {
     downloadModel,
     shareModel,
@@ -65,7 +61,7 @@ export default function ViewModelToolbar({
         />
         <TooltipWrapper
           align="start"
-          content="Add to Animator"
+          content="Rig & Animate"
           IconClassName="w-7 h-7"
           buttonIcon={
             <div className="w-7 h-7 p-1">
@@ -80,8 +76,8 @@ export default function ViewModelToolbar({
         />
         <TooltipWrapper
           align="start"
-          content="Add to Editor"
           IconClassName="w-7 h-7"
+          content="Edit Mesh"
           buttonIcon={
             <div className="w-7 h-7 p-1">
               <Pen />

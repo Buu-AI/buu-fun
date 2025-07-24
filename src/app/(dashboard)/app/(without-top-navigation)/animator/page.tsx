@@ -9,7 +9,12 @@ export default function AnimatorPage() {
   return (
     <main className="relative h-full w-full">
       <div className="w-full h-full overflow-hidden rounded-lg">
-        <iframe ref={iframeRef} className="w-full h-full" src={ANIMATOR_URL} />
+        <iframe
+          title="Animator page"
+          ref={iframeRef}
+          className="w-full h-full"
+          src={ANIMATOR_URL}
+        />
       </div>
       <Suspense fallback={null}>
         <LibraryWrapper iframeRef={iframeRef} />
