@@ -103,26 +103,32 @@ export default function HeaderQuickSelectButton() {
             }
           />
         </button>
-        <QuickSelectCard
-          key={"quick-select-card-comic"}
-          released={false}
-          backgroundImage={<CreateComicLayout />}
-          gradient={gradientBlueyRedImage.src}
-          title={
-            <>
-              Make a 3D model <br />
-              game-production <br />
-              ready
-            </>
-          }
-        />
-        <QuickSelectCard
-          key={"quick-select-card-video"}
-          released={false}
-          backgroundImage={<CreateVideoLayout />}
-          gradient={gradientRainbowImage.src}
-          title={"Help me Rig & Animate a 3D model"}
-        />
+        <button
+          onClick={() => {
+            router.push("/app/editor");
+          }}
+        >
+          <QuickSelectCard
+            key={"quick-select-card-comic"}
+            released={true}
+            backgroundImage={<CreateComicLayout />}
+            title={"Help me edit 3d model"}
+            gradient={gradientBlueyRedImage.src}
+          />
+        </button>
+        <button
+          onClick={() => {
+            router.push("/app/animator");
+          }}
+        >
+          <QuickSelectCard
+            key={"quick-select-card-video"}
+            released={false}
+            backgroundImage={<CreateVideoLayout />}
+            gradient={gradientRainbowImage.src}
+            title={<>Help me animate a 3D model</>}
+          />
+        </button>
       </div>
     </section>
   );
