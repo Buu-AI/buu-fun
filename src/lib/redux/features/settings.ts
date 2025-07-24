@@ -41,6 +41,7 @@ export const contentModes: SettingsState["modes"][] = [
 ];
 export type SettingsState = {
   isPopoverOpen: boolean;
+  autoApprove: boolean;
   isStyleBoxOpen: boolean;
   ThreeDStyle?: TStyle;
   modes: "three_d_object" | "rigging" | "animation";
@@ -59,6 +60,7 @@ const initialState: SettingsState = {
   numberOfModelsMode: "definedByAI",
   faces: "definedByAI",
   textureType: "definedByAI",
+  autoApprove: true,
 };
 
 const SettingsSlice = createSlice({
@@ -66,6 +68,9 @@ const SettingsSlice = createSlice({
   initialState,
 
   reducers: {
+    setAutoApprove(state, action: PayloadAction<boolean>) {
+      state.autoApprove = action.payload;
+    },
     setSettingsPopoverChange(state, action: PayloadAction<boolean>) {
       state.isPopoverOpen = action.payload;
     },
@@ -80,13 +85,13 @@ const SettingsSlice = createSlice({
     },
     changeThreeDStyles(
       state,
-      action: PayloadAction<SettingsState["ThreeDStyle"] | undefined>,
+      action: PayloadAction<SettingsState["ThreeDStyle"] | undefined>
     ) {
       state.ThreeDStyle = action.payload;
     },
     changeNumberOfModelMode(
       state,
-      action: PayloadAction<"custom" | "definedByAI">,
+      action: PayloadAction<"custom" | "definedByAI">
     ) {
       const payload = action.payload;
       if (payload === "custom") {
@@ -99,7 +104,7 @@ const SettingsSlice = createSlice({
     },
     changeNumberOfModel(
       state,
-      action: PayloadAction<"increment" | "decrement">,
+      action: PayloadAction<"increment" | "decrement">
     ) {
       const current = state.numberOfModels;
       const payload = action.payload;
@@ -133,6 +138,7 @@ export const {
   changeNumberOfModelMode,
   changeFaces,
   changeTexture,
+  setAutoApprove,
 } = SettingsSlice.actions;
 
 export default SettingsSlice.reducer;

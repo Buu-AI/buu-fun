@@ -48,7 +48,6 @@ export default function ChatMessageEventProvider({
       switch (data.type) {
         case "message-updated": {
           message = "";
-          console.log(data.payload);
           dispatch(handleMessageUpdates(data.payload));
           handleEventSource["message-updated"]?.({
             ...data,
