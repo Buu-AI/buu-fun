@@ -24,7 +24,6 @@ export default function useSendModels({ iframeRef }: TUseSendModels) {
     status: "idle",
     message: "Ready to load model",
   });
-  // const isLoadedViaParam = useRef(false);
   const path = usePathname();
   const param = useSearchParams();
   const isModelLoadedRef = useRef(false);
@@ -32,7 +31,6 @@ export default function useSendModels({ iframeRef }: TUseSendModels) {
 
   const loadModelGlb = param.get("modelUrl");
   const loadModelObj = param.get("modelObjUrl");
-  // console.log("MODEL_URL", { loadModelGlb, loadModelObj });
 
   const [loadStatus, setLoadStatus] = useState("");
 

@@ -123,7 +123,7 @@ export default function HeaderQuickSelectButton() {
         >
           <QuickSelectCard
             key={"quick-select-card-video"}
-            released={false}
+            released={true}
             backgroundImage={<CreateVideoLayout />}
             gradient={gradientRainbowImage.src}
             title={<>Help me animate a 3D model</>}
