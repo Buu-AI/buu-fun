@@ -33,7 +33,7 @@ export default function ToolTipWrapper({
           whileTap="tap"
           variants={buttonVariants}
           transition={{ type: "spring", stiffness: 400, damping: 17 }}
-          className="group bg-buu-button pointer-events-auto hover:bg-white hover:shadow-none group shadow-buu-button max-w-[30px] w-full aspect-square rounded-md flex items-center justify-center p-1.5"
+          className="hidden md:flex group bg-buu-button pointer-events-auto hover:bg-white hover:shadow-none group shadow-buu-button max-w-[30px] w-full aspect-square rounded-md flex items-center justify-center p-1.5"
         >
           <motion.div
             className="w-full h-full group-hover:text-black group-hover:fill-black"

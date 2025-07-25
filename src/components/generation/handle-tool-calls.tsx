@@ -42,6 +42,11 @@ export const BoardToolTips = [
     content: "Share",
   },
   {
+    type: "DOWNLOAD" as const,
+    Icon: <DownloadIcon />,
+    content: "Download",
+  },
+  {
     type: "PLAYGROUND" as const,
     Icon: (
       <div className="flex w-full">
@@ -50,11 +55,7 @@ export const BoardToolTips = [
     ),
     content: "Add To Playground",
   },
-  {
-    type: "DOWNLOAD" as const,
-    Icon: <DownloadIcon />,
-    content: "Download",
-  },
+
   {
     type: "ANIMATOR" as const,
     Icon: (
