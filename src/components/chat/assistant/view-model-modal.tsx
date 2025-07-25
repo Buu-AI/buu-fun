@@ -4,7 +4,7 @@ import MeshIcon from "@/assets/icons/mesh-icon";
 import TexturedMesh from "@/assets/icons/textured-mesh";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { getModelBasedOnPriority } from "@/lib/helpers/chat/model";
-import { setViewModel } from "@/lib/redux/features/chat";
+import { clearViewModel, setViewModel } from "@/lib/redux/features/chat";
 import { getModelById, getToolById } from "@/lib/redux/selectors/chatMessages";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
@@ -80,6 +80,12 @@ export default function ViewModelModal() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modelRef.current]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearViewModel());
+    };
+  }, [dispatch]);
 
   const meshUrl = model?.mesh?.url;
   const optimizedMesh = model?.optimizedMesh?.url;
@@ -193,8 +199,6 @@ export default function ViewModelModal() {
               modelId={modelId}
               selectedModelUrl={modelUrl}
               toolCallId={toolCall?._id}
-              model={model}
-              toolCall={toolCall}
             />
           </div>
         </div>

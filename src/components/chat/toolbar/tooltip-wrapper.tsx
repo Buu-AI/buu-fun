@@ -45,7 +45,7 @@ export default function TooltipWrapper({
               {
                 "hover:bg-white hover:shadow-none": !hoverState,
               },
-              btnClassName
+              btnClassName,
             )}
             {...buttonProps}
           >

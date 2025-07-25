@@ -10,8 +10,8 @@ type TBoardsPage = {
   }>;
 };
 
-export async function metadata({ params }: TBoardsPage) {
-  const boardId = (await params).id;
+export async function generateMetadata({ params }: TBoardsPage) {
+  const boardId = (await params)?.id;
   const cookie = await cookies();
 
   const accessToken = cookie.get("privy-id-token")?.value;
@@ -40,7 +40,7 @@ export async function metadata({ params }: TBoardsPage) {
 }
 
 export default async function BoardsPage({ params }: TBoardsPage) {
-  const boardId = (await params).id;
+  const boardId = (await params)?.id;
   const cookie = cookies();
 
   const accessToken = (await cookie).get("privy-id-token")?.value;

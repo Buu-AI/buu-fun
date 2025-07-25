@@ -2,32 +2,32 @@ import CreateNFTIcon from "@/assets/icons/create-nft-icon";
 
 import { DownloadIcon } from "@/assets/icons";
 import SelectObjectIcon from "@/assets/icons/select-object-icon";
+import Animator from "@/assets/icons/utility/animator";
+import Pen from "@/assets/icons/utility/pen";
 import ShareIcon from "@/assets/icons/utility/share-icon";
-import { Model } from "@/gql/types/graphql";
 import useToolBar from "@/hooks/use-tool-bar";
-import { Maybe, MaybeString } from "@/types";
-import { TToolRequest } from "@/types/chat/chat-types";
+import { MaybeString } from "@/types";
 import TooltipWrapper from "./tooltip-wrapper";
 
 type TViewModelToolbar = {
   modelId: MaybeString;
   toolCallId: MaybeString;
   selectedModelUrl: MaybeString;
-  model: Maybe<Model>;
-  toolCall: Maybe<TToolRequest>;
 };
 
 export default function ViewModelToolbar({
   modelId,
   selectedModelUrl,
   toolCallId,
-}: TViewModelToolbar) {
+}: Readonly<TViewModelToolbar>) {
   const {
     downloadModel,
     shareModel,
     handleGenerateNFT,
     addModelToPlayground,
     tokenized,
+    addToAnimator,
+    addToEditor,
   } = useToolBar({
     modelId,
     selectedModelUrl,
@@ -57,6 +57,36 @@ export default function ViewModelToolbar({
           hoverState={false}
           onClickCallback={() => {
             addModelToPlayground();
+          }}
+        />
+        <TooltipWrapper
+          align="start"
+          content="Rig & Animate"
+          IconClassName="w-7 h-7"
+          buttonIcon={
+            <div className="w-7 h-7 p-1">
+              <Animator />
+            </div>
+          }
+          btnClassName="p-0.5 hidden md:flex"
+          hoverState={false}
+          onClickCallback={() => {
+            addToAnimator();
+          }}
+        />
+        <TooltipWrapper
+          align="start"
+          IconClassName="w-7 h-7"
+          content="Edit Mesh"
+          buttonIcon={
+            <div className="w-7 h-7 p-1">
+              <Pen />
+            </div>
+          }
+          btnClassName="p-0.5 hidden md:flex"
+          hoverState={false}
+          onClickCallback={() => {
+            addToEditor();
           }}
         />
       </div>

@@ -6,12 +6,12 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 type TBoardsPage = {
   params: Promise<{
-    id: string;
+    id?: string;
   }>;
 };
 
-export async function metadata({ params }: TBoardsPage) {
-  const boardId = (await params).id;
+export async function generateMetadata({ params }: TBoardsPage) {
+  const boardId = (await params)?.id;
   const cookie = await cookies();
 
   const accessToken = cookie.get("privy-id-token")?.value;
@@ -42,7 +42,7 @@ export async function metadata({ params }: TBoardsPage) {
 }
 
 export default async function BoardsPage({ params }: TBoardsPage) {
-  const boardId = (await params).id;
+  const boardId = (await params)?.id;
   const cookie = await cookies();
 
   const accessToken = cookie.get("privy-id-token")?.value;

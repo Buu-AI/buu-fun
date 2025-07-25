@@ -41,6 +41,7 @@ export const contentModes: SettingsState["modes"][] = [
 ];
 export type SettingsState = {
   isPopoverOpen: boolean;
+  autoApprove: boolean;
   isStyleBoxOpen: boolean;
   ThreeDStyle?: TStyle;
   modes: "three_d_object" | "rigging" | "animation";
@@ -59,6 +60,7 @@ const initialState: SettingsState = {
   numberOfModelsMode: "definedByAI",
   faces: "definedByAI",
   textureType: "definedByAI",
+  autoApprove: true,
 };
 
 const SettingsSlice = createSlice({
@@ -66,6 +68,9 @@ const SettingsSlice = createSlice({
   initialState,
 
   reducers: {
+    setAutoApprove(state, action: PayloadAction<boolean>) {
+      state.autoApprove = action.payload;
+    },
     setSettingsPopoverChange(state, action: PayloadAction<boolean>) {
       state.isPopoverOpen = action.payload;
     },
@@ -133,6 +138,7 @@ export const {
   changeNumberOfModelMode,
   changeFaces,
   changeTexture,
+  setAutoApprove,
 } = SettingsSlice.actions;
 
 export default SettingsSlice.reducer;

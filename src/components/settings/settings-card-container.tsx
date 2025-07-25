@@ -2,6 +2,7 @@
 import NumberOfModel from "./number-of-model";
 import SelectFaces from "./select-faces";
 import SelectTexture from "./select-texture";
+import SettingsApprovalCheckbox from "./settings-approval-checkbox";
 import ThreeDSelectBox from "./three-d-select-box";
 
 export default function SettingsCardContainer() {
@@ -15,6 +16,7 @@ export default function SettingsCardContainer() {
       <div className="mt-4">
         <NumberOfModel />
       </div>
+      <SettingsApprovalCheckbox />
     </div>
   );
 }
