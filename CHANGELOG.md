@@ -1,5 +1,73 @@
 # Changelog
 
+## [0.1.73](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.72...buu-fun-v0.1.73) (2025-07-25)
+
+
+### ✨ Features
+
+* added animator and editor to home screen ([e497e7f](https://github.com/Buu-AI/buu-fun/commit/e497e7f88fa7654984fa2ec34f5681607d9cb92e))
+* added animator and editor to home screen ([57a84b8](https://github.com/Buu-AI/buu-fun/commit/57a84b8bda0b3f615dc502a083c0de4f735cceb5))
+* added animator iframe and page ([9ca62f1](https://github.com/Buu-AI/buu-fun/commit/9ca62f1e8ae937ccac8e765ce10b18e6e2e24a2b))
+* added auto close after model is selected ([035f222](https://github.com/Buu-AI/buu-fun/commit/035f222bd401506cd9202ea594bc281245708ceb))
+* added auto-approve feature and select option ([8436eb9](https://github.com/Buu-AI/buu-fun/commit/8436eb96e4b596b8e8303ed5ffe80a18cd01ec30))
+* added buu loader in library page ([425bed8](https://github.com/Buu-AI/buu-fun/commit/425bed8dce401d51623562fa60022ffa2ee102b5))
+* added clear view model state in redux when exiting off the page ([968c2b7](https://github.com/Buu-AI/buu-fun/commit/968c2b7fb1a3ad0aa6512746b90f15231b80ce48))
+* added default model rendering as BUU model ([0481b8b](https://github.com/Buu-AI/buu-fun/commit/0481b8b30953bfb3756270c2b69034dc2bcd3aa4))
+* added horizontal hidden scroll in mobile profile navigation ([14a2eda](https://github.com/Buu-AI/buu-fun/commit/14a2eda49f39f50bdb7f72d308d188ece3884c3b))
+* added model loader from model viewer ([6828a60](https://github.com/Buu-AI/buu-fun/commit/6828a60673a8dd1f8a598173387c3c5241301a07))
+* added new buu loader ([0f25f77](https://github.com/Buu-AI/buu-fun/commit/0f25f77e2cc8785de77a2e7d3108c17aeeda11b0))
+* added new icons for animator and editor ([28048da](https://github.com/Buu-AI/buu-fun/commit/28048da5f422a7686be633bc5b676b50d5f5c2b1))
+* added new reusable library component ([957c060](https://github.com/Buu-AI/buu-fun/commit/957c06066ad582fbcb3ed0a81ab65fb51b4d06ec))
+* added Pen navigation for editor ([033913a](https://github.com/Buu-AI/buu-fun/commit/033913a7015a093c8873538afdf4a3b9c3354e8c))
+* added redirection to playground in model-modal ([36f2dbe](https://github.com/Buu-AI/buu-fun/commit/36f2dbe1f2c8d7f89695c07b9ca3e2e0f5ef1ca6))
+* added rotation to the model ([2e731d1](https://github.com/Buu-AI/buu-fun/commit/2e731d19b9f9029657f593cdd8461771dddbf1b4))
+* added sculpter editor ([bc42b3e](https://github.com/Buu-AI/buu-fun/commit/bc42b3eea139203ee9ce6636384f18a0e583c1da))
+* added tool-tip for model-changer ([cf98862](https://github.com/Buu-AI/buu-fun/commit/cf98862088065b3cf2a902b5ba59d0d307448998))
+* added toolbar to the boards ([5e66a48](https://github.com/Buu-AI/buu-fun/commit/5e66a4873636a29cf4db6b0813ba7fd585fb465a))
+* added tooltip for navigation and api refference link ([0a736c3](https://github.com/Buu-AI/buu-fun/commit/0a736c3f3a001fc1dca211869570c218af507993))
+* added tooltip for playground model toolbar ([fb1e744](https://github.com/Buu-AI/buu-fun/commit/fb1e744d3c96ee164b61a46b9882ccd4b8388b61))
+* added tooltip for playground model toolbar ([b430ea0](https://github.com/Buu-AI/buu-fun/commit/b430ea0d0acaec81d6cf186ec6dc88e2b88fe8cf))
+* added tooltip to approve and animator tools on board ([c0574d6](https://github.com/Buu-AI/buu-fun/commit/c0574d653368249310315e655cf0d4d73d54a5ec))
+* added use model analysis hook ([8751987](https://github.com/Buu-AI/buu-fun/commit/87519879a65fa9c1ca07ad373057ff22ab063bfd))
+* added useSendModels hook to send and receive updates from external iframe source ([9dfc7a7](https://github.com/Buu-AI/buu-fun/commit/9dfc7a723a21871bb0f8fbe7a6a169ef41c21753))
+* added vertex and faces ([2dea3f9](https://github.com/Buu-AI/buu-fun/commit/2dea3f94a117e9ec112e98a06567ab43700dd174))
+* integrated new libary and hooks to send and receive models ([617b04e](https://github.com/Buu-AI/buu-fun/commit/617b04ee23a95a3f0a20cb22647ef39dbc6aafcc))
+* released Animator feature ([be83466](https://github.com/Buu-AI/buu-fun/commit/be83466742b9a25f2429d529a0d13e49832f2302))
+* released Animator feature ([26e12ff](https://github.com/Buu-AI/buu-fun/commit/26e12fff256f9a31769b43a7f0ed3f9c39ac1135))
+* removed jam card and image-comparison slide ([50c6b28](https://github.com/Buu-AI/buu-fun/commit/50c6b288ec856779acb34befec40b57669806af2))
+* removed jam card and image-comparison slide ([ce8254f](https://github.com/Buu-AI/buu-fun/commit/ce8254fc4d8e5396e684dc3de0842fd761c5c078))
+* renamed sculpter =&gt; editor ([95eb089](https://github.com/Buu-AI/buu-fun/commit/95eb089bd6552b4230264b5e56096d4fff2b0485))
+* updated models query and added convert model query ([d8dbbf1](https://github.com/Buu-AI/buu-fun/commit/d8dbbf1be57f37446eabd83adb3582dc082ef000))
+* updated new buu loader ([76d0862](https://github.com/Buu-AI/buu-fun/commit/76d086214c4aca65f6415e852a03ca432ec46e8c))
+
+
+### 🐛 Bugfixes
+
+* added boards playground icon padding fix ([8eb98ac](https://github.com/Buu-AI/buu-fun/commit/8eb98acb9041a3a9d113b4e7f1e8463d27d62a0f))
+* added manual loaders and placed CDN url for scene background ([c809e7f](https://github.com/Buu-AI/buu-fun/commit/c809e7f7b2051b82e126af6c7a2366bf6aff209f))
+* added metadata and optimized loading in home page landing ([c06f58c](https://github.com/Buu-AI/buu-fun/commit/c06f58c4ae58811dec7836e809060de9fd990ea1))
+* added metadata and optimized loading in home page landing ([39f198b](https://github.com/Buu-AI/buu-fun/commit/39f198bc1ed90ae9b697318aae68c16c7bc35203))
+* added rounded corners for modal ([c54e87b](https://github.com/Buu-AI/buu-fun/commit/c54e87b44789c440461e1cfa7864910fd0aeb138))
+* added rounded corners for modal ([69ac6de](https://github.com/Buu-AI/buu-fun/commit/69ac6de8cca0c0cd6d05c68bc22e99fd083f051b))
+* added whole container scrollable in portfolio page ([d122c70](https://github.com/Buu-AI/buu-fun/commit/d122c70aeb70349668a45716df6a46279136aafa))
+* animator is not loading model from library ([709bcad](https://github.com/Buu-AI/buu-fun/commit/709bcad6835b3a3d907faaa88a28af37df24a642))
+* fixed orbit controls to the camera ([ab6e602](https://github.com/Buu-AI/buu-fun/commit/ab6e602c78d566eff473097baf5dfa8d7758547a))
+* formatted and linted the codebase ([4c60347](https://github.com/Buu-AI/buu-fun/commit/4c603475f4af27df4e9b0c91cf1c67e63f235d4b))
+* re-arrange navigation home to be top ([cc32fd1](https://github.com/Buu-AI/buu-fun/commit/cc32fd1693e70a766a02a30da40d79ab05866135))
+* removed any from the set Transformation ([5abfa20](https://github.com/Buu-AI/buu-fun/commit/5abfa200185f000924231c62133bd53b67674d37))
+* removed onClick outside hook ([7033241](https://github.com/Buu-AI/buu-fun/commit/7033241cc77245c242e74f7cf3e1e956f0a6f1e0))
+
+
+### 👽 Miscellaneous
+
+* **lint:** linted and formatted the codebase ([b6c487f](https://github.com/Buu-AI/buu-fun/commit/b6c487f3f448fc555f07088018928084a448b828))
+* **lint:** linted and formatted the codebase ([8500e5a](https://github.com/Buu-AI/buu-fun/commit/8500e5ab3d7b4c048d65fd996a89eadfc6cc9f09))
+* **lint:** linted and formatted the codebase ([4a8fbf2](https://github.com/Buu-AI/buu-fun/commit/4a8fbf2ed9854a00b1173967184e5b2478b53fe5))
+* **lint:** linted and formatted the codebase ([51fdfa5](https://github.com/Buu-AI/buu-fun/commit/51fdfa5a9617ee2c73ec9fe3a77b4ba9db3682c9))
+* **lint:** linted and formatted the codebase ([c330b61](https://github.com/Buu-AI/buu-fun/commit/c330b61b1cc6c96e20e79e5ac9042c8b2a9636c5))
+* **ui:** changed tooltip name from NFT -&gt; Collectibles ([40cb70a](https://github.com/Buu-AI/buu-fun/commit/40cb70a9b6643033cb90a554ef96bcea049825f8))
+* **ui:** removed new from playground ([ee7c0c3](https://github.com/Buu-AI/buu-fun/commit/ee7c0c3b94dd06bacc7113733b62a4934607a08b))
+
 ## [0.1.72](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.71...buu-fun-v0.1.72) (2025-07-01)
 
 
