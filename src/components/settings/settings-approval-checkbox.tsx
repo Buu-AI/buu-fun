@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 import { setAutoApprove } from "@/lib/redux/features/settings";
+import SettingsApproveToolTip from "./settings-approve-tool-tip";
 
 type TSettingsApprovalCheckbox = {};
 
@@ -10,7 +11,7 @@ export default function SettingsApprovalCheckbox({}: TSettingsApprovalCheckbox) 
   const dispatch = useAppDispatch();
   return (
     <div className="pt-2 ml-1">
-      <div className="flex py-2 gap-2 items-center ">
+      <div className="flex py-2 gap-2 items-center">
         <Checkbox
           checked={autoApprove}
           onCheckedChange={(value) => {
@@ -33,6 +34,7 @@ export default function SettingsApprovalCheckbox({}: TSettingsApprovalCheckbox) 
         >
           Auto Approve
         </Label>
+        <SettingsApproveToolTip />
       </div>
     </div>
   );

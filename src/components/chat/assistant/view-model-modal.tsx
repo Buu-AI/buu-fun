@@ -26,7 +26,7 @@ const ModelViewer = dynamic(
   () => import("@/components/generation/model-viewer"),
   {
     ssr: false,
-  }
+  },
 );
 
 export default function ViewModelModal() {
@@ -34,7 +34,7 @@ export default function ViewModelModal() {
   const dispatch = useAppDispatch();
   const modelId = useAppSelector((state) => state.chat.viewModel.model?.id);
   const toolCallId = useAppSelector(
-    (state) => state.chat.viewModel.toolRequest?.id
+    (state) => state.chat.viewModel.toolRequest?.id,
   );
   const model = useAppSelector((state) => getModelById(state, modelId));
 
@@ -98,7 +98,7 @@ export default function ViewModelModal() {
         dispatch(
           setViewModel({
             isOpen: value,
-          })
+          }),
         );
       }}
     >

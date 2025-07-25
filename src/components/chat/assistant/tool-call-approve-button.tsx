@@ -19,7 +19,7 @@ export default function ToolCallApproveButton({
   const { identityToken } = useAuthentication();
   const dispatch = useAppDispatch();
   const isAutoApproveEnabled = useAppSelector(
-    (state) => state.settings.autoApprove
+    (state) => state.settings.autoApprove,
   );
   const hasAutoApproved = useRef(false);
 
