@@ -5,6 +5,8 @@ import {
 import CreateNFTIcon from "@/assets/icons/create-nft-icon";
 import SelectObjectIcon from "@/assets/icons/select-object-icon";
 import ShareIcon from "@/assets/icons/share-icon";
+import Animator from "@/assets/icons/utility/animator";
+import Pen from "@/assets/icons/utility/pen";
 import { Eye, Trash2 } from "lucide-react";
 
 export const ToolTips = [
@@ -40,18 +42,33 @@ export const BoardToolTips = [
     content: "Share",
   },
   {
+    type: "DOWNLOAD" as const,
+    Icon: <DownloadIcon />,
+    content: "Download",
+  },
+  {
     type: "PLAYGROUND" as const,
     Icon: (
-      <div className="w-7 flex h-7">
+      <div className="flex w-full">
         <SelectObjectIcon height={"100%"} width={"100%"} />
       </div>
     ),
     content: "Add To Playground",
   },
+
   {
-    type: "DOWNLOAD" as const,
-    Icon: <DownloadIcon />,
-    content: "Download",
+    type: "ANIMATOR" as const,
+    Icon: (
+      <div className="w-full h-full">
+        <Animator />
+      </div>
+    ),
+    content: "Rig & Animate",
+  },
+  {
+    type: "EDITOR" as const,
+    Icon: <Pen />,
+    content: "Edit Mesh",
   },
 ];
 

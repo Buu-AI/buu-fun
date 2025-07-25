@@ -59,7 +59,6 @@ export default function ViewBoardCarousal({
               >
                 <div>
                   <Image
-                    // TODO
                     src={item.ImageUrl ?? "/logo.png"}
                     alt="Generated AI Image Url"
                     width={1920}
