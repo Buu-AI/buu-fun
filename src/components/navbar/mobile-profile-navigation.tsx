@@ -117,14 +117,14 @@ export default function MobileProfileNavigation() {
                   </Link>
                 </div>
                 <div className="flex border-b w-full ">
-                  <Link href={"/app/portfolio"}>
+                  {/* <Link href={"/app/portfolio"}>
                     <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
                       <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
                         <WalletIcon2 />
                       </div>
                       <p className="text-xl">$BUU Token</p>{" "}
                     </DrawerClose>
-                  </Link>
+                  </Link> */}
                 </div>
                 <div className="flex border-b w-full ">
                   <Link href={"/app/nfts"}>

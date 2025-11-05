@@ -9,9 +9,13 @@ import RoiStakingDialog from "@/components/portfolio/your-earning-new/roi-stakin
 import YourEarnings from "@/components/portfolio/your-earning-new/your-earnings";
 import Bounded from "@/components/ui/Bounded";
 import { constructMetadata } from "@/lib/construct-metadata";
+import { notFound } from "next/navigation";
 export const metadata = constructMetadata({});
-
+const disabled = true;
 export default function PortfolioPage() {
+  if (disabled) {
+    notFound();
+  }
   return (
     <Bounded className="h-full max-w-full    px-0">
       {/* <StakingDataProvider

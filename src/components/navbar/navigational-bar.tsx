@@ -52,7 +52,7 @@ export default function NavigationalBar() {
           >
             <SizePenIcon />
           </LocationKnownLink>
-          <LocationKnownLink
+          {/* <LocationKnownLink
             toolTip={{
               content: "$Buu Token",
               enabled: true,
@@ -63,7 +63,7 @@ export default function NavigationalBar() {
             LinkTo="/app/portfolio"
           >
             <CoinStackIcon />
-          </LocationKnownLink>
+          </LocationKnownLink> */}
           <LocationKnownLink
             toolTip={{
               content: "Collectibles",
