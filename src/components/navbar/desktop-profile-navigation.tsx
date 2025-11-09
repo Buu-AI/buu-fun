@@ -70,7 +70,7 @@ export default function DesktopProfileNavigation() {
                   height={100}
                 />
               </div>
-              <p className="hidden lg:flex">
+              {/* <p className="hidden lg:flex">
                 {address && address.length > 9 ? (
                   <>
                     {address.slice(0, 4)}...
@@ -79,8 +79,8 @@ export default function DesktopProfileNavigation() {
                 ) : (
                   address
                 )}
-              </p>
-              <div className="w-0.5 h-[90%] my-auto bg-muted/80 hidden lg:flex" />
+              </p> */}
+              <div className="w-[1px] h-[90%] my-auto bg-muted/60 hidden lg:flex" />
               <ChevronDown />
             </button>
           </PopoverTrigger>
