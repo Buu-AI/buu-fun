@@ -1,4 +1,3 @@
-import CreateNFTIcon from "@/assets/icons/create-nft-icon";
 
 import { DownloadIcon } from "@/assets/icons";
 import SelectObjectIcon from "@/assets/icons/select-object-icon";
@@ -8,7 +7,6 @@ import ShareIcon from "@/assets/icons/utility/share-icon";
 import useToolBar from "@/hooks/use-tool-bar";
 import { MaybeString } from "@/types";
 import TooltipWrapper from "./tooltip-wrapper";
-
 type TViewModelToolbar = {
   modelId: MaybeString;
   toolCallId: MaybeString;
@@ -23,11 +21,11 @@ export default function ViewModelToolbar({
   const {
     downloadModel,
     shareModel,
-    handleGenerateNFT,
     addModelToPlayground,
-    tokenized,
     addToAnimator,
     addToEditor,
+    // handleGenerateNFT,
+    // tokenized
   } = useToolBar({
     modelId,
     selectedModelUrl,
@@ -36,14 +34,14 @@ export default function ViewModelToolbar({
   return (
     <div className="flex items-center justify-between gap-3  px-4 md:px-6 w-full h-full">
       <div className="flex gap-3 items-center">
-        <TooltipWrapper
+        {/* <TooltipWrapper
           align="start"
           content="Generate Collectible"
           buttonIcon={<CreateNFTIcon />}
           hoverState={tokenized}
           disabled={tokenized}
           onClickCallback={handleGenerateNFT}
-        />
+        /> */}
         <TooltipWrapper
           align="start"
           content="Add to Playground"

@@ -63,7 +63,7 @@ export default function ToolBarWrapper({
           );
         }
 
-        if (item.type === "GENERATE_NFT" && !disabled?.GENERATE_NFT) {
+        if (item.type === "GENERATE_NFT" && !disabled?.GENERATE_NFT && 0) {
           return (
             <ToolTipGenerateNft
               messageId={messageId}

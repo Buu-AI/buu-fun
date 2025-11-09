@@ -1,21 +1,60 @@
 "use client";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
-import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
-import LogoutIcon from "@/assets/icons/log-out-Icon";
-import ReferralIcon from "@/assets/icons/referral-icon";
-import SettingsIcon from "@/assets/icons/settings-icon";
 import { profilePicture } from "@/lib/dice-bear";
 import { useAuthentication } from "@/providers/account.context";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import ExportSolanaWallet from "../referral/export-wallet";
-import CopyAddress from "./copy-address";
+import { createNavigationConfig, NavigationItem } from "./navigation-config";
 
 export default function DesktopProfileNavigation() {
   const { address, isAuthenticated, logout } = useAuthentication();
   const shouldConnect = !isAuthenticated || !address;
+
+  const navigationConfig = createNavigationConfig(logout);
+
+  const renderNavigationItem = (item: NavigationItem, index: number) => {
+    // Filter out "Home" for desktop navigation
+    if (item.label === "Home" || item.label === "Boards" || item.label === "NFT's") {
+      return null;
+    }
+
+    const baseClassName = "flex w-full items-center gap-1.5 py-2 rounded-md px-2 font-medium";
+    const hoverClassName = item.onClick
+      ? "hover:bg-buu-secondary"
+      : "hover:bg-buu-button/60";
+    const className = `${baseClassName} ${hoverClassName}`;
+
+    const content = (
+      <>
+        <div className="w-5 h-5">
+          {item.icon}
+        </div>
+        <p className={item.textClassName || ""}>
+          {item.label}
+        </p>
+      </>
+    );
+
+    if (item.href) {
+      return (
+        <Link key={index} href={item.href} className={className}>
+          {content}
+        </Link>
+      );
+    }
+
+    if (item.onClick) {
+      return (
+        <button key={index} onClick={item.onClick} className={className}>
+          {content}
+        </button>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <>
@@ -50,62 +89,11 @@ export default function DesktopProfileNavigation() {
             align="end"
             className="px-1 pb-1 pt-1 max-w-[210px] bg-buu backdrop-blur-lg border-buu"
           >
-            <ExportSolanaWallet className="w-full" />
-            <div className="w-full mt-2">
+            {/* <ExportSolanaWallet className="w-full" /> */}
+            {/* <div className="w-full mt-2">
               <CopyAddress isNavigation />
-            </div>
-            <Link
-              href={"/app/referral"}
-              className="flex w-full items-center gap-1.5 hover:bg-buu-button/60 py-2 rounded-md px-2 font-medium"
-            >
-              <div className="w-5 h-5">
-                <ReferralIcon />
-              </div>
-              {/* <SettingsIcon /> */}
-              <p className="rainbow-text">Referral Program</p>
-            </Link>
-            {/* <Link
-              href={"/app/portfolio"}
-              className="flex w-full items-center gap-1.5 hover:bg-buu-button/60 py-2 rounded-md px-2 font-medium"
-            >
-              <div className="flex w-5 h-5 ">
-                <WalletIcon2 />
-              </div>
-              <p>$BUU Token</p>
-            </Link> */}
-            <Link
-              href={"/app/api-key"}
-              className="flex w-full items-center gap-1.5 hover:bg-buu-button/60 py-2 rounded-md px-2 font-medium"
-            >
-              <div className="flex w-5 h-5 ">
-                <ApiKeyHeaderIcon fill="#78DBFF" />
-              </div>
-              {/* <SettingsIcon /> */}
-              <p>API Key</p>
-            </Link>
-            <Link
-              href={"/app/profile"}
-              className="flex w-full items-center gap-1.5 hover:bg-buu-button/60 py-2 rounded-md px-2 font-medium"
-            >
-              <div className="w-5 h-5">
-                <SettingsIcon />
-              </div>
-              {/* <SettingsIcon /> */}
-              <p>Settings</p>
-            </Link>
-
-            <button
-              onClick={async () => {
-                await logout();
-              }}
-              className="flex w-full items-center gap-1.5 hover:bg-buu-secondary py-2 rounded-md px-2 font-medium"
-            >
-              {" "}
-              <div className="w-5 h-5">
-                <LogoutIcon />{" "}
-              </div>
-              <p>Logout</p>
-            </button>
+            </div> */}
+            {navigationConfig.map(renderNavigationItem)}
           </PopoverContent>
         </Popover>
       ) : null}

@@ -1,14 +1,13 @@
-import { CoinStackIcon, SizePenIcon } from "@/assets/icons";
+import { SizePenIcon } from "@/assets/icons";
 import logo from "@/assets/icons/logo-no-gradient.png";
 import MagicPenIcon from "@/assets/icons/magicpen";
-import NFTSideBarIcon from "@/assets/icons/nft-sidebar-icon";
 import SelectObjectIcon from "@/assets/icons/select-object-icon";
+import Animator from "@/assets/icons/utility/animator";
+import Pen from "@/assets/icons/utility/pen";
 import Image from "next/image";
 import Link from "next/link";
 import KnowMorePopover from "./know-more-pop-over";
 import LocationKnownLink from "./location-known-link";
-import Pen from "@/assets/icons/utility/pen";
-import Animator from "@/assets/icons/utility/animator";
 export default function NavigationalBar() {
   return (
     <nav className="px-3 py-4  w-full h-full md:h-screen z-50 relative">
@@ -64,7 +63,7 @@ export default function NavigationalBar() {
           >
             <CoinStackIcon />
           </LocationKnownLink> */}
-          <LocationKnownLink
+          {/* <LocationKnownLink
             toolTip={{
               content: "Collectibles",
               enabled: true,
@@ -75,7 +74,7 @@ export default function NavigationalBar() {
             LinkTo="/app/nfts"
           >
             <NFTSideBarIcon />
-          </LocationKnownLink>
+          </LocationKnownLink> */}
           <div className="h-0.5 w-[80%] bg-gray-800 rounded-full" />
           <LocationKnownLink
             toolTip={{

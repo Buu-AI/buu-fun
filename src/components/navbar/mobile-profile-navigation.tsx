@@ -1,10 +1,3 @@
-import { MagicPenIcon, SizePenIcon } from "@/assets/icons";
-import ApiKeyHeaderIcon from "@/assets/icons/api-key-header-icon";
-import LogoutIcon from "@/assets/icons/log-out-Icon";
-import NFTSideBarIcon from "@/assets/icons/nft-sidebar-icon";
-import ReferralIcon from "@/assets/icons/referral-icon";
-import SettingsIcon from "@/assets/icons/settings-icon";
-import WalletIcon2 from "@/assets/icons/wallet-icon-2";
 import {
   Accordion,
   AccordionContent,
@@ -16,7 +9,6 @@ import { useAuthentication } from "@/providers/account.context";
 import { ArrowDown, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import ExportSolanaWallet from "../referral/export-wallet";
 import {
   Drawer,
   DrawerClose,
@@ -26,19 +18,56 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "../ui/drawer";
-import CopyAddress from "./copy-address";
 import KnowMoreContent from "./know-more-content";
+import { createNavigationConfig, NavigationItem } from "./navigation-config";
 
 export default function MobileProfileNavigation() {
   const { address, isAuthenticated, logout } = useAuthentication();
   const shouldConnect = !isAuthenticated || !address;
+
+  const navigationConfig = createNavigationConfig(logout);
+
+  const renderNavigationItem = (item: NavigationItem, index: number) => {
+    const content = (
+      <DrawerClose className="flex w-full items-center gap-2 py-2 rounded-md px-2 font-medium">
+        <div className="w-6 h-6">
+          {item.icon}
+        </div>
+        <p className={`text-xl ${item.textClassName || ""}`}>
+          {item.label}
+        </p>
+      </DrawerClose>
+    );
+
+    if (item.href) {
+      return (
+        <div key={index} className="flex border-b w-full">
+          <Link href={item.href}>
+            {content}
+          </Link>
+        </div>
+      );
+    }
+
+    if (item.onClick) {
+      return (
+        <div key={index} className="flex border-b w-full">
+          <button onClick={item.onClick}>
+            {content}
+          </button>
+        </div>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <>
       {!shouldConnect ? (
         <Drawer>
           <DrawerTrigger className="md:hidden">
-            <div className="flex  items-center gap-1.5 text-sm px-2 h-[40px] group py-1.5 bg-white text-black rounded-md">
+            <div className="flex items-center gap-1.5 text-sm px-2 h-[40px] group py-1.5 bg-white text-black rounded-md">
               <div className="relative flex w-8 h-8 border-profile shadow-inner rounded-md overflow-hidden">
                 <Image
                   src={profilePicture(address)}
@@ -61,164 +90,53 @@ export default function MobileProfileNavigation() {
               <ChevronDown />
             </div>
           </DrawerTrigger>
-          <DrawerContent className="bg-buu shadow-buu-inner border-buu ">
+          <DrawerContent className="bg-buu shadow-buu-inner border-buu">
             <DrawerHeader>
-              <DrawerTitle className="flex   items-center gap-2 justify-center">
-                <div className="relative flex w-8 h-8 border-profile shadow-inner rounded-md overflow-hidden">
+              <DrawerTitle className="flex items-center gap-2 justify-center">
+                {/* <div className="relative flex w-8 h-8 border-profile shadow-inner rounded-md overflow-hidden">
                   <Image
                     src={profilePicture(address)}
                     width={100}
                     alt="sample profile Icon"
                     height={100}
                   />
-                </div>
+                </div> */}
                 <div className="flex">
-                  <CopyAddress />
+                  {/* <CopyAddress /> */}
                 </div>
               </DrawerTitle>
               <DrawerDescription className="sr-only">
                 Navigation drawer for Home, profiles, and boards
               </DrawerDescription>
             </DrawerHeader>
-            <div className="flex flex-col ">
-              <div className="flex  w-full px-1 pb-2 ">
+            <div className="flex flex-col">
+              {/* <div className="flex w-full px-1 pb-2">
                 <DrawerClose asChild>
                   <ExportSolanaWallet className="w-full" />
                 </DrawerClose>
-              </div>
+              </div> */}
               <div className="flex flex-col gap-2 px-1 w-full max-h-[70dvh] overflow-y-scroll scrollbar-w-hidden">
-                <div className="flex border-b w-full ">
-                  <Link
-                    href={"/app"}
-                    // className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium"
-                  >
-                    <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
-                      <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
-                        <MagicPenIcon className="text-[#78DBFF]" />
-                      </div>
-                      <p className="text-xl">Home</p>
-                    </DrawerClose>
-                  </Link>
-                </div>
-                <div className="flex border-b w-full ">
-                  <Link
-                    href={"/app/referral"}
-                    // className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium"
-                  >
-                    {" "}
-                    <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
-                      <div className="w-6 h-6">
-                        <ReferralIcon />
-                      </div>
-                      <p className="text-xl rainbow-text ">
-                        Referral Program
-                      </p>{" "}
-                    </DrawerClose>
-                  </Link>
-                </div>
-                <div className="flex border-b w-full ">
-                  {/* <Link href={"/app/portfolio"}>
-                    <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
-                      <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
-                        <WalletIcon2 />
-                      </div>
-                      <p className="text-xl">$BUU Token</p>{" "}
-                    </DrawerClose>
-                  </Link> */}
-                </div>
-                <div className="flex border-b w-full ">
-                  <Link href={"/app/nfts"}>
-                    <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
-                      <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
-                        <NFTSideBarIcon />
-                      </div>
-                      <p className="text-xl">NFT&apos;s</p>{" "}
-                    </DrawerClose>
-                  </Link>
-                </div>
-                <div className="flex border-b w-full ">
-                  <Link href={"/app/boards"}>
-                    <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
-                      <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
-                        <SizePenIcon />
-                      </div>
-                      <p className="text-xl">Boards</p>{" "}
-                    </DrawerClose>
-                  </Link>
-                </div>
-                <div className="flex border-b w-full ">
-                  <Link href={"/app/api-key"}>
-                    {" "}
-                    <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
-                      <div className="w-6 h-6 group-hover:text-white  group-hover:fill-text-white text-blue-300">
-                        <ApiKeyHeaderIcon />
-                      </div>
-                      <p className="text-xl">API Keys</p>{" "}
-                    </DrawerClose>
-                  </Link>
-                </div>
-                <div className="flex border-b w-full ">
-                  <Link
-                    href={"/app/profile"}
-                    // className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium"
-                  >
-                    {" "}
-                    <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
-                      <div className="w-6 h-6">
-                        <SettingsIcon />
-                      </div>
-                      <p className="text-xl">Settings</p>{" "}
-                    </DrawerClose>
-                  </Link>
-                </div>{" "}
-                <div className="flex border-b  w-full">
-                  <button
-                    onClick={async () => {
-                      await logout();
-                    }}
-                    // className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium"
-                  >
-                    {" "}
-                    <DrawerClose className="flex w-full  items-center gap-2  py-2 rounded-md px-2 font-medium">
-                      <div className="w-6 h-6">
-                        <LogoutIcon />
-                      </div>
-                      <p className="text-xl">Logout</p>{" "}
-                    </DrawerClose>
-                  </button>{" "}
-                </div>
+                {navigationConfig.map(renderNavigationItem)}
                 <Accordion type="single" collapsible>
                   <AccordionItem value="item-1">
                     <AccordionTrigger
-                      className="flex group  group  items-center justify-center w-full"
+                      className="flex group items-center justify-center w-full"
                       arrowClass="hidden"
-                      //   asChild
                     >
-                      <div className="flex justify-center  items-center gap-1.5  py-2 rounded-md px-2 font-medium">
+                      <div className="flex justify-center items-center gap-1.5 py-2 rounded-md px-2 font-medium">
                         <p className="text-base">Know more</p>
                         <div className="w-6 h-6 group-[&[data-state=open]]:rotate-180 transition-transform duration-700 ease-in-out">
                           <ArrowDown />
                         </div>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent className="mb-10 ">
+                    <AccordionContent className="mb-10">
                       <div className="px-3 max-w-sm flex items-center justify-center">
                         <KnowMoreContent />
                       </div>
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
-                {/* <div className="flex max-w-sm py-4 items-center justify-center w-full">
-                  <button
-                    onClick={async () => {}}
-                    className="flex justify-center  items-center gap-1.5  py-2 rounded-md px-2 font-medium"
-                  >
-                    <p className="text-base">Know more</p>
-                    <div className="w-6 h-6">
-                      <ArrowDown />
-                    </div>
-                  </button>{" "}
-                </div> */}
               </div>
             </div>
           </DrawerContent>

@@ -4,7 +4,6 @@ import ViewModelModal from "@/components/chat/assistant/view-model-modal";
 import ChatContainer from "@/components/chat/chat-container";
 import ChatMessageInitializer from "@/components/chat/chat-initializer";
 import ChatMessageEventProvider from "@/components/chat/chat-message-event-provider";
-import GenerateNFTModal from "@/components/chat/toolbar/generate-nft-modal";
 import MaximizeViewModel from "@/components/chat/toolbar/maximize-view-model";
 import ModelGenerationModal from "@/components/chat/toolbar/model-generation-modal";
 import { constructMetadata } from "@/lib/construct-metadata";
@@ -33,7 +32,7 @@ export default async function ChatPage({ params }: TChatPage) {
         </div>
       </main>
 
-      <GenerateNFTModal />
+      {/* <GenerateNFTModal /> */}
       <MaximizeViewModel />
       <ModelGenerationModal />
       <ShareableBoardsButton />

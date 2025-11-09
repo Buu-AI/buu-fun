@@ -3,11 +3,11 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { approveTool } from "@/lib/react-query/threads.v3";
 import { setSubscriptionModel } from "@/lib/redux/features/subscription";
 import { useAuthentication } from "@/providers/account.context";
+import { MaybeString } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { Button } from "../../ui/button";
-import { MaybeString } from "@/types";
 
 type TToolCallApproveButton = {
   requestId: MaybeString;

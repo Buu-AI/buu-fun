@@ -106,7 +106,7 @@ export default function MaximizeViewModel() {
                   tokenized={data?.tokenized}
                   disabled={{
                     MAXIMIZE_VIEW: true,
-                    GENERATE_NFT: data.isTexturedMesh,
+                    GENERATE_NFT: true,
                   }}
                 />
               </div>

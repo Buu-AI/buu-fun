@@ -3,6 +3,7 @@ import CubeTexture from "@/assets/icons/cube-texture";
 import MeshIcon from "@/assets/icons/mesh-icon";
 import TexturedMesh from "@/assets/icons/textured-mesh";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import useModelAnalysis from "@/hooks/use-model-analysis";
 import { getModelBasedOnPriority } from "@/lib/helpers/chat/model";
 import { clearViewModel, setViewModel } from "@/lib/redux/features/chat";
 import { getModelById, getToolById } from "@/lib/redux/selectors/chatMessages";
@@ -18,8 +19,6 @@ import {
 } from "../../ui/dialog";
 import LoaderCircle from "../Loader-circle";
 import ViewModelToolbar from "../toolbar/view-model-toolbar";
-import NftTokenButton from "./nft-token-button";
-import useModelAnalysis from "@/hooks/use-model-analysis";
 import ChangeModelToolTip from "./change-model-tool-tip";
 
 const ModelViewer = dynamic(
@@ -181,9 +180,9 @@ export default function ViewModelModal() {
               />
             ) : null}
           </div>
-          <div className="absolute  bottom-[5rem] right-6  z-[99] ">
-            <NftTokenButton nftId={model?.nftId} />
-          </div>
+          {/* <div className="absolute  bottom-[5rem] right-6  z-[99] "> */}
+            {/* <NftTokenButton nftId={model?.nftId} /> */}
+          {/* </div> */}
           <div className="bottom-[5rem] left-6 absolute">
             <p className="uppercase font-medium  text-xs">
               <span className="text-muted-foreground/60">VERTEX:</span>
