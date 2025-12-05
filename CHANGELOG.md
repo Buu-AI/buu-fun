@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.74](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.73...buu-fun-v0.1.74) (2025-11-09)
+
+
+### ✨ Features
+
+* removed NFT/web3 related tokenization etc.. ([52446dc](https://github.com/Buu-AI/buu-fun/commit/52446dc0d3386c4feb0f957afec51c656c02a6fe))
+
+
+### 🐛 Bugfixes
+
+* disabled portfolio page ([038da94](https://github.com/Buu-AI/buu-fun/commit/038da94278a7aba9e8e4c7e8d6140903c6c1b64c))
+* removed the address and seperator in the profile ([ce62bb4](https://github.com/Buu-AI/buu-fun/commit/ce62bb454b7dd1ceefe575ca2f1f16a93c85df8e))
+
 ## [0.1.73](https://github.com/Buu-AI/buu-fun/compare/buu-fun-v0.1.72...buu-fun-v0.1.73) (2025-07-25)
 
 
