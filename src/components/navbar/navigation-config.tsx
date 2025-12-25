@@ -13,7 +13,7 @@ export type NavigationItem = {
 };
 
 export const createNavigationConfig = (
-  logout: () => Promise<void>
+  logout: () => Promise<void>,
 ): NavigationItem[] => [
   {
     label: "Home",

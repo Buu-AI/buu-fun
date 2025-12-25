@@ -16,11 +16,16 @@ export default function DesktopProfileNavigation() {
 
   const renderNavigationItem = (item: NavigationItem, index: number) => {
     // Filter out "Home" for desktop navigation
-    if (item.label === "Home" || item.label === "Boards" || item.label === "NFT's") {
+    if (
+      item.label === "Home" ||
+      item.label === "Boards" ||
+      item.label === "NFT's"
+    ) {
       return null;
     }
 
-    const baseClassName = "flex w-full items-center gap-1.5 py-2 rounded-md px-2 font-medium";
+    const baseClassName =
+      "flex w-full items-center gap-1.5 py-2 rounded-md px-2 font-medium";
     const hoverClassName = item.onClick
       ? "hover:bg-buu-secondary"
       : "hover:bg-buu-button/60";
@@ -28,12 +33,8 @@ export default function DesktopProfileNavigation() {
 
     const content = (
       <>
-        <div className="w-5 h-5">
-          {item.icon}
-        </div>
-        <p className={item.textClassName || ""}>
-          {item.label}
-        </p>
+        <div className="w-5 h-5">{item.icon}</div>
+        <p className={item.textClassName || ""}>{item.label}</p>
       </>
     );
 
@@ -60,8 +61,8 @@ export default function DesktopProfileNavigation() {
     <>
       {!shouldConnect ? (
         <Popover>
-          <PopoverTrigger asChild className="md:flex hidden">
-            <button className="flex items-center gap-1.5 text-sm px-2 h-[40px] group py-1.5 bg-white text-black rounded-md">
+          <PopoverTrigger asChild className="md:flex hidden relative">
+            <button className="flex items-center relative gap-1.5 text-sm px-2 h-[40px] group py-1.5 bg-white text-black rounded-md">
               <div className="relative flex w-8 h-8 border-profile shadow-inner rounded-md overflow-hidden">
                 <Image
                   src={profilePicture(address)}
@@ -70,18 +71,10 @@ export default function DesktopProfileNavigation() {
                   height={100}
                 />
               </div>
-              {/* <p className="hidden lg:flex">
-                {address && address.length > 9 ? (
-                  <>
-                    {address.slice(0, 4)}...
-                    {address.slice(address.length - 5, address.length - 1)}
-                  </>
-                ) : (
-                  address
-                )}
-              </p> */}
-              <div className="w-[1px] h-[90%] my-auto bg-muted/60 hidden lg:flex" />
-              <ChevronDown />
+              <div className="relative flex items-center">
+                <div className="w-[1px] h-[90%] relative my-auto bg-muted/60 hidden lg:flex" />
+                <ChevronDown />
+              </div>
             </button>
           </PopoverTrigger>
           <PopoverContent
@@ -89,10 +82,6 @@ export default function DesktopProfileNavigation() {
             align="end"
             className="px-1 pb-1 pt-1 max-w-[210px] bg-buu backdrop-blur-lg border-buu"
           >
-            {/* <ExportSolanaWallet className="w-full" /> */}
-            {/* <div className="w-full mt-2">
-              <CopyAddress isNavigation />
-            </div> */}
             {navigationConfig.map(renderNavigationItem)}
           </PopoverContent>
         </Popover>

@@ -1121,6 +1121,12 @@ input[type="number"] {
   box-shadow: 0px 0px 2.215px 0px #78dbff;
 }
 
+.bg-new-pill {
+  /* border: 0.554px solid #78dbff; */
+  background: rgba(120, 219, 255, 0.7);
+  /* box-shadow: 0px 0px 2.215px 0px #78dbff; */
+}
+
 .chat-pending-container {
   border-radius: 10px;
   background: rgba(28, 32, 39, 0.38);

@@ -10,7 +10,7 @@ import { useAppStore } from "@/hooks/redux";
 const PersistLoading = () => (
   <div className="flex items-center justify-center min-h-screen">
     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-    <span className="ml-3 text-gray-600">Restoring your workspace...</span>
+    <span className="ml-3 text-gray-600">loading...</span>
   </div>
 );
 
@@ -25,7 +25,11 @@ export default function StoreProvider({
     storeRef.current = makeStore();
   }
 
-  return <Provider store={storeRef.current}>{children}</Provider>;
+  return (
+    <Provider store={storeRef.current}>
+      <PersistProvider>{children}</PersistProvider>
+    </Provider>
+  );
 }
 
 export function PersistProvider({

@@ -129,6 +129,7 @@ export enum ConvertMesh {
 
 /** The output format of the converted mesh */
 export enum ConvertOutputFormat {
+  Fbx = "fbx",
   Obj = "obj",
 }
 
@@ -206,6 +207,17 @@ export type GenerateCustomerPortalSessionOutput = {
   __typename?: "GenerateCustomerPortalSessionOutput";
   customerPortalLink: Scalars["String"]["output"];
   planKey: StripeSubscriptionPlanKeys;
+};
+
+export type GenerateHunyuan3DModelDetails = {
+  __typename?: "GenerateHunyuan3DModelDetails";
+  conversionJobId?: Maybe<Scalars["String"]["output"]>;
+  enablePBR: Scalars["Boolean"]["output"];
+  faceCount: Scalars["Int"]["output"];
+  fluxJobId?: Maybe<Scalars["String"]["output"]>;
+  outputFormat: Scalars["String"]["output"];
+  polygonType: Scalars["String"]["output"];
+  prompt: Scalars["String"]["output"];
 };
 
 export type GenerateModelsDetails = {
@@ -401,6 +413,7 @@ export type Model = {
   __typename?: "Model";
   _id: Scalars["String"]["output"];
   createdAt: Scalars["DateTimeISO"]["output"];
+  fbx?: Maybe<ModelFiles>;
   image: Media;
   mesh?: Maybe<Media>;
   messageId?: Maybe<Scalars["String"]["output"]>;
@@ -746,8 +759,10 @@ export enum NumberOfFaces {
 }
 
 export type Options = {
-  numberOfFaces?: InputMaybe<NumberOfFaces>;
+  isGameReady?: InputMaybe<Scalars["Boolean"]["input"]>;
+  numberOfFaces?: InputMaybe<Scalars["String"]["input"]>;
   numberOfModels?: InputMaybe<Scalars["Int"]["input"]>;
+  outputFormat?: InputMaybe<Scalars["String"]["input"]>;
   style?: InputMaybe<Style>;
   texture?: InputMaybe<TextureType>;
 };
@@ -1259,6 +1274,7 @@ export type ToolRequestConfirmationResult =
   | ToolRequestConfirmation;
 
 export type ToolRequestDetails =
+  | GenerateHunyuan3DModelDetails
   | GenerateModelsDetails
   | GenerateModelsFromEditDetails
   | GenerateModelsFromImageDetails
@@ -1289,6 +1305,7 @@ export enum ToolRequestStatus {
 /** The type of the tool request */
 export enum ToolRequestType {
   EditImage = "EDIT_IMAGE",
+  GenerateHunyuan3DModel = "GENERATE_HUNYUAN3D_MODEL",
   GenerateImages = "GENERATE_IMAGES",
   GenerateImagesFromReferences = "GENERATE_IMAGES_FROM_REFERENCES",
   GenerateModelsFromEdit = "GENERATE_MODELS_FROM_EDIT",
@@ -2396,6 +2413,7 @@ export type GetMessagesQuery = {
             message: string;
             percentage: number;
             details?:
+              | { __typename?: "GenerateHunyuan3DModelDetails" }
               | {
                   __typename: "GenerateModelsDetails";
                   texture?: TextureType | null;
@@ -3729,6 +3747,7 @@ export type GenerateNftMutation = {
             message: string;
             percentage: number;
             details?:
+              | { __typename?: "GenerateHunyuan3DModelDetails" }
               | {
                   __typename?: "GenerateModelsDetails";
                   texture?: TextureType | null;
@@ -3934,6 +3953,7 @@ export type GenerateNftMutation = {
           message: string;
           percentage: number;
           details?:
+            | { __typename?: "GenerateHunyuan3DModelDetails" }
             | {
                 __typename?: "GenerateModelsDetails";
                 texture?: TextureType | null;

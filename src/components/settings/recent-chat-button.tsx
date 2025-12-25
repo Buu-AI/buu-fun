@@ -8,7 +8,7 @@ export default function RecentChatButton() {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="flex  items-center gap-1 justify-center md:hidden ">
+    <div className="flex items-center gap-1 justify-center md:hidden ">
       <div>
         <Button
           onClick={() => {

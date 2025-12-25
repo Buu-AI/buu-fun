@@ -14,6 +14,7 @@ const pillVariant = cva(
         white: "bg-white text-black",
         blue: "border-pill bg-pill-blue shadow-pill-blue",
         golden: "golden-pill",
+        bannerBlue: "bg-pill-card max-w-max",
         darkYellow: "dark-yellow",
         green: "green-pill",
         gray: "gray-pill",
@@ -22,11 +23,13 @@ const pillVariant = cva(
         default: "px-1.5 py-1",
         md: "px-3 py-1 text-sm",
         sm: "px-3 py-0.5 text-xs",
+        tiny: "p-0.5 text-[7px] max-h-fit leading-none font-bold",
       },
     },
-  },
+  }
 );
 export type TPillVariant = VariantProps<typeof pillVariant>;
+
 export default function Pill({
   className,
   children,
@@ -47,4 +50,10 @@ export default function Pill({
       {children}
     </span>
   );
+}
+
+{
+  /* <div className="absolute bg-pill-card -top-3 left-0 max-w-max p-0.5 mx-auto">
+  <p className="text-[7px] leading-none font-bold text-white">NEW</p>
+</div>; */
 }
