@@ -81,6 +81,7 @@ export default function HeaderQuickSelectButton() {
       accessToken,
       prompt,
       sessionId,
+      
     });
   }
   return (

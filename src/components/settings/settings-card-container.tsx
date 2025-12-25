@@ -1,4 +1,5 @@
 "use client";
+import EnableGameReadySwitch from "./enable-game-ready-switch";
 import NumberOfModel from "./number-of-model";
 import SelectFaces from "./select-faces";
 import SelectTexture from "./select-texture";
@@ -9,7 +10,8 @@ export default function SettingsCardContainer() {
   return (
     <div className="w-full px-2">
       <ThreeDSelectBox />
-      <div className="flex gap-4 mt-4 items-center justify-between w-full">
+      <EnableGameReadySwitch />
+      <div className="flex gap-4  items-center justify-between w-full">
         <SelectFaces />
         <SelectTexture />
       </div>

@@ -5,6 +5,7 @@ import { SettingsState } from "@/lib/redux/features/settings";
 import { facesDetailData, textureDetailData } from "./options-data";
 import SelectedStyles from "./selected-styles";
 import { iconByTitle } from "./styles-data";
+import Pill from "../elements/pill";
 
 export const modes_mapper: Record<SettingsState["modes"], string> = {
   rigging: "Rigging",
@@ -14,7 +15,7 @@ export const modes_mapper: Record<SettingsState["modes"], string> = {
 
 export default function SettingsBarDisplayTitle() {
   const selectedStyle = useAppSelector((state) => state.settings.ThreeDStyle);
-
+  const isGameReady = useAppSelector((state) => state.settings.isGameReady);
   const { displayName } = selectedStyle
     ? iconByTitle[selectedStyle]
     : iconByTitle["definedByAI"];
@@ -40,10 +41,10 @@ export default function SettingsBarDisplayTitle() {
     : facesDetailData["tenKey"];
 
   const numberOfModelsMode = useAppSelector(
-    (state) => state.settings.numberOfModelsMode,
+    (state) => state.settings.numberOfModelsMode
   );
   const numberOfModel = useAppSelector(
-    (state) => state.settings.numberOfModels,
+    (state) => state.settings.numberOfModels
   );
   return (
     <div className="flex gap-1 items-center">
@@ -59,6 +60,16 @@ export default function SettingsBarDisplayTitle() {
               <PaidFeature />
             </div>
           ) : null}
+        </div>
+      ) : null}
+      {isGameReady ? (
+        <div className="px-2.5 relative py-1.5 gap-1 shadow-buu-inner bg-buu rounded-lg flex items-center  justify-center">
+          <div className="absolute -top-1 left-0">
+            <Pill size={"tiny"} variant={"bannerBlue"}>
+              NEW
+            </Pill>
+          </div>
+          <p className="text-sm text-nowrap">Game Ready</p>
         </div>
       ) : null}
       {textureValue !== "definedByAI" ? (
