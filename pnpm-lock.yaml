@@ -47,7 +47,7 @@ importers:
         version: 15.3.4(@mdx-js/loader@3.1.0(acorn@8.14.0)(webpack@5.99.9))(@mdx-js/react@3.1.0(@types/react@19.1.0)(react@19.1.0))
       '@next/third-parties':
         specifier: 15.3.4
-        version: 15.3.4(next@15.3.4(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
+        version: 15.3.4(next@15.3.8(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       '@privy-io/react-auth':
         specifier: ^2.4.5
         version: 2.4.5(@react-native-async-storage/async-storage@1.24.0(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)))(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(@types/react@19.1.0)(bs58@6.0.0)(bufferutil@4.0.9)(immer@10.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.7.3)(use-sync-external-store@1.4.0(react@19.1.0))(utf-8-validate@5.0.10)(zod@3.24.2)
@@ -107,7 +107,7 @@ importers:
         version: 2.5.1(react-redux@9.2.0(@types/react@19.1.0)(react@19.1.0)(redux@5.0.1))(react@19.1.0)
       '@sentry/nextjs':
         specifier: ^9.27.0
-        version: 9.27.0(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(encoding@0.1.13)(next@15.3.4(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(webpack@5.99.9)
+        version: 9.27.0(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(encoding@0.1.13)(next@15.3.8(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(webpack@5.99.9)
       '@solana/spl-token':
         specifier: ^0.4.13
         version: 0.4.13(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(utf-8-validate@5.0.10)
@@ -122,7 +122,7 @@ importers:
         version: 0.9.35(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bs58@6.0.0)(react-dom@19.1.0(react@19.1.0))(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(react@19.1.0)
       '@solana/wallet-adapter-wallets':
         specifier: ^0.19.32
-        version: 0.19.32(@babel/core@7.26.9)(@babel/runtime@7.26.9)(@react-native-async-storage/async-storage@1.24.0(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)))(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bs58@6.0.0)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-dom@19.1.0(react@19.1.0))(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(react@19.1.0)(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+        version: 0.19.32(@babel/core@7.26.9)(@babel/runtime@7.26.9)(@react-native-async-storage/async-storage@1.24.0(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)))(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bs58@6.0.0)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-dom@19.1.0(react@19.1.0))(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(react@19.1.0)(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@solana/wallet-standard-features':
         specifier: ^1.3.0
         version: 1.3.0
@@ -220,8 +220,8 @@ importers:
         specifier: ^5.1.5
         version: 5.1.5
       next:
-        specifier: 15.3.4
-        version: 15.3.4(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: 15.3.8
+        version: 15.3.8(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       p-queue:
         specifier: ^8.1.0
         version: 8.1.0
@@ -1491,6 +1491,7 @@ packages:
   '@graphql-tools/prisma-loader@8.0.17':
     resolution: {integrity: sha512-fnuTLeQhqRbA156pAyzJYN0KxCjKYRU5bz1q/SKOwElSnAU4k7/G1kyVsWLh7fneY78LoMNH5n+KlFV8iQlnyg==}
     engines: {node: '>=16.0.0'}
+    deprecated: 'This package was intended to be used with an older versions of Prisma.\nThe newer versions of Prisma has a different approach to GraphQL integration.\nTherefore, this package is no longer needed and has been deprecated and removed.\nLearn more: https://www.prisma.io/graphql'
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
@@ -1724,6 +1725,7 @@ packages:
 
   '@jnwng/walletconnect-solana@0.2.0':
     resolution: {integrity: sha512-nyRq0xLEj9i2J4UXQ0Mr4KzsooTMbLu0ewHOqdQV7iZE0PfbtKa8poTSF4ZBAQD8hoMHEx+I7zGFCNMI9BTrTA==}
+    deprecated: Please use https://www.npmjs.com/package/@walletconnect/solana-adapter instead
     peerDependencies:
       '@solana/web3.js': ^1.63.0
 
@@ -1872,8 +1874,8 @@ packages:
     resolution: {integrity: sha512-z10PF9JV6SbjFq+/rYabM+8CVlMokgl8RFGvieSGNTmrkQanfHn+15XBrhG3BgUfvmTeSeyShfOHpG0i9zEdcg==}
     deprecated: Motion One for Vue is deprecated. Use Oku Motion instead https://oku-ui.com/motion
 
-  '@next/env@15.3.4':
-    resolution: {integrity: sha512-ZkdYzBseS6UjYzz6ylVKPOK+//zLWvD6Ta+vpoye8cW11AjiQjGYVibF0xuvT4L0iJfAPfZLFidaEzAOywyOAQ==}
+  '@next/env@15.3.8':
+    resolution: {integrity: sha512-SAfHg0g91MQVMPioeFeDjE+8UPF3j3BvHjs8ZKJAUz1BG7eMPvfCKOAgNWJ6s1MLNeP6O2InKQRTNblxPWuq+Q==}
 
   '@next/eslint-plugin-next@15.3.4':
     resolution: {integrity: sha512-lBxYdj7TI8phbJcLSAqDt57nIcobEign5NYIKCiy0hXQhrUbTqLqOaSDi568U6vFg4hJfBdZYsG4iP/uKhCqgg==}
@@ -1889,50 +1891,50 @@ packages:
       '@mdx-js/react':
         optional: true
 
-  '@next/swc-darwin-arm64@15.3.4':
-    resolution: {integrity: sha512-z0qIYTONmPRbwHWvpyrFXJd5F9YWLCsw3Sjrzj2ZvMYy9NPQMPZ1NjOJh4ojr4oQzcGYwgJKfidzehaNa1BpEg==}
+  '@next/swc-darwin-arm64@15.3.5':
+    resolution: {integrity: sha512-lM/8tilIsqBq+2nq9kbTW19vfwFve0NR7MxfkuSUbRSgXlMQoJYg+31+++XwKVSXk4uT23G2eF/7BRIKdn8t8w==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@next/swc-darwin-x64@15.3.4':
-    resolution: {integrity: sha512-Z0FYJM8lritw5Wq+vpHYuCIzIlEMjewG2aRkc3Hi2rcbULknYL/xqfpBL23jQnCSrDUGAo/AEv0Z+s2bff9Zkw==}
+  '@next/swc-darwin-x64@15.3.5':
+    resolution: {integrity: sha512-WhwegPQJ5IfoUNZUVsI9TRAlKpjGVK0tpJTL6KeiC4cux9774NYE9Wu/iCfIkL/5J8rPAkqZpG7n+EfiAfidXA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@next/swc-linux-arm64-gnu@15.3.4':
-    resolution: {integrity: sha512-l8ZQOCCg7adwmsnFm8m5q9eIPAHdaB2F3cxhufYtVo84pymwKuWfpYTKcUiFcutJdp9xGHC+F1Uq3xnFU1B/7g==}
+  '@next/swc-linux-arm64-gnu@15.3.5':
+    resolution: {integrity: sha512-LVD6uMOZ7XePg3KWYdGuzuvVboxujGjbcuP2jsPAN3MnLdLoZUXKRc6ixxfs03RH7qBdEHCZjyLP/jBdCJVRJQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@next/swc-linux-arm64-musl@15.3.4':
-    resolution: {integrity: sha512-wFyZ7X470YJQtpKot4xCY3gpdn8lE9nTlldG07/kJYexCUpX1piX+MBfZdvulo+t1yADFVEuzFfVHfklfEx8kw==}
+  '@next/swc-linux-arm64-musl@15.3.5':
+    resolution: {integrity: sha512-k8aVScYZ++BnS2P69ClK7v4nOu702jcF9AIHKu6llhHEtBSmM2zkPGl9yoqbSU/657IIIb0QHpdxEr0iW9z53A==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@next/swc-linux-x64-gnu@15.3.4':
-    resolution: {integrity: sha512-gEbH9rv9o7I12qPyvZNVTyP/PWKqOp8clvnoYZQiX800KkqsaJZuOXkWgMa7ANCCh/oEN2ZQheh3yH8/kWPSEg==}
+  '@next/swc-linux-x64-gnu@15.3.5':
+    resolution: {integrity: sha512-2xYU0DI9DGN/bAHzVwADid22ba5d/xrbrQlr2U+/Q5WkFUzeL0TDR963BdrtLS/4bMmKZGptLeg6282H/S2i8A==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@next/swc-linux-x64-musl@15.3.4':
-    resolution: {integrity: sha512-Cf8sr0ufuC/nu/yQ76AnarbSAXcwG/wj+1xFPNbyNo8ltA6kw5d5YqO8kQuwVIxk13SBdtgXrNyom3ZosHAy4A==}
+  '@next/swc-linux-x64-musl@15.3.5':
+    resolution: {integrity: sha512-TRYIqAGf1KCbuAB0gjhdn5Ytd8fV+wJSM2Nh2is/xEqR8PZHxfQuaiNhoF50XfY90sNpaRMaGhF6E+qjV1b9Tg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@next/swc-win32-arm64-msvc@15.3.4':
-    resolution: {integrity: sha512-ay5+qADDN3rwRbRpEhTOreOn1OyJIXS60tg9WMYTWCy3fB6rGoyjLVxc4dR9PYjEdR2iDYsaF5h03NA+XuYPQQ==}
+  '@next/swc-win32-arm64-msvc@15.3.5':
+    resolution: {integrity: sha512-h04/7iMEUSMY6fDGCvdanKqlO1qYvzNxntZlCzfE8i5P0uqzVQWQquU1TIhlz0VqGQGXLrFDuTJVONpqGqjGKQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
 
-  '@next/swc-win32-x64-msvc@15.3.4':
-    resolution: {integrity: sha512-4kDt31Bc9DGyYs41FTL1/kNpDeHyha2TC0j5sRRoKCyrhNcfZ/nRQkAUlF27mETwm8QyHqIjHJitfcza2Iykfg==}
+  '@next/swc-win32-x64-msvc@15.3.5':
+    resolution: {integrity: sha512-5fhH6fccXxnX2KhllnGhkYMndhOiLOLEiVGYjP2nizqeGWkN10sA9taATlXwake2E2XMvYZjjz0Uj7T0y+z1yw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -3246,6 +3248,7 @@ packages:
 
   '@simplewebauthn/types@9.0.1':
     resolution: {integrity: sha512-tGSRP1QvsAvsJmnOlRQyw/mvK9gnPtjEc5fg2+m8n+QUa+D7rvrKkOYyfpy42GTs90X3RDOnqJgfHt+qO67/+w==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -3810,6 +3813,7 @@ packages:
   '@solana/wallet-adapter-walletconnect@0.1.16':
     resolution: {integrity: sha512-jNaQwSho8hT7gF1ifePE8TJc1FULx8jCF16KX3fZPtzXDxKrj0R4VUpHMGcw4MlDknrnZNLOJAVvyiawAkPCRQ==}
     engines: {node: '>=16'}
+    deprecated: Please use https://www.npmjs.com/package/@walletconnect/solana-adapter instead
     peerDependencies:
       '@solana/web3.js': ^1.77.3
 
@@ -3987,6 +3991,7 @@ packages:
   '@toruslabs/solana-embed@0.3.4':
     resolution: {integrity: sha512-yj+aBJoBAneap7Jlu9/OOp7irWNuC5CqAhyhVcmb0IjWrCUFnioLdL0U7UfGaqVm/5O0leJh7/Z5Ll+3toWJBg==}
     engines: {node: '>=14.17.0', npm: '>=6.x'}
+    deprecated: This sdk is now deprecated. Please use @web3auth/ws-embed instead
     peerDependencies:
       '@babel/runtime': 7.x
 
@@ -4022,6 +4027,7 @@ packages:
 
   '@trezor/connect-web@9.4.7':
     resolution: {integrity: sha512-mICiGnw1xt60LbELZd2OId+nXGG/NAiywQIXGp5rOY6116I/sqJMw4fuKQrkGJ5zpKzzX/G7Be9GcshICD1ZDg==}
+    deprecated: This version is no longer supported
     peerDependencies:
       tslib: ^2.6.2
 
@@ -4410,6 +4416,7 @@ packages:
 
   '@walletconnect/ethereum-provider@2.18.1':
     resolution: {integrity: sha512-TrokAAz20xcJVurnVkWnmwgIy0owzShZLZrjkWYBdDYmGwvsSWZ3SjamgiU7q5kwh0a8ICIvSvZIzYEGNnFFGA==}
+    deprecated: 'Reliability and performance improvements. See: https://github.com/WalletConnect/walletconnect-monorepo/releases'
 
   '@walletconnect/events@1.0.1':
     resolution: {integrity: sha512-NPTqaoi0oPBVNuLv7qPaJazmGHs5JGyO8eEAk5VGKmJzDR7AHzD4k6ilox5kxk1iwiOnFopBOOMLs86Oa76HpQ==}
@@ -4455,6 +4462,7 @@ packages:
 
   '@walletconnect/modal@2.7.0':
     resolution: {integrity: sha512-RQVt58oJ+rwqnPcIvRFeMGKuXb9qkgSmwz4noF8JZGUym3gUAzVs+uW2NQ1Owm9XOJAV+sANrtJ+VoVq1ftElw==}
+    deprecated: Please follow the migration guide on https://docs.reown.com/appkit/upgrade/wcm
 
   '@walletconnect/qrcode-modal@1.8.0':
     resolution: {integrity: sha512-BueaFefaAi8mawE45eUtztg3ZFbsAH4DDXh1UNwdUlsvFMjqcYzLUG0xZvDd6z2eOpbgDg2N3bl6gF0KONj1dg==}
@@ -4474,6 +4482,7 @@ packages:
 
   '@walletconnect/sign-client@2.18.1':
     resolution: {integrity: sha512-LqsZ4YwR1jXNLhZp3aJiQ4bPO68pCwpp2drhu5KyvTqEYevf1/ckeQ1gQegQQ5e+TXUaPVH2B5lBPTL3SJVvPw==}
+    deprecated: 'Reliability and performance improvements. See: https://github.com/WalletConnect/walletconnect-monorepo/releases'
 
   '@walletconnect/time@1.0.2':
     resolution: {integrity: sha512-uzdd9woDcJ1AaBZRhqy5rNC9laqWGErfc4dxA9a87mPdKOgWMD85mcFo9dIYIts/Jwocfwn07EC6EzclKubk/g==}
@@ -4487,6 +4496,7 @@ packages:
 
   '@walletconnect/universal-provider@2.18.1':
     resolution: {integrity: sha512-kI/tUgrV/L+oPGGhyvV8jj4qhOIIVd98W32N9ElymqQlMihspRGJee5RYprRBxcjD3V/dCi+kn4VXPUQL1EEdA==}
+    deprecated: 'Reliability and performance improvements. See: https://github.com/WalletConnect/walletconnect-monorepo/releases'
 
   '@walletconnect/utils@2.18.1':
     resolution: {integrity: sha512-+07G/SzhFGOFYM9gyY39hKMqdx6qvMcz0EIWjmxgrToiwF//TNz4uurqa52GImjgXCrimFzB0jUD4WJo3xF4Kw==}
@@ -7809,8 +7819,8 @@ packages:
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
-  next@15.3.4:
-    resolution: {integrity: sha512-mHKd50C+mCjam/gcnwqL1T1vPx/XQNFlXqFIVdgQdVAFY9iIQtY0IfaVflEYzKiqjeA7B0cYYMaCrmAYFjs4rA==}
+  next@15.3.8:
+    resolution: {integrity: sha512-L+4c5Hlr84fuaNADZbB9+ceRX9/CzwxJ+obXIGHupboB/Q1OLbSUapFs4bO8hnS/E6zV/JDX7sG1QpKVR2bguA==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
     hasBin: true
     peerDependencies:
@@ -7846,6 +7856,7 @@ packages:
   node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
     engines: {node: '>=10.5.0'}
+    deprecated: Use your platform's native DOMException instead
 
   node-fetch-native@1.6.6:
     resolution: {integrity: sha512-8Mc2HhqPdlIfedsuZoc3yioPuzp6b+L5jRCRY1QzuWZh2EGJVQrGppC6V6cF0bLdbW0+O2YpqCA25aF/1lvipQ==}
@@ -12477,7 +12488,7 @@ snapshots:
       '@motionone/dom': 10.18.0
       tslib: 2.8.1
 
-  '@next/env@15.3.4': {}
+  '@next/env@15.3.8': {}
 
   '@next/eslint-plugin-next@15.3.4':
     dependencies:
@@ -12490,33 +12501,33 @@ snapshots:
       '@mdx-js/loader': 3.1.0(acorn@8.14.0)(webpack@5.99.9)
       '@mdx-js/react': 3.1.0(@types/react@19.1.0)(react@19.1.0)
 
-  '@next/swc-darwin-arm64@15.3.4':
+  '@next/swc-darwin-arm64@15.3.5':
     optional: true
 
-  '@next/swc-darwin-x64@15.3.4':
+  '@next/swc-darwin-x64@15.3.5':
     optional: true
 
-  '@next/swc-linux-arm64-gnu@15.3.4':
+  '@next/swc-linux-arm64-gnu@15.3.5':
     optional: true
 
-  '@next/swc-linux-arm64-musl@15.3.4':
+  '@next/swc-linux-arm64-musl@15.3.5':
     optional: true
 
-  '@next/swc-linux-x64-gnu@15.3.4':
+  '@next/swc-linux-x64-gnu@15.3.5':
     optional: true
 
-  '@next/swc-linux-x64-musl@15.3.4':
+  '@next/swc-linux-x64-musl@15.3.5':
     optional: true
 
-  '@next/swc-win32-arm64-msvc@15.3.4':
+  '@next/swc-win32-arm64-msvc@15.3.5':
     optional: true
 
-  '@next/swc-win32-x64-msvc@15.3.4':
+  '@next/swc-win32-x64-msvc@15.3.5':
     optional: true
 
-  '@next/third-parties@15.3.4(next@15.3.4(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)':
+  '@next/third-parties@15.3.4(next@15.3.8(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)':
     dependencies:
-      next: 15.3.4(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      next: 15.3.8(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
       third-party-capital: 1.0.20
 
@@ -13986,7 +13997,7 @@ snapshots:
 
   '@sentry/core@9.27.0': {}
 
-  '@sentry/nextjs@9.27.0(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(encoding@0.1.13)(next@15.3.4(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(webpack@5.99.9)':
+  '@sentry/nextjs@9.27.0(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(encoding@0.1.13)(next@15.3.8(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(webpack@5.99.9)':
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/semantic-conventions': 1.34.0
@@ -13999,7 +14010,7 @@ snapshots:
       '@sentry/vercel-edge': 9.27.0
       '@sentry/webpack-plugin': 3.5.0(encoding@0.1.13)(webpack@5.99.9)
       chalk: 3.0.0
-      next: 15.3.4(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      next: 15.3.8(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       resolve: 1.22.8
       rollup: 4.35.0
       stacktrace-parser: 0.1.11
@@ -14377,15 +14388,6 @@ snapshots:
     transitivePeerDependencies:
       - fastestsmallesttextencoderdecoder
 
-  '@solana/rpc-subscriptions-channel-websocket@2.0.0(typescript@5.7.3)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
-    dependencies:
-      '@solana/errors': 2.0.0(typescript@5.7.3)
-      '@solana/functional': 2.0.0(typescript@5.7.3)
-      '@solana/rpc-subscriptions-spec': 2.0.0(typescript@5.7.3)
-      '@solana/subscribable': 2.0.0(typescript@5.7.3)
-      typescript: 5.7.3
-      ws: 7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-
   '@solana/rpc-subscriptions-channel-websocket@2.0.0(typescript@5.7.3)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
       '@solana/errors': 2.0.0(typescript@5.7.3)
@@ -14402,24 +14404,6 @@ snapshots:
       '@solana/rpc-spec-types': 2.0.0(typescript@5.7.3)
       '@solana/subscribable': 2.0.0(typescript@5.7.3)
       typescript: 5.7.3
-
-  '@solana/rpc-subscriptions@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
-    dependencies:
-      '@solana/errors': 2.0.0(typescript@5.7.3)
-      '@solana/fast-stable-stringify': 2.0.0(typescript@5.7.3)
-      '@solana/functional': 2.0.0(typescript@5.7.3)
-      '@solana/promises': 2.0.0(typescript@5.7.3)
-      '@solana/rpc-spec-types': 2.0.0(typescript@5.7.3)
-      '@solana/rpc-subscriptions-api': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/rpc-subscriptions-channel-websocket': 2.0.0(typescript@5.7.3)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
-      '@solana/rpc-subscriptions-spec': 2.0.0(typescript@5.7.3)
-      '@solana/rpc-transformers': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/rpc-types': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/subscribable': 2.0.0(typescript@5.7.3)
-      typescript: 5.7.3
-    transitivePeerDependencies:
-      - fastestsmallesttextencoderdecoder
-      - ws
 
   '@solana/rpc-subscriptions@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
@@ -14583,23 +14567,6 @@ snapshots:
       typescript: 5.7.3
     transitivePeerDependencies:
       - fastestsmallesttextencoderdecoder
-
-  '@solana/transaction-confirmation@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
-    dependencies:
-      '@solana/addresses': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/codecs-strings': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/errors': 2.0.0(typescript@5.7.3)
-      '@solana/keys': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/promises': 2.0.0(typescript@5.7.3)
-      '@solana/rpc': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/rpc-subscriptions': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
-      '@solana/rpc-types': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/transaction-messages': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/transactions': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      typescript: 5.7.3
-    transitivePeerDependencies:
-      - fastestsmallesttextencoderdecoder
-      - ws
 
   '@solana/transaction-confirmation@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
@@ -14883,11 +14850,11 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@solana/wallet-adapter-trezor@0.1.2(@babel/core@7.26.9)(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-trezor@0.1.2(@babel/core@7.26.9)(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
       '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))
       '@solana/web3.js': 1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
-      '@trezor/connect-web': 9.4.7(@babel/core@7.26.9)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@trezor/connect-web': 9.4.7(@babel/core@7.26.9)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       buffer: 6.0.3
     transitivePeerDependencies:
       - '@babel/core'
@@ -14943,7 +14910,7 @@ snapshots:
       - uploadthing
       - utf-8-validate
 
-  '@solana/wallet-adapter-wallets@0.19.32(@babel/core@7.26.9)(@babel/runtime@7.26.9)(@react-native-async-storage/async-storage@1.24.0(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)))(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bs58@6.0.0)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-dom@19.1.0(react@19.1.0))(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(react@19.1.0)(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
+  '@solana/wallet-adapter-wallets@0.19.32(@babel/core@7.26.9)(@babel/runtime@7.26.9)(@react-native-async-storage/async-storage@1.24.0(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)))(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bs58@6.0.0)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-dom@19.1.0(react@19.1.0))(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(react@19.1.0)(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
       '@solana/wallet-adapter-alpha': 0.1.10(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))
       '@solana/wallet-adapter-avana': 0.1.13(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))
@@ -14976,7 +14943,7 @@ snapshots:
       '@solana/wallet-adapter-tokenary': 0.1.12(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))
       '@solana/wallet-adapter-tokenpocket': 0.4.19(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))
       '@solana/wallet-adapter-torus': 0.11.28(@babel/runtime@7.26.9)(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
-      '@solana/wallet-adapter-trezor': 0.1.2(@babel/core@7.26.9)(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@solana/wallet-adapter-trezor': 0.1.2(@babel/core@7.26.9)(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@solana/wallet-adapter-trust': 0.1.13(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))
       '@solana/wallet-adapter-unsafe-burner': 0.1.7(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))
       '@solana/wallet-adapter-walletconnect': 0.1.16(@react-native-async-storage/async-storage@1.24.0(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10)))(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -15156,31 +15123,6 @@ snapshots:
       - bufferutil
       - encoding
       - utf-8-validate
-
-  '@solana/web3.js@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
-    dependencies:
-      '@solana/accounts': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/addresses': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/codecs': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/errors': 2.0.0(typescript@5.7.3)
-      '@solana/functional': 2.0.0(typescript@5.7.3)
-      '@solana/instructions': 2.0.0(typescript@5.7.3)
-      '@solana/keys': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/programs': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/rpc': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/rpc-parsed-types': 2.0.0(typescript@5.7.3)
-      '@solana/rpc-spec-types': 2.0.0(typescript@5.7.3)
-      '@solana/rpc-subscriptions': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
-      '@solana/rpc-types': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/signers': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/sysvars': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/transaction-confirmation': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
-      '@solana/transaction-messages': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      '@solana/transactions': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)
-      typescript: 5.7.3
-    transitivePeerDependencies:
-      - fastestsmallesttextencoderdecoder
-      - ws
 
   '@solana/web3.js@2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
@@ -15411,17 +15353,6 @@ snapshots:
       - expo-localization
       - react-native
 
-  '@trezor/blockchain-link-types@1.2.5(fastestsmallesttextencoderdecoder@1.0.22)(tslib@2.8.1)(typescript@5.7.3)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
-    dependencies:
-      '@solana/web3.js': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
-      '@trezor/type-utils': 1.1.4
-      '@trezor/utxo-lib': 2.2.6(tslib@2.8.1)
-      tslib: 2.8.1
-    transitivePeerDependencies:
-      - fastestsmallesttextencoderdecoder
-      - typescript
-      - ws
-
   '@trezor/blockchain-link-types@1.2.5(fastestsmallesttextencoderdecoder@1.0.22)(tslib@2.8.1)(typescript@5.7.3)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
       '@solana/web3.js': 2.0.0(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))
@@ -15488,9 +15419,9 @@ snapshots:
       - expo-localization
       - react-native
 
-  '@trezor/connect-web@9.4.7(@babel/core@7.26.9)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
+  '@trezor/connect-web@9.4.7(@babel/core@7.26.9)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
-      '@trezor/connect': 9.4.7(@babel/core@7.26.9)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@trezor/connect': 9.4.7(@babel/core@7.26.9)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@trezor/connect-common': 0.2.7(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)
       '@trezor/utils': 9.2.6(tslib@2.8.1)
       tslib: 2.8.1
@@ -15507,14 +15438,14 @@ snapshots:
       - utf-8-validate
       - ws
 
-  '@trezor/connect@9.4.7(@babel/core@7.26.9)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
+  '@trezor/connect@9.4.7(@babel/core@7.26.9)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))':
     dependencies:
       '@babel/preset-typescript': 7.26.0(@babel/core@7.26.9)
       '@ethereumjs/common': 4.4.0
       '@ethereumjs/tx': 5.4.0
       '@fivebinaries/coin-selection': 2.2.1
       '@trezor/blockchain-link': 2.3.6(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)(typescript@5.7.3)(utf-8-validate@5.0.10)
-      '@trezor/blockchain-link-types': 1.2.5(fastestsmallesttextencoderdecoder@1.0.22)(tslib@2.8.1)(typescript@5.7.3)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))
+      '@trezor/blockchain-link-types': 1.2.5(fastestsmallesttextencoderdecoder@1.0.22)(tslib@2.8.1)(typescript@5.7.3)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@trezor/connect-analytics': 1.2.4(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)
       '@trezor/connect-common': 0.2.7(react-native@0.78.0(@babel/core@7.26.9)(@babel/preset-env@7.26.9(@babel/core@7.26.9))(@types/react@19.1.0)(bufferutil@4.0.9)(react@19.1.0)(utf-8-validate@5.0.10))(tslib@2.8.1)
       '@trezor/protobuf': 1.2.6(tslib@2.8.1)
@@ -20474,9 +20405,9 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next@15.3.4(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  next@15.3.8(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
-      '@next/env': 15.3.4
+      '@next/env': 15.3.8
       '@swc/counter': 0.1.3
       '@swc/helpers': 0.5.15
       busboy: 1.6.0
@@ -20486,14 +20417,14 @@ snapshots:
       react-dom: 19.1.0(react@19.1.0)
       styled-jsx: 5.1.6(@babel/core@7.26.9)(react@19.1.0)
     optionalDependencies:
-      '@next/swc-darwin-arm64': 15.3.4
-      '@next/swc-darwin-x64': 15.3.4
-      '@next/swc-linux-arm64-gnu': 15.3.4
-      '@next/swc-linux-arm64-musl': 15.3.4
-      '@next/swc-linux-x64-gnu': 15.3.4
-      '@next/swc-linux-x64-musl': 15.3.4
-      '@next/swc-win32-arm64-msvc': 15.3.4
-      '@next/swc-win32-x64-msvc': 15.3.4
+      '@next/swc-darwin-arm64': 15.3.5
+      '@next/swc-darwin-x64': 15.3.5
+      '@next/swc-linux-arm64-gnu': 15.3.5
+      '@next/swc-linux-arm64-musl': 15.3.5
+      '@next/swc-linux-x64-gnu': 15.3.5
+      '@next/swc-linux-x64-musl': 15.3.5
+      '@next/swc-win32-arm64-msvc': 15.3.5
+      '@next/swc-win32-x64-msvc': 15.3.5
       '@opentelemetry/api': 1.9.0
       sharp: 0.34.1
     transitivePeerDependencies:
