@@ -30,21 +30,15 @@ export default function MobileProfileNavigation() {
   const renderNavigationItem = (item: NavigationItem, index: number) => {
     const content = (
       <DrawerClose className="flex w-full items-center gap-2 py-2 rounded-md px-2 font-medium">
-        <div className="w-6 h-6">
-          {item.icon}
-        </div>
-        <p className={`text-xl ${item.textClassName || ""}`}>
-          {item.label}
-        </p>
+        <div className="w-6 h-6">{item.icon}</div>
+        <p className={`text-xl ${item.textClassName || ""}`}>{item.label}</p>
       </DrawerClose>
     );
 
     if (item.href) {
       return (
         <div key={index} className="flex border-b w-full">
-          <Link href={item.href}>
-            {content}
-          </Link>
+          <Link href={item.href}>{content}</Link>
         </div>
       );
     }
@@ -52,9 +46,7 @@ export default function MobileProfileNavigation() {
     if (item.onClick) {
       return (
         <div key={index} className="flex border-b w-full">
-          <button onClick={item.onClick}>
-            {content}
-          </button>
+          <button onClick={item.onClick}>{content}</button>
         </div>
       );
     }
@@ -101,9 +93,7 @@ export default function MobileProfileNavigation() {
                     height={100}
                   />
                 </div> */}
-                <div className="flex">
-                  {/* <CopyAddress /> */}
-                </div>
+                <div className="flex">{/* <CopyAddress /> */}</div>
               </DrawerTitle>
               <DrawerDescription className="sr-only">
                 Navigation drawer for Home, profiles, and boards

@@ -49,6 +49,7 @@ export type SettingsState = {
   numberOfModelsMode: "definedByAI" | "custom";
   faces: TNumberOfFaces;
   textureType: TTextureType;
+  isGameReady: boolean;
 };
 
 const initialState: SettingsState = {
@@ -61,6 +62,7 @@ const initialState: SettingsState = {
   faces: "definedByAI",
   textureType: "definedByAI",
   autoApprove: true,
+  isGameReady: false,
 };
 
 const SettingsSlice = createSlice({
@@ -85,13 +87,13 @@ const SettingsSlice = createSlice({
     },
     changeThreeDStyles(
       state,
-      action: PayloadAction<SettingsState["ThreeDStyle"] | undefined>,
+      action: PayloadAction<SettingsState["ThreeDStyle"] | undefined>
     ) {
       state.ThreeDStyle = action.payload;
     },
     changeNumberOfModelMode(
       state,
-      action: PayloadAction<"custom" | "definedByAI">,
+      action: PayloadAction<"custom" | "definedByAI">
     ) {
       const payload = action.payload;
       if (payload === "custom") {
@@ -104,7 +106,7 @@ const SettingsSlice = createSlice({
     },
     changeNumberOfModel(
       state,
-      action: PayloadAction<"increment" | "decrement">,
+      action: PayloadAction<"increment" | "decrement">
     ) {
       const current = state.numberOfModels;
       const payload = action.payload;
@@ -124,6 +126,9 @@ const SettingsSlice = createSlice({
     changeTexture(state, action: PayloadAction<SettingsState["textureType"]>) {
       state.textureType = action.payload;
     },
+    switchGameReady(state, action: PayloadAction<{ isGameReady: boolean }>) {
+      state.isGameReady = action.payload.isGameReady;
+    },
   },
 });
 
@@ -139,6 +144,7 @@ export const {
   changeFaces,
   changeTexture,
   setAutoApprove,
+  switchGameReady
 } = SettingsSlice.actions;
 
 export default SettingsSlice.reducer;
