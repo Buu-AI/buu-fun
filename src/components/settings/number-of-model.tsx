@@ -17,17 +17,28 @@ type TNumberOfModel = {};
 export default function NumberOfModel({}: TNumberOfModel) {
   const dispatch = useAppDispatch();
   const numberOfModels = useAppSelector(
-    (state) => state.settings.numberOfModels,
+    (state) => state.settings.numberOfModels
   );
   const numberOfModelsMode = useAppSelector(
-    (state) => state.settings.numberOfModelsMode,
+    (state) => state.settings.numberOfModelsMode
   );
+  const isGameReadyEnabled = useAppSelector(
+    (state) => state.settings.isGameReady
+  );
+
   const isAIHandled = numberOfModelsMode === "definedByAI";
   return (
     <div className="w-full flex gap-2 items-center justify-between">
       <div className=" basis-[60%]">
-        <p className="uppercase text-sm  font-semibold mb-3">NUMBER OF MODEL</p>
+        <p
+          className={cn("uppercase text-sm font-semibold mb-3", {
+            "text-gray-400": isGameReadyEnabled,
+          })}
+        >
+          NUMBER OF MODEL
+        </p>
         <Select
+          disabled={isGameReadyEnabled}
           value={numberOfModelsMode}
           onValueChange={(value) => {
             if (value === "custom") {
@@ -74,42 +85,42 @@ export default function NumberOfModel({}: TNumberOfModel) {
           "self-end h-11 border-2 rounded-lg border-muted-foreground/20 px-2 relative flex items-center justify-between gap-2 bg-[#1A1E2450]  basis-[40%]",
           {
             "bg-[#1A1E2490]": numberOfModelsMode,
-          },
+          }
         )}
       >
         <div className="flex  items-center gap-1.5 left-2 ">
           <button
-            disabled={isAIHandled}
+            disabled={isAIHandled || isGameReadyEnabled}
             onClick={() => {
               dispatch(changeNumberOfModel("increment"));
             }}
             className={cn(
               "aspect-square w-7 text-lg font-medium flex items-center justify-center rounded-full  bg-buu-secondary",
               {
-                "text-muted-foreground/60": isAIHandled,
-              },
+                "text-muted-foreground/60": isAIHandled || isGameReadyEnabled,
+              }
             )}
           >
-            <p className="">+</p>
+            +
           </button>
           <button
-            disabled={isAIHandled}
+            disabled={isAIHandled || isGameReadyEnabled}
             onClick={() => {
               dispatch(changeNumberOfModel("decrement"));
             }}
             className={cn(
               "aspect-square w-7 text-lg font-medium flex items-center justify-center rounded-full  bg-buu-secondary",
               {
-                "text-muted-foreground/60": isAIHandled,
-              },
+                "text-muted-foreground/60": isAIHandled || isGameReadyEnabled,
+              }
             )}
           >
-            <p className="">-</p>
+            -
           </button>
         </div>
         <div
           className={cn("pr-2", {
-            "text-muted-foreground/60": isAIHandled,
+            "text-muted-foreground/60": isAIHandled || isGameReadyEnabled,
           })}
         >
           <div>
