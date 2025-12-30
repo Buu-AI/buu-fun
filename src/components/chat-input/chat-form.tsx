@@ -291,154 +291,123 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         }
       )}
     >
-      {!isGameReady ? (
-        <AnimatePresence mode="popLayout">
-          <div className="flex gap-2 items-center   w-full overflow-hidden">
-            {inputFile.map((item, index) => {
-              return (
-                <motion.button
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{
-                    scale: 1,
-                    opacity: 1,
-                    transition: {
-                      type: "spring",
-                      stiffness: 260,
-                      damping: 20,
-                      delay: index * 0.1,
-                    },
-                  }}
-                  exit={{
-                    scale: 0,
-                    opacity: 0,
-                    transition: {
-                      duration: 0.3,
-                      ease: "easeInOut",
-                    },
-                  }}
-                  layout
-                  key={item.id}
-                  type="button"
-                  onClick={() => handleRemoveImage(item)}
-                  className="w-14 h-14 relative rounded-xl overflow-hidden"
+      <AnimatePresence mode="popLayout">
+        <div
+          className={cn("flex gap-2 items-center w-full overflow-hidden", {
+            "opacity-0 pointer-events-none h-0": isGameReady,
+          })}
+          aria-hidden={isGameReady}
+        >
+          {inputFile.map((item, index) => {
+            return (
+              <motion.button
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{
+                  scale: 1,
+                  opacity: 1,
+                  transition: {
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 20,
+                    delay: index * 0.1,
+                  },
+                }}
+                exit={{
+                  scale: 0,
+                  opacity: 0,
+                  transition: {
+                    duration: 0.3,
+                    ease: "easeInOut",
+                  },
+                }}
+                layout
+                key={item.id}
+                type="button"
+                onClick={() => handleRemoveImage(item)}
+                className="w-14 h-14 relative rounded-xl overflow-hidden"
+              >
+                <div
+                  className={
+                    "pointer-events-auto absolute top-1 right-1  bg-white text-black  rounded-full animate-pulse w-4 h-4  flex items-center justify-center text-xs transition-opacity z-50"
+                  }
                 >
-                  <div
-                    className={
-                      "pointer-events-auto absolute top-1 right-1  bg-white text-black  rounded-full animate-pulse w-4 h-4  flex items-center justify-center text-xs transition-opacity z-50"
-                    }
-                  >
-                    ✕
-                  </div>{" "}
-                  <Image
-                    className=""
-                    src={item.url}
-                    alt="user input file"
-                    width={200}
-                    height={200}
-                  />
-                </motion.button>
-              );
-            })}
-          </div>
-        </AnimatePresence>
-      ) : null}
-
-      {/* <button
-        disabled={isChatLoading}
-        className={cn(
-          "bg-buu-button     shadow-buu-button rounded-xl left-0 absolute w-full h-full top-0",
-          {
-            hidden: !inputFile?..length,
-          }
-        )}
-      >
-        <div className="flex   gap-2 items-center justify-center">
-          <p className="font-medium animate-pulse text-white/60">
-            Continue with image
-          </p>
-          <div className="w-5  h-5 ">
-            <ImageIcon />
-          </div>
+                  ✕
+                </div>{" "}
+                <Image
+                  className=""
+                  src={item.url}
+                  alt="user input file"
+                  width={200}
+                  height={200}
+                />
+              </motion.button>
+            );
+          })}
         </div>
-      </button> */}
+      </AnimatePresence>
       {/* Other components */}
-      <AnimatePresence mode="wait">
-        {!isGameReady ? (
+      <div
+        className={cn({
+          "opacity-0 pointer-events-none h-0 overflow-hidden": isGameReady,
+        })}
+        aria-hidden={isGameReady}
+      >
+        <DragImageCard className={""} onImageSelected={() => {}} />
+      </div>
+      <ChatTextArea isChatLoading={isChatLoading} />
+      <div className="w-full flex justify-between">
+        <label
+          htmlFor="file-input"
+          className={cn("cursor-pointer", {
+            "opacity-0 pointer-events-none": isGameReady,
+          })}
+          aria-hidden={isGameReady}
+          tabIndex={isGameReady ? -1 : 0}
+        >
+          <input
+            multiple
+            id="file-input"
+            className="hidden"
+            type="file"
+            accept="image/png, image/jpeg"
+            disabled={isGameReady}
+            // capture="user"
+            onChange={(e) => {
+              const files = e.target?.files;
+              if (files) {
+                for (const file of files) {
+                  if (!getAllowedContentTypeMaps(file.type)) {
+                    toast.error(
+                      `Image type ${file.type} is not supported yet`
+                    );
+                    return;
+                  }
+                  if (fileCount > 4) {
+                    toast.error(`Maximum file count is 4`);
+                    return;
+                  }
+
+                  const imageUrl = URL.createObjectURL(file);
+                  const imageData = {
+                    id: nanoid(),
+                    url: imageUrl,
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                  };
+                  dispatch(setInputFile(imageData));
+                }
+              }
+            }}
+          />
           <motion.div
-            key="drag-card"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
+            className="w-5 h-5"
+            whileHover={{ rotate: 15 }}
             transition={{ duration: 0.2 }}
           >
-            <DragImageCard className={""} onImageSelected={() => {}} />
+            <ImageIcon />
           </motion.div>
-        ) : null}
-      </AnimatePresence>
-      <ChatTextArea isChatLoading={isChatLoading} />
-      <div
-        className={cn("w-full flex justify-between", {
-          "justify-end": isGameReady,
-        })}
-      >
-        <AnimatePresence mode="wait">
-          {!isGameReady ? (
-            <motion.label
-              key="file-input-label"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-              htmlFor="file-input"
-              className="cursor-pointer"
-            >
-              <input
-                multiple
-                id="file-input"
-                className="hidden"
-                type="file"
-                accept="image/png, image/jpeg"
-                // capture="user"
-                onChange={(e) => {
-                  const files = e.target?.files;
-                  if (files) {
-                    for (const file of files) {
-                      if (!getAllowedContentTypeMaps(file.type)) {
-                        toast.error(
-                          `Image type ${file.type} is not supported yet`
-                        );
-                        return;
-                      }
-                      if (fileCount > 4) {
-                        toast.error(`Maximum file count is 4`);
-                        return;
-                      }
-
-                      const imageUrl = URL.createObjectURL(file);
-                      const imageData = {
-                        id: nanoid(),
-                        url: imageUrl,
-                        name: file.name,
-                        size: file.size,
-                        type: file.type,
-                      };
-                      dispatch(setInputFile(imageData));
-                    }
-                  }
-                }}
-              />
-              <motion.div
-                className="w-6 h-6"
-                whileHover={{ rotate: 15 }}
-                transition={{ duration: 0.2 }}
-              >
-                <ImageIcon />
-              </motion.div>
-            </motion.label>
-          ) : null}
-        </AnimatePresence>
+        </label>
 
         <motion.button
           disabled={isChatLoading}

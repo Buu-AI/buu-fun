@@ -9,17 +9,27 @@ import {
   SelectValue,
 } from "../ui/select";
 import { facesDetailData, TFacesKey } from "./options-data";
+import { cn } from "@/lib/utils";
 
 type TSelectFaces = {};
 
 export default function SelectFaces({}: TSelectFaces) {
   const dispatch = useAppDispatch();
   const faceState = useAppSelector((state) => state.settings.faces);
-
+  const isGameReadyEnabled = useAppSelector(
+    (state) => state.settings.isGameReady
+  );
   return (
     <div className="w-full">
-      <p className="uppercase text-sm font-semibold mb-2">Faces</p>
+      <p
+        className={cn("uppercase text-sm font-semibold mb-2", {
+          "text-gray-400": isGameReadyEnabled,
+        })}
+      >
+        Faces
+      </p>
       <Select
+        disabled={isGameReadyEnabled}
         onValueChange={(value: TFacesKey) => {
           const faceValue: TFacesKey = facesDetailData[value]?.value
             ? facesDetailData[value].value

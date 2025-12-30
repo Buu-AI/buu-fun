@@ -9,17 +9,28 @@ import {
   SelectValue,
 } from "../ui/select";
 import { textureDetailData, TTextureKey } from "./options-data";
+import { cn } from "@/lib/utils";
 
 type TSelectTexture = {};
 
 export default function SelectTexture({}: TSelectTexture) {
   const selected = useAppSelector((state) => state.settings.textureType);
   const dispatch = useAppDispatch();
+  const isGameReadyEnabled = useAppSelector(
+    (state) => state.settings.isGameReady
+  );
 
   return (
     <div className="w-full">
-      <p className="uppercase text-sm font-semibold mb-2">Texture</p>
+      <p
+        className={cn("uppercase text-sm font-semibold mb-2", {
+          "text-gray-400": isGameReadyEnabled,
+        })}
+      >
+        Texture
+      </p>
       <Select
+        disabled={isGameReadyEnabled}
         onValueChange={(value: TTextureKey) => {
           const faceValue: TTextureKey = textureDetailData[value]?.value
             ? textureDetailData[value].value
@@ -56,7 +67,7 @@ export default function SelectTexture({}: TSelectTexture) {
                   ) : null}
                 </div>
               </SelectItem>
-            ),
+            )
           )}
         </SelectContent>
       </Select>{" "}
