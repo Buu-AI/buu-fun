@@ -57,7 +57,7 @@ export default function SettingsBarDisplayTitle() {
         <p className="hidden sm:block text-sm">{displayName}</p>
       </motion.div>
       <AnimatePresence mode="popLayout">
-        {facesValue !== "definedByAI" ? (
+        {facesValue !== "definedByAI" && !isGameReady ? (
           <motion.div
             key="faces"
             initial={{ opacity: 0, scale: 0.8, x: -10 }}
@@ -97,7 +97,7 @@ export default function SettingsBarDisplayTitle() {
         ) : null}
       </AnimatePresence>
       <AnimatePresence mode="popLayout">
-        {textureValue !== "definedByAI" ? (
+        {textureValue !== "definedByAI" && !isGameReady ? (
           <motion.div
             key="texture"
             initial={{ opacity: 0, scale: 0.8, x: -10 }}
