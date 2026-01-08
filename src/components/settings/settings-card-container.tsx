@@ -5,7 +5,6 @@ import SelectFaces from "./select-faces";
 import SelectTexture from "./select-texture";
 import SettingsApprovalCheckbox from "./settings-approval-checkbox";
 import StylesSelector from "./styles-selector";
-import ThreeDSelectBox from "./three-d-select-box";
 
 export default function SettingsCardContainer() {
   return (
