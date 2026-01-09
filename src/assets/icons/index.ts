@@ -42,6 +42,7 @@ import SciFiIcon from "@/assets/icons/styles/Sci-Fi.png";
 import StylizedIcon from "@/assets/icons/styles/stylized.png";
 import ToonIcon from "@/assets/icons/styles/Toon.png";
 import VoxelIcon from "@/assets/icons/styles/Voxel.png";
+
 export {
   cuteIcon,
   EnvironmentIcon,
