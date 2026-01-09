@@ -1,7 +1,6 @@
 "use client";
 import ChatwootWidget from "@/components/chat-woot";
 // import CopyAddress from "@/components/navbar/copy-address";
-import AccountLinking from "@/components/profile/account-linking";
 import Base64ImageDiv from "@/components/profile/icon-render";
 import LanyardBadge from "@/components/profile/lanyard-badge";
 import ProfileSkeleton from "@/components/profile/profile-skeleton";
@@ -103,12 +102,12 @@ export default function ProfilePage() {
           <RedeemVouchers />
           <ManageUserSubscriptionButton />
         </div>
-        <div className="mt-6">
+        {/* <div className="mt-6">
           <p className=" font-medium text-buu-muted-text z-10">
             Link your accounts
           </p>
-        </div>
-        <AccountLinking />
+        </div> */}
+        {/* <AccountLinking /> */}
       </main>
 
       {subscription && subscription?.planKey !== "FREE" ? (
