@@ -209,15 +209,16 @@ export type GenerateCustomerPortalSessionOutput = {
   planKey: StripeSubscriptionPlanKeys;
 };
 
-export type GenerateHunyuan3DModelDetails = {
-  __typename?: "GenerateHunyuan3DModelDetails";
+export type GenerateGameReady3DModelDetails = {
+  __typename?: "GenerateGameReady3DModelDetails";
   conversionJobId?: Maybe<Scalars["String"]["output"]>;
   enablePBR: Scalars["Boolean"]["output"];
   faceCount: Scalars["Int"]["output"];
   fluxJobId?: Maybe<Scalars["String"]["output"]>;
-  outputFormat: Scalars["String"]["output"];
+  outputFormat: ModelOutputFormat;
   polygonType: Scalars["String"]["output"];
   prompt: Scalars["String"]["output"];
+  style?: Maybe<Style>;
 };
 
 export type GenerateModelsDetails = {
@@ -465,6 +466,13 @@ export type ModelFilter = {
   updatedAt_ne?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
 };
 
+/** The output format for 3D models (glb, obj, or fbx) */
+export enum ModelOutputFormat {
+  Fbx = "fbx",
+  Glb = "glb",
+  Obj = "obj",
+}
+
 export type ModelPage = {
   __typename?: "ModelPage";
   items: Array<Model>;
@@ -474,6 +482,12 @@ export type ModelPage = {
 export type ModelPageResult = HandledError | ModelPage;
 
 export type ModelResult = HandledError | Model;
+
+/** The 3D generation model to use */
+export enum ModelType {
+  BuuV1 = "buuV1",
+  BuuV2 = "buuV2",
+}
 
 export type Mutation = {
   __typename?: "Mutation";
@@ -760,7 +774,8 @@ export enum NumberOfFaces {
 
 export type Options = {
   isGameReady?: InputMaybe<Scalars["Boolean"]["input"]>;
-  numberOfFaces?: InputMaybe<Scalars["String"]["input"]>;
+  model?: InputMaybe<ModelType>;
+  numberOfFaces?: InputMaybe<NumberOfFaces>;
   numberOfModels?: InputMaybe<Scalars["Int"]["input"]>;
   outputFormat?: InputMaybe<Scalars["String"]["input"]>;
   style?: InputMaybe<Style>;
@@ -1274,7 +1289,7 @@ export type ToolRequestConfirmationResult =
   | ToolRequestConfirmation;
 
 export type ToolRequestDetails =
-  | GenerateHunyuan3DModelDetails
+  | GenerateGameReady3DModelDetails
   | GenerateModelsDetails
   | GenerateModelsFromEditDetails
   | GenerateModelsFromImageDetails
@@ -1305,7 +1320,7 @@ export enum ToolRequestStatus {
 /** The type of the tool request */
 export enum ToolRequestType {
   EditImage = "EDIT_IMAGE",
-  GenerateHunyuan3DModel = "GENERATE_HUNYUAN3D_MODEL",
+  GenerateGameReady_3DModel = "GENERATE_GAME_READY_3D_MODEL",
   GenerateImages = "GENERATE_IMAGES",
   GenerateImagesFromReferences = "GENERATE_IMAGES_FROM_REFERENCES",
   GenerateModelsFromEdit = "GENERATE_MODELS_FROM_EDIT",
@@ -2413,7 +2428,7 @@ export type GetMessagesQuery = {
             message: string;
             percentage: number;
             details?:
-              | { __typename?: "GenerateHunyuan3DModelDetails" }
+              | { __typename?: "GenerateGameReady3DModelDetails" }
               | {
                   __typename: "GenerateModelsDetails";
                   texture?: TextureType | null;
@@ -3747,7 +3762,7 @@ export type GenerateNftMutation = {
             message: string;
             percentage: number;
             details?:
-              | { __typename?: "GenerateHunyuan3DModelDetails" }
+              | { __typename?: "GenerateGameReady3DModelDetails" }
               | {
                   __typename?: "GenerateModelsDetails";
                   texture?: TextureType | null;
@@ -3953,7 +3968,7 @@ export type GenerateNftMutation = {
           message: string;
           percentage: number;
           details?:
-            | { __typename?: "GenerateHunyuan3DModelDetails" }
+            | { __typename?: "GenerateGameReady3DModelDetails" }
             | {
                 __typename?: "GenerateModelsDetails";
                 texture?: TextureType | null;

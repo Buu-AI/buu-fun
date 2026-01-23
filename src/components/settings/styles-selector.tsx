@@ -187,7 +187,9 @@ export default function StylesSelector() {
                       {isSelected && (
                         <div
                           className="absolute inset-0 bg-blue-500/10 flex items-center justify-center"
-                          style={{ boxShadow: 'inset 0 0 10px rgba(0, 0, 0, 0.4)' }}
+                          style={{
+                            boxShadow: "inset 0 0 10px rgba(0, 0, 0, 0.4)",
+                          }}
                         >
                           <div className="absolute top-1 right-1 w-4 h-4 bg-buu-pill-solid rounded-full flex items-center justify-center">
                             <svg
@@ -207,10 +209,7 @@ export default function StylesSelector() {
                       )}
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent
-                    side="top"
-                    className=""
-                    >
+                  <TooltipContent side="top" className="">
                     <p className="text-xs  font-medium">{style.displayName}</p>
                   </TooltipContent>
                 </Tooltip>

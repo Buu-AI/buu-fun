@@ -181,7 +181,7 @@ export default function ViewModelModal() {
             ) : null}
           </div>
           {/* <div className="absolute  bottom-[5rem] right-6  z-[99] "> */}
-            {/* <NftTokenButton nftId={model?.nftId} /> */}
+          {/* <NftTokenButton nftId={model?.nftId} /> */}
           {/* </div> */}
           <div className="bottom-[5rem] left-6 absolute">
             <p className="uppercase font-medium  text-xs">

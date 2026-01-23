@@ -1,4 +1,3 @@
-
 import { DownloadIcon } from "@/assets/icons";
 import SelectObjectIcon from "@/assets/icons/select-object-icon";
 import Animator from "@/assets/icons/utility/animator";

@@ -10,6 +10,7 @@ import {
 } from "../ui/select";
 import { textureDetailData, TTextureKey } from "./options-data";
 import { cn } from "@/lib/utils";
+import { enableFeature, disabledOptions } from "@/constants/settings-card";
 
 type TSelectTexture = {};
 
@@ -17,20 +18,29 @@ export default function SelectTexture({}: TSelectTexture) {
   const selected = useAppSelector((state) => state.settings.textureType);
   const dispatch = useAppDispatch();
   const isGameReadyEnabled = useAppSelector(
-    (state) => state.settings.isGameReady
+    (state) => state.settings.isGameReady,
+  );
+  const model = useAppSelector((state) => state.settings.model);
+  const enableForModel = enableFeature.texture[model] ?? false;
+  const isDisabled = isGameReadyEnabled || !enableForModel;
+
+  // Filter out disabled options based on model configuration
+  const disabledTextureOptions = disabledOptions.texture[model] ?? [];
+  const availableTextures = Object.values(textureDetailData).filter(
+    ({ value }) => !disabledTextureOptions.includes(value)
   );
 
   return (
     <div className="w-full">
       <p
         className={cn("uppercase text-sm font-semibold mb-2", {
-          "text-gray-400": isGameReadyEnabled,
+          "text-gray-400": isDisabled,
         })}
       >
         Texture
       </p>
       <Select
-        disabled={isGameReadyEnabled}
+        disabled={isDisabled}
         onValueChange={(value: TTextureKey) => {
           const faceValue: TTextureKey = textureDetailData[value]?.value
             ? textureDetailData[value].value
@@ -51,7 +61,7 @@ export default function SelectTexture({}: TSelectTexture) {
           />
         </SelectTrigger>
         <SelectContent className="bg-[#1C2129] z-[101] relative border-none shadow-buu-muted border-buu  ">
-          {Object.values(textureDetailData).map(
+          {availableTextures.map(
             ({ displayName, value, pro }) => (
               <SelectItem
                 key={`${displayName}-${value}-styles-selector`}
@@ -67,7 +77,7 @@ export default function SelectTexture({}: TSelectTexture) {
                   ) : null}
                 </div>
               </SelectItem>
-            )
+            ),
           )}
         </SelectContent>
       </Select>{" "}

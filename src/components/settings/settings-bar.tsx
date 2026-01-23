@@ -16,7 +16,7 @@ export default function SettingsBar() {
       </div>
       <div
         className={cn(
-          "px-4 self-end max-w-max  md:w-full   transition-all duration-300 ease-in-out  rounded-2xl py-2  z-10 border  items-center relative justify-end mr-1 flex gap-2 bg-buu shadow-buu-inner flex-shrink"
+          "px-4 self-end max-w-max  md:w-full   transition-all duration-300 ease-in-out  rounded-2xl py-2  z-10 border  items-center relative justify-end mr-1 flex gap-2 bg-buu shadow-buu-inner flex-shrink",
         )}
       >
         <NewAvailableSettingsPill />

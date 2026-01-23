@@ -1,3 +1,4 @@
+import { ModelType } from "@/gql/types/graphql";
 import { SettingsState } from "@/lib/redux/features/settings";
 
 export type TFacesKey = Exclude<SettingsState["faces"], null>;
@@ -65,3 +66,24 @@ export const textureDetailData: Record<TTextureKey, TTextureValue> = {
     value: "hd",
   },
 } as Record<TTextureKey, TTextureValue>;
+
+export type TModelKey = `${ModelType}`;
+
+export type TModelValue = {
+  value: TModelKey;
+  displayName: string;
+  pro: boolean;
+};
+
+export const modelDetailData: Record<TModelKey, TModelValue> = {
+  buuV1: {
+    displayName: "Buu V1",
+    value: "buuV1",
+    pro: false,
+  },
+  buuV2: {
+    displayName: "Buu V2",
+    value: "buuV2",
+    pro: true,
+  },
+} as Record<TModelKey, TModelValue>;

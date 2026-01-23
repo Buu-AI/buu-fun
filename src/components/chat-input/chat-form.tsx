@@ -132,7 +132,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
 
   const handleImageUploadUrl = async (
     ImageData: TImageData,
-    accessToken: string
+    accessToken: string,
   ) => {
     try {
       const file = await blobUrlToFile(ImageData.url, ImageData.name);
@@ -208,7 +208,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
 
       if (inputFile && inputFile?.length > 0) {
         const inputFileRequests = inputFile.map((item) =>
-          handleImageUploadUrl(item, identityToken)
+          handleImageUploadUrl(item, identityToken),
         );
         toast.loading("Preparing image for uploading", { duration: 1200 });
 
@@ -288,7 +288,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         "relative flex-col gap-1 flex items-start w-full p-4  mb-2  rounded-[20px]  shadow-buu-inner bg-buu",
         {
           // "p-0": !inputFile?.url.length
-        }
+        },
       )}
     >
       <AnimatePresence mode="popLayout">
@@ -377,9 +377,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
               if (files) {
                 for (const file of files) {
                   if (!getAllowedContentTypeMaps(file.type)) {
-                    toast.error(
-                      `Image type ${file.type} is not supported yet`
-                    );
+                    toast.error(`Image type ${file.type} is not supported yet`);
                     return;
                   }
                   if (fileCount > 4) {

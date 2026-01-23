@@ -1,5 +1,12 @@
-import { TNumberOfFaces, TStyle, TTextureType } from "@/types/chat/chat-types";
+import {
+  TModelType,
+  TNumberOfFaces,
+  TStyle,
+  TTextureType,
+} from "@/types/chat/chat-types";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { disabledOptions } from "@/constants/settings-card";
+import { textureDetailData } from "@/components/settings/options-data";
 const MAX_MODELS = 4;
 export const threeDStyles: SettingsState["ThreeDStyle"][] = [
   "clay",
@@ -39,6 +46,22 @@ export const contentModes: SettingsState["modes"][] = [
   "rigging",
   "animation",
 ];
+
+/**
+ * Get the first valid texture option for a given model
+ * @param model - The model type to check against
+ * @returns The first valid texture key for the model
+ */
+function getFirstValidTexture(model: TModelType): TTextureType {
+  const disabledTextures = disabledOptions.texture[model] ?? [];
+  const availableTextures = Object.values(textureDetailData).filter(
+    ({ value }) => !disabledTextures.includes(value)
+  );
+
+  // Return first available texture, or 'definedByAI' as fallback
+  return availableTextures[0]?.value ?? "definedByAI";
+}
+
 export type SettingsState = {
   isPopoverOpen: boolean;
   autoApprove: boolean;
@@ -50,6 +73,7 @@ export type SettingsState = {
   faces: TNumberOfFaces;
   textureType: TTextureType;
   isGameReady: boolean;
+  model: TModelType;
 };
 
 const initialState: SettingsState = {
@@ -63,6 +87,7 @@ const initialState: SettingsState = {
   textureType: "definedByAI",
   autoApprove: true,
   isGameReady: false,
+  model: "buuV1",
 };
 
 const SettingsSlice = createSlice({
@@ -87,13 +112,13 @@ const SettingsSlice = createSlice({
     },
     changeThreeDStyles(
       state,
-      action: PayloadAction<SettingsState["ThreeDStyle"] | undefined>
+      action: PayloadAction<SettingsState["ThreeDStyle"] | undefined>,
     ) {
       state.ThreeDStyle = action.payload;
     },
     changeNumberOfModelMode(
       state,
-      action: PayloadAction<"custom" | "definedByAI">
+      action: PayloadAction<"custom" | "definedByAI">,
     ) {
       const payload = action.payload;
       if (payload === "custom") {
@@ -106,7 +131,7 @@ const SettingsSlice = createSlice({
     },
     changeNumberOfModel(
       state,
-      action: PayloadAction<"increment" | "decrement">
+      action: PayloadAction<"increment" | "decrement">,
     ) {
       const current = state.numberOfModels;
       const payload = action.payload;
@@ -115,6 +140,19 @@ const SettingsSlice = createSlice({
         state.numberOfModels = Math.min(current + 1, MAX_MODELS);
       } else if (payload === "decrement") {
         state.numberOfModels = Math.max(current - 1, 1);
+      }
+    },
+    changeModel(state, action: PayloadAction<TModelType>) {
+      const newModel = action.payload;
+      state.model = newModel;
+
+      // Check if current texture is valid for the new model
+      const currentTexture = state.textureType;
+      const disabledTextures = disabledOptions.texture[newModel] ?? [];
+
+      // If current texture is disabled for the new model, reset to first valid option
+      if (currentTexture && disabledTextures.includes(currentTexture)) {
+        state.textureType = getFirstValidTexture(newModel);
       }
     },
     changeModes(state, action: PayloadAction<SettingsState["modes"]>) {
@@ -144,7 +182,8 @@ export const {
   changeFaces,
   changeTexture,
   setAutoApprove,
-  switchGameReady
+  switchGameReady,
+  changeModel
 } = SettingsSlice.actions;
 
 export default SettingsSlice.reducer;

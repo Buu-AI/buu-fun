@@ -17,13 +17,13 @@ type TNumberOfModel = {};
 export default function NumberOfModel({}: TNumberOfModel) {
   const dispatch = useAppDispatch();
   const numberOfModels = useAppSelector(
-    (state) => state.settings.numberOfModels
+    (state) => state.settings.numberOfModels,
   );
   const numberOfModelsMode = useAppSelector(
-    (state) => state.settings.numberOfModelsMode
+    (state) => state.settings.numberOfModelsMode,
   );
   const isGameReadyEnabled = useAppSelector(
-    (state) => state.settings.isGameReady
+    (state) => state.settings.isGameReady,
   );
 
   const isAIHandled = numberOfModelsMode === "definedByAI";
@@ -85,7 +85,7 @@ export default function NumberOfModel({}: TNumberOfModel) {
           "self-end h-11 border-2 rounded-lg border-muted-foreground/20 px-2 relative flex items-center justify-between gap-2 bg-[#1A1E2450]  basis-[40%]",
           {
             "bg-[#1A1E2490]": numberOfModelsMode,
-          }
+          },
         )}
       >
         <div className="flex  items-center gap-1.5 left-2 ">
@@ -98,7 +98,7 @@ export default function NumberOfModel({}: TNumberOfModel) {
               "aspect-square w-7 text-lg font-medium flex items-center justify-center rounded-full  bg-buu-secondary",
               {
                 "text-muted-foreground/60": isAIHandled || isGameReadyEnabled,
-              }
+              },
             )}
           >
             +
@@ -112,7 +112,7 @@ export default function NumberOfModel({}: TNumberOfModel) {
               "aspect-square w-7 text-lg font-medium flex items-center justify-center rounded-full  bg-buu-secondary",
               {
                 "text-muted-foreground/60": isAIHandled || isGameReadyEnabled,
-              }
+              },
             )}
           >
             -

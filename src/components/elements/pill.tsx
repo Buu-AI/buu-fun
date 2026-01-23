@@ -26,7 +26,7 @@ const pillVariant = cva(
         tiny: "p-0.5 text-[7px] max-h-fit leading-none font-bold",
       },
     },
-  }
+  },
 );
 export type TPillVariant = VariantProps<typeof pillVariant>;
 

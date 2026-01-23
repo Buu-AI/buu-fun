@@ -34,7 +34,7 @@ function NewAvailableSettingsPill() {
       });
     }
   }, [settingsStorage, setSettingsStorage]);
-  console.log('hello')
+  console.log("hello");
   // Sync newFeatures with the latest NEW_FEATURES constant
   useEffect(() => {
     if (settingsStorage.newFeatures && settingsStorage.seenFeatures) {
@@ -43,7 +43,7 @@ function NewAvailableSettingsPill() {
 
       // Check if there are new features in the code that aren't in localStorage
       const hasNewFeatures = currentFeatures.some(
-        (feature) => !storedFeatures.includes(feature)
+        (feature) => !storedFeatures.includes(feature),
       );
 
       if (hasNewFeatures) {
@@ -64,7 +64,7 @@ function NewAvailableSettingsPill() {
       settingsStorage.seenFeatures
     ) {
       const unseenFeatures = settingsStorage.newFeatures.filter(
-        (feature) => !settingsStorage.seenFeatures.includes(feature)
+        (feature) => !settingsStorage.seenFeatures.includes(feature),
       );
 
       if (unseenFeatures.length > 0) {
@@ -79,7 +79,7 @@ function NewAvailableSettingsPill() {
 
   // Check if there are any unseen features
   const hasUnseenFeatures = settingsStorage.newFeatures?.some(
-    (feature) => !settingsStorage.seenFeatures?.includes(feature)
+    (feature) => !settingsStorage.seenFeatures?.includes(feature),
   );
 
   if (!hasUnseenFeatures) {

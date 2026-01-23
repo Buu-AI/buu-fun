@@ -10,6 +10,7 @@ import {
 } from "../ui/select";
 import { facesDetailData, TFacesKey } from "./options-data";
 import { cn } from "@/lib/utils";
+import { enableFeature, disabledOptions } from "@/constants/settings-card";
 
 type TSelectFaces = {};
 
@@ -17,19 +18,30 @@ export default function SelectFaces({}: TSelectFaces) {
   const dispatch = useAppDispatch();
   const faceState = useAppSelector((state) => state.settings.faces);
   const isGameReadyEnabled = useAppSelector(
-    (state) => state.settings.isGameReady
+    (state) => state.settings.isGameReady,
   );
+
+  const model = useAppSelector((state) => state.settings.model);
+  const enableForModel = enableFeature.faces[model] ?? false;
+  const isDisabled = isGameReadyEnabled || !enableForModel;
+
+  // Filter out disabled options based on model configuration
+  const disabledFaceOptions = disabledOptions.faces[model] ?? [];
+  const availableFaces = Object.values(facesDetailData).filter(
+    ({ value }) => !disabledFaceOptions.includes(value)
+  );
+
   return (
     <div className="w-full">
       <p
         className={cn("uppercase text-sm font-semibold mb-2", {
-          "text-gray-400": isGameReadyEnabled,
+          "text-gray-400": isDisabled,
         })}
       >
         Faces
       </p>
       <Select
-        disabled={isGameReadyEnabled}
+        disabled={isDisabled}
         onValueChange={(value: TFacesKey) => {
           const faceValue: TFacesKey = facesDetailData[value]?.value
             ? facesDetailData[value].value
@@ -54,7 +66,7 @@ export default function SelectFaces({}: TSelectFaces) {
           defaultValue={"tenKey"}
           className="bg-[#1C2129] z-[101] relative border-none shadow-buu-muted border-buu  "
         >
-          {Object.values(facesDetailData).map(({ displayName, value, pro }) => (
+          {availableFaces.map(({ displayName, value, pro }) => (
             <SelectItem
               key={`${displayName}-${value}-styles-selector`}
               className="focus:bg-[#252931] pl-4 border-none backdrop-blur-10   py-3"
