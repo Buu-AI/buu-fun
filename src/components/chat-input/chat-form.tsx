@@ -39,6 +39,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
   const router = useRouter();
   const prompt = useAppSelector((state) => state.chat.inputQuery);
   const inputFile = useAppSelector((state) => state.chat.inputFile);
+  const model = useAppSelector((state) => state.settings.model);
 
   const isChatPending = useAppSelector(isChatGenerating);
   // Mutation for creating a new chat
@@ -246,6 +247,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         texture,
         numberOfModels: numberOfModel,
         isGameReady,
+        model
       };
 
       if (action === "new_chat") {

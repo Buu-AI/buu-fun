@@ -33,6 +33,7 @@ import { AccessToken } from "./user";
 import { GetMessages } from "@/gql/documents/messages";
 import { Maybe } from "@/types";
 import { TNumberOfFaces, TStyle, TTextureType } from "@/types/chat/chat-types";
+import { TModelKey } from "@/components/settings/options-data";
 
 export type TGetMessages = {
   sessionId: string;
@@ -127,6 +128,7 @@ type TOptions = {
   numberOfModels?: Maybe<number>;
   style?: Maybe<TStyle>;
   texture?: Maybe<TTextureType>;
+  model?: Maybe<TModelKey>; 
 };
 
 type TSendChatMessage = {
