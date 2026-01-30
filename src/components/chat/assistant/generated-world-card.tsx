@@ -5,8 +5,7 @@ import { World } from "@/gql/types/graphql";
 import { useAppDispatch } from "@/hooks/redux";
 import {
   isToolCallFailed,
-  isToolCallGenerating,
-  isToolCallPending,
+  isToolCallPending
 } from "@/lib/helpers/status-checker";
 import { setViewWorld } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
@@ -28,7 +27,7 @@ export default function GeneratedWorldCard({
 }: TGeneratedWorldCard) {
   const dispatch = useAppDispatch();
   const status = toolRequest?.status;
-  const isGenerating = isToolCallGenerating(status);
+  // const isGenerating = isToolCallGenerating(status);
   const isPending = isToolCallPending(status);
   const isFailed = isToolCallFailed(status);
 
