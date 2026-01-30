@@ -205,6 +205,118 @@ export const GetMessages = gql`
               updatedAt
               createdAt
             }
+            worlds {
+              _id
+              teamId
+              sessionId
+              messageId
+              toolRequestId
+              worldId
+              operationId
+              displayName
+              modelType
+              caption
+              promptType
+              textPrompt
+              inputImages {
+                alt
+                keyS3 
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              isPano
+              panoMedia {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              thumbnailMedia {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              splatFiles {
+                lowRes {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+                mediumRes {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+                highRes {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+              }
+              colliderMesh {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              status
+              error
+              createdAt
+              updatedAt
+            }
           }
           toolRequest {
             _id
@@ -214,78 +326,100 @@ export const GetMessages = gql`
             type
             priority
             payload
-            details {
-              ... on GenerateModelsDetails {
-                __typename
-                texture
-                numberOfFaces
-                numberOfModels
+            details  {
+            ... on GenerateModelsDetails {
+              texture
+              numberOfFaces
+              numberOfModels
+            }
+            ... on GenerateModelsFromPromptDetails {
+              texture
+              numberOfFaces
+              numberOfModels
+              prompt
+              style
+            }
+            ... on GenerateModelsFromImageDetails {
+              texture
+              numberOfFaces
+              numberOfModels
+            }
+            ... on GenerateModelsFromReferencesDetails {
+              texture
+              numberOfFaces
+              numberOfModels
+              images {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
               }
-              ... on GenerateModelsFromPromptDetails {
-                __typename
-                texture
-                numberOfFaces
-                numberOfModels
+              instructions
+            }
+            ... on GenerateModelsFromEditDetails {
+              texture
+              numberOfFaces
+              numberOfModels
+              edit
+              model {
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
                 prompt
                 style
-              }
-              ... on GenerateModelsFromImageDetails {
-                __typename
-                texture
-                numberOfFaces
-                numberOfModels
-                image {
-                  alt
-                  keyS3
-                  size
-                  type
-                  url
-                  _id
-                  teamId
-                  sessionId
-                  messageId
-                  createdAt
-                  updatedAt
-                }
-              }
-              ... on GenerateModelsFromReferencesDetails {
-                __typename
-                texture
-                numberOfFaces
-                numberOfModels
-                images {
-                  alt
-                  keyS3
-                  size
-                  type
-                  url
-                  _id
-                  teamId
-                  sessionId
-                  messageId
-                  createdAt
-                  updatedAt
-                }
-                instructions
-              }
-              ... on GenerateModelsFromEditDetails {
-                __typename
-                texture
-                numberOfFaces
-                numberOfModels
-                edit
-              }
-              ... on GenerateNftDetails {
-                __typename
-                name
-                description
-                symbol
-                attributes {
-                  trait_type
-                  value
-                }
+                nftId
               }
             }
+            ... on GenerateNftDetails {
+              name
+              description
+              symbol
+            }
+            ... on GenerateGameReady3DModelDetails {
+              prompt
+              polygonType
+              faceCount
+              enablePBR
+              outputFormat
+              style
+              fluxJobId
+              conversionJobId
+            }
+            ... on GenerateWorldFromPromptDetails {
+              textPrompt
+              displayName
+              modelType
+            }
+            ... on GenerateWorldFromImageDetails {
+              image {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              textPrompt
+              isPano
+              displayName
+              modelType
+            }
+          }
             credits
             references
             status
@@ -509,6 +643,118 @@ export const GenerateModelFromImageMutation = gql`
               updatedAt
               createdAt
             }
+            worlds {
+              _id
+              teamId
+              sessionId
+              messageId
+              toolRequestId
+              worldId
+              operationId
+              displayName
+              modelType
+              caption
+              promptType
+              textPrompt
+              inputImages {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              isPano
+              panoMedia {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              thumbnailMedia {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              splatFiles {
+                lowRes {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+                mediumRes {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+                highRes {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+              }
+              colliderMesh {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              status
+              error
+              createdAt
+              updatedAt
+            }
           }
           toolRequest {
             _id
@@ -724,6 +970,118 @@ export const EditModelMutation = gql`
               updatedAt
               createdAt
             }
+            worlds {
+              _id
+              teamId
+              sessionId
+              messageId
+              toolRequestId
+              worldId
+              operationId
+              displayName
+              modelType
+              caption
+              promptType
+              textPrompt
+              inputImages {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              isPano
+              panoMedia {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              thumbnailMedia {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              splatFiles {
+                lowRes {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+                mediumRes {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+                highRes {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+              }
+              colliderMesh {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              status
+              error
+              createdAt
+              updatedAt
+            }
           }
           toolRequest {
             _id
@@ -938,6 +1296,118 @@ export const SendChatMessage = gql`
               chain
               updatedAt
               createdAt
+            }
+            worlds {
+              _id
+              teamId
+              sessionId
+              messageId
+              toolRequestId
+              worldId
+              operationId
+              displayName
+              modelType
+              caption
+              promptType
+              textPrompt
+              inputImages {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              isPano
+              panoMedia {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              thumbnailMedia {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              splatFiles {
+                lowRes {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+                mediumRes {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+                highRes {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+              }
+              colliderMesh {
+                alt
+                keyS3
+                size
+                type
+                url
+                _id
+                teamId
+                sessionId
+                messageId
+                createdAt
+                updatedAt
+              }
+              status
+              error
+              createdAt
+              updatedAt
             }
           }
           toolRequest {

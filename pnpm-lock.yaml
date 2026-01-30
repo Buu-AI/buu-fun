@@ -129,6 +129,9 @@ importers:
       '@solana/web3.js':
         specifier: ^1.98.0
         version: 1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
+      '@sparkjsdev/spark':
+        specifier: ^0.1.10
+        version: 0.1.10
       '@streamflow/common':
         specifier: ^7.5.1
         version: 7.5.1(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(utf-8-validate@5.0.10)
@@ -3885,6 +3888,9 @@ packages:
     resolution: {integrity: sha512-jrseNWipwl9xXZgrzwZF3hhL0eIVxuEtoZOSLmuPuef7FgHjstuTtNJAeT4icA7pzdDV4hZvu54pI2r2f7SmrQ==}
     peerDependencies:
       '@solana/web3.js': '*'
+
+  '@sparkjsdev/spark@0.1.10':
+    resolution: {integrity: sha512-CiijdZQuj7KPDUqIZPiEqyUkJCYo1JqR05vq/V+ElxMwqR7L70ZuZDyIKcasjZHSiPB8pGRMH8HZGqUKO9aRPQ==}
 
   '@standard-schema/utils@0.3.0':
     resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==}
@@ -15222,6 +15228,10 @@ snapshots:
       bs58: 5.0.0
       eventemitter3: 5.0.1
       uuid: 9.0.1
+
+  '@sparkjsdev/spark@0.1.10':
+    dependencies:
+      fflate: 0.8.2
 
   '@standard-schema/utils@0.3.0': {}
 

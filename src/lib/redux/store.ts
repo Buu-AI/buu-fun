@@ -28,7 +28,10 @@ const persistedSettingsReducer = persistReducer(
 
 export const makeStore = () => {
   return configureStore({
-    devTools: true,
+    devTools:
+      process.env.NODE_ENV === "development"
+        ? { maxAge: 50, trace: false }
+        : false,
     reducer: {
       boards: boardSlice,
       settings: persistedSettingsReducer,

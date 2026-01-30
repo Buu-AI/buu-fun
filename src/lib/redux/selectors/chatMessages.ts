@@ -38,3 +38,20 @@ export const getToolById = createSelector(
     return null;
   },
 );
+
+export const getWorldById = createSelector(
+  [Messages, (_, id?: MaybeString) => id],
+  (messages, id) => {
+    if (!id) return null;
+    for (const message of messages) {
+      const worlds = message.worlds;
+      if (!worlds) continue;
+      for (const world of worlds) {
+        if (world._id === id) {
+          return world;
+        }
+      }
+    }
+    return null;
+  },
+);

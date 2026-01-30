@@ -6,6 +6,17 @@ import remarkGfm from "remark-gfm";
 const nextConfig: NextConfig = {
   /* config options here */
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  webpack: (config) => {
+    // Fix for @sparkjsdev/spark - disable parsing of new URL() syntax
+    config.module.parser = {
+      ...config.module.parser,
+      javascript: {
+        ...config.module.parser?.javascript,
+        url: false,
+      },
+    };
+    return config;
+  },
   async headers() {
     return [
       {

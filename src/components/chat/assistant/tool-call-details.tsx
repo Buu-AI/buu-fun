@@ -13,7 +13,7 @@ export default function ToolCallDetails({ toolRequest }: TToolCallDetails) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { details }: any = toolRequest;
   if (!details) return;
-
+  
   const NFTAttribute = details?.attributes
     ? details?.attributes?.map((item: NftAttribute, index: number) => {
         return (
@@ -47,7 +47,7 @@ export default function ToolCallDetails({ toolRequest }: TToolCallDetails) {
               <Image
                 src={details?.image?.url ?? "/logo.png"}
                 width={250}
-                className="w-20 h-20"
+                className="w-20 h-20 rounded-sm"
                 height={250}
                 alt="N/A"
               />
@@ -78,14 +78,14 @@ export default function ToolCallDetails({ toolRequest }: TToolCallDetails) {
             </div>
           </div>
         ) : null}
-        {(details?.instructions ?? details?.prompt ?? details?.edit) ? (
+        {(details?.instructions ?? details?.prompt ?? details?.edit ?? details?.textPrompt) ? (
           <div className="mt-4">
             <p className="text-xs font-medium ml-2 text-muted-foreground/60">
               Prompt
             </p>
             <div className="min-h-20 pt-1 mt-1 chat-prompt-bg">
               <p className="py-2 mt-1  px-4 text-sm ">
-                {details?.instructions ?? details?.prompt ?? details?.edit}
+                {details?.instructions ?? details?.prompt ?? details?.edit ?? details?.textPrompt}
               </p>
             </div>
           </div>
@@ -109,6 +109,36 @@ export default function ToolCallDetails({ toolRequest }: TToolCallDetails) {
               <div className="mt-1 chat-prompt-bg">
                 <p className="py-3   px-4 text-sm uppercase">{details?.name}</p>
               </div>{" "}
+            </div>
+          ) : null}
+          {details?.displayName ? (
+            <div>
+              <p className="text-xs font-medium ml-2 text-muted-foreground/60">
+                Display Name
+              </p>
+              <div className="mt-1 chat-prompt-bg">
+                <p className="py-3 px-4 text-sm">{details?.displayName}</p>
+              </div>
+            </div>
+          ) : null}
+          {details?.modelType ? (
+            <div>
+              <p className="text-xs font-medium ml-2 text-muted-foreground/60">
+                Model Type
+              </p>
+              <div className="mt-1 chat-prompt-bg">
+                <p className="py-3 px-4 text-sm uppercase">{details?.modelType?.replace(/-/g, " ")}</p>
+              </div>
+            </div>
+          ) : null}
+          {details?.isPano !== undefined ? (
+            <div>
+              <p className="text-xs font-medium ml-2 text-muted-foreground/60">
+                Panoramic
+              </p>
+              <div className="mt-1 chat-prompt-bg">
+                <p className="py-3 px-4 text-sm">{details?.isPano ? "Yes" : "No"}</p>
+              </div>
             </div>
           ) : null}
           {NFTAttribute}

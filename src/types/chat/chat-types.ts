@@ -10,6 +10,7 @@ import {
   ToolRequest,
   ToolRequestStatus,
   ToolRequestType,
+  World,
 } from "@/gql/types/graphql";
 import { TErrorTypeName } from "@/lib/redux/features/chat-types";
 import { Maybe, MaybeString } from "..";
@@ -46,6 +47,7 @@ export type TChatMessage = {
   messageId: string;
   prompt: MaybeString;
   medias: Maybe<Media[]>;
+  worlds: Maybe<World[]>;
   models: Model[];
   role: TMessageRole;
   payload: PromptPayload;

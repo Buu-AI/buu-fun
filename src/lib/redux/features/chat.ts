@@ -17,6 +17,7 @@ import {
   TImageData,
   TMaximize,
   TViewModel,
+  TViewWorld,
 } from "./chat-types";
 import { isTypeUndefined } from "@/lib/utils";
 
@@ -28,6 +29,10 @@ const initialState: ChatState = {
     isOpen: false,
     model: null,
     toolRequest: null,
+  },
+  viewWorld: {
+    isOpen: false,
+    world: null,
   },
   genNft: {
     isGenNftModalOpen: false,
@@ -103,6 +108,21 @@ const ChatSlice = createSlice({
 
       if (!isTypeUndefined(payload.toolRequest)) {
         state.viewModel.toolRequest = payload.toolRequest;
+      }
+    },
+    clearViewWorld(state) {
+      state.viewWorld.isOpen = false;
+      state.viewWorld.world = null;
+    },
+    setViewWorld(state, action: PayloadAction<Partial<TViewWorld>>) {
+      const payload = action.payload;
+
+      if (!isTypeUndefined(payload.isOpen)) {
+        state.viewWorld.isOpen = payload.isOpen;
+      }
+
+      if (!isTypeUndefined(payload.world)) {
+        state.viewWorld.world = payload.world;
       }
     },
     removeImage(state, action: PayloadAction<string>) {
@@ -288,6 +308,8 @@ export const {
   updateMessageToolRequest,
   setHistoryModel,
   clearViewModel,
+  setViewWorld,
+  clearViewWorld,
 } = ChatSlice.actions;
 
 export default ChatSlice.reducer;

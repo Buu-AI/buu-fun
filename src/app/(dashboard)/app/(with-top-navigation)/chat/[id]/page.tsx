@@ -1,6 +1,7 @@
 import ShareableBoardsButton from "@/components/boards/shareable-boards-button";
 import BottomBarContainer from "@/components/chat-input/bottom-bar-container";
 import ViewModelModal from "@/components/chat/assistant/view-model-modal";
+import ViewWorldModal from "@/components/chat/assistant/view-world-modal";
 import ChatContainer from "@/components/chat/chat-container";
 import ChatMessageInitializer from "@/components/chat/chat-initializer";
 import ChatMessageEventProvider from "@/components/chat/chat-message-event-provider";
@@ -37,6 +38,7 @@ export default async function ChatPage({ params }: TChatPage) {
       <ModelGenerationModal />
       <ShareableBoardsButton />
       <ViewModelModal />
+      <ViewWorldModal />
     </DndKitProvider>
   );
 }

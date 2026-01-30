@@ -55,6 +55,13 @@ export type TViewModel = {
   } | null;
 };
 
+export type TViewWorld = {
+  isOpen: boolean;
+  world: {
+    id: string;
+  } | null;
+};
+
 export type ChatState = {
   isRecentChatOpen: boolean;
   inputQuery: string;
@@ -75,6 +82,7 @@ export type ChatState = {
   sessionId: string;
   messages: TChatMessage[];
   viewModel: TViewModel;
+  viewWorld: TViewWorld;
 };
 
 export type TErrorTypeName = { __typename?: "HandledError" };

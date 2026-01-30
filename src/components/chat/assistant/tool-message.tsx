@@ -8,6 +8,7 @@ import { isToolCallCanceled } from "@/lib/helpers/status-checker";
 import { TChatMessage } from "@/types/chat/chat-types";
 import ImageRenderer from "../image-renderer";
 import GeneratedModelCard from "./generated-model-card";
+import GeneratedWorldCard from "./generated-world-card";
 import AssistantToolCallContainer from "./tool-call-container";
 type TAssistantMessage = {} & TChatMessage;
 export default function AssistantToolMessage({
@@ -19,6 +20,7 @@ export default function AssistantToolMessage({
   type,
   medias,
   models,
+  worlds,
   toolRequest,
 }: TAssistantMessage) {
   const isCanceled = isToolCallCanceled(toolRequest?.status);
@@ -80,6 +82,20 @@ export default function AssistantToolMessage({
                 />
               );
             })
+          : null}
+      </div>
+      {!isCanceled && worlds && worlds.length > 0 ? (
+        <div className="h-0.5 w-full bg-white/10 rounded-full my-6 px-2" />
+      ) : null}
+      <div className="grid grid-cols-2 gap-4 justify-around flex-wrap w-full">
+        {!isCanceled && worlds
+          ? worlds.map((world) => (
+              <GeneratedWorldCard
+                key={`generated-world-card-${world._id}`}
+                world={world}
+                toolRequest={toolRequest}
+              />
+            ))
           : null}
       </div>
       <div>

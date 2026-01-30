@@ -1,4 +1,4 @@
-import { Model } from "@/gql/types/graphql";
+import { Model, World } from "@/gql/types/graphql";
 import { isRoleAssistant } from "@/lib/helpers/status-checker";
 import { parseJson } from "@/lib/utils";
 import {
@@ -64,6 +64,7 @@ export function TransformMessage(item: TMessage): TChatMessage {
     medias: item.content?.medias,
     isAssistantLastMessage: false,
     models: (item.content?.models as Model[]) ?? [],
+    worlds: (item.content?.worlds as World[]) ?? [],  
     messageId: item._id,
     sessionId: item.sessionId,
     createdAt: item.createdAt,
