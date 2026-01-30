@@ -74,7 +74,9 @@ export default function ViewWorldModal() {
   );
 
   const showProgressOverlay =
-    stage === "idle" || stage === "loading_preview" || stage === "loading_fullres";
+    stage === "idle" ||
+    stage === "loading_preview" ||
+    stage === "loading_fullres";
   const currentProgress =
     stage === "loading_preview" ? previewProgress : fullResProgress;
   const progressText =
@@ -173,14 +175,14 @@ export default function ViewWorldModal() {
           )}
 
           {stage === "complete" && (
-              <div className="absolute bottom-4 left-4 right-4 z-20">
-                <div className="bg-buu/80 backdrop-blur-sm px-4 py-2 rounded-full inline-block">
-                  <span className="text-white text-sm font-medium">
-                    {world.textPrompt ?? "World"}
-                  </span>
-                </div>
+            <div className="absolute bottom-4 left-4 right-4 z-20">
+              <div className="bg-buu/80 backdrop-blur-sm px-4 py-2 rounded-full inline-block">
+                <span className="text-white text-sm font-medium">
+                  {world.textPrompt ?? "World"}
+                </span>
               </div>
-            )}
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>

@@ -220,7 +220,7 @@ export const GetMessages = gql`
               textPrompt
               inputImages {
                 alt
-                keyS3 
+                keyS3
                 size
                 type
                 url
@@ -326,100 +326,100 @@ export const GetMessages = gql`
             type
             priority
             payload
-            details  {
-            ... on GenerateModelsDetails {
-              texture
-              numberOfFaces
-              numberOfModels
-            }
-            ... on GenerateModelsFromPromptDetails {
-              texture
-              numberOfFaces
-              numberOfModels
-              prompt
-              style
-            }
-            ... on GenerateModelsFromImageDetails {
-              texture
-              numberOfFaces
-              numberOfModels
-            }
-            ... on GenerateModelsFromReferencesDetails {
-              texture
-              numberOfFaces
-              numberOfModels
-              images {
-                alt
-                keyS3
-                size
-                type
-                url
-                _id
-                teamId
-                sessionId
-                messageId
-                createdAt
-                updatedAt
+            details {
+              ... on GenerateModelsDetails {
+                texture
+                numberOfFaces
+                numberOfModels
               }
-              instructions
-            }
-            ... on GenerateModelsFromEditDetails {
-              texture
-              numberOfFaces
-              numberOfModels
-              edit
-              model {
-                _id
-                teamId
-                sessionId
-                messageId
-                createdAt
-                updatedAt
+              ... on GenerateModelsFromPromptDetails {
+                texture
+                numberOfFaces
+                numberOfModels
                 prompt
                 style
-                nftId
+              }
+              ... on GenerateModelsFromImageDetails {
+                texture
+                numberOfFaces
+                numberOfModels
+              }
+              ... on GenerateModelsFromReferencesDetails {
+                texture
+                numberOfFaces
+                numberOfModels
+                images {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+                instructions
+              }
+              ... on GenerateModelsFromEditDetails {
+                texture
+                numberOfFaces
+                numberOfModels
+                edit
+                model {
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                  prompt
+                  style
+                  nftId
+                }
+              }
+              ... on GenerateNftDetails {
+                name
+                description
+                symbol
+              }
+              ... on GenerateGameReady3DModelDetails {
+                prompt
+                polygonType
+                faceCount
+                enablePBR
+                outputFormat
+                style
+                fluxJobId
+                conversionJobId
+              }
+              ... on GenerateWorldFromPromptDetails {
+                textPrompt
+                displayName
+                modelType
+              }
+              ... on GenerateWorldFromImageDetails {
+                image {
+                  alt
+                  keyS3
+                  size
+                  type
+                  url
+                  _id
+                  teamId
+                  sessionId
+                  messageId
+                  createdAt
+                  updatedAt
+                }
+                textPrompt
+                isPano
+                displayName
+                modelType
               }
             }
-            ... on GenerateNftDetails {
-              name
-              description
-              symbol
-            }
-            ... on GenerateGameReady3DModelDetails {
-              prompt
-              polygonType
-              faceCount
-              enablePBR
-              outputFormat
-              style
-              fluxJobId
-              conversionJobId
-            }
-            ... on GenerateWorldFromPromptDetails {
-              textPrompt
-              displayName
-              modelType
-            }
-            ... on GenerateWorldFromImageDetails {
-              image {
-                alt
-                keyS3
-                size
-                type
-                url
-                _id
-                teamId
-                sessionId
-                messageId
-                createdAt
-                updatedAt
-              }
-              textPrompt
-              isPano
-              displayName
-              modelType
-            }
-          }
             credits
             references
             status

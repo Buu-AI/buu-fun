@@ -13,7 +13,7 @@ export default function SettingsCardContainer() {
       <StylesSelector />
       {/* <ThreeDSelectBox /> */}
       <EnableGameReadySwitch />
-        <SelectModel/>
+      <SelectModel />
       <div className="flex gap-4  items-center justify-between w-full">
         <SelectFaces />
         <SelectTexture />

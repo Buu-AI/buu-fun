@@ -64,7 +64,7 @@ export function TransformMessage(item: TMessage): TChatMessage {
     medias: item.content?.medias,
     isAssistantLastMessage: false,
     models: (item.content?.models as Model[]) ?? [],
-    worlds: (item.content?.worlds as World[]) ?? [],  
+    worlds: (item.content?.worlds as World[]) ?? [],
     messageId: item._id,
     sessionId: item.sessionId,
     createdAt: item.createdAt,

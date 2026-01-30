@@ -27,7 +27,7 @@ export default function SelectTexture({}: TSelectTexture) {
   // Filter out disabled options based on model configuration
   const disabledTextureOptions = disabledOptions.texture[model] ?? [];
   const availableTextures = Object.values(textureDetailData).filter(
-    ({ value }) => !disabledTextureOptions.includes(value)
+    ({ value }) => !disabledTextureOptions.includes(value),
   );
 
   return (
@@ -61,24 +61,22 @@ export default function SelectTexture({}: TSelectTexture) {
           />
         </SelectTrigger>
         <SelectContent className="bg-[#1C2129] z-[101] relative border-none shadow-buu-muted border-buu  ">
-          {availableTextures.map(
-            ({ displayName, value, pro }) => (
-              <SelectItem
-                key={`${displayName}-${value}-styles-selector`}
-                className="focus:bg-[#252931] pl-4 border-none backdrop-blur-10   py-3"
-                value={value}
-              >
-                <div className="flex items-center justify-center gap-2 ">
-                  <span>{displayName}</span>
-                  {pro ? (
-                    <div className="w-5 h-5">
-                      <PaidFeature />
-                    </div>
-                  ) : null}
-                </div>
-              </SelectItem>
-            ),
-          )}
+          {availableTextures.map(({ displayName, value, pro }) => (
+            <SelectItem
+              key={`${displayName}-${value}-styles-selector`}
+              className="focus:bg-[#252931] pl-4 border-none backdrop-blur-10   py-3"
+              value={value}
+            >
+              <div className="flex items-center justify-center gap-2 ">
+                <span>{displayName}</span>
+                {pro ? (
+                  <div className="w-5 h-5">
+                    <PaidFeature />
+                  </div>
+                ) : null}
+              </div>
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>{" "}
     </div>

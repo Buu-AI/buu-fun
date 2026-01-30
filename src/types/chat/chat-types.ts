@@ -64,4 +64,4 @@ export type TStyle = `${Style}` | "definedByAI";
 
 export type TTextureType = `${TextureType}` | "definedByAI";
 
-export type TModelType = `${ModelType}`
+export type TModelType = `${ModelType}`;

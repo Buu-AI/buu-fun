@@ -5,7 +5,7 @@ import { World } from "@/gql/types/graphql";
 import { useAppDispatch } from "@/hooks/redux";
 import {
   isToolCallFailed,
-  isToolCallPending
+  isToolCallPending,
 } from "@/lib/helpers/status-checker";
 import { setViewWorld } from "@/lib/redux/features/chat";
 import { cn } from "@/lib/utils";
@@ -51,7 +51,8 @@ export default function GeneratedWorldCard({
       disabled={!isReady}
       className={cn(
         "w-full aspect-square overflow-hidden rounded-2xl relative justify-center",
-        isReady && "cursor-pointer hover:ring-2 hover:ring-buu-blue transition-all",
+        isReady &&
+          "cursor-pointer hover:ring-2 hover:ring-buu-blue transition-all",
         !isReady && "cursor-default",
       )}
     >

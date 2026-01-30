@@ -247,7 +247,7 @@ export default function ChatForm({ action }: TBottomBarContainer) {
         texture,
         numberOfModels: numberOfModel,
         isGameReady,
-        model
+        model,
       };
 
       if (action === "new_chat") {

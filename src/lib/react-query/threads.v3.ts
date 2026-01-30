@@ -128,7 +128,7 @@ type TOptions = {
   numberOfModels?: Maybe<number>;
   style?: Maybe<TStyle>;
   texture?: Maybe<TTextureType>;
-  model?: Maybe<TModelKey>; 
+  model?: Maybe<TModelKey>;
 };
 
 type TSendChatMessage = {

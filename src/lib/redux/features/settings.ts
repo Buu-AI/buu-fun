@@ -55,7 +55,7 @@ export const contentModes: SettingsState["modes"][] = [
 function getFirstValidTexture(model: TModelType): TTextureType {
   const disabledTextures = disabledOptions.texture[model] ?? [];
   const availableTextures = Object.values(textureDetailData).filter(
-    ({ value }) => !disabledTextures.includes(value)
+    ({ value }) => !disabledTextures.includes(value),
   );
 
   // Return first available texture, or 'definedByAI' as fallback
@@ -183,7 +183,7 @@ export const {
   changeTexture,
   setAutoApprove,
   switchGameReady,
-  changeModel
+  changeModel,
 } = SettingsSlice.actions;
 
 export default SettingsSlice.reducer;

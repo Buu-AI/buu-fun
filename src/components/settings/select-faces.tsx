@@ -28,7 +28,7 @@ export default function SelectFaces({}: TSelectFaces) {
   // Filter out disabled options based on model configuration
   const disabledFaceOptions = disabledOptions.faces[model] ?? [];
   const availableFaces = Object.values(facesDetailData).filter(
-    ({ value }) => !disabledFaceOptions.includes(value)
+    ({ value }) => !disabledFaceOptions.includes(value),
   );
 
   return (
